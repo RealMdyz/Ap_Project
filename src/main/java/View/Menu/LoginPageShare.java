@@ -1,5 +1,7 @@
 package View.Menu;
 
+import Controller.GameLoop;
+import Models.Game;
 import MyProject.MyProjectData;
 
 import javax.swing.*;
@@ -16,8 +18,13 @@ public class LoginPageShare extends JFrame implements ActionListener {
     JButton exitButton;
     JLayeredPane backgroundPanel;
     JLabel backgroundImageLabel;
+    protected GameLoop gameLoop;
+    protected Game game;
 
-    public LoginPageShare(){
+    public LoginPageShare(GameLoop gameLoop){
+
+        this.gameLoop = gameLoop;
+
         ImageIcon backgroundImage = MyProjectData.getProjectData().getGameMenuImage();
         ImageIcon gameIcon = MyProjectData.getProjectData().getGameIcon();
         Font font20 = MyProjectData.getProjectData().getFont20();
@@ -92,7 +99,7 @@ public class LoginPageShare extends JFrame implements ActionListener {
         this.add(backgroundPanel);
     }
     private void Start(){
-
+        gameLoop.start();
     }
     private void Setting(){
 
