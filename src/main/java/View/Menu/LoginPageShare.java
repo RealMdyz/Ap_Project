@@ -1,26 +1,128 @@
 package View.Menu;
 
+import MyProject.MyProjectData;
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 public class LoginPageShare extends JFrame implements ActionListener {
-    JButton start;
-    JButton setting;
-    JButton tutorial;
-    JButton skillTree;
-    JButton exit;
+    JButton startButton;
+    JButton settingButton;
+    JButton tutorialButton;
+    JButton skillTreeButton;
+    JButton exitButton;
+    JLayeredPane backgroundPanel;
+    JLabel backgroundImageLabel;
 
     public LoginPageShare(){
+        ImageIcon backgroundImage = MyProjectData.getProjectData().getGameMenuImage();
+        ImageIcon gameIcon = MyProjectData.getProjectData().getGameIcon();
+        Font font20 = MyProjectData.getProjectData().getFont20();
+        Font font10 =  MyProjectData.getProjectData().getFont10();
         this.setSize(650, 700);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
         this.setResizable(false);
+        //this.setIconImage(gameIcon.getImage());
+
+
+        backgroundPanel = new JLayeredPane();
+        backgroundPanel.setBounds(0, 0, 700, 700);
+
+
+        backgroundImageLabel = new JLabel(backgroundImage);
+        backgroundImageLabel.setBounds(0, 0, 650, 700);
+        backgroundImageLabel.setOpaque(true);
+
+        startButton = new JButton("Start");
+        startButton.setBounds(100, 100, 120, 50);
+        startButton.setBackground(Color.WHITE);
+        startButton.setForeground(Color.BLACK);
+        startButton.setFocusable(false);
+        startButton.setFont(font20);
+
+
+        settingButton = new JButton("Settings");
+        settingButton.setBounds(80, 200, 120, 50);
+        settingButton.setBackground(Color.WHITE);
+        settingButton.setForeground(Color.BLACK);
+        settingButton.setFocusable(false);
+        settingButton.setFont(font20);
+
+        tutorialButton = new JButton("Tutorial");
+        tutorialButton.setBounds(400, 500, 120, 50);
+        tutorialButton.setBackground(Color.WHITE);
+        tutorialButton.setForeground(Color.BLACK);
+        tutorialButton.setFocusable(false);
+        tutorialButton.setFont(font20);
+
+        skillTreeButton = new JButton("Skill Tree");
+        skillTreeButton.setBounds(250, 350, 150, 50);
+        skillTreeButton.setBackground(Color.WHITE);
+        skillTreeButton.setForeground(Color.BLACK);
+        skillTreeButton.setFocusable(false);
+        skillTreeButton.setFont(font20);
+
+        exitButton = new JButton("Exit");
+        exitButton.setBounds(0, 0, 70, 40);
+        exitButton.setBackground(Color.WHITE);
+        exitButton.setForeground(Color.BLACK);
+        exitButton.setFocusable(false);
+        exitButton.setFont(font10);
+
+        startButton.addActionListener(this);
+        settingButton.addActionListener(this);
+        tutorialButton.addActionListener(this);
+        skillTreeButton.addActionListener(this);
+        exitButton.addActionListener(this);
+
+        backgroundPanel.add(backgroundImageLabel, Integer.valueOf(0));
+        backgroundPanel.add(startButton, Integer.valueOf(1));
+        backgroundPanel.add(settingButton, Integer.valueOf(1));
+        backgroundPanel.add(skillTreeButton, Integer.valueOf(1));
+        backgroundPanel.add(tutorialButton, Integer.valueOf(1));
+        backgroundPanel.add(exitButton, Integer.valueOf(1));
+
+
+        this.add(backgroundPanel);
+    }
+    private void Start(){
+
+    }
+    private void Setting(){
+
+    }
+    private void Tutorial(){
+
+    }
+    private void SkillTree(){
+
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if(e.getSource() == startButton){
+            this.setVisible(false);
+            Start();
+        }
+        if(e.getSource() == settingButton){
+            this.setVisible(false);
+            Setting();
+        }
+        if(e.getSource() == tutorialButton){
+            this.setVisible(false);
+            Tutorial();
+        }
+        if(e.getSource() == skillTreeButton){
+            this.setVisible(false);
+            SkillTree();
+        }
+        if(e.getSource() == exitButton){
+            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        }
     }
 }
