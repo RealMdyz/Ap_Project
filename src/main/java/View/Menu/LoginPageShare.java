@@ -21,10 +21,10 @@ public class LoginPageShare extends JFrame implements ActionListener {
     protected GameLoop gameLoop;
     protected Game game;
 
-    public LoginPageShare(GameLoop gameLoop){
+    public LoginPageShare(GameLoop gameLoop, Game game){
 
         this.gameLoop = gameLoop;
-
+        this.game = game;
         ImageIcon backgroundImage = MyProjectData.getProjectData().getGameMenuImage();
         ImageIcon gameIcon = MyProjectData.getProjectData().getGameIcon();
         Font font20 = MyProjectData.getProjectData().getFont20();
@@ -43,12 +43,12 @@ public class LoginPageShare extends JFrame implements ActionListener {
 
 
         backgroundImageLabel = new JLabel(backgroundImage);
-        backgroundImageLabel.setBounds(0, 0, 650, 700);
+        backgroundImageLabel.setBounds(0, 0, 700, 700);
         backgroundImageLabel.setOpaque(true);
 
         startButton = new JButton("Start");
         startButton.setBounds(100, 100, 120, 50);
-        startButton.setBackground(Color.WHITE);
+        startButton.setBackground(Color.RED);
         startButton.setForeground(Color.BLACK);
         startButton.setFocusable(false);
         startButton.setFont(font20);
@@ -56,28 +56,28 @@ public class LoginPageShare extends JFrame implements ActionListener {
 
         settingButton = new JButton("Settings");
         settingButton.setBounds(80, 200, 120, 50);
-        settingButton.setBackground(Color.WHITE);
+        settingButton.setBackground(Color.RED);
         settingButton.setForeground(Color.BLACK);
         settingButton.setFocusable(false);
         settingButton.setFont(font20);
 
         tutorialButton = new JButton("Tutorial");
         tutorialButton.setBounds(400, 500, 120, 50);
-        tutorialButton.setBackground(Color.WHITE);
+        tutorialButton.setBackground(Color.RED);
         tutorialButton.setForeground(Color.BLACK);
         tutorialButton.setFocusable(false);
         tutorialButton.setFont(font20);
 
         skillTreeButton = new JButton("Skill Tree");
         skillTreeButton.setBounds(250, 350, 150, 50);
-        skillTreeButton.setBackground(Color.WHITE);
+        skillTreeButton.setBackground(Color.RED);
         skillTreeButton.setForeground(Color.BLACK);
         skillTreeButton.setFocusable(false);
         skillTreeButton.setFont(font20);
 
         exitButton = new JButton("Exit");
         exitButton.setBounds(0, 0, 70, 40);
-        exitButton.setBackground(Color.WHITE);
+        exitButton.setBackground(Color.RED);
         exitButton.setForeground(Color.BLACK);
         exitButton.setFocusable(false);
         exitButton.setFont(font10);
@@ -99,6 +99,7 @@ public class LoginPageShare extends JFrame implements ActionListener {
         this.add(backgroundPanel);
     }
     private void Start(){
+        game.getGameFrame().setVisible(true);
         gameLoop.start();
     }
     private void Setting(){
@@ -110,6 +111,12 @@ public class LoginPageShare extends JFrame implements ActionListener {
     private void SkillTree(){
 
     }
+
+    @Override
+    public void paintComponents(Graphics g) {
+        super.paintComponents(g);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == startButton){

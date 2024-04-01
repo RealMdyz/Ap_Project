@@ -2,6 +2,7 @@ package MyProject;
 
 import Controller.GameLoop;
 import Models.Game;
+import View.Game.GameFrame;
 import View.Menu.LoginPageShare;
 
 public class MyProject {
@@ -10,7 +11,7 @@ public class MyProject {
     public MyProject(){
         game = new Game();
         gameLoop = new GameLoop(game);
-        new LoginPageShare(gameLoop);
+        new LoginPageShare(gameLoop, game);
 
     }
 }
