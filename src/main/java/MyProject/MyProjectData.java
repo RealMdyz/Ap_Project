@@ -1,13 +1,20 @@
 package MyProject;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class MyProjectData {
 
     private static MyProjectData projectData;
     protected ImageIcon gameIcon;
     protected ImageIcon gameMenuImage;
+    protected BufferedImage squarAntine ;
+    protected BufferedImage triGorath ;
+    protected BufferedImage epsilonCircle ;
 
     protected Font font10;
     protected Font font12;
@@ -32,7 +39,29 @@ public class MyProjectData {
     }
     private void importImages(){
         gameMenuImage = new ImageIcon("Game/GameMenuImage.jpg");
-        gameIcon = new ImageIcon("Game/GameIcon.jpeg");
+        gameIcon = new ImageIcon("Game/GameIcon.ico");
+
+        try {
+            String pathBackground = "Enemy/square.png";
+            File fileBackground = new File(pathBackground);
+            squarAntine = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String pathBackground = "Enemy/triangle.png";
+            File fileBackground = new File(pathBackground);
+            triGorath = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String pathBackground = "Epsilon/Epsilon_Circle.png";
+            File fileBackground = new File(pathBackground);
+            epsilonCircle = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     private void importFonts() {
 
@@ -110,5 +139,29 @@ public class MyProjectData {
 
     public void setFont35(Font font35) {
         this.font35 = font35;
+    }
+
+    public BufferedImage getSquarAntine() {
+        return squarAntine;
+    }
+
+    public void setSquarAntine(BufferedImage squarAntine) {
+        this.squarAntine = squarAntine;
+    }
+
+    public BufferedImage getTriGorath() {
+        return triGorath;
+    }
+
+    public void setTriGorath(BufferedImage triGorath) {
+        this.triGorath = triGorath;
+    }
+
+    public BufferedImage getEpsilonCircle() {
+        return epsilonCircle;
+    }
+
+    public void setEpsilonCircle(BufferedImage epsilonCircle) {
+        this.epsilonCircle = epsilonCircle;
     }
 }

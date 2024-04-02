@@ -3,6 +3,7 @@ package Controller;
 import Models.Constant;
 import Models.Game;
 
+import java.awt.*;
 import java.util.Random;
 
 public class GameLoop extends Thread{
@@ -19,12 +20,13 @@ public class GameLoop extends Thread{
         }
     }
     private void update(){
-        Random random = new Random();
-        game.getGameFrame().setBounds(random.nextInt(700), random.nextInt(700), random.nextInt(700) + 50, random.nextInt(700) + 50);
+        game.getGameFrame().getEpsilon().move();
+        game.getGameFrame().repaint();
         try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Thread.sleep(10);
+        }
+        catch (Exception e){
+
         }
     }
 }
