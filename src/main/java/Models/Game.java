@@ -10,7 +10,8 @@ public class Game {
 
     public Game(){
         isRunning = true;
-        gameFrame = new GameFrame();
+        constant = new Constant();
+        gameFrame = new GameFrame(constant);
     }
     public boolean isRunning() {
         return isRunning;
@@ -26,5 +27,13 @@ public class Game {
 
     public void setGameFrame(GameFrame gameFrame) {
         this.gameFrame = gameFrame;
+    }
+
+    public Constant getConstant() {
+        return constant;
+    }
+
+    public void setConstant(Constant constant) {
+        this.constant = constant;
     }
 }

@@ -9,7 +9,8 @@ public class GameFrame extends JFrame {
 
     Constant constant;
 
-    public GameFrame(){
+    public GameFrame(Constant constant){
+        this.constant = constant;
         this.setSize(constant.FIRST_WIDTH, constant.FIRST_HEIGHT);
         this.setResizable(false);
         this.setTitle("Window Kill");
@@ -17,7 +18,6 @@ public class GameFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
-
     @Override
     public void paintComponents(Graphics g) {
         super.paintComponents(g);

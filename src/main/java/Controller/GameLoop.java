@@ -1,5 +1,6 @@
 package Controller;
 
+import Models.Constant;
 import Models.Game;
 
 import java.util.Random;
@@ -21,7 +22,7 @@ public class GameLoop extends Thread{
         Random random = new Random();
         game.getGameFrame().setBounds(random.nextInt(700), random.nextInt(700), random.nextInt(700) + 50, random.nextInt(700) + 50);
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
