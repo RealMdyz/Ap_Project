@@ -27,7 +27,7 @@ public class InputListener {
         createKeyActions();
 
         createMouseAction();
-        System.out.println("Added");
+
 
     }
     private void createKeyBindings() {
@@ -64,7 +64,7 @@ public class InputListener {
         actionMap.put("moveDown", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                y += 1;
+                y = 1;
                 epsilon.setyVelocity(y * (int)(Constant.getSensitivityForMoves() / 10 + 1));
             }
         });
@@ -88,7 +88,6 @@ public class InputListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Constant.setOpenStore(true);
-                System.out.println("Hello");
             }
         });
         actionMap.put("ability", new AbstractAction() {
@@ -103,7 +102,7 @@ public class InputListener {
         actionMap.put("moveUpReleased", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                y = 1;
+                y = 0;
                 epsilon.setyVelocity(0);
             }
         });
@@ -111,24 +110,27 @@ public class InputListener {
         actionMap.put("moveDownReleased", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                y = 0;
                 epsilon.setyVelocity(0);
-                y = -1;
+
             }
         });
 
         actionMap.put("moveLeftReleased", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                epsilon.setxVelocity(0);
                 x = 0;
+                epsilon.setxVelocity(0);
+
             }
         });
 
         actionMap.put("moveRightReleased", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                epsilon.setxVelocity(0);
                 x = 0;
+                epsilon.setxVelocity(0);
+
             }
         });
         actionMap.put("bStoreReleased", new AbstractAction() {

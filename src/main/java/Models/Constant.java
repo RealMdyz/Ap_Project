@@ -9,13 +9,14 @@ public class Constant {
     private static int sensitivityForMoves = 0;
     private static long abilityStartTime = -100000;
     private  int playerXP = 0;
-
+    private static boolean isRunning;
     private static int sound = 0;
     private static char keyForMoveUp = 'W';
     private static char keyForMoveDown = 'S';
     private static char keyForMoveLeft = 'A';
     private static char keyForMoveRight = 'D';
     private static boolean openStore = false;
+    private static int speedOfShot = 15;
 
     public Constant(){
 
@@ -99,5 +100,21 @@ public class Constant {
 
     public static void setAbilityStartTime(long abilityStartTime) {
         Constant.abilityStartTime = abilityStartTime;
+    }
+
+    public static boolean isIsRunning() {
+        return isRunning;
+    }
+
+    public static void setIsRunning(boolean isRunning) {
+        Constant.isRunning = isRunning;
+    }
+
+    public static int getSpeedOfShot() {
+        return speedOfShot;
+    }
+
+    public static void setSpeedOfShot(int speedOfShot) {
+        Constant.speedOfShot = speedOfShot;
     }
 }

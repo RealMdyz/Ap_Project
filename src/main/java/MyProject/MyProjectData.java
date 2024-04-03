@@ -15,6 +15,7 @@ public class MyProjectData {
     protected BufferedImage squarAntine ;
     protected BufferedImage triGorath ;
     protected BufferedImage epsilonCircle ;
+    protected BufferedImage shot;
 
     protected Font font10;
     protected Font font12;
@@ -62,6 +63,14 @@ public class MyProjectData {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        try {
+            String pathBackground = "Epsilon/Shot.png";
+            File fileBackground = new File(pathBackground);
+            shot = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
     private void importFonts() {
 
@@ -163,5 +172,13 @@ public class MyProjectData {
 
     public void setEpsilonCircle(BufferedImage epsilonCircle) {
         this.epsilonCircle = epsilonCircle;
+    }
+
+    public BufferedImage getShot() {
+        return shot;
+    }
+
+    public void setShot(BufferedImage shot) {
+        this.shot = shot;
     }
 }

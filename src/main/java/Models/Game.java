@@ -14,21 +14,15 @@ public class Game {
     private StorePanel storePanel;
 
     public Game(){
-        isRunning = true;
         constant = new Constant();
+        Constant.setIsRunning(true);
         epsilon = new Epsilon(500, 500);
         gameFrame = new GameFrame(constant, epsilon);
         storePanel = new StorePanel(constant);
         inputListener = new InputListener(gameFrame, constant);
 
     }
-    public boolean isRunning() {
-        return isRunning;
-    }
 
-    public void setRunning(boolean running) {
-        isRunning = running;
-    }
 
     public GameFrame getGameFrame() {
         return gameFrame;

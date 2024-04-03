@@ -1,6 +1,7 @@
 package Controller;
 
 import Models.Constant;
+import Models.Epsilon.Shot;
 import Models.Game;
 
 import java.awt.*;
@@ -18,7 +19,7 @@ public class GameLoop extends Thread{
     public void run() {
 
 
-        while (game.isRunning()) {
+        while (Constant.isIsRunning()) {
             game.getStorePanel().setVisible(Constant.isOpenStore());
             if(!Constant.isOpenStore()){
                 update();
@@ -27,14 +28,23 @@ public class GameLoop extends Thread{
                 store();
             }
         }
-
+        game.getGameFrame().setVisible(false);
 
     }
     private void update(){
         game.getGameFrame().getEpsilon().move();
         game.getGameFrame().repaint();
+        if(game.getInputListener().getxMousePress() != -1 || game.getInputListener().getyMousePress() != -1){
+            Shot shot = new Shot(game.getGameFrame().getEpsilon().getX(), game.getGameFrame().getEpsilon().getY());
+            shot.setV(game.getInputListener().getxMousePress(), game.getInputListener().getyMousePress());
+            game.getGameFrame().getShots().add(shot);
+            game.getGameFrame().add(shot);
+            game.getInputListener().setxMousePress(-1);
+            game.getInputListener().setyMousePress(-1);
+        }
+        shotMove();
         try {
-            Thread.sleep(100);
+            Thread.sleep(10);
         }
         catch (Exception e){
 
@@ -47,6 +57,12 @@ public class GameLoop extends Thread{
         }
         catch (Exception e){
 
+        }
+    }
+    private void shotMove(){
+        for(Shot shot : game.getGameFrame().getShots()){
+            shot.move();
+            game.getGameFrame().repaint();
         }
     }
 }

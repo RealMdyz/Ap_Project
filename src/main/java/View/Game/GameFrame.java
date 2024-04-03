@@ -2,9 +2,13 @@ package View.Game;
 
 import Models.Constant;
 import Models.Epsilon.Epsilon;
+import Models.Epsilon.Shot;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class GameFrame extends JFrame {
 
@@ -12,6 +16,8 @@ public class GameFrame extends JFrame {
     JPanel panel;
     JPanel gamePanel;
     Epsilon epsilon;
+    private JButton exitButton;
+    protected ArrayList<Shot> shots = new ArrayList<>();
     public GameFrame(Constant constant, Epsilon epsilon){
         this.constant = constant;
         this.epsilon = epsilon;
@@ -42,6 +48,15 @@ public class GameFrame extends JFrame {
         gamePanel.setLayout(null);
         gamePanel.setOpaque(false);
 
+        exitButton = new JButton("exit");
+        exitButton.setBounds(0, 0, 30, 30);
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Constant.setIsRunning(false);
+            }
+        });
+       //gamePanel.add(exitButton);
         panel.add(gamePanel);
         gamePanel.add(epsilon);
         gamePanel.repaint();
@@ -65,5 +80,13 @@ public class GameFrame extends JFrame {
 
     public void setConstant(Constant constant) {
         this.constant = constant;
+    }
+
+    public ArrayList<Shot> getShots() {
+        return shots;
+    }
+
+    public void setShots(ArrayList<Shot> shots) {
+        this.shots = shots;
     }
 }
