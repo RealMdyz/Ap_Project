@@ -7,12 +7,16 @@ public class Constant {
 
     private static int level = 0;
     private static int sensitivityForMoves = 0;
+    private static long abilityStartTime = -100000;
+    private  int playerXP = 0;
 
     private static int sound = 0;
     private static char keyForMoveUp = 'W';
     private static char keyForMoveDown = 'S';
     private static char keyForMoveLeft = 'A';
     private static char keyForMoveRight = 'D';
+    private static boolean openStore = false;
+
     public Constant(){
 
     }
@@ -71,5 +75,29 @@ public class Constant {
 
     public static void setKeyForMoveRight(char keyForMoveRight) {
         Constant.keyForMoveRight = keyForMoveRight;
+    }
+
+    public int getPlayerXP() {
+        return playerXP;
+    }
+
+    public void setPlayerXP(int playerXP) {
+        this.playerXP = playerXP;
+    }
+
+    public static boolean isOpenStore() {
+        return openStore;
+    }
+
+    public static void setOpenStore(boolean openStore) {
+        Constant.openStore = openStore;
+    }
+
+    public static long getAbilityStartTime() {
+        return abilityStartTime;
+    }
+
+    public static void setAbilityStartTime(long abilityStartTime) {
+        Constant.abilityStartTime = abilityStartTime;
     }
 }

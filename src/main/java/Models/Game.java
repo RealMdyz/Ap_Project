@@ -3,6 +3,7 @@ package Models;
 import Models.Epsilon.Epsilon;
 import View.Game.GameFrame;
 import View.Game.InputListener;
+import View.Menu.StorePanel;
 
 public class Game {
     private boolean isRunning;
@@ -10,12 +11,14 @@ public class Game {
     protected Constant constant;
     protected Epsilon epsilon;
     protected InputListener inputListener;
+    private StorePanel storePanel;
 
     public Game(){
         isRunning = true;
         constant = new Constant();
         epsilon = new Epsilon(500, 500);
         gameFrame = new GameFrame(constant, epsilon);
+        storePanel = new StorePanel(constant);
         inputListener = new InputListener(gameFrame, constant);
 
     }
@@ -49,5 +52,13 @@ public class Game {
 
     public void setInputListener(InputListener inputListener) {
         this.inputListener = inputListener;
+    }
+
+    public StorePanel getStorePanel() {
+        return storePanel;
+    }
+
+    public void setStorePanel(StorePanel storePanel) {
+        this.storePanel = storePanel;
     }
 }
