@@ -30,7 +30,7 @@ public class GameFrame extends JFrame {
         this.repaint();
 
         panel = new JPanel();
-        panel.setBounds(0, 0, Constant.FIRST_WIDTH, Constant.FIRST_HEIGHT);
+        panel.setBounds(0, 0, Constant.FIRST_WIDTH * 2, Constant.FIRST_HEIGHT * 2);
         panel.setVisible(true);
         panel.setFocusable(true);
         panel.requestFocus();
@@ -40,7 +40,7 @@ public class GameFrame extends JFrame {
         setContentPane(panel);
 
         gamePanel = new JPanel();
-        gamePanel.setBounds(0,0, Constant.FIRST_WIDTH, Constant.FIRST_HEIGHT);
+        gamePanel.setBounds(0,0, Constant.FIRST_WIDTH * 2, Constant.FIRST_WIDTH * 2);
         gamePanel.setVisible(true);
         gamePanel.setFocusable(true);
         gamePanel.requestFocus();
@@ -88,5 +88,19 @@ public class GameFrame extends JFrame {
 
     public void setShots(ArrayList<Shot> shots) {
         this.shots = shots;
+    }
+    public void removeOneShot(Shot shot){
+        gamePanel.remove(shot);
+        shots.remove(shot);
+        gamePanel.repaint();
+
+    }
+
+    public JPanel getGamePanel() {
+        return gamePanel;
+    }
+
+    public void setGamePanel(JPanel gamePanel) {
+        this.gamePanel = gamePanel;
     }
 }
