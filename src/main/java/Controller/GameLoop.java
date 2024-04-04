@@ -1,10 +1,14 @@
 package Controller;
 
 import Models.Constant;
+import Models.Enemy.EnemyWave;
 import Models.Epsilon.Shot;
 import Models.Game;
+import Models.ObjectsInGame;
 
+import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 import java.util.Random;
 
 public class GameLoop extends Thread{
@@ -12,9 +16,21 @@ public class GameLoop extends Thread{
 
     private Game game;
     private Constant constant;
+    private EnemyWave[] waves;
+    private int currentWaveIndex;
+    private int currentWaveIndexEnemy;
+
+    private int delay = 0;
 
     public GameLoop(Game game){
         this.game = game;
+        waves = new EnemyWave[3];
+        waves[0] = new EnemyWave(3, 1000); // 3 enemies, 1 second delay
+        waves[1] = new EnemyWave(5, 800);  // 5 enemies, 0.8 second delay
+        waves[2] = new EnemyWave(7, 600);  // 7 enemies, 0.6 second delay
+        currentWaveIndex = 0;
+        currentWaveIndexEnemy = 0;
+
     }
     public void run() {
 
@@ -43,7 +59,17 @@ public class GameLoop extends Thread{
             game.getInputListener().setyMousePress(-1);
         }
         shotMove();
-
+        delay += 10;
+        if(delay >= waves[currentWaveIndex].getDelay()){
+            addNewEnemy();
+            System.out.println(currentWaveIndex);
+            System.out.println(currentWaveIndexEnemy);
+        }
+        if(currentWaveIndex == 3){
+            Constant.setIsRunning(false);
+            JOptionPane.showMessageDialog(game.getGameFrame(), "Congratulations! You have defeated all waves.");
+            System.exit(0);
+        }
         try {
             Thread.sleep(10);
         }
@@ -58,6 +84,22 @@ public class GameLoop extends Thread{
         }
         catch (Exception e){
 
+        }
+    }
+    private void addNewEnemy(){
+        int index = 0;
+        for(ObjectsInGame objects : waves[currentWaveIndex].getEnemies()){
+            index += 1;
+            game.getGameFrame().add(objects);
+            if(index > currentWaveIndexEnemy){
+                currentWaveIndexEnemy += 1;
+                break;
+            }
+        }
+        delay = 0;
+        if(currentWaveIndexEnemy == waves[currentWaveIndex].getNumEnemies()){
+            currentWaveIndexEnemy = 0;
+            currentWaveIndex +=1;
         }
     }
     private void shotMove(){

@@ -17,6 +17,11 @@ public class Constant {
     private static char keyForMoveRight = 'D';
     private static boolean openStore = false;
     private static int speedOfShot = 15;
+    private static int widthOfTrighrath = 20;
+    private static int heightOfTrighrath = 20;
+    private static int widthOfSquarantine = 20;
+    private static int heightOfSquarantine = 20;
+
 
     public Constant(){
 
@@ -116,5 +121,37 @@ public class Constant {
 
     public static void setSpeedOfShot(int speedOfShot) {
         Constant.speedOfShot = speedOfShot;
+    }
+
+    public static int getWidthOfTrighrath() {
+        return widthOfTrighrath;
+    }
+
+    public static void setWidthOfTrighrath(int widthOfTrighrath) {
+        Constant.widthOfTrighrath = widthOfTrighrath;
+    }
+
+    public static int getHeightOfTrighrath() {
+        return heightOfTrighrath;
+    }
+
+    public static void setHeightOfTrighrath(int heightOfTrighrath) {
+        Constant.heightOfTrighrath = heightOfTrighrath;
+    }
+
+    public static int getWidthOfSquarantine() {
+        return widthOfSquarantine;
+    }
+
+    public static void setWidthOfSquarantine(int widthOfSquarantine) {
+        Constant.widthOfSquarantine = widthOfSquarantine;
+    }
+
+    public static int getHeightOfSquarantine() {
+        return heightOfSquarantine;
+    }
+
+    public static void setHeightOfSquarantine(int heightOfSquarantine) {
+        Constant.heightOfSquarantine = heightOfSquarantine;
     }
 }
