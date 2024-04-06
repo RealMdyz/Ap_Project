@@ -1,20 +1,17 @@
 package Models.Enemy;
 
-import Models.Aggression;
-import Models.Constant;
-import Models.LocalRouting;
-import Models.ObjectsInGame;
+import Models.*;
 import MyProject.MyProjectData;
 
 import java.awt.*;
 
-public class Squarantine extends ObjectsInGame implements LocalRouting, Aggression {
+public class Squarantine extends Enemy implements LocalRouting, Aggression, Moveable {
     Constant constant;
-    private int hp = 10;
     private int collectibleNumber = 1;
     private int xpForEachCollectible = 5;
+
     public Squarantine(int x, int y) {
-        super(x, y);
+        super(x, y, 10);
         this.setHeight(Constant.getHeightOfSquarantine());
         this.setWidth(Constant.getWidthOfSquarantine());
         setSize(Constant.getWidthOfSquarantine(), Constant.getHeightOfSquarantine());
@@ -22,13 +19,31 @@ public class Squarantine extends ObjectsInGame implements LocalRouting, Aggressi
     }
 
     @Override
-    public void localRouting() {
+    public void localRouting(int xEpsilon, int yEpsilon) {
+        int xChar = getX(); // Your character's x position
+        int yChar = getY(); // Your character's y position
 
+        // Calculate the direction vector from character to epsilon character
+        double dx = xEpsilon - xChar;
+        double dy = yEpsilon - yChar;
+
+        // Calculate the angle in radians
+        double angle = Math.atan2(dy, dx);
+
+        // Convert angle to velocity components
+        double speed = Constant.getSpeedOfSquarantine(); // Adjust speed as needed
+        double vx = speed * Math.cos(angle);
+        double vy = speed * Math.sin(angle);
+
+        // Set the velocity based on the direction (adjust speed according to your game's requirement)// Adjust speed as needed
+        setxVelocity((int) (vx));
+        setyVelocity((int) (vy));
     }
     @Override
     public void aggression() {
 
     }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
@@ -37,14 +52,6 @@ public class Squarantine extends ObjectsInGame implements LocalRouting, Aggressi
         g2D.fill(new Arc2D.Double(getX() - radius, getY() - radius, 2 * radius, 2 * radius, 0, 360, Arc2D.PIE));
         g2D.dispose();
         */
-    }
-
-    public int getHp() {
-        return hp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
     }
 
     public int getCollectibleNumber() {
@@ -61,5 +68,11 @@ public class Squarantine extends ObjectsInGame implements LocalRouting, Aggressi
 
     public void setXpForEachCollectible(int xpForEachCollectible) {
         this.xpForEachCollectible = xpForEachCollectible;
+    }
+
+    @Override
+    public void move() {
+        setX(this.getX() + this.getxVelocity());
+        setY(this.getY() + this.getyVelocity());
     }
 }

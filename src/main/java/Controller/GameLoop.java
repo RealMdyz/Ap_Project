@@ -1,6 +1,7 @@
 package Controller;
 
 import Models.Constant;
+import Models.Enemy.Enemy;
 import Models.Enemy.EnemyWave;
 import Models.Epsilon.Shot;
 import Models.Game;
@@ -59,11 +60,11 @@ public class GameLoop extends Thread{
             game.getInputListener().setyMousePress(-1);
         }
         shotMove();
-        delay += 10;
+        enemyMove();
+        checkIntersection();
+        delay += 15;
         if(delay >= waves[currentWaveIndex].getDelay()){
             addNewEnemy();
-            System.out.println(currentWaveIndex);
-            System.out.println(currentWaveIndexEnemy);
         }
         if(currentWaveIndex == 3){
             Constant.setIsRunning(false);
@@ -71,7 +72,7 @@ public class GameLoop extends Thread{
             System.exit(0);
         }
         try {
-            Thread.sleep(10);
+            Thread.sleep(20);
         }
         catch (Exception e){
 
@@ -97,9 +98,17 @@ public class GameLoop extends Thread{
             }
         }
         delay = 0;
-        if(currentWaveIndexEnemy == waves[currentWaveIndex].getNumEnemies()){
-            currentWaveIndexEnemy = 0;
-            currentWaveIndex +=1;
+        if(currentWaveIndexEnemy >= waves[currentWaveIndex].getEnemies().size()){
+            waves[currentWaveIndex].setWaveOver(true);
+            for(ObjectsInGame objects : waves[currentWaveIndex].getEnemies()){
+                if(objects.getHp() > 0){
+                    waves[currentWaveIndex].setWaveOver(false);
+                }
+            }
+            if(waves[currentWaveIndex].isWaveOver()){
+                currentWaveIndex += 1;
+                currentWaveIndexEnemy = 0;
+            }
         }
     }
     private void shotMove(){
@@ -133,5 +142,45 @@ public class GameLoop extends Thread{
         if(cnt == 1)
             game.getGameFrame().removeOneShot(removedShot);
 
+    }
+    private void enemyMove(){
+        int index = 0;
+        for(Enemy object: waves[currentWaveIndex].getEnemies()){
+            index += 1;
+            if(index > currentWaveIndexEnemy)
+                break;;
+            object.localRouting(game.getGameFrame().getEpsilon().getX(), game.getGameFrame().getEpsilon().getY());
+            object.move();
+            game.getGameFrame().repaint();
+        }
+    }
+    private void checkIntersection(){
+        int index = 0;
+        Enemy enemy1 = new Enemy(0, 0, 1);
+        Shot shot1 = new Shot(0,0 );
+        for(Enemy enemy : waves[currentWaveIndex].getEnemies()){
+            index += 1;
+            if(index > currentWaveIndexEnemy)
+                break;
+            for(Shot shot : game.getGameFrame().getShots()){
+                if(game.getIntersection().checkCollision(shot, enemy) && shot.getHp() == 1){
+                    enemy.setHp(enemy.getHp() - 5);
+                    shot.setHp(0);
+                    if(enemy.getHp() <= 0){
+                        enemy1 = enemy;
+                        shot1 = shot;
+                        game.getGameFrame().remove(enemy);
+                        game.getGameFrame().revalidate();
+                        game.getGameFrame().repaint();
+                        currentWaveIndexEnemy -= 1;
+                    }
+
+                }
+            }
+
+        }
+        waves[currentWaveIndex].getEnemies().remove(enemy1);
+        game.getGameFrame().repaint();
+        game.getGameFrame().removeOneShot(shot1);
     }
 }

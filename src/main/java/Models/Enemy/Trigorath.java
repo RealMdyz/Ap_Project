@@ -1,21 +1,17 @@
 package Models.Enemy;
 
-import Models.Aggression;
-import Models.Constant;
-import Models.LocalRouting;
-import Models.ObjectsInGame;
+import Models.*;
 import MyProject.MyProjectData;
 
 import java.awt.*;
 
-public class Trigorath extends ObjectsInGame implements LocalRouting, Aggression {
+public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveable {
     Constant constant;
-    private int hp = 15;
     private int collectibleNumber = 2;
     private int xpForEachCollectible = 5;
 
     public Trigorath(int x, int y) {
-        super(x, y);
+        super(x, y, 15);
         this.setHeight(Constant.getHeightOfTrighrath());
         this.setWidth(Constant.getWidthOfTrighrath());
         setSize(Constant.getWidthOfTrighrath(), Constant.getHeightOfTrighrath());
@@ -23,8 +19,25 @@ public class Trigorath extends ObjectsInGame implements LocalRouting, Aggression
     }
 
     @Override
-    public void localRouting() {
+    public void localRouting(int xEpsilon, int yEpsilon) {
+        int xChar = getX(); // Your character's x position
+        int yChar = getY(); // Your character's y position
 
+        // Calculate the direction vector from character to epsilon character
+        double dx = xEpsilon - xChar;
+        double dy = yEpsilon - yChar;
+
+        // Calculate the angle in radians
+        double angle = Math.atan2(dy, dx);
+
+        // Convert angle to velocity components
+        double speed = Constant.getSpeedOfTrighrath(); // Adjust speed as needed
+        double vx = speed * Math.cos(angle);
+        double vy = speed * Math.sin(angle);
+
+        // Set the velocity based on the direction (adjust speed according to your game's requirement)// Adjust speed as needed
+        setxVelocity((int) (vx));
+        setyVelocity((int) (vy));
     }
 
     @Override
@@ -40,12 +53,10 @@ public class Trigorath extends ObjectsInGame implements LocalRouting, Aggression
         g2D.dispose();
         */
     }
-    public int getHp() {
-        return hp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
+    @Override
+    public void move() {
+        setX(this.getX() + this.getxVelocity());
+        setY(this.getY() + this.getyVelocity());
     }
 
     public int getCollectibleNumber() {

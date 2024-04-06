@@ -1,5 +1,6 @@
 package Models;
 
+import Controller.Intersection;
 import Models.Epsilon.Epsilon;
 import View.Game.GameFrame;
 import View.Game.InputListener;
@@ -9,9 +10,11 @@ public class Game {
     private boolean isRunning;
     protected GameFrame gameFrame;
     protected Constant constant;
+    protected Intersection intersection;
     protected Epsilon epsilon;
     protected InputListener inputListener;
     private StorePanel storePanel;
+
 
     public Game(){
         constant = new Constant();
@@ -20,7 +23,7 @@ public class Game {
         gameFrame = new GameFrame(constant, epsilon);
         storePanel = new StorePanel(constant);
         inputListener = new InputListener(gameFrame, constant);
-
+        intersection = new Intersection();
     }
 
 
@@ -54,5 +57,13 @@ public class Game {
 
     public void setStorePanel(StorePanel storePanel) {
         this.storePanel = storePanel;
+    }
+
+    public Intersection getIntersection() {
+        return intersection;
+    }
+
+    public void setIntersection(Intersection intersection) {
+        this.intersection = intersection;
     }
 }

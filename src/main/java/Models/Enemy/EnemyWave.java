@@ -1,11 +1,12 @@
 package Models.Enemy;
 
+import Models.Constant;
 import Models.ObjectsInGame;
 
 import java.util.ArrayList;
 
 public class EnemyWave {
-    private ArrayList<ObjectsInGame> enemies = new ArrayList<>();
+    private ArrayList<Enemy> enemies = new ArrayList<>();
     private int numEnemies;
     private int delay;
     private boolean waveOver;
@@ -16,19 +17,19 @@ public class EnemyWave {
         for (int i = 0; i < numEnemies; i++) {
             // Add Enemy to enemies;
             if(i % 2 == 0){
-                enemies.add(new Squarantine(numEnemies * 20, 25 * i + 10));
+                enemies.add(new Squarantine(numEnemies *  Constant.getWidthOfTrighrath(), Constant.getHeightOfTrighrath() * i + Constant.getHeightOfTrighrath()));
             }
             else {
-                enemies.add(new Trigorath(numEnemies * 20, 25 * i + 10));
+                enemies.add(new Trigorath(numEnemies * Constant.getWidthOfSquarantine(),  Constant.getHeightOfSquarantine() * i + Constant.getHeightOfSquarantine()));
             }
         }
     }
 
-    public ArrayList<ObjectsInGame> getEnemies() {
+    public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
 
-    public void setEnemies(ArrayList<ObjectsInGame> enemies) {
+    public void setEnemies(ArrayList<Enemy> enemies) {
         this.enemies = enemies;
     }
 

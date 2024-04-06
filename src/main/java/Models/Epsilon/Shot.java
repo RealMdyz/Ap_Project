@@ -12,8 +12,9 @@ public class Shot extends ObjectsInGame implements Moveable {
     private int yVelocity = 0;
     Constant constant;
 
+
     public Shot(int x, int y) {
-        super(x, y);
+        super(x, y, 1);
         this.setHeight(70);
         this.setWidth(70);
         setSize(getWidth(), getHeight());

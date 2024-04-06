@@ -8,11 +8,8 @@ import java.awt.*;
 
 public class Epsilon extends ObjectsInGame implements Moveable {
 
-    private int xVelocity = 0;
-    private int yVelocity = 0;
-
     public Epsilon(int x, int y) {
-        super(x, y);
+        super(x, y, 100);
         this.setHeight(70);
         this.setWidth(70);
         setSize(getWidth(), getHeight());
@@ -32,23 +29,9 @@ public class Epsilon extends ObjectsInGame implements Moveable {
 
     @Override
     public void move() {
-        this.setX(this.getX() + this.xVelocity);
-        this.setY(this.getY() + this.yVelocity);
+        this.setX(this.getX() + this.getxVelocity());
+        this.setY(this.getY() + this.getyVelocity());
     }
 
-    public int getxVelocity() {
-        return xVelocity;
-    }
 
-    public void setxVelocity(int xVelocity) {
-        this.xVelocity = xVelocity;
-    }
-
-    public int getyVelocity() {
-        return yVelocity;
-    }
-
-    public void setyVelocity(int yVelocity) {
-        this.yVelocity = yVelocity;
-    }
 }
