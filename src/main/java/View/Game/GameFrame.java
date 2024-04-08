@@ -55,7 +55,7 @@ public class GameFrame extends JFrame {
 
        //gamePanel.add(exitButton);
         panel.add(gamePanel);
-        gamePanel.add(epsilon);
+        panel.add(epsilon);
         gamePanel.repaint();
 
         panel.add(topPanel, BorderLayout.NORTH);
