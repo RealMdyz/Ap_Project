@@ -37,7 +37,7 @@ public class TopPanel extends JPanel {
 
     private void customizeLabels() {
         // Example: Set font and foreground color for labels
-        Font labelFont = new Font("Arial", Font.BOLD, 20);
+        Font labelFont = new Font("Arial", Font.BOLD, 16);
         Color labelColor = Color.WHITE;
 
         waveLabel.setFont(labelFont);

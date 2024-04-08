@@ -10,7 +10,7 @@ public class Constant {
     private static long abilityStartTime = -100000;
     private  int playerXP = 0;
     private static boolean isRunning;
-    private static int sound = 0;
+    private static int sound = 10;
     private static char keyForMoveUp = 'W';
     private static char keyForMoveDown = 'S';
     private static char keyForMoveLeft = 'A';

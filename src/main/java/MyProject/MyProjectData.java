@@ -24,6 +24,16 @@ public class MyProjectData {
     protected Font font22;
     protected Font font35;
 
+    public String getEnemyDieSound() {
+        return enemyDieSound;
+    }
+
+    public void setEnemyDieSound(String enemyDieSound) {
+        this.enemyDieSound = enemyDieSound;
+    }
+
+    private String enemyDieSound = "Sounds/died.wav";
+
     private MyProjectData() {
 
         importImages();

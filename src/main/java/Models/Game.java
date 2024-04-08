@@ -6,6 +6,7 @@ import View.Game.GameFrame;
 import View.Game.InputListener;
 import View.Menu.StorePanel;
 import View.Menu.TopPanel;
+import View.MusicPlayer;
 
 public class Game {
     private boolean isRunning;
@@ -14,6 +15,7 @@ public class Game {
     protected Intersection intersection;
     protected Epsilon epsilon;
     protected InputListener inputListener;
+    protected MusicPlayer musicPlayer;
     private StorePanel storePanel;
     private TopPanel topPanel;
 
@@ -22,6 +24,7 @@ public class Game {
         this.constant = constant;
         Constant.setIsRunning(true);
         epsilon = new Epsilon(350, 350);
+        MusicPlayer musicPlayer = new MusicPlayer("Sounds/BackgroundMusic.wav", true);
         topPanel = new TopPanel();
         gameFrame = new GameFrame(constant, epsilon, topPanel);
         storePanel = new StorePanel(constant);
@@ -77,5 +80,13 @@ public class Game {
 
     public void setTopPanel(TopPanel topPanel) {
         this.topPanel = topPanel;
+    }
+
+    public MusicPlayer getMusicPlayer() {
+        return musicPlayer;
+    }
+
+    public void setMusicPlayer(MusicPlayer musicPlayer) {
+        this.musicPlayer = musicPlayer;
     }
 }

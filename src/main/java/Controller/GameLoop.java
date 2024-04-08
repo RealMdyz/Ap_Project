@@ -6,7 +6,9 @@ import Models.Enemy.EnemyWave;
 import Models.Epsilon.Shot;
 import Models.Game;
 import Models.ObjectsInGame;
+import MyProject.MyProjectData;
 import View.Menu.TopPanel;
+import View.MusicPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -178,6 +180,7 @@ public class GameLoop extends Thread{
                     if(enemy.getHp() <= 0){
                         enemy1 = enemy;
                         game.getGameFrame().remove(enemy);
+                        MusicPlayer.playOnce(MyProjectData.getProjectData().getEnemyDieSound());
                         game.getGameFrame().revalidate();
                         game.getGameFrame().repaint();
                         currentWaveIndexEnemy -= 1;
