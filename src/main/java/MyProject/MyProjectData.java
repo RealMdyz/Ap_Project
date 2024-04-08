@@ -16,6 +16,7 @@ public class MyProjectData {
     protected BufferedImage triGorath ;
     protected BufferedImage epsilonCircle ;
     protected BufferedImage shot;
+    protected BufferedImage collectible;
 
     protected Font font10;
     protected Font font12;
@@ -78,6 +79,14 @@ public class MyProjectData {
             File fileBackground = new File(pathBackground);
             shot = ImageIO.read(fileBackground);
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String pathBackground = "Epsilon/coin.png";
+            File fileBackground = new File(pathBackground);
+            collectible = ImageIO.read(fileBackground);
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -190,5 +199,13 @@ public class MyProjectData {
 
     public void setShot(BufferedImage shot) {
         this.shot = shot;
+    }
+
+    public BufferedImage getCollectible() {
+        return collectible;
+    }
+
+    public void setCollectible(BufferedImage collectible) {
+        this.collectible = collectible;
     }
 }

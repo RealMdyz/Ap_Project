@@ -7,11 +7,9 @@ import java.awt.*;
 
 public class Squarantine extends Enemy implements LocalRouting, Aggression, Moveable {
     Constant constant;
-    private int collectibleNumber = 1;
-    private int xpForEachCollectible = 5;
 
     public Squarantine(int x, int y) {
-        super(x, y, 10);
+        super(x, y, 10, 1, 5);
         this.setHeight(Constant.getHeightOfSquarantine());
         this.setWidth(Constant.getWidthOfSquarantine());
         setSize(Constant.getWidthOfSquarantine(), Constant.getHeightOfSquarantine());
@@ -53,26 +51,10 @@ public class Squarantine extends Enemy implements LocalRouting, Aggression, Move
         g2D.dispose();
         */
     }
-
-    public int getCollectibleNumber() {
-        return collectibleNumber;
-    }
-
-    public void setCollectibleNumber(int collectibleNumber) {
-        this.collectibleNumber = collectibleNumber;
-    }
-
-    public int getXpForEachCollectible() {
-        return xpForEachCollectible;
-    }
-
-    public void setXpForEachCollectible(int xpForEachCollectible) {
-        this.xpForEachCollectible = xpForEachCollectible;
-    }
-
     @Override
     public void move() {
         setX(this.getX() + this.getxVelocity());
         setY(this.getY() + this.getyVelocity());
     }
+
 }

@@ -7,11 +7,9 @@ import java.awt.*;
 
 public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveable {
     Constant constant;
-    private int collectibleNumber = 2;
-    private int xpForEachCollectible = 5;
 
     public Trigorath(int x, int y) {
-        super(x, y, 15);
+        super(x, y, 15, 2, 5);
         this.setHeight(Constant.getHeightOfTrighrath());
         this.setWidth(Constant.getWidthOfTrighrath());
         setSize(Constant.getWidthOfTrighrath(), Constant.getHeightOfTrighrath());
@@ -32,7 +30,7 @@ public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveab
         double angle = Math.atan2(dy, dx);
 
         // Convert angle to velocity components
-        double speed = Constant.getSpeedOfTrighrath() * Math.log(Math.log(dis * dis)) ; // Adjust speed as needed
+        double speed = Constant.getSpeedOfTrighrath() * Math.log(Math.log(dis * 10)) ; // Adjust speed as needed
         double vx = speed * Math.cos(angle);
         double vy = speed * Math.sin(angle);
 
@@ -56,19 +54,6 @@ public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveab
         setY(this.getY() + this.getyVelocity());
     }
 
-    public int getCollectibleNumber() {
-        return collectibleNumber;
-    }
 
-    public void setCollectibleNumber(int collectibleNumber) {
-        this.collectibleNumber = collectibleNumber;
-    }
 
-    public int getXpForEachCollectible() {
-        return xpForEachCollectible;
-    }
-
-    public void setXpForEachCollectible(int xpForEachCollectible) {
-        this.xpForEachCollectible = xpForEachCollectible;
-    }
 }

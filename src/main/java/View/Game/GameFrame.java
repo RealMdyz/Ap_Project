@@ -1,6 +1,8 @@
 package View.Game;
 
 import Models.Constant;
+import Models.Enemy.Enemy;
+import Models.Epsilon.Collectible;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 import MyProject.MyProjectData;
@@ -21,6 +23,7 @@ public class GameFrame extends JFrame {
     private JButton exitButton;
     TopPanel topPanel;
     protected ArrayList<Shot> shots = new ArrayList<>();
+    protected ArrayList<Collectible>  collectibles = new ArrayList<>();
     public GameFrame(Constant constant, Epsilon epsilon,TopPanel topPanel ){
         this.topPanel = topPanel;
         this.constant = constant;
@@ -105,5 +108,40 @@ public class GameFrame extends JFrame {
     }
     public void addToPanel(JPanel jPanel){
         panel.add(jPanel, BorderLayout.NORTH);
+    }
+
+    public ArrayList<Collectible> getCollectibles() {
+        return collectibles;
+    }
+    public void setCollectibles(ArrayList<Collectible> collectibles) {
+        this.collectibles = collectibles;
+    }
+    public void addNewCollectoble(Enemy enemy){
+        if(enemy.getCollectibleNumber() == 1){
+            Collectible collectible = new Collectible(enemy.getX(), enemy.getY(), 0, 5, System.currentTimeMillis());
+            gamePanel.add(collectible);
+            collectibles.add(collectible);
+        }
+        else if(enemy.getCollectibleNumber() == 2){
+            Collectible collectible = new Collectible(enemy.getX(), enemy.getY(), 0, 5, System.currentTimeMillis());
+            gamePanel.add(collectible);
+            collectibles.add(collectible);
+            Collectible collectible1 = new Collectible(enemy.getX() + 50, enemy.getY() + 50, 0, 5, System.currentTimeMillis());
+            gamePanel.add(collectible1);
+            collectibles.add(collectible1);
+        }
+    }
+    public void checkTheCollectibleTime(){
+        Collectible collectible = new Collectible(0, 0, 0, 5, System.currentTimeMillis());
+        for (Collectible collectible1 : collectibles){
+            if(System.currentTimeMillis() - collectible1.getStart() > 5000){
+                collectible = collectible1;
+                break;
+            }
+        }
+        gamePanel.remove(collectible);
+        collectibles.remove(collectible);
+        gamePanel.repaint();
+
     }
 }

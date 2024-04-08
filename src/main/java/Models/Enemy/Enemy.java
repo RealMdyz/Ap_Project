@@ -4,8 +4,14 @@ import Models.*;
 
 public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Moveable {
 
-    public Enemy(int x, int y, int hp) {
+    private int collectibleNumber = 1;
+    private int xpForEachCollectible = 5;
+
+
+    public Enemy(int x, int y, int hp, int collectibleNumber, int xpForEachCollectible) {
         super(x, y, hp);
+        this.collectibleNumber = collectibleNumber;
+        this.xpForEachCollectible = xpForEachCollectible;
     }
 
     @Override
@@ -42,5 +48,21 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
         double vy = speed * Math.sin(angle) ;
         this.setX(this.getX() + (int)(vx));
         this.setY(this.getY() + (int)(vy));
+    }
+
+    public int getCollectibleNumber() {
+        return collectibleNumber;
+    }
+
+    public void setCollectibleNumber(int collectibleNumber) {
+        this.collectibleNumber = collectibleNumber;
+    }
+
+    public int getXpForEachCollectible() {
+        return xpForEachCollectible;
+    }
+
+    public void setXpForEachCollectible(int xpForEachCollectible) {
+        this.xpForEachCollectible = xpForEachCollectible;
     }
 }
