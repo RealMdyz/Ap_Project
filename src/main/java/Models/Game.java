@@ -5,6 +5,7 @@ import Models.Epsilon.Epsilon;
 import View.Game.GameFrame;
 import View.Game.InputListener;
 import View.Menu.StorePanel;
+import View.Menu.TopPanel;
 
 public class Game {
     private boolean isRunning;
@@ -14,16 +15,19 @@ public class Game {
     protected Epsilon epsilon;
     protected InputListener inputListener;
     private StorePanel storePanel;
+    private TopPanel topPanel;
 
 
-    public Game(){
-        constant = new Constant();
+    public Game(Constant constant){
+        this.constant = constant;
         Constant.setIsRunning(true);
-        epsilon = new Epsilon(500, 500);
-        gameFrame = new GameFrame(constant, epsilon);
+        epsilon = new Epsilon(350, 350);
+        topPanel = new TopPanel();
+        gameFrame = new GameFrame(constant, epsilon, topPanel);
         storePanel = new StorePanel(constant);
         inputListener = new InputListener(gameFrame, constant);
         intersection = new Intersection();
+
     }
 
 
@@ -65,5 +69,13 @@ public class Game {
 
     public void setIntersection(Intersection intersection) {
         this.intersection = intersection;
+    }
+
+    public TopPanel getTopPanel() {
+        return topPanel;
+    }
+
+    public void setTopPanel(TopPanel topPanel) {
+        this.topPanel = topPanel;
     }
 }

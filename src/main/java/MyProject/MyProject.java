@@ -10,8 +10,9 @@ public class MyProject {
     protected Game game;
     protected GameLoop gameLoop;
     public MyProject(){
-        game = new Game();
-        gameLoop = new GameLoop(game);
+        Constant constant = new Constant();
+        game = new Game(constant);
+        gameLoop = new GameLoop(game, constant);
         new LoginPageShare(gameLoop, game);
 
     }

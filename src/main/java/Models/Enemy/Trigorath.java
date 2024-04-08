@@ -27,31 +27,28 @@ public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveab
         double dx = xEpsilon - xChar;
         double dy = yEpsilon - yChar;
 
+        double dis = Math.sqrt(dx * dx + dy * dy);
         // Calculate the angle in radians
         double angle = Math.atan2(dy, dx);
 
         // Convert angle to velocity components
-        double speed = Constant.getSpeedOfTrighrath(); // Adjust speed as needed
+        double speed = Constant.getSpeedOfTrighrath() * Math.log(Math.log(dis * dis)) ; // Adjust speed as needed
         double vx = speed * Math.cos(angle);
         double vy = speed * Math.sin(angle);
 
         // Set the velocity based on the direction (adjust speed according to your game's requirement)// Adjust speed as needed
-        setxVelocity((int) (vx));
-        setyVelocity((int) (vy));
+        setxVelocity((int)(vx));
+        setyVelocity((int)(vy));
     }
 
     @Override
     public void aggression() {
-
+        // I do that in local routing !!!!
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
         g2D.drawImage(background, 0, 0, Constant.getWidthOfTrighrath(), Constant.getHeightOfTrighrath(), null);
-        /*
-        g2D.fill(new Arc2D.Double(getX() - radius, getY() - radius, 2 * radius, 2 * radius, 0, 360, Arc2D.PIE));
-        g2D.dispose();
-        */
     }
     @Override
     public void move() {

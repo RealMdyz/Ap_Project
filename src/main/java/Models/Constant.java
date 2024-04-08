@@ -19,11 +19,12 @@ public class Constant {
     private static int speedOfShot = 15;
     private static int widthOfTrighrath = 50;
     private static int heightOfTrighrath = 50;
-    private static int speedOfTrighrath = 5;
+    private static int speedOfTrighrath = 3;
     private static int widthOfSquarantine = 50;
     private static int heightOfSquarantine = 50;
 
-    private static int speedOfSquarantine  = 5;
+    private static int speedOfSquarantine  = 4;
+    private static int speedOfImpact = 3;
 
     public Constant(){
 
@@ -171,5 +172,13 @@ public class Constant {
 
     public static void setSpeedOfSquarantine(int speedOfSquarantine) {
         Constant.speedOfSquarantine = speedOfSquarantine;
+    }
+
+    public static int getSpeedOfImpact() {
+        return speedOfImpact;
+    }
+
+    public static void setSpeedOfImpact(int speedOfImpact) {
+        Constant.speedOfImpact = speedOfImpact;
     }
 }

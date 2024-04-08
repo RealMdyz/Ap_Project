@@ -3,6 +3,8 @@ package View.Game;
 import Models.Constant;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
+import MyProject.MyProjectData;
+import View.Menu.TopPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,8 +19,10 @@ public class GameFrame extends JFrame {
     JPanel gamePanel;
     Epsilon epsilon;
     private JButton exitButton;
+    TopPanel topPanel;
     protected ArrayList<Shot> shots = new ArrayList<>();
-    public GameFrame(Constant constant, Epsilon epsilon){
+    public GameFrame(Constant constant, Epsilon epsilon,TopPanel topPanel ){
+        this.topPanel = topPanel;
         this.constant = constant;
         this.epsilon = epsilon;
         this.setSize(Constant.FIRST_WIDTH, Constant.FIRST_HEIGHT);
@@ -29,13 +33,14 @@ public class GameFrame extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.repaint();
 
+
         panel = new JPanel();
         panel.setBounds(0, 0, Constant.FIRST_WIDTH * 2, Constant.FIRST_HEIGHT * 2);
         panel.setVisible(true);
         panel.setFocusable(true);
         panel.requestFocus();
         panel.requestFocusInWindow();
-        panel.setLayout(null);
+        panel.setLayout(new BorderLayout());
         panel.setBackground(Color.black);
         setContentPane(panel);
 
@@ -48,18 +53,12 @@ public class GameFrame extends JFrame {
         gamePanel.setLayout(null);
         gamePanel.setOpaque(false);
 
-        exitButton = new JButton("exit");
-        exitButton.setBounds(0, 0, 30, 30);
-        exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Constant.setIsRunning(false);
-            }
-        });
        //gamePanel.add(exitButton);
         panel.add(gamePanel);
         gamePanel.add(epsilon);
         gamePanel.repaint();
+
+        panel.add(topPanel, BorderLayout.NORTH);
     }
     @Override
     public void paintComponents(Graphics g) {
@@ -103,5 +102,8 @@ public class GameFrame extends JFrame {
 
     public void setGamePanel(JPanel gamePanel) {
         this.gamePanel = gamePanel;
+    }
+    public void addToPanel(JPanel jPanel){
+        panel.add(jPanel, BorderLayout.NORTH);
     }
 }
