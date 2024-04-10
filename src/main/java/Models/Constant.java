@@ -1,14 +1,22 @@
 package Models;
 
+import Models.Epsilon.Epsilon;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
 public class Constant {
 
     public static final int FIRST_HEIGHT = 700;
     public static final int FIRST_WIDTH = 700;
 
-    private static int level = 0;
-    private static int sensitivityForMoves = 0;
+    private static int level = 10;
+    private static int sensitivityForMoves = 40;
     private static long abilityStartTime = -100000;
-    private  int playerXP = 0;
+    private int playerXP = 0;
     private static boolean isRunning;
     private static int sound = 10;
     private static char keyForMoveUp = 'W';
@@ -25,8 +33,69 @@ public class Constant {
 
     private static int speedOfSquarantine  = 4;
     private static int speedOfImpact = 3;
+    private static int savedXp;
 
     public Constant(){
+        savedXp = 0;
+        File file = new File("gameData");
+        if(!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            // FirstLine: SavedXp;
+            // SecondLine : LevelWritOfAres;
+            // ThirdLine : LevelOfWritOfProteus;
+            // FourthLine : writeOfAceso
+
+        }
+        Scanner scanner;
+        try {
+            scanner = new Scanner(file);
+            savedXp = scanner.nextInt();
+            Epsilon.setLevelOfWritOfAres(scanner.nextInt());
+            Epsilon.setLevelOfWritOfProteus(scanner.nextInt());
+            int l = scanner.nextInt();
+            if(l == 0)
+                Epsilon.setWriteOfAceso(false);
+            else
+                Epsilon.setWriteOfAceso(true);
+        }
+        catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(savedXp + " " + Epsilon.getLevelOfWritOfAres() + " " + Epsilon.getLevelOfWritOfProteus() + " " + Epsilon.isWriteOfAceso());
+
+
+    }
+    public void writeInFile(int xpForSave, int levelAres, int levelProteus, int levelAceso){
+        File file = new File("gameData");
+        if(!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            // FirstLine: SavedXp;
+            // SecondLine : LevelWritOfAres;
+            // ThirdLine : LevelOfWritOfProteus;
+            // FourthLine : writeOfAceso
+
+        }
+        PrintWriter printWriter;
+        try {
+            printWriter = new PrintWriter(file);
+            printWriter.println(xpForSave);
+            printWriter.println(levelAres);
+            printWriter.println(levelProteus);
+            printWriter.println(levelAceso);
+            printWriter.flush();
+            printWriter.close();
+        }
+        catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -180,5 +249,13 @@ public class Constant {
 
     public static void setSpeedOfImpact(int speedOfImpact) {
         Constant.speedOfImpact = speedOfImpact;
+    }
+
+    public static int getSavedXp() {
+        return savedXp;
+    }
+
+    public static void setSavedXp(int savedXp) {
+        Constant.savedXp = savedXp;
     }
 }

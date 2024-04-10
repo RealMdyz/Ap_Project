@@ -57,7 +57,7 @@ public class InputListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 y = -1;
-                epsilon.setyVelocity(y * (int)(Constant.getSensitivityForMoves() / 10 + 1) );
+                epsilon.setyVelocity(y * (int)(Constant.getSensitivityForMoves() / 10 - 1));
             }
         });
 
@@ -66,6 +66,8 @@ public class InputListener {
             public void actionPerformed(ActionEvent e) {
                 y = 1;
                 epsilon.setyVelocity(y * (int)(Constant.getSensitivityForMoves() / 10 + 1));
+
+
             }
         });
 
@@ -73,7 +75,8 @@ public class InputListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 x =  -1;
-                epsilon.setxVelocity(x * (int)(Constant.getSensitivityForMoves() / 10 + 1));
+                epsilon.setxVelocity(x * (int)(Constant.getSensitivityForMoves() / 10 - 1));
+
             }
         });
 
@@ -82,6 +85,7 @@ public class InputListener {
             public void actionPerformed(ActionEvent e) {
                 x = 1;
                 epsilon.setxVelocity(x * (int)(Constant.getSensitivityForMoves() / 10 + 1));
+
             }
         });
         actionMap.put("bStore", new AbstractAction() {

@@ -30,7 +30,7 @@ public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveab
         double angle = Math.atan2(dy, dx);
 
         // Convert angle to velocity components
-        double speed = Constant.getSpeedOfTrighrath() * Math.log(Math.log(dis * 10)) ; // Adjust speed as needed
+        double speed = Constant.getSpeedOfTrighrath() * Math.log(Math.log(dis)) ; // Adjust speed as needed
         double vx = speed * Math.cos(angle);
         double vy = speed * Math.sin(angle);
 
@@ -49,9 +49,19 @@ public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveab
         g2D.drawImage(background, 0, 0, Constant.getWidthOfTrighrath(), Constant.getHeightOfTrighrath(), null);
     }
     @Override
-    public void move() {
-        setX(this.getX() + this.getxVelocity());
-        setY(this.getY() + this.getyVelocity());
+    public void move(int xLimit, int yLimit) {
+        if(this.getX() <= 0  && this.getxVelocity() > 0)
+            this.setX(this.getX() + this.getxVelocity());
+        else if(this.getX() >= xLimit - this.getWidth() - 10 && this.getxVelocity() < 0)
+            this.setX(this.getX() + this.getxVelocity());
+        else if(this.getX() >= 0 && this.getX() <= xLimit - this.getWidth() - 10)
+            this.setX(this.getX() + this.getxVelocity());
+        if(this.getY() <= 0  && this.getyVelocity() > 0)
+            this.setY(this.getY() + this.getyVelocity());
+        else if(this.getY() >= yLimit - this.getHeight() - 10 && this.getyVelocity() < 0)
+            this.setY(this.getY() + this.getyVelocity());
+        else if(this.getY() >= 0 && this.getY() <= yLimit - this.getHeight() - 10)
+            this.setY(this.getY() + this.getyVelocity());
     }
 
 

@@ -25,7 +25,7 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
     }
 
     @Override
-    public void move() {
+    public void move(int xLimit, int yLimit) {
 
     }
     public void doImpact(int xImpact, int yImpact){

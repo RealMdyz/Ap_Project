@@ -110,9 +110,15 @@ public class LoginPageShare extends JFrame implements ActionListener {
     private void Tutorial(){
 
     }
-    private void SkillTree(){
 
+    private void SkillTree(){
+            SkillTreePanel skillTreePanel = new SkillTreePanel(this);
+            skillTreePanel.setPreferredSize(new Dimension(650, 700)); // Set preferred size
+            skillTreePanel.setVisible(true);
+            backgroundPanel.add(skillTreePanel, Integer.valueOf(2)); // Add with a higher layer number
+            repaint();
     }
+
 
     @Override
     public void paintComponents(Graphics g) {
@@ -133,7 +139,6 @@ public class LoginPageShare extends JFrame implements ActionListener {
             Tutorial();
         }
         if(e.getSource() == skillTreeButton){
-            this.setVisible(false);
             SkillTree();
         }
         if(e.getSource() == exitButton){

@@ -12,6 +12,7 @@ public class Shot extends ObjectsInGame implements Moveable {
     private int yVelocity = 0;
     Constant constant;
 
+    private int power = 5;
 
     public Shot(int x, int y) {
         super(x, y, 1);
@@ -41,7 +42,7 @@ public class Shot extends ObjectsInGame implements Moveable {
 
 
     @Override
-    public void move() {
+    public void move(int xLimit, int yLimit) {
         this.setX(this.getX() + this.xVelocity);
         this.setY(this.getY() + this.yVelocity);
     }
@@ -60,5 +61,13 @@ public class Shot extends ObjectsInGame implements Moveable {
 
     public void setyVelocity(int yVelocity) {
         this.yVelocity = yVelocity;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
     }
 }

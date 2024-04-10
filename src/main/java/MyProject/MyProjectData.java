@@ -17,6 +17,9 @@ public class MyProjectData {
     protected BufferedImage epsilonCircle ;
     protected BufferedImage shot;
     protected BufferedImage collectible;
+    protected BufferedImage writOfAceso;
+    protected BufferedImage writOfAres;
+    protected BufferedImage writOfProteus;
 
     protected Font font10;
     protected Font font12;
@@ -87,6 +90,27 @@ public class MyProjectData {
             collectible = ImageIO.read(fileBackground);
         }
         catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String pathBackground = "Game/Writ of Aceso.png";
+            File fileBackground = new File(pathBackground);
+            writOfAceso = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String pathBackground = "Game/Writ of Ares.png";
+            File fileBackground = new File(pathBackground);
+            writOfAres = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String pathBackground = "Game/Writ of Proteus.png";
+            File fileBackground = new File(pathBackground);
+            writOfProteus = ImageIO.read(fileBackground);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -207,5 +231,29 @@ public class MyProjectData {
 
     public void setCollectible(BufferedImage collectible) {
         this.collectible = collectible;
+    }
+
+    public BufferedImage getWritOfAceso() {
+        return writOfAceso;
+    }
+
+    public void setWritOfAceso(BufferedImage writOfAceso) {
+        this.writOfAceso = writOfAceso;
+    }
+
+    public BufferedImage getWritOfAres() {
+        return writOfAres;
+    }
+
+    public void setWritOfAres(BufferedImage writOfAres) {
+        this.writOfAres = writOfAres;
+    }
+
+    public BufferedImage getWritOfProteus() {
+        return writOfProteus;
+    }
+
+    public void setWritOfProteus(BufferedImage writOfProteus) {
+        this.writOfProteus = writOfProteus;
     }
 }

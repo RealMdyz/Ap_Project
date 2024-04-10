@@ -1,5 +1,5 @@
 package Models;
 
 public interface Moveable {
-    void move();
+    void move(int xLimit, int yLimit);
 }

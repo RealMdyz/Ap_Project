@@ -52,9 +52,19 @@ public class Squarantine extends Enemy implements LocalRouting, Aggression, Move
         */
     }
     @Override
-    public void move() {
-        setX(this.getX() + this.getxVelocity());
-        setY(this.getY() + this.getyVelocity());
+    public void move(int xLimit, int yLimit) {
+        if(this.getX() <= 0  && this.getxVelocity() > 0)
+            this.setX(this.getX() + this.getxVelocity());
+        else if(this.getX() >= xLimit - this.getWidth() - 10 && this.getxVelocity() < 0)
+            this.setX(this.getX() + this.getxVelocity());
+        else if(this.getX() >= 0 && this.getX() <= xLimit - this.getWidth() - 10)
+            this.setX(this.getX() + this.getxVelocity());
+        if(this.getY() <= 0  && this.getyVelocity() > 0)
+            this.setY(this.getY() + this.getyVelocity());
+        else if(this.getY() >= yLimit - this.getHeight() - 10 && this.getyVelocity() < 0)
+            this.setY(this.getY() + this.getyVelocity());
+        else if(this.getY() >= 0 && this.getY() <= yLimit - this.getHeight() - 10)
+            this.setY(this.getY() + this.getyVelocity());;
     }
 
 }

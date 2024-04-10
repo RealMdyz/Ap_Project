@@ -8,6 +8,12 @@ import View.Menu.StorePanel;
 import View.Menu.TopPanel;
 import View.MusicPlayer;
 
+import javax.swing.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
+
 public class Game {
     private boolean isRunning;
     protected GameFrame gameFrame;
@@ -88,5 +94,40 @@ public class Game {
 
     public void setMusicPlayer(MusicPlayer musicPlayer) {
         this.musicPlayer = musicPlayer;
+    }
+
+    public void endGame(){
+        JOptionPane.showMessageDialog(getGameFrame(), "Congratulations! You have defeated all waves.");
+        File file = new File("gameData");
+        int savedXp;
+        int levelOfWritOfAres;
+        int levelOfWritOfProteus;
+        int lForAceso;
+        if(!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            // FirstLine: SavedXp;
+            // SecondLine : LevelWritOfAres;
+            // ThirdLine : LevelOfWritOfProteus;
+            // FourthLine : writeOfAceso
+        }
+        Scanner scanner;
+        try {
+            scanner = new Scanner(file);
+            savedXp = scanner.nextInt();
+            levelOfWritOfAres = scanner.nextInt();
+            levelOfWritOfProteus = (scanner.nextInt());
+            lForAceso = scanner.nextInt();
+        }
+        catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        Constant.setSavedXp(savedXp + constant.getPlayerXP());
+        constant.writeInFile(Constant.getSavedXp(), levelOfWritOfAres, levelOfWritOfProteus, lForAceso);
+        System.exit(0);
+
     }
 }
