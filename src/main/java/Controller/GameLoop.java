@@ -36,13 +36,13 @@ public class GameLoop extends Thread{
     public GameLoop(Game game, Constant constant){
         this.constant = constant;
         this.game = game;
-        startOfGame = System.currentTimeMillis();
     }
     public void run() {
+        startOfGame = System.currentTimeMillis();
         waves = new EnemyWave[3];
-        waves[0] = new EnemyWave((int)(Constant.getLevel() / 15) + 1 , 3 * (100 - Constant.getLevel()) * 12 + 300 ); // 3 enemies, 1 second delay
-        waves[1] = new EnemyWave((int)(Constant.getLevel() / 10) + 1, 2 * (100 - Constant.getLevel()) * 6 + 200);  // 5 enemies, 0.8 second delay
-        waves[2] = new EnemyWave((int)(Constant.getLevel() / 5) + 1, (100 - Constant.getLevel()) * 3 + 100);  // 7 enemies, 0.6 second delay
+        waves[0] = new EnemyWave((int)(Constant.getLevel() / 15) + 1 , 3 * (100 - Constant.getLevel()) * 8 + 800 ); // 3 enemies, 1 second delay
+        waves[1] = new EnemyWave((int)(Constant.getLevel() / 10) + 1, 2 * (100 - Constant.getLevel()) * 4 + 400);  // 5 enemies, 0.8 second delay
+        waves[2] = new EnemyWave((int)(Constant.getLevel() / 5) + 1, (100 - Constant.getLevel()) * 2 + 200);  // 7 enemies, 0.6 second delay
         currentWaveIndex = 0;
         currentWaveIndexEnemy = 0;
         // Start the timer for smooth size reduction
@@ -56,6 +56,8 @@ public class GameLoop extends Thread{
                 game.getStorePanel().setXpLabel();
             }
         }
+        game.getMusicPlayer().stop();
+        game.getMusicPlayer().close();
         game.getGameFrame().setVisible(false);
 
     }

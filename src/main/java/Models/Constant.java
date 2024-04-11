@@ -30,7 +30,6 @@ public class Constant {
     private static int speedOfTrighrath = 3;
     private static int widthOfSquarantine = 50;
     private static int heightOfSquarantine = 50;
-
     private static int speedOfSquarantine  = 4;
     private static int speedOfImpact = 3;
     private static int savedXp;
@@ -69,7 +68,7 @@ public class Constant {
 
 
     }
-    public void writeInFile(int xpForSave, int levelAres, int levelProteus, int levelAceso){
+    public void writeInFile(int xpForSave, int levelAres,  int levelAceso, int levelProteus){
         File file = new File("gameData");
         if(!file.exists()){
             try {

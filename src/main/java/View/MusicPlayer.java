@@ -11,7 +11,6 @@ public class MusicPlayer {
     private boolean loop;
     private FloatControl volumeControl;
 
-
     // Constructor
     public MusicPlayer(String filePath, boolean loop) {
         this.loop = loop;
@@ -28,6 +27,9 @@ public class MusicPlayer {
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             e.printStackTrace();
         }
+    }
+    public MusicPlayer(){
+
     }
 
     // Method to start playing the music

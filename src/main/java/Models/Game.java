@@ -4,6 +4,7 @@ import Controller.Intersection;
 import Models.Epsilon.Epsilon;
 import View.Game.GameFrame;
 import View.Game.InputListener;
+import View.Menu.LoginPageShare;
 import View.Menu.StorePanel;
 import View.Menu.TopPanel;
 import View.MusicPlayer;
@@ -30,7 +31,7 @@ public class Game {
         this.constant = constant;
         Constant.setIsRunning(true);
         epsilon = new Epsilon(350, 350);
-        MusicPlayer musicPlayer = new MusicPlayer("Sounds/BackgroundMusic.wav", true);
+        musicPlayer = new MusicPlayer("Sounds/BackgroundMusic.wav", true);
         topPanel = new TopPanel();
         gameFrame = new GameFrame(constant, epsilon, topPanel);
         storePanel = new StorePanel(constant,epsilon);
@@ -125,10 +126,12 @@ public class Game {
         catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(savedXp + " " + Constant.getPlayerXP());
-        Constant.setSavedXp(savedXp + Constant.getPlayerXP());
-        constant.writeInFile(Constant.getSavedXp(), levelOfWritOfAres, levelOfWritOfProteus, lForAceso);
-        System.exit(0);
+//        System.out.println(Constant.getPlayerXP());
+//        Constant.setSavedXp(savedXp + Constant.getPlayerXP());
+        System.out.println(savedXp +  Constant.getPlayerXP());
+        constant.writeInFile(savedXp +  Constant.getPlayerXP(), levelOfWritOfAres, lForAceso, levelOfWritOfProteus);
+        Constant.setSavedXp(0);
 
+        // TODO;
     }
 }

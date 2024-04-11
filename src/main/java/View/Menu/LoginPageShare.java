@@ -19,13 +19,11 @@ public class LoginPageShare extends JFrame implements ActionListener {
     JButton exitButton;
     JLayeredPane backgroundPanel;
     JLabel backgroundImageLabel;
-    protected GameLoop gameLoop;
-    protected Game game;
 
-    public LoginPageShare(GameLoop gameLoop, Game game){
+    protected Constant constant;
+    public LoginPageShare(Constant constant){
+        this.constant = constant;
 
-        this.gameLoop = gameLoop;
-        this.game = game;
         ImageIcon backgroundImage = MyProjectData.getProjectData().getGameMenuImage();
         ImageIcon gameIcon = MyProjectData.getProjectData().getGameIcon();
         Font font20 = MyProjectData.getProjectData().getFont20();
@@ -97,12 +95,14 @@ public class LoginPageShare extends JFrame implements ActionListener {
         repaint();
     }
     private void Start() {
+        Game game = new Game(constant);
+        GameLoop gameLoop = new GameLoop(game, constant);
         game.getGameFrame().setVisible(true);
         gameLoop.start();
         repaint();
     }
     private void Setting(){
-        SettingPage settingPage = new SettingPage(game.getConstant());
+        SettingPage settingPage = new SettingPage(constant);
         //System.out.println(Constant.getLevel() + " " + Constant.getSound() + " " +  Constant.getSensitivityForMoves());
         repaint();
     }
@@ -111,7 +111,7 @@ public class LoginPageShare extends JFrame implements ActionListener {
     }
 
     private void SkillTree(){
-            SkillTreePanel skillTreePanel = new SkillTreePanel(this);
+            SkillTreePanel skillTreePanel = new SkillTreePanel(this, constant);
             skillTreePanel.setPreferredSize(new Dimension(650, 700)); // Set preferred size
             skillTreePanel.setVisible(true);
             backgroundPanel.add(skillTreePanel, Integer.valueOf(2)); // Add with a higher layer number
@@ -127,7 +127,7 @@ public class LoginPageShare extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == startButton){
-            this.setVisible(false);
+           // this.setVisible(false);
             Start();
         }
         if(e.getSource() == settingButton){

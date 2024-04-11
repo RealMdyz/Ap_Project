@@ -8,6 +8,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class SkillTreePanel extends JPanel implements ActionListener {
 
@@ -15,9 +19,11 @@ public class SkillTreePanel extends JPanel implements ActionListener {
     private BufferedImage writOfAcesoImage;
     private BufferedImage writOfAresImage;
     private BufferedImage writOfProteusImage;
+    Constant constant;
 
-    public SkillTreePanel(JFrame parentPanel) {
+    public SkillTreePanel(JFrame parentPanel, Constant constant) {
         this.parentPanel = parentPanel;
+        this.constant = constant;
         this.setSize(650, 700);
         setLayout(new BorderLayout()); // Use BorderLayout for better component arrangement
         setBackground(new Color(240, 240, 240));
@@ -93,7 +99,7 @@ public class SkillTreePanel extends JPanel implements ActionListener {
         if (source instanceof JButton) {
             JButton button = (JButton) source;
             String buttonText = button.getText();
-            if(buttonText.equals("Writ Of Ares")){
+            if(buttonText.equals("Writ of Ares")){
                 if(Constant.getSavedXp() >= 750){
                     Constant.setSavedXp(Constant.getSavedXp() - 750);
                     Epsilon.setLevelOfWritOfAres(Epsilon.getLevelOfWritOfAres() + 2);
@@ -116,6 +122,14 @@ public class SkillTreePanel extends JPanel implements ActionListener {
                 // For now, just print a message
                 this.setVisible(false);
             }
+            //System.out.println(Constant.getSavedXp());
+            File file = new File("gameData");
+            int savedXp = Constant.getSavedXp();
+            int levelOfWritOfAres = Epsilon.getLevelOfWritOfAres();
+            int levelOfWritOfProteus = Epsilon.getLevelOfWritOfProteus();
+            int lForAceso = (Epsilon.isWriteOfAceso() ? 1 : 0);
+            constant.writeInFile(savedXp, levelOfWritOfAres, lForAceso, levelOfWritOfProteus);
+
         }
     }
 
