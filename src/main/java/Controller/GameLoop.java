@@ -62,6 +62,10 @@ public class GameLoop extends Thread{
 
     }
     private void update(){
+        if(game.getGameFrame().getEpsilon().getHp() <= 0){
+            game.endGame();
+            Constant.setIsRunning(false);
+        }
         if(game.getGameFrame().getEpsilon().getHp() < 100 && Epsilon.isWriteOfAceso() && System.currentTimeMillis() - game.getGameFrame().getEpsilon().getPrevAceso() > 1000){
             game.getGameFrame().getEpsilon().setHp(game.getGameFrame().getEpsilon().getHp() + 1);
             game.getGameFrame().getEpsilon().setPrevAceso(System.currentTimeMillis());
@@ -90,6 +94,7 @@ public class GameLoop extends Thread{
         if(currentWaveIndex < 3){
             shotMove();
             enemyMove();
+            checkTheIntersectionToEpsilon();
             Random random = new Random();
             if(random.nextInt() % (220 - Constant.getLevel() * 2) == 1)
                 aggression();
@@ -213,7 +218,7 @@ public class GameLoop extends Thread{
     }
     private void checkIntersection(){
         int index = 0;
-        Enemy enemy1 = new Enemy(0, 0, 1, 0, 0);
+        Enemy enemy1 = new Enemy(0, 0, 1, 0, 0, 0);
         Shot shot1 = new Shot(0,0 );
         for(Enemy enemy : waves[currentWaveIndex].getEnemies()){
             index += 1;
@@ -330,6 +335,18 @@ public class GameLoop extends Thread{
                     game.getGameFrame().repaint();
                     break;
                 }
+            }
+        }
+    }
+    private void checkTheIntersectionToEpsilon(){
+        int index = 0;
+
+        for(Enemy enemy : waves[currentWaveIndex].getEnemies()){
+            index += 1;
+            if(currentWaveIndexEnemy < index)
+                break;
+            if(game.getIntersection().intersectsEpsilon(enemy, game.getGameFrame().getEpsilon())){
+                game.getGameFrame().getEpsilon().setHp(game.getGameFrame().getEpsilon().getHp() - 5);
             }
         }
     }

@@ -9,7 +9,7 @@ public class Squarantine extends Enemy implements LocalRouting, Aggression, Move
     Constant constant;
 
     public Squarantine(int x, int y) {
-        super(x, y, 10, 1, 5);
+        super(x, y, 10, 1, 5, 4);
         this.setHeight(Constant.getHeightOfSquarantine());
         this.setWidth(Constant.getWidthOfSquarantine());
         setSize(Constant.getWidthOfSquarantine(), Constant.getHeightOfSquarantine());

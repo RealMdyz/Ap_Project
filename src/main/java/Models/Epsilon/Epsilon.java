@@ -15,7 +15,7 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     private long prevAceso = 0;
 
     private long startOfAthena = 0;
-
+    private int radius = 35;
 
     public Epsilon(int x, int y) {
         super(x, y, 100);
@@ -113,5 +113,13 @@ public class Epsilon extends ObjectsInGame implements Moveable {
 
     public void setStartOfAthena(long startOfAthena) {
         this.startOfAthena = startOfAthena;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
     }
 }

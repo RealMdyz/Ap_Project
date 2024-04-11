@@ -9,7 +9,7 @@ public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveab
     Constant constant;
 
     public Trigorath(int x, int y) {
-        super(x, y, 15, 2, 5);
+        super(x, y, 15, 2, 5, 3);
         this.setHeight(Constant.getHeightOfTrighrath());
         this.setWidth(Constant.getWidthOfTrighrath());
         setSize(Constant.getWidthOfTrighrath(), Constant.getHeightOfTrighrath());

@@ -1,6 +1,7 @@
 package Controller;
 
 import Models.Enemy.Enemy;
+import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 import Models.ObjectsInGame;
 
@@ -87,6 +88,109 @@ public class Intersection {
 
         // No intersection, return null
         return null;
+    }
+
+    // Check if any regular polygon intersects with the epsilon
+    public boolean intersectsEpsilon(Enemy polygon, Epsilon epsilon) {
+        // Calculate the coordinates of the polygon's vertices
+        int numSides = polygon.getNumSides(); // Get the number of sides of the polygon
+        int[] polyVerticesX = new int[numSides];
+        int[] polyVerticesY = new int[numSides];
+
+        // Calculate the size of each side of the polygon
+        double sideLength = polygon.getWidth() / 2; // Assuming the polygon is inscribed in a square
+
+        // Calculate the angle increment for each vertex
+        double angleIncrement = 2 * Math.PI / numSides;
+
+        // Calculate coordinates of each vertex
+        for (int i = 0; i < numSides; i++) {
+            double angle = i * angleIncrement;
+            int x = (int) (polygon.getX() + sideLength * Math.cos(angle));
+            int y = (int) (polygon.getY() + sideLength * Math.sin(angle));
+            polyVerticesX[i] = x;
+            polyVerticesY[i] = y;
+        }
+
+        // Check each vertex against the epsilon
+        for (int i = 0; i < numSides; i++) {
+            // Calculate the distance between the vertex and the center of the epsilon
+            double dx = polyVerticesX[i] - epsilon.getX();
+            double dy = polyVerticesY[i] - epsilon.getY();
+            double distance = Math.sqrt(dx * dx + dy * dy);
+
+            // If the distance is less than the epsilon's radius, intersection occurs
+            if (distance < epsilon.getRadius()) {
+                return true;
+            }
+        }
+
+        // Check if any point on the epsilon's edge intersects with the polygon
+        for (int i = 0; i < numSides; i++) {
+            int x1 = polyVerticesX[i];
+            int y1 = polyVerticesY[i];
+            int x2 = polyVerticesX[(i + 1) % numSides]; // Next vertex (cyclically)
+            int y2 = polyVerticesY[(i + 1) % numSides]; // Next vertex (cyclically)
+
+            // Check if the edge of the epsilon intersects with the polygon
+            if (edgeIntersectsPolygon(x1, y1, x2, y2, polygon)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Check if an edge of the epsilon intersects with the polygon
+    private boolean edgeIntersectsPolygon(int x1, int y1, int x2, int y2, Enemy polygon) {
+        // Check each edge of the polygon
+        int numSides = polygon.getNumSides();
+        int[] polyVerticesX = new int[numSides];
+        int[] polyVerticesY = new int[numSides];
+        double sideLength = polygon.getWidth() / 2;
+        double angleIncrement = 2 * Math.PI / numSides;
+
+        for (int i = 0; i < numSides; i++) {
+            double angle = i * angleIncrement;
+            int x = (int) (polygon.getX() + sideLength * Math.cos(angle));
+            int y = (int) (polygon.getY() + sideLength * Math.sin(angle));
+            polyVerticesX[i] = x;
+            polyVerticesY[i] = y;
+        }
+
+        for (int i = 0; i < numSides; i++) {
+            int x3 = polyVerticesX[i];
+            int y3 = polyVerticesY[i];
+            int x4 = polyVerticesX[(i + 1) % numSides];
+            int y4 = polyVerticesY[(i + 1) % numSides];
+
+            if (segmentsIntersect(x1, y1, x2, y2, x3, y3, x4, y4)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Check if two line segments intersect
+    private boolean segmentsIntersect(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) {
+        int dx12 = x2 - x1;
+        int dy12 = y2 - y1;
+        int dx34 = x4 - x3;
+        int dy34 = y4 - y3;
+
+        double denominator = dx12 * dy34 - dy12 * dx34;
+
+        if (denominator == 0) {
+            return false;
+        }
+
+        double t1 =
+                ((x1 - x3) * dy34 + (y3 - y1) * dx34) / denominator;
+        double t2 =
+                ((x3 - x1) * dy12 + (y1 - y3) * dx12) / -denominator;
+
+        return t1 >= 0 && t1 <= 1 && t2 >= 0 && t2 <= 1;
     }
 
 }
