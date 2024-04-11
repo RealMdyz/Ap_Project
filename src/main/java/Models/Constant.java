@@ -16,7 +16,7 @@ public class Constant {
     private static int level = 10;
     private static int sensitivityForMoves = 40;
     private static long abilityStartTime = -100000;
-    private int playerXP = 0;
+    private static int playerXP = 0;
     private static boolean isRunning;
     private static int sound = 10;
     private static char keyForMoveUp = 'W';
@@ -155,12 +155,12 @@ public class Constant {
         Constant.keyForMoveRight = keyForMoveRight;
     }
 
-    public int getPlayerXP() {
+    public static int getPlayerXP() {
         return playerXP;
     }
 
-    public void setPlayerXP(int playerXP) {
-        this.playerXP = playerXP;
+    public static void setPlayerXP(int playerXP) {
+        Constant.playerXP = playerXP;
     }
 
     public static boolean isOpenStore() {

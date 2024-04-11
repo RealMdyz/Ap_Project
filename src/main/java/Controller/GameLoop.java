@@ -30,20 +30,21 @@ public class GameLoop extends Thread{
     private int delay = 0;
     private long startOfGame = 0;
     private boolean panelReduced = false;
+    private boolean epsilonIncrease = false;
+    private boolean panelReducedInEnd = false;
 
     public GameLoop(Game game, Constant constant){
         this.constant = constant;
         this.game = game;
-        waves = new EnemyWave[3];
-        waves[0] = new EnemyWave(1, 2500); // 3 enemies, 1 second delay
-        waves[1] = new EnemyWave(1, 2000);  // 5 enemies, 0.8 second delay
-        waves[2] = new EnemyWave(1, 1500);  // 7 enemies, 0.6 second delay
-        currentWaveIndex = 0;
-        currentWaveIndexEnemy = 0;
         startOfGame = System.currentTimeMillis();
     }
     public void run() {
-
+        waves = new EnemyWave[3];
+        waves[0] = new EnemyWave((int)(Constant.getLevel() / 15) + 1 , 3 * (100 - Constant.getLevel()) * 12 + 300 ); // 3 enemies, 1 second delay
+        waves[1] = new EnemyWave((int)(Constant.getLevel() / 10) + 1, 2 * (100 - Constant.getLevel()) * 6 + 200);  // 5 enemies, 0.8 second delay
+        waves[2] = new EnemyWave((int)(Constant.getLevel() / 5) + 1, (100 - Constant.getLevel()) * 3 + 100);  // 7 enemies, 0.6 second delay
+        currentWaveIndex = 0;
+        currentWaveIndexEnemy = 0;
         // Start the timer for smooth size reduction
         while (Constant.isIsRunning()) {
             game.getStorePanel().setVisible(Constant.isOpenStore());
@@ -52,6 +53,7 @@ public class GameLoop extends Thread{
             }
             else{
                 store();
+                game.getStorePanel().setXpLabel();
             }
         }
         game.getGameFrame().setVisible(false);
@@ -69,26 +71,59 @@ public class GameLoop extends Thread{
             shot.setV(game.getInputListener().getxMousePress(), game.getInputListener().getyMousePress());
             game.getGameFrame().getShots().add(shot);
             game.getGameFrame().getGamePanel().add(shot);
+            if(System.currentTimeMillis() - game.getGameFrame().getEpsilon().getStartOfAthena() < 10000){
+                Shot shot1 = new Shot(game.getGameFrame().getEpsilon().getX(), game.getGameFrame().getEpsilon().getY());
+                shot1.setV(game.getInputListener().getxMousePress() + 20, game.getInputListener().getyMousePress() + 20);
+                game.getGameFrame().getShots().add(shot1);
+                game.getGameFrame().getGamePanel().add(shot1);
+                Shot shot2 = new Shot(game.getGameFrame().getEpsilon().getX(), game.getGameFrame().getEpsilon().getY());
+                shot2.setV(game.getInputListener().getxMousePress() - 20, game.getInputListener().getyMousePress() - 20);
+                game.getGameFrame().getShots().add(shot2);
+                game.getGameFrame().getGamePanel().add(shot2);
+            }
             game.getInputListener().setxMousePress(-1);
             game.getInputListener().setyMousePress(-1);
         }
         updateTopPanel();
-        shotMove();
-        enemyMove();
-        Random random = new Random();
-        if(random.nextInt() % (220 - Constant.getLevel() * 2) == 1)
-             aggression();
-        checkIntersection();
-        game.getGameFrame().checkTheCollectibleTime();
-
-   //   checkTheImpact();
-        delay += 15;
-        if(delay >= waves[currentWaveIndex].getDelay()){
-            addNewEnemy();
+        if(currentWaveIndex < 3){
+            shotMove();
+            enemyMove();
+            Random random = new Random();
+            if(random.nextInt() % (220 - Constant.getLevel() * 2) == 1)
+                aggression();
+            checkIntersection();
+            //   checkTheImpact();
+            delay += 15;
+            if(delay >= waves[currentWaveIndex].getDelay()){
+                addNewEnemy();
+            }
         }
+        game.getGameFrame().checkTheCollectibleTime();
         if(currentWaveIndex == 3){
-            Constant.setIsRunning(false);
-            game.endGame();
+            if(epsilonIncrease){
+                if(panelReducedInEnd){
+                    Constant.setIsRunning(false);
+                    game.endGame();
+                }
+                else{
+                    game.getGameFrame().setSize(game.getGameFrame().getWidth() - 3, game.getGameFrame().getHeight() - 3);
+                    if(game.getGameFrame().getHeight() <= 50){
+                        panelReducedInEnd = true;
+                    }
+                   // System.out.println(game.getGameFrame().getHeight());
+                }
+            }
+            else{
+                game.getGameFrame().getEpsilon().changeSize(
+                        game.getGameFrame().getEpsilon().getWidth() + 3,
+                        game.getGameFrame().getEpsilon().getHeight() + 3
+                );
+                if(game.getGameFrame().getEpsilon().getHeight() > game.getGameFrame().getHeight())
+                    epsilonIncrease = true;
+            }
+
+
+
         }
         try {
             Thread.sleep(20);
@@ -208,7 +243,7 @@ public class GameLoop extends Thread{
         Collectible collectible1 = new Collectible(0, 0, 0, 0, 0);
         for(Collectible collectible : game.getGameFrame().getCollectibles()){
             if(game.getIntersection().intersect(collectible, game.getGameFrame().getEpsilon())){
-                constant.setPlayerXP(constant.getPlayerXP() + collectible.getIncreaceXp());
+                Constant.setPlayerXP(Constant.getPlayerXP() + collectible.getIncreaceXp());
                 collectible1 = collectible;
             }
         }

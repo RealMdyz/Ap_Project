@@ -1,6 +1,7 @@
 package View.Menu;
 
 import Models.Constant;
+import Models.Epsilon.Epsilon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,8 +12,10 @@ public class StorePanel extends JFrame implements ActionListener {
     Constant constant;
     JLabel xpLabel;
     MessagePanel messagePanel;
-    public StorePanel(Constant constant){
+    Epsilon epsilon;
+    public StorePanel(Constant constant, Epsilon epsilon){
         this.constant = constant;
+        this.epsilon = epsilon;
         this.setSize(650, 700);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
@@ -37,7 +40,7 @@ public class StorePanel extends JFrame implements ActionListener {
         add(gradientPanel);
 
         // Label to display XP
-        xpLabel = new JLabel("Your XP: " + constant.getPlayerXP());
+        xpLabel = new JLabel("Your XP: " + Constant.getPlayerXP());
         xpLabel.setBounds(20, 20, 200, 30);
         xpLabel.setFont(new Font("Arial", Font.BOLD, 16));
         gradientPanel.add(xpLabel);
@@ -78,9 +81,9 @@ public class StorePanel extends JFrame implements ActionListener {
 
         switch (actionCommand) {
             case "Buy O' Hephaestus (100 XP)":
-                if (constant.getPlayerXP() >= 100) {
+                if (Constant.getPlayerXP() >= 100) {
                     // Perform the purchase
-                    constant.setPlayerXP(constant.getPlayerXP() - 100);
+                    Constant.setPlayerXP(Constant.getPlayerXP() - 100);
                     // Implement the action for O' Hephaestus
                     // For example:
                     // gameFrame.activateOhephaestus();
@@ -92,12 +95,13 @@ public class StorePanel extends JFrame implements ActionListener {
                 break;
 
             case "Buy O' Athena (75 XP)":
-                if (constant.getPlayerXP() >= 75) {
+                if (Constant.getPlayerXP() >= 75) {
                     // Perform the purchase
-                    constant.setPlayerXP(constant.getPlayerXP() - 75);
+                    Constant.setPlayerXP(Constant.getPlayerXP() - 75);
                     // Implement the action for O' Athena
                     // For example:
                     // gameFrame.activateOAthena();
+                    epsilon.setStartOfAthena(System.currentTimeMillis());
                     Constant.setOpenStore(false);
                 } else {
                     JOptionPane.showMessageDialog(this, "Not enough XP to buy O' Athena!");
@@ -106,12 +110,13 @@ public class StorePanel extends JFrame implements ActionListener {
                 break;
 
             case "Buy O' Apollo (50 XP)":
-                if (constant.getPlayerXP() >= 50) {
+                if (Constant.getPlayerXP() >= 50) {
                     // Perform the purchase
-                    constant.setPlayerXP(constant.getPlayerXP() - 50);
+                    Constant.setPlayerXP(Constant.getPlayerXP() - 50);
                     // Implement the action for O' Apollo
                     // For example:
                     // gameFrame.activateOApollo();
+                    epsilon.setHp(Math.min(epsilon.getHp() + 10, 100));
                     Constant.setOpenStore(false);
 
                 } else {
@@ -121,11 +126,14 @@ public class StorePanel extends JFrame implements ActionListener {
                 break;
         }
         // Update XP label
-        xpLabel.setText("Your XP: " + constant.getPlayerXP());
+        xpLabel.setText("Your XP: " + Constant.getPlayerXP());
     }
 
     @Override
     public void paintComponents(Graphics g) {
         super.paintComponents(g);
+    }
+    public void setXpLabel(){
+        xpLabel.setText("Your XP: " + Constant.getPlayerXP());
     }
 }

@@ -14,12 +14,14 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     public static boolean writeOfAceso = false;
     private long prevAceso = 0;
 
+    private long startOfAthena = 0;
+
 
     public Epsilon(int x, int y) {
-        super(x, y, 15);
+        super(x, y, 100);
         this.setHeight(70);
         this.setWidth(70);
-        setSize(70, 70);
+        setSize(this.getWidth(), this.getHeight());
         background = MyProjectData.getProjectData().getEpsilonCircle();
     }
 
@@ -27,7 +29,7 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
-        g2D.drawImage(background, 0, 0, 70, 70, null);
+        g2D.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
     }
 
     @Override
@@ -66,6 +68,12 @@ public class Epsilon extends ObjectsInGame implements Moveable {
         this.setX(this.getX() + (int)(vx));
         this.setY(this.getY() + (int)(vy));
     }
+    public void changeSize(int newWidth, int newHeight) {
+        this.setWidth(newWidth);
+        this.setHeight(newHeight);
+        setSize(newWidth, newHeight);
+        repaint(); // Call repaint to ensure the changes are reflected visually
+    }
 
     public static int getLevelOfWritOfAres() {
         return levelOfWritOfAres;
@@ -97,5 +105,13 @@ public class Epsilon extends ObjectsInGame implements Moveable {
 
     public void setPrevAceso(long prevAceso) {
         this.prevAceso = prevAceso;
+    }
+
+    public long getStartOfAthena() {
+        return startOfAthena;
+    }
+
+    public void setStartOfAthena(long startOfAthena) {
+        this.startOfAthena = startOfAthena;
     }
 }

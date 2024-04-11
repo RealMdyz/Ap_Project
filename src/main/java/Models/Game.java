@@ -33,7 +33,7 @@ public class Game {
         MusicPlayer musicPlayer = new MusicPlayer("Sounds/BackgroundMusic.wav", true);
         topPanel = new TopPanel();
         gameFrame = new GameFrame(constant, epsilon, topPanel);
-        storePanel = new StorePanel(constant);
+        storePanel = new StorePanel(constant,epsilon);
         inputListener = new InputListener(gameFrame, constant);
         intersection = new Intersection();
 
@@ -97,7 +97,7 @@ public class Game {
     }
 
     public void endGame(){
-        JOptionPane.showMessageDialog(getGameFrame(), "Congratulations! You have defeated all waves.");
+        JOptionPane.showMessageDialog(gameFrame, "Earned XP: " + constant.getPlayerXP(), "XP Earned", JOptionPane.INFORMATION_MESSAGE);
         File file = new File("gameData");
         int savedXp;
         int levelOfWritOfAres;
@@ -125,7 +125,8 @@ public class Game {
         catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        Constant.setSavedXp(savedXp + constant.getPlayerXP());
+        System.out.println(savedXp + " " + Constant.getPlayerXP());
+        Constant.setSavedXp(savedXp + Constant.getPlayerXP());
         constant.writeInFile(Constant.getSavedXp(), levelOfWritOfAres, levelOfWritOfProteus, lForAceso);
         System.exit(0);
 
