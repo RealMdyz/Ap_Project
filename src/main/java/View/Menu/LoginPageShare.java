@@ -115,6 +115,7 @@ public class LoginPageShare extends JFrame implements ActionListener {
             skillTreePanel.setPreferredSize(new Dimension(650, 700)); // Set preferred size
             skillTreePanel.setVisible(true);
             backgroundPanel.add(skillTreePanel, Integer.valueOf(2)); // Add with a higher layer number
+
             repaint();
     }
 

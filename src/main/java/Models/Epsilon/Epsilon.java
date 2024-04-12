@@ -34,39 +34,26 @@ public class Epsilon extends ObjectsInGame implements Moveable {
 
     @Override
     public void move(int xLimit, int yLimit) {
+        this.setxVelocity(this.getxVelocity() + this.getxVelocityImpact());
+        this.setyVelocity(this.getyVelocity() + this.getyVelocityImpact());
+
         if(this.getX() <= 0  && this.getxVelocity() > 0)
             this.setX(this.getX() + this.getxVelocity());
         else if(this.getX() >= xLimit - this.getWidth() - 10 && this.getxVelocity() < 0)
             this.setX(this.getX() + this.getxVelocity());
         else if(this.getX() >= 0 && this.getX() <= xLimit - this.getWidth() - 10)
             this.setX(this.getX() + this.getxVelocity());
-
         if(this.getY() <= 0  && this.getyVelocity() > 0)
             this.setY(this.getY() + this.getyVelocity());
         else if(this.getY() >= yLimit - this.getHeight() - 10 && this.getyVelocity() < 0)
             this.setY(this.getY() + this.getyVelocity());
         else if(this.getY() >= 0 && this.getY() <= yLimit - this.getHeight() - 10)
             this.setY(this.getY() + this.getyVelocity());
-    }
-    public void doImpact(int xImpact, int yImpact){
-        int xChar = getX(); // Your character's x position
-        int yChar = getY(); // Your character's y position
 
-        // Calculate the direction vector from character to impact point
-        double dx = xImpact - xChar;
-        double dy = yImpact - yChar;
-
-        // Calculate the distance from character to impact point
-        double distance = Math.sqrt(dx * dx + dy * dy);
-
-        // Adjust speed as needed
-        double speed = Constant.getSpeedOfSquarantine();
-
-        // Calculate the velocity components based on the distance
-        double vx = speed * dx / distance;
-        double vy = speed * dy / distance;
-        this.setX(this.getX() + (int)(vx));
-        this.setY(this.getY() + (int)(vy));
+        this.setxVelocity(this.getxVelocity() - this.getxVelocityImpact());
+        this.setyVelocity(this.getyVelocity() - this.getyVelocityImpact());
+        this.setxVelocityImpact(Math.max(this.getxVelocityImpact() - 1, 0));
+        this.setyVelocityImpact(Math.max(this.getyVelocityImpact() - 1, 0));
     }
     public void changeSize(int newWidth, int newHeight) {
         this.setWidth(newWidth);

@@ -12,6 +12,7 @@ public class Constant {
 
     public static final int FIRST_HEIGHT = 700;
     public static final int FIRST_WIDTH = 700;
+    public static final int MAX_DISTANCE = 100;
 
     private static int level = 10;
     private static int sensitivityForMoves = 40;
@@ -31,7 +32,7 @@ public class Constant {
     private static int widthOfSquarantine = 50;
     private static int heightOfSquarantine = 50;
     private static int speedOfSquarantine  = 4;
-    private static int speedOfImpact = 3;
+    private static int speedOfImpact = 15;
     private static int savedXp;
 
     public Constant(){
@@ -64,9 +65,39 @@ public class Constant {
         catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(savedXp + " " + Epsilon.getLevelOfWritOfAres() + " " + Epsilon.getLevelOfWritOfProteus() + " " + Epsilon.isWriteOfAceso());
+       // System.out.println(savedXp + " " + Epsilon.getLevelOfWritOfAres() + " " + Epsilon.getLevelOfWritOfProteus() + " " + Epsilon.isWriteOfAceso());
 
 
+    }
+    public void updateToSkillAndXp(){
+        File file = new File("gameData");
+        if(!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            // FirstLine: SavedXp;
+            // SecondLine : LevelWritOfAres;
+            // ThirdLine : LevelOfWritOfProteus;
+            // FourthLine : writeOfAceso
+
+        }
+        Scanner scanner;
+        try {
+            scanner = new Scanner(file);
+            savedXp = scanner.nextInt();
+            Epsilon.setLevelOfWritOfAres(scanner.nextInt());
+            Epsilon.setLevelOfWritOfProteus(scanner.nextInt());
+            int l = scanner.nextInt();
+            if(l == 0)
+                Epsilon.setWriteOfAceso(false);
+            else
+                Epsilon.setWriteOfAceso(true);
+        }
+        catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
     public void writeInFile(int xpForSave, int levelAres,  int levelAceso, int levelProteus){
         File file = new File("gameData");

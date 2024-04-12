@@ -20,6 +20,7 @@ public class SkillTreePanel extends JPanel implements ActionListener {
     private BufferedImage writOfAresImage;
     private BufferedImage writOfProteusImage;
     Constant constant;
+    JLabel moneyLabel;
 
     public SkillTreePanel(JFrame parentPanel, Constant constant) {
         this.parentPanel = parentPanel;
@@ -58,7 +59,7 @@ public class SkillTreePanel extends JPanel implements ActionListener {
         JButton okButton = new JButton("OK");
         okButton.addActionListener(this); // Add ActionListener for OK button
 
-        JLabel moneyLabel = new JLabel("XP : " + Constant.getSavedXp()); // Example money panel
+        moneyLabel = new JLabel("XP : " + Constant.getSavedXp()); // Example money panel
         moneyLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
         bottomPanel.add(okButton);
@@ -128,8 +129,8 @@ public class SkillTreePanel extends JPanel implements ActionListener {
             int levelOfWritOfAres = Epsilon.getLevelOfWritOfAres();
             int levelOfWritOfProteus = Epsilon.getLevelOfWritOfProteus();
             int lForAceso = (Epsilon.isWriteOfAceso() ? 1 : 0);
-            constant.writeInFile(savedXp, levelOfWritOfAres, lForAceso, levelOfWritOfProteus);
-
+            constant.writeInFile(savedXp + Constant.getPlayerXP(), levelOfWritOfAres, lForAceso, levelOfWritOfProteus);
+            constant.updateToSkillAndXp();
         }
     }
 
@@ -137,5 +138,8 @@ public class SkillTreePanel extends JPanel implements ActionListener {
         Image img = icon.getImage();
         Image resizedImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return new ImageIcon(resizedImg);
+    }
+    private void updateMoneyLabel(){
+        moneyLabel.setText("XP : " + Constant.getSavedXp());
     }
 }

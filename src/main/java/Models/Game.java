@@ -128,10 +128,9 @@ public class Game {
         }
 //        System.out.println(Constant.getPlayerXP());
 //        Constant.setSavedXp(savedXp + Constant.getPlayerXP());
-        System.out.println(savedXp +  Constant.getPlayerXP());
         constant.writeInFile(savedXp +  Constant.getPlayerXP(), levelOfWritOfAres, lForAceso, levelOfWritOfProteus);
-        Constant.setSavedXp(0);
-
+        Constant.setSavedXp(savedXp +  Constant.getPlayerXP());
         // TODO;
+        Constant.setPlayerXP(0);
     }
 }
