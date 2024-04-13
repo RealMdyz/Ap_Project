@@ -34,8 +34,14 @@ public class Epsilon extends ObjectsInGame implements Moveable {
 
     @Override
     public void move(int xLimit, int yLimit) {
-        this.setxVelocity(this.getxVelocity() + this.getxVelocityImpact());
-        this.setyVelocity(this.getyVelocity() + this.getyVelocityImpact());
+
+        double t = ((double)System.currentTimeMillis() - (double)this.getImpactTime()) / 1000;
+        t = Math.max(0, (1 - t));
+        double x = (this.getxVelocityImpact()) * (t);
+        double y = ((this.getyVelocityImpact())) * (t);
+
+        this.setxVelocity(this.getxVelocity() + (int)x);
+        this.setyVelocity(this.getyVelocity() + (int)y);
 
         if(this.getX() <= 0  && this.getxVelocity() > 0)
             this.setX(this.getX() + this.getxVelocity());
@@ -45,21 +51,38 @@ public class Epsilon extends ObjectsInGame implements Moveable {
             this.setX(this.getX() + this.getxVelocity());
         if(this.getY() <= 0  && this.getyVelocity() > 0)
             this.setY(this.getY() + this.getyVelocity());
-        else if(this.getY() >= yLimit - this.getHeight() - 10 && this.getyVelocity() < 0)
+        else if(this.getY() >= yLimit - this.getHeight() && this.getyVelocity() < 0)
             this.setY(this.getY() + this.getyVelocity());
-        else if(this.getY() >= 0 && this.getY() <= yLimit - this.getHeight() - 10)
+        else if(this.getY() >= 0 && this.getY() <= yLimit - this.getHeight())
             this.setY(this.getY() + this.getyVelocity());
+        //System.out.println(x + " " + y);
+        this.setxVelocity(this.getxVelocity() - (int)x);
+        this.setyVelocity(this.getyVelocity() - (int)y);
 
-        this.setxVelocity(this.getxVelocity() - this.getxVelocityImpact());
-        this.setyVelocity(this.getyVelocity() - this.getyVelocityImpact());
-        this.setxVelocityImpact(Math.max(this.getxVelocityImpact() - 1, 0));
-        this.setyVelocityImpact(Math.max(this.getyVelocityImpact() - 1, 0));
     }
     public void changeSize(int newWidth, int newHeight) {
         this.setWidth(newWidth);
         this.setHeight(newHeight);
         setSize(newWidth, newHeight);
         repaint(); // Call repaint to ensure the changes are reflected visually
+    }
+    public void doImpactToWall(int xLimit, int yLimit){
+        if(this.getX() < 0 || this.getY() < 0){
+            double angle = Math.atan2(this.getX(), this.getY());
+            double vx = Math.cos(angle) * Constant.getSpeedOfImpact();
+            double vy = Math.sin(angle) * Constant.getSpeedOfImpact();
+            this.setImpactTime(System.currentTimeMillis());
+            setxVelocityImpact(vx);
+            setyVelocityImpact(vy);
+        }
+        else if(this.getX() + this.getWidth() + 20 >= xLimit || this.getY() + this.getHeight() + 20 >= yLimit){
+            double angle = Math.atan2(- this.getY(), - this.getX());
+            double vx = Math.cos(angle) * Constant.getSpeedOfImpact();
+            double vy = Math.sin(angle) * Constant.getSpeedOfImpact();
+            this.setImpactTime(System.currentTimeMillis());
+            setxVelocityImpact(vx);
+            setyVelocityImpact(vy);
+        }
     }
 
     public static int getLevelOfWritOfAres() {
@@ -77,6 +100,7 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     public static void setLevelOfWritOfProteus(int levelOfWritOfProteus) {
         Epsilon.levelOfWritOfProteus = levelOfWritOfProteus;
     }
+
 
     public static boolean isWriteOfAceso() {
         return writeOfAceso;

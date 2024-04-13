@@ -99,7 +99,7 @@ public class GameLoop extends Thread{
             if(random.nextInt() % (220 - Constant.getLevel() * 2) == 1)
                 aggression();
             checkIntersection();
-          //  checkTheImpact();
+            checkTheImpact();
             delay += 15;
             if(delay >= waves[currentWaveIndex].getDelay()){
                 addNewEnemy();
@@ -260,12 +260,12 @@ public class GameLoop extends Thread{
     }
     private void checkTheImpact(){
         int index = 0;
-        for(Enemy enemy : waves[currentWaveIndex].getEnemies()){
+       /* for(Enemy enemy : waves[currentWaveIndex].getEnemies()){
             index += 1;
             if(index > currentWaveIndexEnemy)
                 break;
             if(game.getIntersection().intersect(game.getGameFrame().getEpsilon(), enemy)){
-                doImpact(game.getIntersection().getIntersectionCenter(game.getGameFrame().getEpsilon(), enemy).x, game.getIntersection().getIntersectionCenter(game.getGameFrame().getEpsilon(), enemy).y);
+                 doImpact(game.getIntersection().getIntersectionCenter(game.getGameFrame().getEpsilon(), enemy).x, game.getIntersection().getIntersectionCenter(game.getGameFrame().getEpsilon(), enemy).y);
             }
             int secondIndex = 0;
             for(Enemy enemy1 : waves[currentWaveIndex].getEnemies()){
@@ -278,7 +278,9 @@ public class GameLoop extends Thread{
                     }
                 }
             }
-        }
+        }*/
+        game.getGameFrame().getEpsilon().doImpactToWall(game.getGameFrame().getWidth(), game.getGameFrame().getHeight());
+
     }
     private void doImpact(int x, int y){
         for(Enemy enemy : waves[currentWaveIndex].getEnemies()){

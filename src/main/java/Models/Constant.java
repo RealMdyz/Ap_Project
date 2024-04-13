@@ -28,11 +28,11 @@ public class Constant {
     private static int speedOfShot = 15;
     private static int widthOfTrighrath = 50;
     private static int heightOfTrighrath = 50;
-    private static int speedOfTrighrath = 3;
+    private static int speedOfTrighrath = 5;
     private static int widthOfSquarantine = 50;
     private static int heightOfSquarantine = 50;
-    private static int speedOfSquarantine  = 4;
-    private static int speedOfImpact = 15;
+    private static int speedOfSquarantine  = 5;
+    private static int speedOfImpact = 10;
     private static int savedXp;
 
     public Constant(){
