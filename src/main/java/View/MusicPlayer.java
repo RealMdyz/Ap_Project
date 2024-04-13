@@ -23,7 +23,7 @@ public class MusicPlayer {
             if (loop) {
                 clip.loop(Clip.LOOP_CONTINUOUSLY);
             }
-            setVolume(Constant.getSound());
+            setVolume(0);
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             e.printStackTrace();
         }

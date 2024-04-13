@@ -21,6 +21,8 @@ public class Epsilon extends ObjectsInGame implements Moveable {
         super(x, y, 100);
         this.setHeight(70);
         this.setWidth(70);
+        this.setxCenter(this.getX() + (int)this.getWidth() / 2);
+        this.setyCenter(this.getY() + (int)this.getHeight() / 2);
         setSize(this.getWidth(), this.getHeight());
         background = MyProjectData.getProjectData().getEpsilonCircle();
     }
@@ -35,6 +37,7 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     @Override
     public void move(int xLimit, int yLimit) {
 
+        System.out.println(getxCenter() + " " + getyCenter());
         double t = ((double)System.currentTimeMillis() - (double)this.getImpactTime()) / 1000;
         t = Math.max(0, (1 - t));
         double x = (this.getxVelocityImpact()) * (t);

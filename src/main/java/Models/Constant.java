@@ -12,7 +12,8 @@ public class Constant {
 
     public static final int FIRST_HEIGHT = 700;
     public static final int FIRST_WIDTH = 700;
-    public static final int MAX_DISTANCE = 100;
+    public static final int MAX_DISTANCE = 20;
+    public static final double ALPHA = 0.05;
 
     private static int level = 10;
     private static int sensitivityForMoves = 40;

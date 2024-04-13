@@ -12,6 +12,8 @@ public class Squarantine extends Enemy implements LocalRouting, Aggression, Move
         super(x, y, 10, 1, 5, 4);
         this.setHeight(Constant.getHeightOfSquarantine());
         this.setWidth(Constant.getWidthOfSquarantine());
+        this.setxCenter(this.getX() + (int)this.getWidth() / 2);
+        this.setyCenter(this.getY() + (int)this.getHeight() / 2);
         setSize(Constant.getWidthOfSquarantine(), Constant.getHeightOfSquarantine());
         background = MyProjectData.getProjectData().getSquarAntine();
     }
@@ -50,10 +52,18 @@ public class Squarantine extends Enemy implements LocalRouting, Aggression, Move
     }
     @Override
     public void move(int xLimit, int yLimit) {
-        this.setxVelocity(this.getxVelocity() + (int)this.getxVelocityImpact());
-        this.setyVelocity(this.getyVelocity() + (int)this.getyVelocityImpact());
 
-        //System.out.println(this.getxVelocityImpact() + " " + this.getyVelocityImpact());
+        double t = ((double)System.currentTimeMillis() - (double)this.getImpactTime()) / 1000;
+        t = Math.max(0, (1 - t));
+        double x = (this.getxVelocityImpact()) * (t * t);
+        double y = ((this.getyVelocityImpact())) * (t * t);
+        int vx = this.getxVelocity();
+        int vy = this.getyVelocity();
+        if(t != 0){
+            this.setxVelocity((int)x);
+            this.setyVelocity((int)y);
+        }
+
         if(this.getX() <= 0  && this.getxVelocity() > 0)
             this.setX(this.getX() + this.getxVelocity());
         else if(this.getX() >= xLimit - this.getWidth() - 10 && this.getxVelocity() < 0)
@@ -65,13 +75,12 @@ public class Squarantine extends Enemy implements LocalRouting, Aggression, Move
         else if(this.getY() >= yLimit - this.getHeight() - 10 && this.getyVelocity() < 0)
             this.setY(this.getY() + this.getyVelocity());
         else if(this.getY() >= 0 && this.getY() <= yLimit - this.getHeight() - 10)
-            this.setY(this.getY() + this.getyVelocity());;
+            this.setY(this.getY() + this.getyVelocity());
 
-        this.setxVelocity(this.getxVelocity() - (int)this.getxVelocityImpact());
-        this.setyVelocity(this.getyVelocity() - (int)this.getyVelocityImpact());
-        this.setxVelocityImpact(Math.max(this.getxVelocityImpact() - 0.3, 0));
-        this.setyVelocityImpact(Math.max(this.getyVelocityImpact() - 0.3, 0));
-
+        if(t != 0){
+            this.setxVelocity(vx);
+            this.setyVelocity(vy);
+        }
     }
 
 }

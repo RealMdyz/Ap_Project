@@ -94,7 +94,6 @@ public class GameLoop extends Thread{
         if(currentWaveIndex < 3){
             shotMove();
             enemyMove();
-            checkTheIntersectionToEpsilon();
             Random random = new Random();
             if(random.nextInt() % (220 - Constant.getLevel() * 2) == 1)
                 aggression();
@@ -260,12 +259,13 @@ public class GameLoop extends Thread{
     }
     private void checkTheImpact(){
         int index = 0;
-       /* for(Enemy enemy : waves[currentWaveIndex].getEnemies()){
+        for(Enemy enemy : waves[currentWaveIndex].getEnemies()){
             index += 1;
             if(index > currentWaveIndexEnemy)
                 break;
             if(game.getIntersection().intersect(game.getGameFrame().getEpsilon(), enemy)){
                  doImpact(game.getIntersection().getIntersectionCenter(game.getGameFrame().getEpsilon(), enemy).x, game.getIntersection().getIntersectionCenter(game.getGameFrame().getEpsilon(), enemy).y);
+                 game.getGameFrame().getEpsilon().setHp(game.getGameFrame().getEpsilon().getHp() - 5);
             }
             int secondIndex = 0;
             for(Enemy enemy1 : waves[currentWaveIndex].getEnemies()){
@@ -278,7 +278,7 @@ public class GameLoop extends Thread{
                     }
                 }
             }
-        }*/
+        }
         game.getGameFrame().getEpsilon().doImpactToWall(game.getGameFrame().getWidth(), game.getGameFrame().getHeight());
 
     }
@@ -340,18 +340,6 @@ public class GameLoop extends Thread{
                     game.getGameFrame().repaint();
                     break;
                 }
-            }
-        }
-    }
-    private void checkTheIntersectionToEpsilon(){
-        int index = 0;
-
-        for(Enemy enemy : waves[currentWaveIndex].getEnemies()){
-            index += 1;
-            if(currentWaveIndexEnemy < index)
-                break;
-            if(game.getIntersection().intersectsEpsilon(enemy, game.getGameFrame().getEpsilon())){
-                game.getGameFrame().getEpsilon().setHp(game.getGameFrame().getEpsilon().getHp() - 5);
             }
         }
     }

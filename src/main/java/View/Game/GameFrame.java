@@ -56,7 +56,19 @@ public class GameFrame extends JFrame {
         gamePanel.setLayout(null);
         gamePanel.setOpaque(false);
 
-       //gamePanel.add(exitButton);
+        exitButton = new JButton("exit");
+        exitButton.setBounds(340, 0, 70, 30);
+        exitButton.setForeground(Color.WHITE);
+        exitButton.setBackground(Color.black);
+        exitButton.setOpaque(false);
+        gamePanel.add(exitButton);
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                Constant.setIsRunning(false);
+            }
+        });
         panel.add(gamePanel);
         panel.add(epsilon);
         gamePanel.repaint();

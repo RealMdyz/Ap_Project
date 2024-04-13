@@ -12,6 +12,8 @@ public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveab
         super(x, y, 15, 2, 5, 3);
         this.setHeight(Constant.getHeightOfTrighrath());
         this.setWidth(Constant.getWidthOfTrighrath());
+        this.setxCenter(this.getX() + (int)this.getWidth() / 2);
+        this.setyCenter(this.getY() + (int)this.getHeight() / 2);
         setSize(Constant.getWidthOfTrighrath(), Constant.getHeightOfTrighrath());
         background = MyProjectData.getProjectData().getTriGorath();
     }
@@ -30,7 +32,7 @@ public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveab
         double angle = Math.atan2(dy, dx);
 
         // Convert angle to velocity components
-        double speed = Constant.getSpeedOfTrighrath() - Math.log(Math.log(dis)) ; // Adjust speed as needed
+        double speed = Constant.getSpeedOfTrighrath() / Math.log(2 * Math.log(dis)) ; // Adjust speed as needed
         double vx = speed * Math.cos(angle);
         double vy = speed * Math.sin(angle);
 
@@ -51,14 +53,16 @@ public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveab
     @Override
     public void move(int xLimit, int yLimit) {
 
-
         double t = ((double)System.currentTimeMillis() - (double)this.getImpactTime()) / 1000;
-        t = Math.max(0, t);
-        double x = (this.getxVelocityImpact()) * (1 - t);
-        double y = ((this.getyVelocityImpact())) * (1 - t);
-
-        this.setxVelocity(this.getxVelocity() + (int)x);
-        this.setyVelocity(this.getyVelocity() + (int)y);
+        t = Math.max(0, (1 - t));
+        double x = (this.getxVelocityImpact()) * (t * t);
+        double y = ((this.getyVelocityImpact())) * (t * t);
+        int vx = this.getxVelocity();
+        int vy = this.getyVelocity();
+        if(t != 0){
+            this.setxVelocity((int)x);
+            this.setyVelocity((int)y);
+        }
 
         if(this.getX() <= 0  && this.getxVelocity() > 0)
             this.setX(this.getX() + this.getxVelocity());
@@ -73,9 +77,10 @@ public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveab
         else if(this.getY() >= 0 && this.getY() <= yLimit - this.getHeight() - 10)
             this.setY(this.getY() + this.getyVelocity());
 
-        this.setxVelocity(this.getxVelocity() - (int)x);
-        this.setyVelocity(this.getyVelocity() - (int)y);
-
+        if(t != 0){
+            this.setxVelocity(vx);
+            this.setyVelocity(vy);
+        }
 
     }
 

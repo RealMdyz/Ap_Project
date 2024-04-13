@@ -7,7 +7,9 @@ public class ObjectsInGame extends JLabel {
 
 
     private int x;
+    private int xCenter;
     private int y;
+    private int yCenter;
     private int hp = 10;
     private int width;
     private int height;
@@ -27,24 +29,39 @@ public class ObjectsInGame extends JLabel {
 
     }
 
+
+
     public void doImpact(int xImpact, int yImpact) {
+        this.setxCenter(this.getX() + (int)this.getWidth() / 2);
+        this.setyCenter(this.getY() + (int)this.getHeight() / 2);
         // Calculate the direction vector from the impact point to the object's position
-        double dx = getX() - xImpact;
-        double dy = getY() - yImpact;
+        double dx = getxCenter() - xImpact;
+        double dy = getyCenter() - yImpact;
 
         // Calculate the distance from the impact point to the object's position
         double distance = Math.sqrt(dx * dx + dy * dy);
 
         // Adjust speed as needed
         double speed = Constant.getSpeedOfImpact();
+        double vx, vy;
+        vx = 0;
+        vy = 0;
+        // Calculate the impact percentage using sigmoid function
+        double impactPercentage = 1 / (1 + Math.exp(-Constant.ALPHA * (distance - (double) Constant.MAX_DISTANCE / 2)));
+        if(distance < 200){
+            vx = speed * dx / distance * impactPercentage;
+            vy = speed * dy / distance * impactPercentage;
+        }
+        // Adjust velocity based on impact percentage
 
-        // Calculate the velocity components based on the distance
-        double vx = speed * dx / distance;
-        double vy = speed * dy / distance;
+
         impactTime = System.currentTimeMillis();
         setxVelocityImpact(vx);
         setyVelocityImpact(vy);
+        System.out.println(distance + " " + hp);
     }
+
+
 
 
 
@@ -132,5 +149,21 @@ public class ObjectsInGame extends JLabel {
 
     public void setImpactTime(long impactTime) {
         this.impactTime = impactTime;
+    }
+
+    public int getxCenter() {
+        return xCenter;
+    }
+
+    public void setxCenter(int xCenter) {
+        this.xCenter = xCenter;
+    }
+
+    public int getyCenter() {
+        return yCenter;
+    }
+
+    public void setyCenter(int yCenter) {
+        this.yCenter = yCenter;
     }
 }
