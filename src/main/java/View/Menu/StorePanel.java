@@ -1,6 +1,7 @@
 package View.Menu;
 
 import Models.Constant;
+import Models.Enemy.EnemyWave;
 import Models.Epsilon.Epsilon;
 
 import javax.swing.*;
@@ -13,6 +14,9 @@ public class StorePanel extends JFrame implements ActionListener {
     JLabel xpLabel;
     MessagePanel messagePanel;
     Epsilon epsilon;
+
+    public boolean newImpact = false;
+    public int newImpactX, newImpactY;
     public StorePanel(Constant constant, Epsilon epsilon){
         this.constant = constant;
         this.epsilon = epsilon;
@@ -81,14 +85,18 @@ public class StorePanel extends JFrame implements ActionListener {
 
         switch (actionCommand) {
             case "Buy O' Hephaestus (100 XP)":
-                if (Constant.getPlayerXP() >= 100) {
+                if (Constant.getPlayerXP() >= 0) {
                     // Perform the purchase
-                    Constant.setPlayerXP(Constant.getPlayerXP() - 100);
+                    Constant.setPlayerXP(Constant.getPlayerXP() - 0);
                     // Implement the action for O' Hephaestus
                     // For example:
                     // gameFrame.activateOhephaestus();
+                    newImpact = true;
+                    newImpactX = epsilon.getxCenter();
+                    newImpactY = epsilon.getyCenter();
                     Constant.setOpenStore(false);
-                } else {
+                }
+                else {
                     JOptionPane.showMessageDialog(this, "Not enough XP to buy O' Hephaestus!");
                     Constant.setOpenStore(false);
                 }

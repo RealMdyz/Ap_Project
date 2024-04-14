@@ -9,7 +9,7 @@ public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveab
     Constant constant;
 
     public Trigorath(int x, int y) {
-        super(x, y, 15, 2, 5, 3);
+        super(x, y, 15, 2, 5, 3, 10);
         this.setHeight(Constant.getHeightOfTrighrath());
         this.setWidth(Constant.getWidthOfTrighrath());
         this.setxCenter(this.getX() + (int)this.getWidth() / 2);
@@ -31,15 +31,23 @@ public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveab
         // Calculate the angle in radians
         double angle = Math.atan2(dy, dx);
 
+        // Adjust speed based on distance using a sigmoid function
+        double maxSpeed = Constant.getSpeedOfTrighrath();
+        double minSpeed = maxSpeed / 2; // Adjust this value as needed
+        double epsilonThreshold = 100; // Adjust this value as needed
+
+        double sigmoidArg = (dis - epsilonThreshold) / (epsilonThreshold / 3); // Adjust this value as needed for the steepness of the sigmoid
+        double speed = minSpeed + (maxSpeed - minSpeed) * (1 / (1 + Math.exp(-sigmoidArg)));
+
         // Convert angle to velocity components
-        double speed = Constant.getSpeedOfTrighrath() / Math.log(2 * Math.log(dis)) ; // Adjust speed as needed
         double vx = speed * Math.cos(angle);
         double vy = speed * Math.sin(angle);
 
-        // Set the velocity based on the direction (adjust speed according to your game's requirement)// Adjust speed as needed
-        setxVelocity((int)(vx));
-        setyVelocity((int)(vy));
+        // Set the velocity based on the direction
+        setxVelocity((int) vx);
+        setyVelocity((int) vy);
     }
+
 
     @Override
     public void aggression() {

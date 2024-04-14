@@ -31,7 +31,7 @@ public class ObjectsInGame extends JLabel {
 
 
 
-    public void doImpact(int xImpact, int yImpact) {
+    public void doImpact(int xImpact, int yImpact,  int dis) {
         this.setxCenter(this.getX() + (int)this.getWidth() / 2);
         this.setyCenter(this.getY() + (int)this.getHeight() / 2);
         // Calculate the direction vector from the impact point to the object's position
@@ -48,17 +48,18 @@ public class ObjectsInGame extends JLabel {
         vy = 0;
         // Calculate the impact percentage using sigmoid function
         double impactPercentage = 1 / (1 + Math.exp(-Constant.ALPHA * (distance - (double) Constant.MAX_DISTANCE / 2)));
-        if(distance < 200){
+        if(distance < dis){
             vx = speed * dx / distance * impactPercentage;
             vy = speed * dy / distance * impactPercentage;
+            impactTime = System.currentTimeMillis();
         }
         // Adjust velocity based on impact percentage
 
 
-        impactTime = System.currentTimeMillis();
+
         setxVelocityImpact(vx);
         setyVelocityImpact(vy);
-        System.out.println(distance + " " + hp);
+       // System.out.println(distance + " " + hp);
     }
 
 

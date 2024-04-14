@@ -97,8 +97,16 @@ public class InputListener {
         actionMap.put("ability", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(System.currentTimeMillis());
-                Constant.setAbilityStartTime(System.currentTimeMillis());
+                if(Constant.getPlayerXP() >= 100 && System.currentTimeMillis() - Constant.getAbilityStartTime() > 5 * 60000){
+                    System.out.println(System.currentTimeMillis());
+                    Constant.setAbilityStartTime(System.currentTimeMillis());
+                    Constant.setPlayerXP(Constant.getPlayerXP() - 100);
+                    Constant.setqPressed(true);
+                }
+                else{
+                    JOptionPane.showMessageDialog(gameFrame, "Not enough XP to do your ability!");
+
+                }
             }
         });
 

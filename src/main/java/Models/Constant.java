@@ -36,6 +36,7 @@ public class Constant {
     private static int speedOfImpact = 10;
     private static int savedXp;
 
+    private static boolean qPressed = false;
     public Constant(){
         savedXp = 0;
         File file = new File("gameData");
@@ -288,5 +289,13 @@ public class Constant {
 
     public static void setSavedXp(int savedXp) {
         Constant.savedXp = savedXp;
+    }
+
+    public static boolean isqPressed() {
+        return qPressed;
+    }
+
+    public static void setqPressed(boolean qPressed) {
+        Constant.qPressed = qPressed;
     }
 }

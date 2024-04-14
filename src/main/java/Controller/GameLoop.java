@@ -40,9 +40,9 @@ public class GameLoop extends Thread{
     public void run() {
         startOfGame = System.currentTimeMillis();
         waves = new EnemyWave[3];
-        waves[0] = new EnemyWave((int)(Constant.getLevel() / 15) + 1 , 3 * (100 - Constant.getLevel()) * 8 + 800 ); // 3 enemies, 1 second delay
-        waves[1] = new EnemyWave((int)(Constant.getLevel() / 10) + 1, 2 * (100 - Constant.getLevel()) * 4 + 400);  // 5 enemies, 0.8 second delay
-        waves[2] = new EnemyWave((int)(Constant.getLevel() / 5) + 1, (100 - Constant.getLevel()) * 2 + 200);  // 7 enemies, 0.6 second delay
+        waves[0] = new EnemyWave((int)(Constant.getLevel() / 8) + 1 , 3 * (100 - Constant.getLevel()) * 8 + 1000 ); // 3 enemies, 1 second delay
+        waves[1] = new EnemyWave((int)(Constant.getLevel() / 6) + 1, 2 * (100 - Constant.getLevel()) * 4 + 500);  // 5 enemies, 0.8 second delay
+        waves[2] = new EnemyWave((int)(Constant.getLevel() / 5) + 1, (100 - Constant.getLevel()) * 2 + 250);  // 7 enemies, 0.6 second delay
         currentWaveIndex = 0;
         currentWaveIndexEnemy = 0;
         // Start the timer for smooth size reduction
@@ -54,6 +54,18 @@ public class GameLoop extends Thread{
             else{
                 store();
                 game.getStorePanel().setXpLabel();
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                if(game.getStorePanel().newImpact){
+                    doImpact(game.getStorePanel().newImpactX, game.getStorePanel().newImpactY, 200);
+                    game.getStorePanel().newImpact = false;
+                    game.getStorePanel().newImpactX = 0;
+                    game.getStorePanel().newImpactY = 0;
+                }
+
             }
         }
         game.getMusicPlayer().stop();
@@ -66,7 +78,8 @@ public class GameLoop extends Thread{
             game.endGame();
             Constant.setIsRunning(false);
         }
-        if(game.getGameFrame().getEpsilon().getHp() < 100 && Epsilon.isWriteOfAceso() && System.currentTimeMillis() - game.getGameFrame().getEpsilon().getPrevAceso() > 1000){
+        long t = System.currentTimeMillis();
+        if(game.getGameFrame().getEpsilon().getHp() < 100 && Epsilon.isWriteOfAceso() && t - game.getGameFrame().getEpsilon().getPrevAceso() > 1000 && Constant.isqPressed()){
             game.getGameFrame().getEpsilon().setHp(game.getGameFrame().getEpsilon().getHp() + 1);
             game.getGameFrame().getEpsilon().setPrevAceso(System.currentTimeMillis());
         }
@@ -75,15 +88,21 @@ public class GameLoop extends Thread{
         if(game.getInputListener().getxMousePress() != -1 || game.getInputListener().getyMousePress() != -1){
             Shot shot = new Shot(game.getGameFrame().getEpsilon().getX(), game.getGameFrame().getEpsilon().getY());
             shot.setV(game.getInputListener().getxMousePress(), game.getInputListener().getyMousePress());
+            if(Constant.isqPressed())
+                shot.setPower(5 + Epsilon.getLevelOfWritOfAres());
             game.getGameFrame().getShots().add(shot);
             game.getGameFrame().getGamePanel().add(shot);
             if(System.currentTimeMillis() - game.getGameFrame().getEpsilon().getStartOfAthena() < 10000){
                 Shot shot1 = new Shot(game.getGameFrame().getEpsilon().getX(), game.getGameFrame().getEpsilon().getY());
                 shot1.setV(game.getInputListener().getxMousePress() + 20, game.getInputListener().getyMousePress() + 20);
+                if(Constant.isqPressed())
+                    shot1.setPower(5 + Epsilon.getLevelOfWritOfAres());
                 game.getGameFrame().getShots().add(shot1);
                 game.getGameFrame().getGamePanel().add(shot1);
                 Shot shot2 = new Shot(game.getGameFrame().getEpsilon().getX(), game.getGameFrame().getEpsilon().getY());
                 shot2.setV(game.getInputListener().getxMousePress() - 20, game.getInputListener().getyMousePress() - 20);
+                if(Constant.isqPressed())
+                    shot2.setPower(5 + Epsilon.getLevelOfWritOfAres());
                 game.getGameFrame().getShots().add(shot2);
                 game.getGameFrame().getGamePanel().add(shot2);
             }
@@ -148,6 +167,7 @@ public class GameLoop extends Thread{
         }
     }
     private void addNewEnemy(){
+        MusicPlayer.playOnce(MyProjectData.getProjectData().getEnterAnEnemy());
         int index = 0;
         for(ObjectsInGame objects : waves[currentWaveIndex].getEnemies()){
             index += 1;
@@ -168,6 +188,7 @@ public class GameLoop extends Thread{
             if(waves[currentWaveIndex].isWaveOver()){
                 currentWaveIndex += 1;
                 currentWaveIndexEnemy = 0;
+                MusicPlayer.playOnce(MyProjectData.getProjectData().getEndOfEachWaveSound());
             }
         }
     }
@@ -217,7 +238,7 @@ public class GameLoop extends Thread{
     }
     private void checkIntersection(){
         int index = 0;
-        Enemy enemy1 = new Enemy(0, 0, 1, 0, 0, 0);
+        Enemy enemy1 = new Enemy(0, 0, 1, 0, 0, 0, 0);
         Shot shot1 = new Shot(0,0 );
         for(Enemy enemy : waves[currentWaveIndex].getEnemies()){
             index += 1;
@@ -225,7 +246,7 @@ public class GameLoop extends Thread{
                 break;
             for(Shot shot : game.getGameFrame().getShots()){
                 if(game.getIntersection().checkCollision(shot, enemy) && shot.getHp() == 1){
-                    enemy.setHp(enemy.getHp() - shot.getPower() - Epsilon.getLevelOfWritOfAres());
+                    enemy.setHp(enemy.getHp() - shot.getPower());
                     shot.setHp(0);
                     shot1 = shot;
                     if(enemy.getHp() <= 0){
@@ -264,8 +285,8 @@ public class GameLoop extends Thread{
             if(index > currentWaveIndexEnemy)
                 break;
             if(game.getIntersection().intersect(game.getGameFrame().getEpsilon(), enemy)){
-                 doImpact(game.getIntersection().getIntersectionCenter(game.getGameFrame().getEpsilon(), enemy).x, game.getIntersection().getIntersectionCenter(game.getGameFrame().getEpsilon(), enemy).y);
-                 game.getGameFrame().getEpsilon().setHp(game.getGameFrame().getEpsilon().getHp() - 5);
+                 doImpact(game.getIntersection().getIntersectionCenter(game.getGameFrame().getEpsilon(), enemy).x, game.getIntersection().getIntersectionCenter(game.getGameFrame().getEpsilon(), enemy).y , 100);
+                 game.getGameFrame().getEpsilon().setHp(game.getGameFrame().getEpsilon().getHp() - enemy.getPower());
             }
             int secondIndex = 0;
             for(Enemy enemy1 : waves[currentWaveIndex].getEnemies()){
@@ -274,7 +295,7 @@ public class GameLoop extends Thread{
                     break;
                 if(secondIndex > index){
                     if(game.getIntersection().intersect(enemy1, enemy)){
-                        doImpact(game.getIntersection().getIntersectionCenter(enemy, enemy1).x, game.getIntersection().getIntersectionCenter(enemy, enemy1).y);
+                        doImpact(game.getIntersection().getIntersectionCenter(enemy, enemy1).x, game.getIntersection().getIntersectionCenter(enemy, enemy1).y, 100);
                     }
                 }
             }
@@ -282,11 +303,11 @@ public class GameLoop extends Thread{
         game.getGameFrame().getEpsilon().doImpactToWall(game.getGameFrame().getWidth(), game.getGameFrame().getHeight());
 
     }
-    private void doImpact(int x, int y){
+    private void doImpact(int x, int y, int dis){
         for(Enemy enemy : waves[currentWaveIndex].getEnemies()){
-            enemy.doImpact(x, y);
+            enemy.doImpact(x, y, dis);
         }
-        game.getGameFrame().getEpsilon().doImpact(x, y);
+        game.getGameFrame().getEpsilon().doImpact(x, y, dis);
     }
     private void updateTopPanel(){
         game.getTopPanel().updateHPLabel(game.getGameFrame().getEpsilon().getHp());

@@ -37,6 +37,9 @@ public class MyProjectData {
     }
 
     private String enemyDieSound = "Sounds/died.wav";
+    private String endOfEachWaveSound = "Sounds/fire.wav";
+    private String endOfGameSound = "Sounds/jump.wav";
+    private String enterAnEnemy = "Sounds/shoot.wav";
 
     private MyProjectData() {
 
@@ -255,5 +258,29 @@ public class MyProjectData {
 
     public void setWritOfProteus(BufferedImage writOfProteus) {
         this.writOfProteus = writOfProteus;
+    }
+
+    public String getEndOfEachWaveSound() {
+        return endOfEachWaveSound;
+    }
+
+    public void setEndOfEachWaveSound(String endOfEachWaveSound) {
+        this.endOfEachWaveSound = endOfEachWaveSound;
+    }
+
+    public String getEndOfGameSound() {
+        return endOfGameSound;
+    }
+
+    public void setEndOfGameSound(String endOfGameSound) {
+        this.endOfGameSound = endOfGameSound;
+    }
+
+    public String getEnterAnEnemy() {
+        return enterAnEnemy;
+    }
+
+    public void setEnterAnEnemy(String enterAnEnemy) {
+        this.enterAnEnemy = enterAnEnemy;
     }
 }

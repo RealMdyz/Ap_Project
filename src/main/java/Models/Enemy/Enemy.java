@@ -7,10 +7,11 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
     private int collectibleNumber = 1;
     private int xpForEachCollectible = 5;
     private int numSides;
+    private int power = 6;
 
-
-    public Enemy(int x, int y, int hp, int collectibleNumber, int xpForEachCollectible, int numSides) {
+    public Enemy(int x, int y, int hp, int collectibleNumber, int xpForEachCollectible, int numSides, int power) {
         super(x, y, hp);
+        this.power = power;
         this.numSides = numSides;
         this.collectibleNumber = collectibleNumber;
         this.xpForEachCollectible = xpForEachCollectible;
@@ -55,5 +56,11 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
         this.numSides = numSides;
     }
 
+    public int getPower() {
+        return power;
+    }
 
+    public void setPower(int power) {
+        this.power = power;
+    }
 }

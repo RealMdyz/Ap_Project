@@ -2,6 +2,7 @@ package Models;
 
 import Controller.Intersection;
 import Models.Epsilon.Epsilon;
+import MyProject.MyProjectData;
 import View.Game.GameFrame;
 import View.Game.InputListener;
 import View.Menu.LoginPageShare;
@@ -132,5 +133,7 @@ public class Game {
         Constant.setSavedXp(savedXp +  Constant.getPlayerXP());
         // TODO;
         Constant.setPlayerXP(0);
+        Constant.setqPressed(false);
+        MusicPlayer.playOnce(MyProjectData.getProjectData().getEndOfGameSound());
     }
 }

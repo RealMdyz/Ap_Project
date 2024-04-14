@@ -6,13 +6,15 @@ import Models.ObjectsInGame;
 import MyProject.MyProjectData;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Epsilon extends ObjectsInGame implements Moveable {
 
     public static int levelOfWritOfAres = 0;
-    public static int levelOfWritOfProteus = 0;
+    public static int levelOfWritOfProteus = 1;
     public static boolean writeOfAceso = false;
     private long prevAceso = 0;
+    private ArrayList<Vertex> vertices = new ArrayList<>();
 
     private long startOfAthena = 0;
     private int radius = 35;
@@ -25,6 +27,7 @@ public class Epsilon extends ObjectsInGame implements Moveable {
         this.setyCenter(this.getY() + (int)this.getHeight() / 2);
         setSize(this.getWidth(), this.getHeight());
         background = MyProjectData.getProjectData().getEpsilonCircle();
+        addVertex();
     }
 
     @Override
@@ -34,10 +37,11 @@ public class Epsilon extends ObjectsInGame implements Moveable {
         g2D.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
     }
 
+
     @Override
     public void move(int xLimit, int yLimit) {
 
-        System.out.println(getxCenter() + " " + getyCenter());
+      //  System.out.println(getxCenter() + " " + getyCenter());
         double t = ((double)System.currentTimeMillis() - (double)this.getImpactTime()) / 1000;
         t = Math.max(0, (1 - t));
         double x = (this.getxVelocityImpact()) * (t);
@@ -45,6 +49,12 @@ public class Epsilon extends ObjectsInGame implements Moveable {
 
         this.setxVelocity(this.getxVelocity() + (int)x);
         this.setyVelocity(this.getyVelocity() + (int)y);
+
+        for(Vertex vertex : vertices){
+            vertex.setxVelocity(this.getxVelocity());
+            vertex.setyVelocity(this.getyVelocity());
+            vertex.move(xLimit, yLimit);
+        }
 
         if(this.getX() <= 0  && this.getxVelocity() > 0)
             this.setX(this.getX() + this.getxVelocity());
@@ -87,6 +97,16 @@ public class Epsilon extends ObjectsInGame implements Moveable {
             setyVelocityImpact(vy);
         }
     }
+    public void addVertex(){
+        System.out.println(levelOfWritOfProteus);
+        double angleBetweenVertices = 2 * Math.PI / levelOfWritOfProteus;
+        for (int i = 0; i < levelOfWritOfProteus; i++) {
+            double angle = i * angleBetweenVertices;
+            int vx = (int) (getX() + radius * Math.cos(angle));
+            int vy = (int) (getY() + radius * Math.sin(angle));
+            vertices.add(new Vertex(vx, vy));
+        }
+    }
 
     public static int getLevelOfWritOfAres() {
         return levelOfWritOfAres;
@@ -103,8 +123,6 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     public static void setLevelOfWritOfProteus(int levelOfWritOfProteus) {
         Epsilon.levelOfWritOfProteus = levelOfWritOfProteus;
     }
-
-
     public static boolean isWriteOfAceso() {
         return writeOfAceso;
     }
@@ -135,5 +153,16 @@ public class Epsilon extends ObjectsInGame implements Moveable {
 
     public void setRadius(int radius) {
         this.radius = radius;
+    }
+    public void clearVertices() {
+        vertices.clear();
+    }
+
+    public ArrayList<Vertex> getVertices() {
+        return vertices;
+    }
+
+    public void setVertices(ArrayList<Vertex> vertices) {
+        this.vertices = vertices;
     }
 }
