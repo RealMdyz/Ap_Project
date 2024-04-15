@@ -6,6 +6,7 @@ import Models.Enemy.EnemyWave;
 import Models.Epsilon.Collectible;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
+import Models.Epsilon.Vertex;
 import Models.Game;
 import Models.ObjectsInGame;
 import MyProject.MyProjectData;
@@ -32,6 +33,7 @@ public class GameLoop extends Thread{
     private boolean panelReduced = false;
     private boolean epsilonIncrease = false;
     private boolean panelReducedInEnd = false;
+    private boolean addVertex = true;
 
     public GameLoop(Game game, Constant constant){
         this.constant = constant;
@@ -82,6 +84,14 @@ public class GameLoop extends Thread{
         if(game.getGameFrame().getEpsilon().getHp() < 100 && Epsilon.isWriteOfAceso() && t - game.getGameFrame().getEpsilon().getPrevAceso() > 1000 && Constant.isqPressed()){
             game.getGameFrame().getEpsilon().setHp(game.getGameFrame().getEpsilon().getHp() + 1);
             game.getGameFrame().getEpsilon().setPrevAceso(System.currentTimeMillis());
+        }
+        if(addVertex && Constant.isqPressed()){
+            for(Vertex vertex : game.getGameFrame().getEpsilon().getVertices()){
+                game.getGameFrame().addToGamePanel(vertex);
+               // System.out.println(vertex.getX() + " " + vertex.getY());
+               // System.out.println(game.getGameFrame().getEpsilon().getVertices().size());
+            }
+            addVertex = false;
         }
         game.getGameFrame().getEpsilon().move(game.getGameFrame().getWidth(), game.getGameFrame().getHeight());
         game.getGameFrame().repaint();
@@ -280,10 +290,29 @@ public class GameLoop extends Thread{
     }
     private void checkTheImpact(){
         int index = 0;
+        Enemy enemy12 = new Enemy(0, 0, 1, 0, 0, 0, 0);
+
         for(Enemy enemy : waves[currentWaveIndex].getEnemies()){
             index += 1;
             if(index > currentWaveIndexEnemy)
                 break;
+            if(Constant.isqPressed()){ // Thhiiiiiiiiiiiiiis Where!!
+                for(Vertex vertex : game.getGameFrame().getEpsilon().getVertices()){
+                    if(game.getIntersection().intersect(vertex, enemy)){
+                        doImpact(vertex.getxCenter(),vertex.getyCenter(), 100);
+                        enemy.setHp(enemy.getHp() - 10);
+                        if(enemy.getHp() <= 0){
+                            enemy12 = enemy;
+                            game.getGameFrame().remove(enemy);
+                            game.getGameFrame().addNewCollectoble(enemy);
+                            MusicPlayer.playOnce(MyProjectData.getProjectData().getEnemyDieSound());
+                            game.getGameFrame().revalidate();
+                            game.getGameFrame().repaint();
+                            currentWaveIndexEnemy -= 1;
+                        }
+                    }
+                }
+            }
             if(game.getIntersection().intersect(game.getGameFrame().getEpsilon(), enemy)){
                  doImpact(game.getIntersection().getIntersectionCenter(game.getGameFrame().getEpsilon(), enemy).x, game.getIntersection().getIntersectionCenter(game.getGameFrame().getEpsilon(), enemy).y , 100);
                  game.getGameFrame().getEpsilon().setHp(game.getGameFrame().getEpsilon().getHp() - enemy.getPower());
@@ -300,6 +329,8 @@ public class GameLoop extends Thread{
                 }
             }
         }
+        waves[currentWaveIndex].getEnemies().remove(enemy12);
+        game.getGameFrame().repaint();
         game.getGameFrame().getEpsilon().doImpactToWall(game.getGameFrame().getWidth(), game.getGameFrame().getHeight());
 
     }

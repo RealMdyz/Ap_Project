@@ -98,13 +98,13 @@ public class Epsilon extends ObjectsInGame implements Moveable {
         }
     }
     public void addVertex(){
-        System.out.println(levelOfWritOfProteus);
+        //System.out.println(levelOfWritOfProteus);
         double angleBetweenVertices = 2 * Math.PI / levelOfWritOfProteus;
         for (int i = 0; i < levelOfWritOfProteus; i++) {
             double angle = i * angleBetweenVertices;
             int vx = (int) (getX() + radius * Math.cos(angle));
             int vy = (int) (getY() + radius * Math.sin(angle));
-            vertices.add(new Vertex(vx, vy));
+            vertices.add(new Vertex( vx, vy));
         }
     }
 

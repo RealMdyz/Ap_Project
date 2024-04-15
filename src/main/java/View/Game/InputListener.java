@@ -53,41 +53,47 @@ public class InputListener {
     private void createKeyActions() {
 
         // Key Press Action:
-        actionMap.put("moveUp", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                y = -1;
-                epsilon.setyVelocity(y * (int)(Constant.getSensitivityForMoves() / 10 - 1));
-            }
-        });
-
-        actionMap.put("moveDown", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                y = 1;
-                epsilon.setyVelocity(y * (int)(Constant.getSensitivityForMoves() / 10 + 1));
-
-
-            }
-        });
-
         actionMap.put("moveLeft", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                x =  -1;
-                epsilon.setxVelocity(x * (int)(Constant.getSensitivityForMoves() / 10 - 1));
-
+                if (!(isKeyPressed(KeyEvent.VK_D) && !isKeyPressed(KeyEvent.VK_A))) {
+                    x = -1;
+                    epsilon.setxVelocity(x * (int)(Constant.getSensitivityForMoves() / 10 - 1));
+                }
             }
         });
 
         actionMap.put("moveRight", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                x = 1;
-                epsilon.setxVelocity(x * (int)(Constant.getSensitivityForMoves() / 10 + 1));
-
+                if (!(isKeyPressed(KeyEvent.VK_A) && !isKeyPressed(KeyEvent.VK_D))) {
+                    x = 1;
+                    epsilon.setxVelocity(x * (int)(Constant.getSensitivityForMoves() / 10 + 1));
+                }
             }
         });
+
+        actionMap.put("moveUp", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!(isKeyPressed(KeyEvent.VK_S) && !isKeyPressed(KeyEvent.VK_W))) {
+                    y = -1;
+                    epsilon.setyVelocity(y * (int)(Constant.getSensitivityForMoves() / 10 - 1));
+                }
+            }
+        });
+
+        actionMap.put("moveDown", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!(isKeyPressed(KeyEvent.VK_W) && !isKeyPressed(KeyEvent.VK_S))) {
+                    y = 1;
+                    epsilon.setyVelocity(y * (int)(Constant.getSensitivityForMoves() / 10 + 1));
+                }
+            }
+        });
+
+
         actionMap.put("bStore", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -98,14 +104,16 @@ public class InputListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(Constant.getPlayerXP() >= 100 && System.currentTimeMillis() - Constant.getAbilityStartTime() > 5 * 60000){
-                    System.out.println(System.currentTimeMillis());
+                    //System.out.println(System.currentTimeMillis());
                     Constant.setAbilityStartTime(System.currentTimeMillis());
                     Constant.setPlayerXP(Constant.getPlayerXP() - 100);
                     Constant.setqPressed(true);
                 }
+                else if(System.currentTimeMillis() - Constant.getAbilityStartTime() > 5 * 60000){
+                    JOptionPane.showMessageDialog(gameFrame, "Not enough XP to do your ability!");
+                }
                 else{
                     JOptionPane.showMessageDialog(gameFrame, "Not enough XP to do your ability!");
-
                 }
             }
         });
@@ -163,6 +171,11 @@ public class InputListener {
                 yMousePress = mousePoint.y;
             }
         });
+    }
+
+    private boolean isKeyPressed(int keyCode) {
+        //return false;
+       return inputMap.get(KeyStroke.getKeyStroke(keyCode, 0)) != null;
     }
 
     public int getyMousePress() {

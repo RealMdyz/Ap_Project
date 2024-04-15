@@ -15,11 +15,13 @@ public class MyProjectData {
     protected BufferedImage squarAntine ;
     protected BufferedImage triGorath ;
     protected BufferedImage epsilonCircle ;
+    protected BufferedImage vertexOnEpsilon;
     protected BufferedImage shot;
     protected BufferedImage collectible;
     protected BufferedImage writOfAceso;
     protected BufferedImage writOfAres;
     protected BufferedImage writOfProteus;
+
 
     protected Font font10;
     protected Font font12;
@@ -117,6 +119,13 @@ public class MyProjectData {
             throw new RuntimeException(e);
         }
 
+        try {
+            String pathBackground = "Epsilon/circle.png";
+            File fileBackground = new File(pathBackground);
+            vertexOnEpsilon = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     private void importFonts() {
 
@@ -282,5 +291,13 @@ public class MyProjectData {
 
     public void setEnterAnEnemy(String enterAnEnemy) {
         this.enterAnEnemy = enterAnEnemy;
+    }
+
+    public BufferedImage getVertexOnEpsilon() {
+        return vertexOnEpsilon;
+    }
+
+    public void setVertexOnEpsilon(BufferedImage vertexOnEpsilon) {
+        this.vertexOnEpsilon = vertexOnEpsilon;
     }
 }

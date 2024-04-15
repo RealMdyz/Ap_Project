@@ -5,6 +5,7 @@ import Models.Enemy.Enemy;
 import Models.Epsilon.Collectible;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
+import Models.ObjectsInGame;
 import MyProject.MyProjectData;
 import View.Menu.TopPanel;
 
@@ -109,6 +110,11 @@ public class GameFrame extends JFrame {
         gamePanel.revalidate();
         gamePanel.repaint();
 
+    }
+    public void addToGamePanel(ObjectsInGame object){
+        gamePanel.add(object);
+        gamePanel.repaint();
+       // System.out.println("Hello");
     }
 
     public JPanel getGamePanel() {

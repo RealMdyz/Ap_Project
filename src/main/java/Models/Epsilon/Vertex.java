@@ -2,25 +2,33 @@ package Models.Epsilon;
 
 import Models.Moveable;
 import Models.ObjectsInGame;
+import MyProject.MyProjectData;
 
 import java.awt.*;
 
 public class Vertex extends ObjectsInGame implements Moveable {
     private int x;
     private int y;
-    private Color color; // رنگ راس
+    private Color color;
 
     public Vertex(int x, int y) {
-        super(x, y, 0);
+        super(x + 28, y + 28, 1);
         this.x = x;
         this.y = y;
+        this.setHeight(15);
+        this.setWidth(15);
+        this.setxCenter(this.getX() + (int)this.getWidth() / 2);
+        this.setyCenter(this.getY() + (int)this.getHeight() / 2);
+        setSize(this.getWidth(), this.getHeight());
         this.color = Color.RED;
+        background = MyProjectData.getProjectData().getVertexOnEpsilon();
     }
 
-
-    public void draw(Graphics g) {
-        g.setColor(color);
-        g.fillOval(x - 5, y - 5, 10, 10);
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2D = (Graphics2D) g;
+        g2D.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
     }
 
     public void setColor(Color color) {
