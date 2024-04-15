@@ -27,7 +27,6 @@ public class Epsilon extends ObjectsInGame implements Moveable {
         this.setyCenter(this.getY() + (int)this.getHeight() / 2);
         setSize(this.getWidth(), this.getHeight());
         background = MyProjectData.getProjectData().getEpsilonCircle();
-        addVertex();
     }
 
     @Override

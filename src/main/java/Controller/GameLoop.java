@@ -87,6 +87,7 @@ public class GameLoop extends Thread{
             game.getGameFrame().getEpsilon().setPrevAceso(System.currentTimeMillis());
         }
         if(addVertex && Constant.isqPressed()){
+            game.getGameFrame().getEpsilon().addVertex();
             for(Vertex vertex : game.getGameFrame().getEpsilon().getVertices()){
                 game.getGameFrame().addToGamePanel(vertex);
                // System.out.println(vertex.getX() + " " + vertex.getY());

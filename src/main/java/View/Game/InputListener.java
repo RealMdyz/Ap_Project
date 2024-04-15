@@ -56,40 +56,36 @@ public class InputListener {
         actionMap.put("moveLeft", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!(isKeyPressed(KeyEvent.VK_D) && !isKeyPressed(KeyEvent.VK_A))) {
+
                     x = -1;
-                    epsilon.setxVelocity(x * (int)(Constant.getSensitivityForMoves() / 10 - 1));
-                }
+                    epsilon.setxVelocity(  (-(int)(Constant.getSensitivityForMoves() / 10) - 1));
+
             }
         });
 
         actionMap.put("moveRight", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!(isKeyPressed(KeyEvent.VK_A) && !isKeyPressed(KeyEvent.VK_D))) {
                     x = 1;
-                    epsilon.setxVelocity(x * (int)(Constant.getSensitivityForMoves() / 10 + 1));
-                }
+                    epsilon.setxVelocity((int)(Constant.getSensitivityForMoves() / 10) + 1);
             }
         });
 
         actionMap.put("moveUp", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!(isKeyPressed(KeyEvent.VK_S) && !isKeyPressed(KeyEvent.VK_W))) {
                     y = -1;
-                    epsilon.setyVelocity(y * (int)(Constant.getSensitivityForMoves() / 10 - 1));
-                }
+                    epsilon.setyVelocity((- (int)(Constant.getSensitivityForMoves() / 10)- 1));
+
             }
         });
 
         actionMap.put("moveDown", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!(isKeyPressed(KeyEvent.VK_W) && !isKeyPressed(KeyEvent.VK_S))) {
                     y = 1;
-                    epsilon.setyVelocity(y * (int)(Constant.getSensitivityForMoves() / 10 + 1));
-                }
+                    epsilon.setyVelocity(( + (int)(Constant.getSensitivityForMoves() / 10) + 1));
+
             }
         });
 

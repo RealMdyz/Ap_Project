@@ -12,7 +12,7 @@ public class Vertex extends ObjectsInGame implements Moveable {
     private Color color;
 
     public Vertex(int x, int y) {
-        super(x , y, 1);
+        super(x + 28, y + 28, 1);
         this.x = x;
         this.y = y;
         this.setHeight(15);
