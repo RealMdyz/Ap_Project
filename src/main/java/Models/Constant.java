@@ -29,7 +29,7 @@ public class Constant {
     private static int speedOfShot = 15;
     private static int widthOfTrighrath = 50;
     private static int heightOfTrighrath = 50;
-    private static int speedOfTrighrath = 5;
+    private static int speedOfTrighrath = 7;
     private static int widthOfSquarantine = 50;
     private static int heightOfSquarantine = 50;
     private static int speedOfSquarantine  = 5;

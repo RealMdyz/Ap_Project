@@ -4,6 +4,7 @@ import Models.Constant;
 import Models.ObjectsInGame;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class EnemyWave {
     private ArrayList<Enemy> enemies = new ArrayList<>();
@@ -16,11 +17,14 @@ public class EnemyWave {
         this.waveOver = false;
         for (int i = 0; i < numEnemies; i++) {
             // Add Enemy to enemies;
+            Random random = new Random();
+            int xRandom = random.nextInt() % 350;
+            int yRandom = random.nextInt() % 350;
             if(i % 2 == 0){
-                enemies.add(new Squarantine(numEnemies *  Constant.getWidthOfTrighrath(), Constant.getHeightOfTrighrath() * i + Constant.getHeightOfTrighrath()));
+                enemies.add(new Squarantine(Constant.getWidthOfTrighrath() * (random.nextInt() % 5) + xRandom, Constant.getHeightOfTrighrath() * i + Constant.getHeightOfTrighrath() + yRandom));
             }
             else {
-                enemies.add(new Trigorath(numEnemies * Constant.getWidthOfSquarantine(),  Constant.getHeightOfSquarantine() * i + Constant.getHeightOfSquarantine()));
+                enemies.add(new Trigorath(Constant.getWidthOfTrighrath() * (random.nextInt() % 5) + xRandom, Constant.getHeightOfTrighrath() * i + Constant.getHeightOfTrighrath() + yRandom));
             }
         }
     }
