@@ -85,9 +85,9 @@ public class StorePanel extends JFrame implements ActionListener {
 
         switch (actionCommand) {
             case "Buy O' Hephaestus (100 XP)":
-                if (Constant.getPlayerXP() >= 0) {
+                if (Constant.getPlayerXP() >= 100) {
                     // Perform the purchase
-                    Constant.setPlayerXP(Constant.getPlayerXP() - 0);
+                    Constant.setPlayerXP(Constant.getPlayerXP() - 100);
                     // Implement the action for O' Hephaestus
                     // For example:
                     // gameFrame.activateOhephaestus();

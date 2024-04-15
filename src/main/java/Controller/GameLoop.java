@@ -62,10 +62,11 @@ public class GameLoop extends Thread{
                     throw new RuntimeException(e);
                 }
                 if(game.getStorePanel().newImpact){
-                    doImpact(game.getStorePanel().newImpactX, game.getStorePanel().newImpactY, 200);
+                    doImpact(game.getStorePanel().newImpactX, game.getStorePanel().newImpactY, 500);
                     game.getStorePanel().newImpact = false;
                     game.getStorePanel().newImpactX = 0;
                     game.getStorePanel().newImpactY = 0;
+
                 }
 
             }
