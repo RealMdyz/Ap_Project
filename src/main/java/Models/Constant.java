@@ -2,11 +2,16 @@ package Models;
 
 import Models.Epsilon.Epsilon;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Scanner;
+import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class Constant {
 
@@ -21,10 +26,8 @@ public class Constant {
     private static int playerXP = 0;
     private static boolean isRunning;
     private static int sound = 10;
-    private static char keyForMoveUp = 'W';
-    private static char keyForMoveDown = 'S';
-    private static char keyForMoveLeft = 'A';
-    private static char keyForMoveRight = 'D';
+
+    private Map<String, Integer> keyMap;
     private static boolean openStore = false;
     private static int speedOfShot = 15;
     private static int widthOfTrighrath = 50;
@@ -36,9 +39,26 @@ public class Constant {
     private static int speedOfImpact = 10;
     private static int savedXp;
 
+    private int upKey, downKey, leftKey, rightKey, abilityKey, storeKey;
+
     private static boolean qPressed = false;
     public Constant(){
         savedXp = 0;
+
+        keyMap = new HashMap<>();
+        keyMap.put("Left", KeyEvent.VK_A);
+        leftKey = keyMap.get("Left");
+        keyMap.put("Right", KeyEvent.VK_D);
+        rightKey = keyMap.get("Right");
+        keyMap.put("Up", KeyEvent.VK_W);
+        upKey = keyMap.get("Up");
+        keyMap.put("Down", KeyEvent.VK_S);
+        downKey = keyMap.get("Down");
+        keyMap.put("OpenShop", KeyEvent.VK_B);
+        storeKey = keyMap.get("OpenShop");
+        keyMap.put("ActivateAbility", KeyEvent.VK_Q);
+        abilityKey = keyMap.get("ActivateAbility");
+
         File file = new File("gameData");
         if(!file.exists()){
             try {
@@ -130,6 +150,21 @@ public class Constant {
         }
 
     }
+    public void setKeyBindings(Map<String, Integer> keyBindings) {
+        this.keyMap = keyBindings;
+    }
+
+    public void updateKeyBindings() {
+        // Update key bindings according to your requirements
+        // For example:
+        this.upKey = keyMap.get("Up");
+        this.downKey = keyMap.get("Down");
+        this.leftKey = keyMap.get("Left");
+        this.rightKey = keyMap.get("Right");
+        this.storeKey = keyMap.get("OpenShop");
+        this.abilityKey = keyMap.get("ActivateAbility");
+    }
+
 
     public static int getLevel() {
         return level;
@@ -153,38 +188,6 @@ public class Constant {
 
     public static void setSound(int sound) {
         Constant.sound = sound;
-    }
-
-    public static char getKeyForMoveUp() {
-        return keyForMoveUp;
-    }
-
-    public static void setKeyForMoveUp(char keyForMoveUp) {
-        Constant.keyForMoveUp = keyForMoveUp;
-    }
-
-    public static char getKeyForMoveLeft() {
-        return keyForMoveLeft;
-    }
-
-    public static void setKeyForMoveLeft(char keyForMoveLeft) {
-        Constant.keyForMoveLeft = keyForMoveLeft;
-    }
-
-    public static char getKeyForMoveDown() {
-        return keyForMoveDown;
-    }
-
-    public static void setKeyForMoveDown(char keyForMoveDown) {
-        Constant.keyForMoveDown = keyForMoveDown;
-    }
-
-    public static char getKeyForMoveRight() {
-        return keyForMoveRight;
-    }
-
-    public static void setKeyForMoveRight(char keyForMoveRight) {
-        Constant.keyForMoveRight = keyForMoveRight;
     }
 
     public static int getPlayerXP() {
@@ -297,5 +300,61 @@ public class Constant {
 
     public static void setqPressed(boolean qPressed) {
         Constant.qPressed = qPressed;
+    }
+
+    public Map<String, Integer> getKeyMap() {
+        return keyMap;
+    }
+
+    public void setKeyMap(Map<String, Integer> keyMap) {
+        this.keyMap = keyMap;
+    }
+
+    public int getUpKey() {
+        return upKey;
+    }
+
+    public void setUpKey(int upKey) {
+        this.upKey = upKey;
+    }
+
+    public int getDownKey() {
+        return downKey;
+    }
+
+    public void setDownKey(int downKey) {
+        this.downKey = downKey;
+    }
+
+    public int getLeftKey() {
+        return leftKey;
+    }
+
+    public void setLeftKey(int leftKey) {
+        this.leftKey = leftKey;
+    }
+
+    public int getRightKey() {
+        return rightKey;
+    }
+
+    public void setRightKey(int rightKey) {
+        this.rightKey = rightKey;
+    }
+
+    public int getAbilityKey() {
+        return abilityKey;
+    }
+
+    public void setAbilityKey(int abilityKey) {
+        this.abilityKey = abilityKey;
+    }
+
+    public int getStoreKey() {
+        return storeKey;
+    }
+
+    public void setStoreKey(int storeKey) {
+        this.storeKey = storeKey;
     }
 }

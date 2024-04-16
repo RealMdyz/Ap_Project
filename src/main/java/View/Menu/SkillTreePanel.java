@@ -49,9 +49,30 @@ public class SkillTreePanel extends JPanel implements ActionListener {
         writOfAcesoButton.addActionListener(this);
         writOfProteusButton.addActionListener(this);
 
+        writOfAresButton.setText("Writ of Ares");
+        writOfAcesoButton.setText("Writ of Aceso");
+        writOfProteusButton.setText("Writ of Proteus");
+
+        int xpForWritOfAres = 750;
+        int xpForWritOfAceso = 500;
+        int xpForWritOfProteus = 1000;
+
+        // Create JLabels to display XP information under each button
+        JLabel xpLabelAres = new JLabel("(" + xpForWritOfAres + " XP)");
+        JLabel xpLabelAceso = new JLabel("(" + xpForWritOfAceso + " XP)");
+        JLabel xpLabelProteus = new JLabel("(" + xpForWritOfProteus + " XP)");
+
+        // Set font and foreground color for XP labels
+        xpLabelAres.setFont(MyProjectData.getProjectData().getFont35());
+        xpLabelAceso.setFont(MyProjectData.getProjectData().getFont35());
+        xpLabelProteus.setFont(MyProjectData.getProjectData().getFont35());
+
         skillButtonsPanel.add(writOfAresButton);
+        skillButtonsPanel.add(xpLabelAres);
         skillButtonsPanel.add(writOfAcesoButton);
+        skillButtonsPanel.add(xpLabelAceso);
         skillButtonsPanel.add(writOfProteusButton);
+        skillButtonsPanel.add(xpLabelProteus);;
 
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); // Panel for OK button and money panel
         bottomPanel.setBackground(new Color(240, 240, 240));

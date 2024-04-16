@@ -36,18 +36,21 @@ public class InputListener {
         actionMap = gameFrame.getRootPane().getActionMap();
 
         // Key Press:
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0), "moveUp");
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0), "moveDown");
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), "moveLeft");
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0), "moveRight");
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_B, 0), "bStore");
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Q, 0), "ability");
+
+        // Key Press:
+        inputMap.put(KeyStroke.getKeyStroke(constant.getUpKey(), 0), "moveUp");
+        inputMap.put(KeyStroke.getKeyStroke(constant.getDownKey(), 0), "moveDown");
+        inputMap.put(KeyStroke.getKeyStroke(constant.getLeftKey(), 0), "moveLeft");
+        inputMap.put(KeyStroke.getKeyStroke(constant.getRightKey(), 0), "moveRight");
+        inputMap.put(KeyStroke.getKeyStroke(constant.getStoreKey(), 0), "bStore");
+        inputMap.put(KeyStroke.getKeyStroke(constant.getAbilityKey(), 0), "ability");
+        System.out.println(constant.getLeftKey());
         // Key Release:
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, true), "moveUpReleased");
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, true), "moveDownReleased");
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true), "moveLeftReleased");
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, true), "moveRightReleased");
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_B, 0, true), "bStoreReleased");
+        inputMap.put(KeyStroke.getKeyStroke(constant.getUpKey(), 0, true), "moveUpReleased");
+        inputMap.put(KeyStroke.getKeyStroke(constant.getDownKey(), 0, true), "moveDownReleased");
+        inputMap.put(KeyStroke.getKeyStroke(constant.getLeftKey(), 0, true), "moveLeftReleased");
+        inputMap.put(KeyStroke.getKeyStroke(constant.getRightKey(), 0, true), "moveRightReleased");
+        inputMap.put(KeyStroke.getKeyStroke(constant.getStoreKey(), 0, true), "bStoreReleased");
 
     }
     private void createKeyActions() {

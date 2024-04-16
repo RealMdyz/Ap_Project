@@ -56,16 +56,20 @@ public class MusicPlayer {
         MusicPlayer player = new MusicPlayer(filePath, false);
         player.play();
     }
-    public void setVolume(float volume) {
+    public void setVolume(int volumePercent) {
         if (volumeControl != null) {
             // Ensure volume is within the valid range
-            if (volume < 0.0f) {
-                volume = 0.0f;
-            } else if (volume > 1.0f) {
-                volume = 1.0f;
+            if (volumePercent < 0) {
+                volumePercent = 0;
+            } else if (volumePercent > 100) {
+                volumePercent = 100;
             }
+            // Convert volumePercent to a value between 0 and 1
+            float volume = volumePercent / 100.0f;
+            // Convert volume to dB
             float dB = (float) (Math.log(volume) / Math.log(10.0) * 20.0);
             volumeControl.setValue(dB);
         }
     }
+
 }
