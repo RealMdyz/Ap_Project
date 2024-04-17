@@ -170,6 +170,22 @@ public class InputListener {
                 yMousePress = mousePoint.y;
             }
         });
+        gameFrame.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                Point mousePoint = evt.getPoint();
+                int mouseX = mousePoint.x;
+                int mouseY = mousePoint.y;
+
+                int epsilonCenterX = epsilon.getX() + epsilon.getWidth() / 2 - 7;
+                int epsilonCenterY = epsilon.getY() + epsilon.getHeight() / 2 - 7;
+
+                double angle = Math.atan2(mouseY - epsilonCenterY, mouseX - epsilonCenterX);
+
+                double angleDegrees = Math.toDegrees(angle);
+
+                epsilon.rotateVertices(angleDegrees);
+            }
+        });
     }
 
     private boolean isKeyPressed(int keyCode) {

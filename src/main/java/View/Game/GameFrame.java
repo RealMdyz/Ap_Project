@@ -76,6 +76,7 @@ public class GameFrame extends JFrame {
 
         panel.add(topPanel, BorderLayout.NORTH);
     }
+
     @Override
     public void paintComponents(Graphics g) {
         super.paintComponents(g);

@@ -122,7 +122,7 @@ public class GameLoop extends Thread{
             game.getInputListener().setyMousePress(-1);
         }
         updateTopPanel();
-        //game.getGameFrame().getEpsilon().rotateImage(20);
+        //game.getGameFrame().getEpsilon().rotateVertices(0.1);
         if(currentWaveIndex < 3){
             shotMove();
             enemyMove();

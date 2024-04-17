@@ -109,6 +109,22 @@ public class Epsilon extends ObjectsInGame implements Moveable {
             vertices.add(new Vertex( vx, vy));
         }
     }
+    public void rotateVertices(double angle) {
+        double centerX = this.getX() + this.getWidth() / 2 - 7;
+        double centerY = this.getY() + this.getHeight() / 2 - 7;
+        angle = Math.toDegrees(angle);
+
+        for (Vertex vertex : vertices) {
+            double relativeX = vertex.getX() - centerX;
+            double relativeY = vertex.getY() - centerY;
+
+            double rotatedX = relativeX * Math.cos(angle) - relativeY * Math.sin(angle);
+            double rotatedY = relativeX * Math.sin(angle) + relativeY * Math.cos(angle);
+
+            vertex.setX((int) (rotatedX + centerX));
+            vertex.setY((int) (rotatedY + centerY));
+        }
+    }
 
     public static int getLevelOfWritOfAres() {
         return levelOfWritOfAres;
