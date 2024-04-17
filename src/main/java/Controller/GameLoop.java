@@ -122,6 +122,7 @@ public class GameLoop extends Thread{
             game.getInputListener().setyMousePress(-1);
         }
         updateTopPanel();
+        //game.getGameFrame().getEpsilon().rotateImage(20);
         if(currentWaveIndex < 3){
             shotMove();
             enemyMove();
@@ -135,7 +136,7 @@ public class GameLoop extends Thread{
                 addNewEnemy();
             }
         }
-        game.getGameFrame().checkTheCollectibleTime();
+        //game.getGameFrame().checkTheCollectibleTime();
         if(currentWaveIndex == 3){
             if(epsilonIncrease){
                 if(panelReducedInEnd){

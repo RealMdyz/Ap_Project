@@ -7,6 +7,9 @@ import MyProject.MyProjectData;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+
 
 public class Epsilon extends ObjectsInGame implements Moveable {
 

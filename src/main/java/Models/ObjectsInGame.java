@@ -1,7 +1,11 @@
 package Models;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 
 public class ObjectsInGame extends JLabel {
 
@@ -61,9 +65,42 @@ public class ObjectsInGame extends JLabel {
         setyVelocityImpact(vy);
        // System.out.println(distance + " " + hp);
     }
+    public void rotateImage(double degrees) {
+        // Create a backup copy of the original image
+        BufferedImage originalImage = deepCopy(background);
 
+        // Create a new BufferedImage to hold the rotated image
+        BufferedImage rotatedImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 
+        // Get the graphics context of the rotated image
+        Graphics2D g2D = rotatedImage.createGraphics();
 
+        // Create an AffineTransform to perform the rotation
+        AffineTransform rotation = AffineTransform.getRotateInstance(Math.toRadians(degrees), getWidth() / 2, getHeight() / 2);
+
+        // Apply the rotation transformation
+        g2D.transform(rotation);
+
+        // Draw the original image onto the rotated image
+        g2D.drawImage(originalImage, 0, 0, null);
+
+        // Dispose the graphics context
+        g2D.dispose();
+
+        // Update the background with the rotated image
+        background = rotatedImage;
+
+        // Repaint the component to reflect the changes
+        repaint();
+    }
+
+    // Helper method to create a deep copy of a BufferedImage
+    private BufferedImage deepCopy(BufferedImage image) {
+        ColorModel cm = image.getColorModel();
+        boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
+        WritableRaster raster = image.copyData(null);
+        return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
+    }
 
 
     @Override
