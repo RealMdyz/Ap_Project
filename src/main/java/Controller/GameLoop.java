@@ -137,7 +137,7 @@ public class GameLoop extends Thread{
 
             }
         }
-        //game.getGameFrame().checkTheCollectibleTime();
+        game.getGameFrame().checkTheCollectibleTime();
         if(currentWaveIndex == 3){
             if(epsilonIncrease){
                 if(panelReducedInEnd){

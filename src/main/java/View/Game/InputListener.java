@@ -232,12 +232,16 @@ public class InputListener {
     }
     private void updateVelocity() {
         // Check if opposing keys are pressed
-        if ((pressedKeys.contains("up") && pressedKeys.contains("down")) ||
-                (pressedKeys.contains("left") && pressedKeys.contains("right"))) {
+        if ((pressedKeys.contains("up") && pressedKeys.contains("down"))) {
+            // If opposing keys are pressed, stop the character
+            epsilon.setyVelocity(0);
+        }
+        else if ((pressedKeys.contains("left") && pressedKeys.contains("right"))) {
             // If opposing keys are pressed, stop the character
             epsilon.setxVelocity(0);
-            epsilon.setyVelocity(0);
-        } else {
+
+        }
+        else {
             // Calculate x and y velocity based on pressed keys
             int xVelocity = 0;
             int yVelocity = 0;

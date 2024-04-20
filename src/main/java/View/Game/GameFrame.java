@@ -31,11 +31,10 @@ public class GameFrame extends JFrame {
         this.epsilon = epsilon;
         this.setTitle("Window Kill");
         this.setLayout(null);
-        this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.repaint();
 
-
+        this.setLocationRelativeTo(null);
         this.setUndecorated(true);
         this.setResizable(false);
         this.setSize(Constant.FIRST_WIDTH, Constant.FIRST_HEIGHT);

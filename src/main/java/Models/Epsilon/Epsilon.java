@@ -22,6 +22,8 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     private long startOfAthena = 0;
     private int radius = 35;
 
+    private int count = 0;
+
     public Epsilon(int x, int y) {
         super(x, y, 100);
         this.setHeight(70);
@@ -110,24 +112,52 @@ public class Epsilon extends ObjectsInGame implements Moveable {
         }
     }
     public void rotateVertices(double angle) {
-        double centerX = this.getX() + this.getWidth() / 2 - 7.9;
-        double centerY = this.getY() + this.getHeight() / 2 - 7.9;
-        angle = Math.toDegrees(angle);
+        // Use the provided angle directly in radians for the rotation
+        double centerX = this.getxCenter();
+        double centerY = this.getyCenter();
+
+        // Iterate through each vertex
         if(!Constant.isRotateVertices()){
             angle = 0;
         }
-        angle /= (10000);
+
         for (Vertex vertex : vertices) {
+            // Calculate relative position from the center
             double relativeX = vertex.getX() - centerX;
             double relativeY = vertex.getY() - centerY;
 
+            // Apply the rotation transformation
             double rotatedX = relativeX * Math.cos(angle) - relativeY * Math.sin(angle);
             double rotatedY = relativeX * Math.sin(angle) + relativeY * Math.cos(angle);
 
-            vertex.setX((int) (rotatedX + centerX));
-            vertex.setY((int) (rotatedY + centerY));
+            // Calculate the new absolute position of the vertex
+            double newX = rotatedX + centerX;
+            double newY = rotatedY + centerY;
+
+            // Set the new positions of the vertex
+            vertex.setxFake(newX);
+            vertex.setyFake(newY);
+        }
+        count += 1;
+        if(count > 10 ){
+            count = 0;
+            setPosVertex();
         }
     }
+    public void setPosVertex(){
+        double angleBetweenVertices = 2 * Math.PI / levelOfWritOfProteus;
+        int index = 0;
+        for (Vertex vertex : vertices) {
+            double angle = index * angleBetweenVertices;
+            int vx = (int) (getX() + radius * Math.cos(angle));
+            int vy = (int) (getY() + radius * Math.sin(angle));
+            vertex.setX(vx);
+            vertex.setY(vy);
+            index += 1;
+        }
+
+    }
+
 
     public static int getLevelOfWritOfAres() {
         return levelOfWritOfAres;
