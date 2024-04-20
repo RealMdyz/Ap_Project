@@ -29,13 +29,18 @@ public class GameFrame extends JFrame {
         this.topPanel = topPanel;
         this.constant = constant;
         this.epsilon = epsilon;
-        this.setSize(Constant.FIRST_WIDTH, Constant.FIRST_HEIGHT);
-        this.setResizable(false);
         this.setTitle("Window Kill");
         this.setLayout(null);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.repaint();
+
+
+        this.setUndecorated(true);
+        this.setResizable(false);
+        this.setSize(Constant.FIRST_WIDTH, Constant.FIRST_HEIGHT);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
 
         panel = new JPanel();

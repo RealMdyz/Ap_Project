@@ -26,7 +26,7 @@ public class Constant {
     private static int playerXP = 0;
     private static boolean isRunning;
     private static int sound = 10;
-    private static boolean  rotateVertices = true;
+    private static boolean  rotateVertices = false;
 
     private Map<String, Integer> keyMap;
     private static boolean openStore = false;

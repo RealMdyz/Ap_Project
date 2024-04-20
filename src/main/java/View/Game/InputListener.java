@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.HashSet;
+import java.util.Set;
 
 public class InputListener {
     InputMap inputMap;
@@ -19,6 +21,7 @@ public class InputListener {
 
     int x = 0;
     int y = 0;
+    private final Set<String> pressedKeys = new HashSet<>();
     public InputListener(GameFrame gameFrame, Constant constant) {
         this.gameFrame = gameFrame;
         this.constant = constant;
@@ -56,39 +59,104 @@ public class InputListener {
     private void createKeyActions() {
 
         // Key Press Action:
-        actionMap.put("moveLeft", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                    x = -1;
-                    epsilon.setxVelocity(  (-(int)(Constant.getSensitivityForMoves() / 10) - 1));
-
-            }
-        });
-
-        actionMap.put("moveRight", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                    x = 1;
-                    epsilon.setxVelocity((int)(Constant.getSensitivityForMoves() / 10) + 1);
-            }
-        });
+//        actionMap.put("moveLeft", new AbstractAction() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//                    x = -1;
+//                    epsilon.setxVelocity(  (-(int)(Constant.getSensitivityForMoves() / 10) - 1));
+//
+//            }
+//        });
+//
+//        actionMap.put("moveRight", new AbstractAction() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                    x = 1;
+//                    epsilon.setxVelocity((int)(Constant.getSensitivityForMoves() / 10) + 1);
+//            }
+//        });
+//
+//        actionMap.put("moveUp", new AbstractAction() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                    y = -1;
+//                    epsilon.setyVelocity((- (int)(Constant.getSensitivityForMoves() / 10)- 1));
+//
+//            }
+//        });
+//
+//        actionMap.put("moveDown", new AbstractAction() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                    y = 1;
+//                    epsilon.setyVelocity(( + (int)(Constant.getSensitivityForMoves() / 10) + 1));
+//
+//            }
+//        });
 
         actionMap.put("moveUp", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    y = -1;
-                    epsilon.setyVelocity((- (int)(Constant.getSensitivityForMoves() / 10)- 1));
-
+                pressedKeys.add("up");
+                updateVelocity();
             }
         });
 
         actionMap.put("moveDown", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    y = 1;
-                    epsilon.setyVelocity(( + (int)(Constant.getSensitivityForMoves() / 10) + 1));
+                pressedKeys.add("down");
+                updateVelocity();
+            }
+        });
 
+        actionMap.put("moveLeft", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pressedKeys.add("left");
+                updateVelocity();
+            }
+        });
+
+        actionMap.put("moveRight", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pressedKeys.add("right");
+                updateVelocity();
+            }
+        });
+
+        // Key Release Action
+        actionMap.put("moveUpReleased", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pressedKeys.remove("up");
+                updateVelocity();
+            }
+        });
+
+        actionMap.put("moveDownReleased", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pressedKeys.remove("down");
+                updateVelocity();
+            }
+        });
+
+        actionMap.put("moveLeftReleased", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pressedKeys.remove("left");
+                updateVelocity();
+            }
+        });
+
+        actionMap.put("moveRightReleased", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pressedKeys.remove("right");
+                updateVelocity();
             }
         });
 
@@ -118,40 +186,40 @@ public class InputListener {
         });
 
         // Key Release Action:
-        actionMap.put("moveUpReleased", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                y = 0;
-                epsilon.setyVelocity(0);
-            }
-        });
-
-        actionMap.put("moveDownReleased", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                y = 0;
-                epsilon.setyVelocity(0);
-
-            }
-        });
-
-        actionMap.put("moveLeftReleased", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                x = 0;
-                epsilon.setxVelocity(0);
-
-            }
-        });
-
-        actionMap.put("moveRightReleased", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                x = 0;
-                epsilon.setxVelocity(0);
-
-            }
-        });
+//        actionMap.put("moveUpReleased", new AbstractAction() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                y = 0;
+//                epsilon.setyVelocity(0);
+//            }
+//        });
+//
+//        actionMap.put("moveDownReleased", new AbstractAction() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                y = 0;
+//                epsilon.setyVelocity(0);
+//
+//            }
+//        });
+//
+//        actionMap.put("moveLeftReleased", new AbstractAction() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                x = 0;
+//                epsilon.setxVelocity(0);
+//
+//            }
+//        });
+//
+//        actionMap.put("moveRightReleased", new AbstractAction() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                x = 0;
+//                epsilon.setxVelocity(0);
+//
+//            }
+//        });
         actionMap.put("bStoreReleased", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -161,6 +229,34 @@ public class InputListener {
 
 
 
+    }
+    private void updateVelocity() {
+        // Check if opposing keys are pressed
+        if ((pressedKeys.contains("up") && pressedKeys.contains("down")) ||
+                (pressedKeys.contains("left") && pressedKeys.contains("right"))) {
+            // If opposing keys are pressed, stop the character
+            epsilon.setxVelocity(0);
+            epsilon.setyVelocity(0);
+        } else {
+            // Calculate x and y velocity based on pressed keys
+            int xVelocity = 0;
+            int yVelocity = 0;
+
+            if (pressedKeys.contains("left")) {
+                xVelocity = -1;
+            } else if (pressedKeys.contains("right")) {
+                xVelocity = 1;
+            }
+
+            if (pressedKeys.contains("up")) {
+                yVelocity = -1;
+            } else if (pressedKeys.contains("down")) {
+                yVelocity = 1;
+            }
+
+            epsilon.setxVelocity(xVelocity * (int)(Constant.getSensitivityForMoves() / 10) + xVelocity);
+            epsilon.setyVelocity(yVelocity * (int)(Constant.getSensitivityForMoves() / 10) + yVelocity);
+        }
     }
     private void createMouseAction(){
         gameFrame.addMouseListener(new java.awt.event.MouseAdapter() {
