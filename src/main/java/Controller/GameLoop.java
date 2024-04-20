@@ -86,7 +86,7 @@ public class GameLoop extends Thread{
             game.getGameFrame().getEpsilon().setHp(game.getGameFrame().getEpsilon().getHp() + 1);
             game.getGameFrame().getEpsilon().setPrevAceso(System.currentTimeMillis());
         }
-        if(addVertex && Constant.isqPressed()){
+        if(addVertex && !Constant.isqPressed()){
             game.getGameFrame().getEpsilon().addVertex();
             for(Vertex vertex : game.getGameFrame().getEpsilon().getVertices()){
                 game.getGameFrame().addToGamePanel(vertex);
@@ -134,6 +134,7 @@ public class GameLoop extends Thread{
             delay += 15;
             if(delay >= waves[currentWaveIndex].getDelay()){
                 addNewEnemy();
+
             }
         }
         //game.getGameFrame().checkTheCollectibleTime();

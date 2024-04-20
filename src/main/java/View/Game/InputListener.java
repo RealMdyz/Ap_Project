@@ -176,7 +176,7 @@ public class InputListener {
                 int mouseX = mousePoint.x;
                 int mouseY = mousePoint.y;
 
-                int epsilonCenterX = epsilon.getX() + epsilon.getWidth() / 2 - 7;
+                int epsilonCenterX = epsilon.getX() + epsilon.getWidth() / 2 + 7;
                 int epsilonCenterY = epsilon.getY() + epsilon.getHeight() / 2 - 7;
 
                 double angle = Math.atan2(mouseY - epsilonCenterY, mouseX - epsilonCenterX);

@@ -26,6 +26,7 @@ public class Constant {
     private static int playerXP = 0;
     private static boolean isRunning;
     private static int sound = 10;
+    private static boolean  rotateVertices = true;
 
     private Map<String, Integer> keyMap;
     private static boolean openStore = false;
@@ -356,5 +357,13 @@ public class Constant {
 
     public void setStoreKey(int storeKey) {
         this.storeKey = storeKey;
+    }
+
+    public static boolean isRotateVertices() {
+        return rotateVertices;
+    }
+
+    public static void setRotateVertices(boolean rotateVertices) {
+        Constant.rotateVertices = rotateVertices;
     }
 }

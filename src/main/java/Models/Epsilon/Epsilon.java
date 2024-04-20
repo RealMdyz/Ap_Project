@@ -110,10 +110,13 @@ public class Epsilon extends ObjectsInGame implements Moveable {
         }
     }
     public void rotateVertices(double angle) {
-        double centerX = this.getX() + this.getWidth() / 2 - 7;
-        double centerY = this.getY() + this.getHeight() / 2 - 7;
+        double centerX = this.getX() + this.getWidth() / 2 - 7.9;
+        double centerY = this.getY() + this.getHeight() / 2 - 7.9;
         angle = Math.toDegrees(angle);
-
+        if(!Constant.isRotateVertices()){
+            angle = 0;
+        }
+        angle /= (10000);
         for (Vertex vertex : vertices) {
             double relativeX = vertex.getX() - centerX;
             double relativeY = vertex.getY() - centerY;
