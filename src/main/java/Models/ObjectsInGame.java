@@ -74,6 +74,37 @@ public class ObjectsInGame extends JLabel {
         return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
     }
 
+    public void rotateImage(double degrees) {
+        // Create a new BufferedImage to hold the rotated image
+        BufferedImage rotatedImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+        // Get the graphics context of the rotated image
+        Graphics2D g2D = rotatedImage.createGraphics();
+
+        // Create an AffineTransform to perform the rotation
+        AffineTransform rotation = AffineTransform.getRotateInstance(Math.toRadians(degrees), getWidth() / 2, getHeight() / 2);
+
+        // Apply the rotation transformation
+        g2D.transform(rotation);
+
+        // Draw the original image onto the rotated image
+        g2D.drawImage(background, 0, 0, null);
+
+        // Dispose the graphics context
+        g2D.dispose();
+
+        // Update the background with the rotated image
+        background = rotatedImage;
+
+        // Update the position and size of the object based on the rotated image
+        setWidth(rotatedImage.getWidth());
+        setHeight(rotatedImage.getHeight());
+
+        // Repaint the component to reflect the changes
+        repaint();
+    }
+
+
 
     @Override
     public int getX() {

@@ -2,6 +2,10 @@ package Models.Enemy;
 
 import Models.*;
 
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+
 public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Moveable {
 
     private int collectibleNumber = 1;

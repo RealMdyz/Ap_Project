@@ -2,6 +2,8 @@ package Models.Enemy;
 
 import Models.*;
 import MyProject.MyProjectData;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 
 import java.awt.*;
 
@@ -47,6 +49,7 @@ public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveab
         setxVelocity((int) vx);
         setyVelocity((int) vy);
     }
+
 
 
     @Override

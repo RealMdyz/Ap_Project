@@ -167,4 +167,20 @@ public class GameFrame extends JFrame {
         gamePanel.repaint();
 
     }
+
+    public JPanel getPanel() {
+        return panel;
+    }
+
+    public void setPanel(JPanel panel) {
+        this.panel = panel;
+    }
+    public void addToGamePanelAnObject(ObjectsInGame object) {
+        gamePanel.add(object);
+        // Update the layout of gamePanel to reflect the new object
+        gamePanel.revalidate();
+        // Repaint gamePanel to reflect the changes
+        gamePanel.repaint();
+    }
+
 }

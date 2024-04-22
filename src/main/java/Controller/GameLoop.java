@@ -10,14 +10,9 @@ import Models.Epsilon.Vertex;
 import Models.Game;
 import Models.ObjectsInGame;
 import MyProject.MyProjectData;
-import View.Menu.TopPanel;
 import View.MusicPlayer;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Objects;
 import java.util.Random;
 
 public class GameLoop extends Thread{
@@ -97,6 +92,7 @@ public class GameLoop extends Thread{
         }
         game.getGameFrame().getEpsilon().move(game.getGameFrame().getWidth(), game.getGameFrame().getHeight());
         game.getGameFrame().repaint();
+
         if(game.getInputListener().getxMousePress() != -1 || game.getInputListener().getyMousePress() != -1){
             Shot shot = new Shot(game.getGameFrame().getEpsilon().getX(), game.getGameFrame().getEpsilon().getY());
             shot.setV(game.getInputListener().getxMousePress(), game.getInputListener().getyMousePress());
@@ -122,7 +118,7 @@ public class GameLoop extends Thread{
             game.getInputListener().setyMousePress(-1);
         }
         updateTopPanel();
-        //game.getGameFrame().getEpsilon().rotateVertices(0.1);
+    //    game.getGameFrame().getEpsilon().rotateVertices(5);
         if(currentWaveIndex < 3){
             shotMove();
             enemyMove();
@@ -176,16 +172,17 @@ public class GameLoop extends Thread{
         try {
             Thread.sleep(100);
         }
-        catch (Exception e){
+        catch (Exception ignored){
 
         }
     }
     private void addNewEnemy(){
         MusicPlayer.playOnce(MyProjectData.getProjectData().getEnterAnEnemy());
         int index = 0;
-        for(ObjectsInGame objects : waves[currentWaveIndex].getEnemies()){
+        for(Enemy objects : waves[currentWaveIndex].getEnemies()){
             index += 1;
             game.getGameFrame().add(objects);
+           // objects.rotateImage(20);
             if(index > currentWaveIndexEnemy){
                 currentWaveIndexEnemy += 1;
                 break;
