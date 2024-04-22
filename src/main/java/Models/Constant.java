@@ -32,11 +32,11 @@ public class Constant {
     private Map<String, Integer> keyMap;
     private static boolean openStore = false;
     private static int speedOfShot = 15;
-    private static int widthOfTrighrath = 50;
-    private static int heightOfTrighrath = 50;
+    private static int widthOfTrighrath = 40;
+    private static int heightOfTrighrath = 40;
     private static int speedOfTrighrath = 7;
-    private static int widthOfSquarantine = 50;
-    private static int heightOfSquarantine = 50;
+    private static int widthOfSquarantine = 40;
+    private static int heightOfSquarantine = 40;
     private static int speedOfSquarantine  = 5;
     private static int speedOfImpact = 10;
     private static int savedXp;

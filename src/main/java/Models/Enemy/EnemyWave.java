@@ -18,8 +18,23 @@ public class EnemyWave {
         for (int i = 0; i < numEnemies; i++) {
             // Add Enemy to enemies;
             Random random = new Random();
-            int xRandom = random.nextInt() % 400;
-            int yRandom = random.nextInt() % 400;
+            int xRandom = random.nextInt() % 400 + 350;
+            int yRandom = random.nextInt() % 400 + 350;
+            int x1 = random.nextInt();
+            if(x1 % 2 == 1){
+                x1 = 1;
+
+            }
+            else
+                x1 = -1;
+            int y1 = random.nextInt();
+            if(y1 % 2 == 1){
+                y1 = 1;
+            }
+            else
+                y1 = -1;
+            xRandom *= x1;
+            yRandom *= y1;
             if(i % 2 == 0){
                 enemies.add(new Squarantine(Constant.getWidthOfTrighrath() * (random.nextInt() % 4 + 1) + xRandom, Constant.getHeightOfTrighrath() * i + Constant.getHeightOfTrighrath() + yRandom));
             }

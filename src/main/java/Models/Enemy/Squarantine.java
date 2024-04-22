@@ -8,6 +8,7 @@ import java.awt.*;
 public class Squarantine extends Enemy implements LocalRouting, Aggression, Moveable {
     Constant constant;
 
+
     public Squarantine(int x, int y) {
         super(x, y, 10, 1, 5, 4, 6);
         this.setHeight(Constant.getHeightOfSquarantine());
@@ -16,6 +17,7 @@ public class Squarantine extends Enemy implements LocalRouting, Aggression, Move
         this.setyCenter(this.getY() + (int)this.getHeight() / 2);
         setSize(Constant.getWidthOfSquarantine(), Constant.getHeightOfSquarantine());
         background = MyProjectData.getProjectData().getSquarAntine();
+
     }
 
     @Override
@@ -64,18 +66,50 @@ public class Squarantine extends Enemy implements LocalRouting, Aggression, Move
             this.setyVelocity((int)y);
         }
 
-        if(this.getX() <= 0  && this.getxVelocity() > 0)
+
+        if (this.getX() <= 0 && this.getxVelocity() > 0) {
             this.setX(this.getX() + this.getxVelocity());
-        else if(this.getX() >= xLimit - this.getWidth() - 10 && this.getxVelocity() < 0)
+            for (Point point : this.getPoints()){
+                point.setLocation(point.getX() + this.getxVelocity(), point.getY());
+            }
+        }
+        else if (this.getX() >= xLimit - this.getWidth() - 10 && this.getxVelocity() < 0) {
             this.setX(this.getX() + this.getxVelocity());
-        else if(this.getX() >= 0 && this.getX() <= xLimit - this.getWidth() - 10)
+            for (Point point : this.getPoints()){
+                point.setLocation(point.getX() + this.getxVelocity(), point.getY());
+            }
+
+        }
+        else if (this.getX() >= 0 && this.getX() <= xLimit - this.getWidth() - 10) {
             this.setX(this.getX() + this.getxVelocity());
-        if(this.getY() <= 0  && this.getyVelocity() > 0)
+            for (Point point : this.getPoints()){
+                point.setLocation(point.getX() + this.getxVelocity(), point.getY());
+            }
+
+        }
+
+        // Check y-axis movement and adjust position
+        if (this.getY() <= 0 && this.getyVelocity() > 0) {
             this.setY(this.getY() + this.getyVelocity());
-        else if(this.getY() >= yLimit - this.getHeight() - 10 && this.getyVelocity() < 0)
+            for (Point point : this.getPoints()){
+                point.setLocation(point.getX(), point.getY() + this.getyVelocity());
+            }
+
+        }
+        else if (this.getY() >= yLimit - this.getHeight() - 10 && this.getyVelocity() < 0) {
             this.setY(this.getY() + this.getyVelocity());
-        else if(this.getY() >= 0 && this.getY() <= yLimit - this.getHeight() - 10)
+            for (Point point : this.getPoints()){
+                point.setLocation(point.getX(), point.getY() + this.getyVelocity());
+            }
+
+        }
+        else if (this.getY() >= 0 && this.getY() <= yLimit - this.getHeight() - 10) {
             this.setY(this.getY() + this.getyVelocity());
+            for (Point point : this.getPoints()){
+                point.setLocation(point.getX(), point.getY() + this.getyVelocity());
+            }
+
+        }
 
         if(t != 0){
             this.setxVelocity(vx);

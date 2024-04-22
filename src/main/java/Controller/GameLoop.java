@@ -315,10 +315,12 @@ public class GameLoop extends Thread{
                     }
                 }
             }
-            if(game.getIntersection().intersect(game.getGameFrame().getEpsilon(), enemy)){
-                 doImpact(game.getIntersection().getIntersectionCenter(game.getGameFrame().getEpsilon(), enemy).x, game.getIntersection().getIntersectionCenter(game.getGameFrame().getEpsilon(), enemy).y , 100);
-                 game.getGameFrame().getEpsilon().setHp(game.getGameFrame().getEpsilon().getHp() - enemy.getPower());
+            if(game.getIntersection().intersect(enemy, game.getGameFrame().getEpsilon())){
+                doImpact(game.getIntersection().getIntersectionCenter(game.getGameFrame().getEpsilon(), enemy).x, game.getIntersection().getIntersectionCenter(game.getGameFrame().getEpsilon(), enemy).y , 100);
+                game.getGameFrame().getEpsilon().setHp(game.getGameFrame().getEpsilon().getHp() - enemy.getPower());
             }
+
+
             int secondIndex = 0;
             for(Enemy enemy1 : waves[currentWaveIndex].getEnemies()){
                 secondIndex += 1;

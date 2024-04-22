@@ -199,7 +199,7 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     }
 
     public int getRadius() {
-        return radius;
+        return radius + 3;
     }
 
     public void setRadius(int radius) {

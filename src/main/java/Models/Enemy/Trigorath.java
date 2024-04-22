@@ -10,6 +10,7 @@ import java.awt.*;
 public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveable {
     Constant constant;
 
+
     public Trigorath(int x, int y) {
         super(x, y, 15, 2, 5, 3, 10);
         this.setHeight(Constant.getHeightOfTrighrath());
@@ -67,6 +68,7 @@ public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveab
         double t = ((double)System.currentTimeMillis() - (double)this.getImpactTime()) / 1000;
         t = Math.max(0, 1 - t);
 
+        boolean check = false;
         // Calculate movement impact based on time and velocity
         double x = this.getxVelocityImpact() * (t * t);
         double y = this.getyVelocityImpact() * (t * t);
@@ -80,33 +82,65 @@ public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveab
             this.setxVelocity((int) x);
             this.setyVelocity((int) y);
         }
-        if(getAngleForRotate() > 0){
-            setAngleForRotate(getAngleForRotate() - 1);
-            this.rotateImage(getAngleForRotate());
-        }
+
 
         // Check x-axis movement and adjust position
         if (this.getX() <= 0 && this.getxVelocity() > 0) {
             this.setX(this.getX() + this.getxVelocity());
-        } else if (this.getX() >= xLimit - this.getWidth() - 10 && this.getxVelocity() < 0) {
+            for (Point point : this.getPoints()){
+                point.setLocation(point.getX() + this.getxVelocity(), point.getY());
+            }
+            check = true;
+        }
+        else if (this.getX() >= xLimit - this.getWidth() - 10 && this.getxVelocity() < 0) {
             this.setX(this.getX() + this.getxVelocity());
-        } else if (this.getX() >= 0 && this.getX() <= xLimit - this.getWidth() - 10) {
+            for (Point point : this.getPoints()){
+                point.setLocation(point.getX() + this.getxVelocity(), point.getY());
+            }
+            check = true;
+        }
+        else if (this.getX() >= 0 && this.getX() <= xLimit - this.getWidth() - 10) {
             this.setX(this.getX() + this.getxVelocity());
+            for (Point point : this.getPoints()){
+                point.setLocation(point.getX() + this.getxVelocity(), point.getY());
+            }
+            check = true;
         }
 
         // Check y-axis movement and adjust position
         if (this.getY() <= 0 && this.getyVelocity() > 0) {
             this.setY(this.getY() + this.getyVelocity());
-        } else if (this.getY() >= yLimit - this.getHeight() - 10 && this.getyVelocity() < 0) {
-            this.setY(this.getY() + this.getyVelocity());
-        } else if (this.getY() >= 0 && this.getY() <= yLimit - this.getHeight() - 10) {
-            this.setY(this.getY() + this.getyVelocity());
+            for (Point point : this.getPoints()){
+                point.setLocation(point.getX(), point.getY() + this.getyVelocity());
+            }
+            check = true;
         }
+        else if (this.getY() >= yLimit - this.getHeight() - 10 && this.getyVelocity() < 0) {
+            this.setY(this.getY() + this.getyVelocity());
+            for (Point point : this.getPoints()){
+                point.setLocation(point.getX(), point.getY() + this.getyVelocity());
+            }
+            check = true;
+        }
+        else if (this.getY() >= 0 && this.getY() <= yLimit - this.getHeight() - 10) {
+            this.setY(this.getY() + this.getyVelocity());
+            for (Point point : this.getPoints()){
+                point.setLocation(point.getX(), point.getY() + this.getyVelocity());
+            }
+            check = true;
+        }
+
 
         // Restore original velocity if time effect is still active
         if (t != 0) {
             this.setxVelocity(vx);
             this.setyVelocity(vy);
+        }
+        if(!check)
+            setAngleForRotate(0);
+        if(getAngleForRotate() > 0){
+            setAngleForRotate(getAngleForRotate() - 1);
+            this.rotateImage(getAngleForRotate());
         }
     }
 

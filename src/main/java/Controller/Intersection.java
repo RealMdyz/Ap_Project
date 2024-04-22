@@ -46,6 +46,79 @@ public class Intersection {
         // If intersection area is greater than zero, rectangles are intersecting
         return intersectionArea > 0;
     }
+    public boolean checkIntersectInPoint(Enemy enemy, Epsilon epsilon) {
+        // Retrieve the radius of the epsilon
+        double epsilonRadius = epsilon.getRadius();
+
+        // Iterate through each point in the enemy
+        for (Point enemyPoint : enemy.getPoints()) {
+            // Calculate the distance between the enemy point and the center of epsilon
+            double dx = enemyPoint.getX() - (epsilon.getX() + epsilon.getRadius());
+            double dy = enemyPoint.getY() - (epsilon.getY() + epsilon.getRadius());
+            double distance = Math.sqrt(dx * dx + dy * dy);
+            //System.out.println(dx);
+            //System.out.println(enemyPoint.getX() + " " + epsilon.getX() + epsilon.getRadius() + " "+ distance);
+            // Check if the distance is less than or equal to epsilon's radius
+            if (distance <= epsilonRadius) {
+                // If the distance is less than or equal to epsilon's radius, return false
+                return true;
+            }
+
+        }
+
+        // If no point in the enemy intersects with epsilon, return true
+        return false;
+    }
+    public boolean intersectInTheEdge(Epsilon epsilon, Enemy enemy) {
+        Point[] enemyPoints = enemy.getPoints();
+        int numSides = enemy.getNumSides();
+
+        int epsilonX = epsilon.getxCenter();
+        int epsilonY = epsilon.getyCenter();
+        double epsilonRadius = epsilon.getRadius();
+
+        for (int i = 0; i < numSides; i++) {
+            Point p1 = enemyPoints[i];
+            Point p2 = enemyPoints[(i + 1) % numSides];
+
+            if (checkLineCircleCollision(p1, p2, epsilonX, epsilonY, epsilonRadius)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean checkLineCircleCollision(Point p1, Point p2, int cx, int cy, double radius) {
+        double dx = p2.x - p1.x;
+        double dy = p2.y - p1.y;
+
+        double length = Math.sqrt(dx * dx + dy * dy);
+
+        dx /= length;
+        dy /= length;
+
+        double dot = dx * (cx - p1.x) + dy * (cy - p1.y);
+        double closestX = p1.x + dot * dx;
+        double closestY = p1.y + dot * dy;
+
+        double segStartX = Math.min(p1.x, p2.x);
+        double segEndX = Math.max(p1.x, p2.x);
+        double segStartY = Math.min(p1.y, p2.y);
+        double segEndY = Math.max(p1.y, p2.y);
+
+        if (closestX < segStartX) closestX = segStartX;
+        if (closestX > segEndX) closestX = segEndX;
+        if (closestY < segStartY) closestY = segStartY;
+        if (closestY > segEndY) closestY = segEndY;
+
+        double dxClose = closestX - cx;
+        double dyClose = closestY - cy;
+        double distance = Math.sqrt(dxClose * dxClose + dyClose * dyClose);
+
+        return distance < radius;
+    }
+
     // Check intersection between two ObjectsInGame objects and return the center point of the intersection area
     public Point getIntersectionCenter(ObjectsInGame obj1, ObjectsInGame obj2) {
         // Calculate the intersection rectangle
