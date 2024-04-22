@@ -28,8 +28,6 @@ public class Intersection {
         // Calculate the coordinates of the bounding boxes for obj1
 
         double dis = Math.sqrt((obj2.getX() - obj1.getX()) * (obj2.getX() - obj1.getX()) + (obj2.getY() - obj1.getY()) * (obj2.getY() - obj1.getY()));
-        if(dis > 100)
-            return false;
         int obj1X1 = obj1.getX();
         int obj1Y1 = obj1.getY();
         int obj1X2 = obj1X1 + obj1.getWidth();

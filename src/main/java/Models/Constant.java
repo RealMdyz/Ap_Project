@@ -20,14 +20,15 @@ public class Constant {
     public static final int MAX_DISTANCE = 20;
     public static final double ALPHA = 0.05;
 
-    private static int level = 10;
-    private static int sensitivityForMoves = 0;
+    private static int level = 50;
+    private static int sensitivityForMoves = 50;
     private static long abilityStartTime = -100000;
     private static int playerXP = 0;
     private static boolean isRunning;
-    private static int sound = 10;
+    private static int sound = 50;
     private static boolean  rotateVertices = false;
 
+    private static double rotateAfterImpact = 25;
     private Map<String, Integer> keyMap;
     private static boolean openStore = false;
     private static int speedOfShot = 15;
@@ -365,5 +366,13 @@ public class Constant {
 
     public static void setRotateVertices(boolean rotateVertices) {
         Constant.rotateVertices = rotateVertices;
+    }
+
+    public static double getRotateAfterImpact() {
+        return rotateAfterImpact;
+    }
+
+    public static void setRotateAfterImpact(double rotateAfterImpact) {
+        Constant.rotateAfterImpact = rotateAfterImpact;
     }
 }

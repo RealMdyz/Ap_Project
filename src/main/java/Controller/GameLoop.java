@@ -181,8 +181,9 @@ public class GameLoop extends Thread{
         int index = 0;
         for(Enemy objects : waves[currentWaveIndex].getEnemies()){
             index += 1;
-            game.getGameFrame().add(objects);
            // objects.rotateImage(20);
+            game.getGameFrame().add(objects);
+
             if(index > currentWaveIndexEnemy){
                 currentWaveIndexEnemy += 1;
                 break;
@@ -338,6 +339,7 @@ public class GameLoop extends Thread{
     private void doImpact(int x, int y, int dis){
         for(Enemy enemy : waves[currentWaveIndex].getEnemies()){
             enemy.doImpact(x, y, dis);
+
         }
         game.getGameFrame().getEpsilon().doImpact(x, y, dis);
     }

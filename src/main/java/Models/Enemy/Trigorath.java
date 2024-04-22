@@ -63,37 +63,53 @@ public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveab
     }
     @Override
     public void move(int xLimit, int yLimit) {
-
+        // Calculate time difference and quadratic effect on movement
         double t = ((double)System.currentTimeMillis() - (double)this.getImpactTime()) / 1000;
-        t = Math.max(0, (1 - t));
-        double x = (this.getxVelocityImpact()) * (t * t);
-        double y = ((this.getyVelocityImpact())) * (t * t);
+        t = Math.max(0, 1 - t);
+
+        // Calculate movement impact based on time and velocity
+        double x = this.getxVelocityImpact() * (t * t);
+        double y = this.getyVelocityImpact() * (t * t);
+
+        // Save current velocity for later restoration
         int vx = this.getxVelocity();
         int vy = this.getyVelocity();
-        if(t != 0){
-            this.setxVelocity((int)x);
-            this.setyVelocity((int)y);
+
+        // Apply movement based on time effect if within valid range
+        if (t != 0) {
+            this.setxVelocity((int) x);
+            this.setyVelocity((int) y);
+        }
+        if(getAngleForRotate() > 0){
+            setAngleForRotate(getAngleForRotate() - 1);
+            this.rotateImage(getAngleForRotate());
         }
 
-        if(this.getX() <= 0  && this.getxVelocity() > 0)
+        // Check x-axis movement and adjust position
+        if (this.getX() <= 0 && this.getxVelocity() > 0) {
             this.setX(this.getX() + this.getxVelocity());
-        else if(this.getX() >= xLimit - this.getWidth() - 10 && this.getxVelocity() < 0)
+        } else if (this.getX() >= xLimit - this.getWidth() - 10 && this.getxVelocity() < 0) {
             this.setX(this.getX() + this.getxVelocity());
-        else if(this.getX() >= 0 && this.getX() <= xLimit - this.getWidth() - 10)
+        } else if (this.getX() >= 0 && this.getX() <= xLimit - this.getWidth() - 10) {
             this.setX(this.getX() + this.getxVelocity());
-        if(this.getY() <= 0  && this.getyVelocity() > 0)
-            this.setY(this.getY() + this.getyVelocity());
-        else if(this.getY() >= yLimit - this.getHeight() - 10 && this.getyVelocity() < 0)
-            this.setY(this.getY() + this.getyVelocity());
-        else if(this.getY() >= 0 && this.getY() <= yLimit - this.getHeight() - 10)
-            this.setY(this.getY() + this.getyVelocity());
+        }
 
-        if(t != 0){
+        // Check y-axis movement and adjust position
+        if (this.getY() <= 0 && this.getyVelocity() > 0) {
+            this.setY(this.getY() + this.getyVelocity());
+        } else if (this.getY() >= yLimit - this.getHeight() - 10 && this.getyVelocity() < 0) {
+            this.setY(this.getY() + this.getyVelocity());
+        } else if (this.getY() >= 0 && this.getY() <= yLimit - this.getHeight() - 10) {
+            this.setY(this.getY() + this.getyVelocity());
+        }
+
+        // Restore original velocity if time effect is still active
+        if (t != 0) {
             this.setxVelocity(vx);
             this.setyVelocity(vy);
         }
-
     }
+
 
 
 
