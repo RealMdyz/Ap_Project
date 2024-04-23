@@ -33,9 +33,12 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
             points1[3] = new Point();
 
             points1[0].setLocation(this.getX(), this.getY());
+
             points1[1].setLocation(this.getX() + Constant.getWidthOfSquarantine(), this.getY());
-            points1[2].setLocation(this.getX(), this.getY() + Constant.getHeightOfSquarantine());
-            points1[3].setLocation(this.getX() + Constant.getWidthOfSquarantine(), this.getY() + Constant.getHeightOfSquarantine());
+
+            points1[2].setLocation(this.getX() + Constant.getWidthOfSquarantine(), this.getY() + Constant.getHeightOfSquarantine());
+
+            points1[3].setLocation(this.getX(), this.getY() + Constant.getHeightOfSquarantine());
 
             //System.out.println(points1[0].getX() + " " + points1[1].getX() + " " + points1[2].getX() + " " + points1[3].getX());
 
@@ -111,5 +114,17 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
 
     public void setPoints(Point[] points) {
         this.points = points;
+    }
+    public void addX(int amountForAdd){
+        this.setX(this.getX() + amountForAdd);
+        for (Point point : this.getPoints()){
+            point.setLocation(point.getX() + amountForAdd, point.getY());
+        }
+    }
+    public void addY(int amountForAdd){
+        this.setY(this.getY() + amountForAdd);
+        for (Point point : this.getPoints()){
+            point.setLocation(point.getX(), point.getY() + amountForAdd);
+        }
     }
 }

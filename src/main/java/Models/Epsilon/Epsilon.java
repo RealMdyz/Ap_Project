@@ -139,7 +139,7 @@ public class Epsilon extends ObjectsInGame implements Moveable {
             vertex.setyFake(newY);
         }
         count += 1;
-        if(count > 10 ){
+        if(count > 10  && Constant.isRotateVertices()){
             count = 0;
             setPosVertex();
         }

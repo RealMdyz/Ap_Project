@@ -84,50 +84,23 @@ public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveab
         }
 
 
-        // Check x-axis movement and adjust position
         if (this.getX() <= 0 && this.getxVelocity() > 0) {
-            this.setX(this.getX() + this.getxVelocity());
-            for (Point point : this.getPoints()){
-                point.setLocation(point.getX() + this.getxVelocity(), point.getY());
-            }
-            check = true;
+            addX(this.getxVelocity());
         }
         else if (this.getX() >= xLimit - this.getWidth() - 10 && this.getxVelocity() < 0) {
-            this.setX(this.getX() + this.getxVelocity());
-            for (Point point : this.getPoints()){
-                point.setLocation(point.getX() + this.getxVelocity(), point.getY());
-            }
-            check = true;
+            addX(this.getxVelocity());
         }
         else if (this.getX() >= 0 && this.getX() <= xLimit - this.getWidth() - 10) {
-            this.setX(this.getX() + this.getxVelocity());
-            for (Point point : this.getPoints()){
-                point.setLocation(point.getX() + this.getxVelocity(), point.getY());
-            }
-            check = true;
+            addX(this.getxVelocity());
         }
-
-        // Check y-axis movement and adjust position
         if (this.getY() <= 0 && this.getyVelocity() > 0) {
-            this.setY(this.getY() + this.getyVelocity());
-            for (Point point : this.getPoints()){
-                point.setLocation(point.getX(), point.getY() + this.getyVelocity());
-            }
-            check = true;
+            addY(this.getyVelocity());
         }
         else if (this.getY() >= yLimit - this.getHeight() - 10 && this.getyVelocity() < 0) {
-            this.setY(this.getY() + this.getyVelocity());
-            for (Point point : this.getPoints()){
-                point.setLocation(point.getX(), point.getY() + this.getyVelocity());
-            }
-            check = true;
+            addY(this.getyVelocity());
         }
         else if (this.getY() >= 0 && this.getY() <= yLimit - this.getHeight() - 10) {
-            this.setY(this.getY() + this.getyVelocity());
-            for (Point point : this.getPoints()){
-                point.setLocation(point.getX(), point.getY() + this.getyVelocity());
-            }
-            check = true;
+            addY(this.getyVelocity());
         }
 
 

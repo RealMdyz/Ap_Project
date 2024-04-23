@@ -315,10 +315,20 @@ public class GameLoop extends Thread{
                     }
                 }
             }
-            if(game.getIntersection().intersect(enemy, game.getGameFrame().getEpsilon())){
+          /*  if(game.getIntersection().intersect(enemy, game.getGameFrame().getEpsilon())){
                 doImpact(game.getIntersection().getIntersectionCenter(game.getGameFrame().getEpsilon(), enemy).x, game.getIntersection().getIntersectionCenter(game.getGameFrame().getEpsilon(), enemy).y , 100);
                 game.getGameFrame().getEpsilon().setHp(game.getGameFrame().getEpsilon().getHp() - enemy.getPower());
+            }*/
+            if(game.getIntersection().intersectInTheEdge(game.getGameFrame().getEpsilon(), enemy) != null){
+                Point point = game.getIntersection().intersectInTheEdge(game.getGameFrame().getEpsilon(), enemy);
+                doImpact(point.x, point.y, 100);
             }
+            else if(game.getIntersection().checkIntersectInPoint(enemy, game.getGameFrame().getEpsilon()) != null){
+                Point point = game.getIntersection().checkIntersectInPoint(enemy, game.getGameFrame().getEpsilon());
+                doImpact(point.x, point.y, 100);
+                game.getGameFrame().getEpsilon().setHp(game.getGameFrame().getEpsilon().getHp() - enemy.getPower());
+            }
+
 
 
             int secondIndex = 0;
@@ -367,17 +377,17 @@ public class GameLoop extends Thread{
             index += 1;
             if(index > currentWaveIndexEnemy)
                 break;
-            if(enemy.getCollectibleNumber() == 1){
-                ObjectsInGame objects = enemy;
+            if(enemy.getHp() == 10){
+                Enemy enemy2 = enemy;
                 int xDash = 15;
                 int yDash = 15;
-                if(game.getGameFrame().getEpsilon().getX() < objects.getX())
+                if(game.getGameFrame().getEpsilon().getX() < enemy2.getX())
                     xDash *= (-1);
-                objects.setX(objects.getX() + xDash);
+                enemy2.addX(xDash);
 
-                if(game.getGameFrame().getEpsilon().getY() < objects.getY())
+                if(game.getGameFrame().getEpsilon().getY() < enemy2.getY())
                     yDash *= (-1);
-                objects.setY(objects.getY() + yDash);
+                enemy2.addY(yDash);
                 boolean c = true;
                 int secondIndex = 0;
                 for(Enemy enemy1 :  waves[currentWaveIndex].getEnemies()){
@@ -385,15 +395,15 @@ public class GameLoop extends Thread{
                     if(index <= secondIndex ){
                         break;
                     }
-                    if(game.getIntersection().intersect(enemy1, objects))
+                    if(game.getIntersection().intersect(enemy1, enemy2))
                         c = false;
                 }
-                if(game.getIntersection().intersect(game.getGameFrame().getEpsilon(), objects))
+                if(game.getIntersection().intersect(game.getGameFrame().getEpsilon(), enemy2))
                     c = false;
 
                 if(c){
-                    enemy.setX(objects.getX() + 15);
-                    enemy.setY(objects.getY() + 15);
+                    enemy.addX(xDash);
+                    enemy.addY(yDash);
                     game.getGameFrame().repaint();
                     break;
                 }
