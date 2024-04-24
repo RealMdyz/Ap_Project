@@ -56,13 +56,6 @@ public class GameLoop extends Thread{
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                if(game.getStorePanel().newImpact){
-                    doImpact(game.getStorePanel().newImpactX, game.getStorePanel().newImpactY, 500);
-                    game.getStorePanel().newImpact = false;
-                    game.getStorePanel().newImpactX = 0;
-                    game.getStorePanel().newImpactY = 0;
-
-                }
 
             }
         }
@@ -75,6 +68,13 @@ public class GameLoop extends Thread{
         if(game.getGameFrame().getEpsilon().getHp() <= 0){
             game.endGame();
             Constant.setIsRunning(false);
+        }
+        if(game.getStorePanel().newImpact){
+            doImpact(game.getStorePanel().newImpactX, game.getStorePanel().newImpactY, 500);
+            game.getStorePanel().newImpact = false;
+            game.getStorePanel().newImpactX = 0;
+            game.getStorePanel().newImpactY = 0;
+
         }
         long t = System.currentTimeMillis();
         if(game.getGameFrame().getEpsilon().getHp() < 100 && Epsilon.isWriteOfAceso() && t - game.getGameFrame().getEpsilon().getPrevAceso() > 1000 && Constant.isqPressed()){

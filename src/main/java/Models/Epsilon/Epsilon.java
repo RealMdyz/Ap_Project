@@ -138,11 +138,7 @@ public class Epsilon extends ObjectsInGame implements Moveable {
             vertex.setxFake(newX);
             vertex.setyFake(newY);
         }
-        count += 1;
-        if(count > 10  && Constant.isRotateVertices()){
-            count = 0;
-            setPosVertex();
-        }
+
     }
     public void setPosVertex(){
         double angleBetweenVertices = 2 * Math.PI / levelOfWritOfProteus;
