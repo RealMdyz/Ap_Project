@@ -72,62 +72,8 @@ public class ObjectsInGame extends JLabel {
        // System.out.println(distance + " " + hp);
     }
 
-    public void rotateImage(double degrees) {
-        // Ensure the background image is not null
-        if (background == null) {
-            System.out.println("Background image is null. Exiting rotateImage function.");
-            return;
-        }
 
-        // Create a new BufferedImage to hold the rotated image
-        int width = Constant.getHeightOfSquarantine();
-        int height = Constant.getHeightOfSquarantine();
-        BufferedImage rotatedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
-        // Get the graphics context of the rotated image
-        Graphics2D g2D = rotatedImage.createGraphics();
-
-        // Set rendering hints for high-quality rendering
-        g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-
-        // Calculate the center of rotation
-        double centerX = width / 2.0;
-        double centerY = height / 2.0;
-
-        // Create an AffineTransform to perform the rotation around the center of the image
-        AffineTransform rotation = AffineTransform.getRotateInstance(Math.toRadians(degrees), centerX, centerY);
-
-        // Apply the rotation transformation
-        g2D.setTransform(rotation);
-
-        // Draw the original image onto the rotated image
-        g2D.drawImage(background, 0, 0, width, height, null);
-
-        // Dispose the graphics context
-        g2D.dispose();
-
-        // Calculate the bounds of the rotated image
-        Rectangle bounds = rotation.createTransformedShape(new Rectangle(width, height)).getBounds();
-        int newWidth = bounds.width;
-        int newHeight = bounds.height;
-
-        // Update the object's dimensions based on the rotated image dimensions
-        setWidth(newWidth);
-        setHeight(newHeight);
-
-        // Adjust the position of the rotated image to keep it within bounds
-        int deltaX = bounds.x;
-        int deltaY = bounds.y;
-        setX(getX() + deltaX);
-        setY(getY() + deltaY);
-
-        // Set the rotated image as the new background
-        changeBackground(rotatedImage);
-
-        // Repaint the component to reflect the changes
-        repaint();
-    }
 
 
     public void changeBackground(BufferedImage newBackground) {

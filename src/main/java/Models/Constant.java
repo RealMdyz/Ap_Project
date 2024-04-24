@@ -28,7 +28,7 @@ public class Constant {
     private static int sound = 50;
     private static boolean  rotateVertices = false;
 
-    private static double rotateAfterImpact = 0;
+    private static double rotateAfterImpact = 25;
     private Map<String, Integer> keyMap;
     private static boolean openStore = false;
     private static int speedOfShot = 15;
