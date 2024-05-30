@@ -98,9 +98,7 @@ public class LoginPageShare extends JFrame implements ActionListener {
     }
     private void Start(){
         game.getGameFrame().setVisible(true);
-        gameLoop.start();
         repaint();
-
     }
     private void Setting(){
         SettingPage settingPage = new SettingPage(game.getConstant());
