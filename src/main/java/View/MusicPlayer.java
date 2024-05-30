@@ -10,7 +10,6 @@ public class MusicPlayer {
     private Clip clip;
     private boolean loop;
     private FloatControl volumeControl;
-
     // Constructor
     public MusicPlayer(String filePath, boolean loop) {
         this.loop = loop;

@@ -22,7 +22,6 @@ public class MyProjectData {
     protected BufferedImage writOfAres;
     protected BufferedImage writOfProteus;
 
-
     protected Font font10;
     protected Font font12;
     protected Font font15;
