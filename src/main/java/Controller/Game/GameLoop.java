@@ -1,4 +1,4 @@
-package Controller;
+package Controller.Game;
 
 import Models.Constant;
 import Models.Enemy.Enemy;
@@ -20,26 +20,99 @@ public class GameLoop{
 
     private Game game;
     private Constant constant;
-    private EnemyWave[] waves_Phase1;
-    private int currentWaveIndex;
-    private int currentWaveIndexEnemy;
-    private int delay = 0;
-    private long startOfGame = 0;
-    private boolean panelReduced = false;
-    private boolean epsilonIncrease = false;
-    private boolean panelReducedInEnd = false;
-    private boolean addVertex = true;
+    private long startOfGame = System.currentTimeMillis();
+    private int indexWave = 0;
 
     public GameLoop(Game game, Constant constant){
         this.constant = constant;
         this.game = game;
-        PhaseOne phaseOne = new PhaseOne();
-        phaseOne.start();
+        // PhaseOne phaseOne = new PhaseOne();
+        EpsilonThread epsilonThread = new EpsilonThread();
+        CalculatorThread calculatorThread = new CalculatorThread();
+        EnemyThread enemyThread = new EnemyThread();
+        GraphicThread graphicThread = new GraphicThread();
+        // phaseOne.start();
+        calculatorThread.start();
+        enemyThread.start();
+        graphicThread.start();
+        epsilonThread.start();
 
+
+    }
+    private class EpsilonThread extends Thread{
+        @Override
+        public void run() {
+            while (!constant.isBossTriggered()){
+
+                game.getGameFrame().getEpsilon().move(game.getGameFrame().getWidth(), game.getGameFrame().getHeight());
+                game.getEpsilonShotController().checkShot();
+                game.epsilonShotController.shotMove();
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
+    }
+    private class GraphicThread extends Thread{
+        @Override
+        public void run() {
+            while (!constant.isBossTriggered()){
+
+                game.getUpdateToPanel().updateTopPanel(startOfGame,indexWave, 5);
+                game.getGameFrame().repaint();
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
+    }
+    private class EnemyThread extends Thread{
+        @Override
+        public void run() {
+            while (!constant.isBossTriggered()){
+
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
+    }
+    private class CalculatorThread extends Thread{
+        @Override
+        public void run() {
+            while (!constant.isBossTriggered()){
+
+                game.shrinkageController.panelReducedSize(game.getGameFrame());
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
     }
 
 
     private class PhaseOne extends Thread{
+
+        private EnemyWave[] waves_Phase1;
+        private int currentWaveIndex;
+        private int currentWaveIndexEnemy;
+        private int delay = 0;
+        private boolean panelReduced = false;
+        private boolean epsilonIncrease = false;
+        private boolean panelReducedInEnd = false;
+        private boolean addVertex = true;
         public void run() {
             startOfGame = System.currentTimeMillis();
             waves_Phase1 = new EnemyWave[3];
@@ -365,7 +438,7 @@ public class GameLoop{
             game.getTopPanel().updateHPLabel(game.getGameFrame().getEpsilon().getHp());
             game.getTopPanel().updateXPLabel(constant.getPlayerXP());
             game.getTopPanel().updateTimeLabel((System.currentTimeMillis() - startOfGame));
-            game.getTopPanel().updateWaveLabel(currentWaveIndex);
+            game.getTopPanel().updateWaveLabel(currentWaveIndex, 3);
             if (!panelReduced && game.getGameFrame().getWidth() > 450 && game.getGameFrame().getHeight() > 450) {
                 int newWidth = game.getGameFrame().getWidth() - 4;
                 int newHeight = game.getGameFrame().getHeight() - 4;

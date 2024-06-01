@@ -1,11 +1,13 @@
 package Models;
 
-import Controller.Intersection;
+import Controller.Game.EpsilonShotController;
+import Controller.Game.Intersection;
+import Controller.Menu.ShrinkageController;
+import Controller.Menu.UpdateToPPanel;
 import Models.Epsilon.Epsilon;
 import MyProject.MyProjectData;
 import View.Game.GameFrame;
 import View.Game.InputListener;
-import View.Menu.LoginPageShare;
 import View.Menu.StorePanel;
 import View.Menu.TopPanel;
 import View.MusicPlayer;
@@ -18,8 +20,13 @@ import java.util.Scanner;
 
 public class Game {
     private boolean isRunning;
+
     protected GameFrame gameFrame;
     protected Constant constant;
+
+    public UpdateToPPanel updateToPPanel;
+    public ShrinkageController shrinkageController;
+    public EpsilonShotController epsilonShotController;
     protected Intersection intersection;
     protected Epsilon epsilon;
     protected InputListener inputListener;
@@ -38,7 +45,9 @@ public class Game {
         storePanel = new StorePanel(constant,epsilon);
         inputListener = new InputListener(gameFrame, constant);
         intersection = new Intersection();
-
+        updateToPPanel = new UpdateToPPanel(this, constant);
+        epsilonShotController = new EpsilonShotController(this);
+        shrinkageController = new ShrinkageController(constant.getMinHeightForShrinkage(), constant.getMinWidthForShrinkage(), constant.getReduceForeShrinkage());
     }
 
 
@@ -98,6 +107,22 @@ public class Game {
         this.musicPlayer = musicPlayer;
     }
 
+    public UpdateToPPanel getUpdateToPanel() {
+        return updateToPPanel;
+    }
+
+    public void setUpdateToPanel(UpdateToPPanel updateToPPanel) {
+        this.updateToPPanel = updateToPPanel;
+    }
+
+    public EpsilonShotController getEpsilonShotController() {
+        return epsilonShotController;
+    }
+
+    public void setEpsilonShotController(EpsilonShotController epsilonShotController) {
+        this.epsilonShotController = epsilonShotController;
+    }
+
     public void endGame(){
         JOptionPane.showMessageDialog(gameFrame, "Earned XP: " + constant.getPlayerXP(), "XP Earned", JOptionPane.INFORMATION_MESSAGE);
         File file = new File("gameData");
@@ -136,4 +161,5 @@ public class Game {
         Constant.setqPressed(false);
         MusicPlayer.playOnce(MyProjectData.getProjectData().getEndOfGameSound());
     }
+
 }

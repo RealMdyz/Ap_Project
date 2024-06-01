@@ -1,6 +1,6 @@
 package View.Menu;
 
-import Controller.GameLoop;
+import Controller.Game.GameLoop;
 import Models.Constant;
 import Models.Game;
 import MyProject.MyProjectData;

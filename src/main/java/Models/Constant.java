@@ -24,7 +24,11 @@ public class Constant {
     private static int sensitivityForMoves = 50;
     private static long abilityStartTime = -100000;
     private static int playerXP = 0;
+    private int minWidthForShrinkage = 450;
+    private int minHeightForShrinkage = 450;
+    private int reduceForeShrinkage = 3;
     private static boolean isRunning;
+
     private static int sound = 50;
     private static boolean  rotateVertices = false;
 
@@ -44,6 +48,8 @@ public class Constant {
     private int upKey, downKey, leftKey, rightKey, abilityKey, storeKey;
 
     private static boolean qPressed = false;
+    private boolean bossTriggered = false;
+
     public Constant(){
         savedXp = 0;
 
@@ -374,5 +380,37 @@ public class Constant {
 
     public static void setRotateAfterImpact(double rotateAfterImpact) {
         Constant.rotateAfterImpact = rotateAfterImpact;
+    }
+
+    public boolean isBossTriggered() {
+        return bossTriggered;
+    }
+
+    public void setBossTriggered(boolean bossTriggered) {
+        this.bossTriggered = bossTriggered;
+    }
+
+    public int getMinWidthForShrinkage() {
+        return minWidthForShrinkage;
+    }
+
+    public void setMinWidthForShrinkage(int minWidthForShrinkage) {
+        this.minWidthForShrinkage = minWidthForShrinkage;
+    }
+
+    public int getMinHeightForShrinkage() {
+        return minHeightForShrinkage;
+    }
+
+    public void setMinHeightForShrinkage(int minHeightForShrinkage) {
+        this.minHeightForShrinkage = minHeightForShrinkage;
+    }
+
+    public int getReduceForeShrinkage() {
+        return reduceForeShrinkage;
+    }
+
+    public void setReduceForeShrinkage(int reduceForeShrinkage) {
+        this.reduceForeShrinkage = reduceForeShrinkage;
     }
 }

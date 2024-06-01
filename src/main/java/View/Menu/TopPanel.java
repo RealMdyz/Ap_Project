@@ -54,10 +54,10 @@ public class TopPanel extends JPanel {
     }
 
     // Methods to update label texts
-    public void updateWaveLabel(int wave) {
+    public void updateWaveLabel(int wave, int endWave) {
         if(wave == 3)
             wave = 2;
-        waveLabel.setText("Wave: " + (wave + 1) + "/3");
+        waveLabel.setText("Wave: " + (wave + 1) + "/" + endWave);
     }
 
     public void updateTimeLabel(long timeInMillis) {

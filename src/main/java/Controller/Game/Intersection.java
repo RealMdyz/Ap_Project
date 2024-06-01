@@ -1,4 +1,4 @@
-package Controller;
+package Controller.Game;
 
 import Models.Enemy.Enemy;
 import Models.Epsilon.Epsilon;
