@@ -2,6 +2,7 @@ package Models;
 
 import Controller.Game.EpsilonShotController;
 import Controller.Game.Intersection;
+import Controller.Game.StoreController;
 import Controller.Menu.ShrinkageController;
 import Controller.Menu.UpdateToPPanel;
 import Models.Epsilon.Epsilon;
@@ -27,12 +28,14 @@ public class Game {
     public UpdateToPPanel updateToPPanel;
     public ShrinkageController shrinkageController;
     public EpsilonShotController epsilonShotController;
+    public StoreController storeController;
     protected Intersection intersection;
     protected Epsilon epsilon;
     protected InputListener inputListener;
     protected MusicPlayer musicPlayer;
     private StorePanel storePanel;
     private TopPanel topPanel;
+
 
 
     public Game(Constant constant){
@@ -47,6 +50,7 @@ public class Game {
         intersection = new Intersection();
         updateToPPanel = new UpdateToPPanel(this, constant);
         epsilonShotController = new EpsilonShotController(this);
+        storeController = new StoreController(this);
         shrinkageController = new ShrinkageController(constant.getMinHeightForShrinkage(), constant.getMinWidthForShrinkage(), constant.getReduceForeShrinkage());
     }
 
@@ -121,6 +125,30 @@ public class Game {
 
     public void setEpsilonShotController(EpsilonShotController epsilonShotController) {
         this.epsilonShotController = epsilonShotController;
+    }
+
+    public StoreController getStoreController() {
+        return storeController;
+    }
+
+    public void setStoreController(StoreController storeController) {
+        this.storeController = storeController;
+    }
+
+    public UpdateToPPanel getUpdateToPPanel() {
+        return updateToPPanel;
+    }
+
+    public void setUpdateToPPanel(UpdateToPPanel updateToPPanel) {
+        this.updateToPPanel = updateToPPanel;
+    }
+
+    public ShrinkageController getShrinkageController() {
+        return shrinkageController;
+    }
+
+    public void setShrinkageController(ShrinkageController shrinkageController) {
+        this.shrinkageController = shrinkageController;
     }
 
     public void endGame(){

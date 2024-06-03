@@ -15,6 +15,9 @@ import java.util.List;
 
 public class Constant {
 
+
+    private final Object lockForStore = new Object();
+
     public static final int FIRST_HEIGHT = 700;
     public static final int FIRST_WIDTH = 700;
     public static final int MAX_DISTANCE = 20;
@@ -404,6 +407,10 @@ public class Constant {
 
     public void setMinHeightForShrinkage(int minHeightForShrinkage) {
         this.minHeightForShrinkage = minHeightForShrinkage;
+    }
+
+    public Object getLockForStore() {
+        return lockForStore;
     }
 
     public int getReduceForeShrinkage() {

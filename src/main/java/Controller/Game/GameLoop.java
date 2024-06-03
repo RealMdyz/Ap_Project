@@ -16,13 +16,10 @@ import java.awt.*;
 import java.util.Random;
 
 public class GameLoop{
-
-
     private Game game;
     private Constant constant;
     private long startOfGame = System.currentTimeMillis();
-    private int indexWave = 0;
-
+    private int indexWave;
     public GameLoop(Game game, Constant constant){
         this.constant = constant;
         this.game = game;
@@ -36,8 +33,6 @@ public class GameLoop{
         enemyThread.start();
         graphicThread.start();
         epsilonThread.start();
-
-
     }
     private class EpsilonThread extends Thread{
         @Override
@@ -47,6 +42,7 @@ public class GameLoop{
                 game.getGameFrame().getEpsilon().move(game.getGameFrame().getWidth(), game.getGameFrame().getHeight());
                 game.getEpsilonShotController().checkShot();
                 game.epsilonShotController.shotMove();
+
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -77,6 +73,7 @@ public class GameLoop{
         public void run() {
             while (!constant.isBossTriggered()){
 
+
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -91,6 +88,8 @@ public class GameLoop{
         public void run() {
             while (!constant.isBossTriggered()){
 
+
+                game.storeController.openStore();
                 game.shrinkageController.panelReducedSize(game.getGameFrame());
                 try {
                     Thread.sleep(10);
