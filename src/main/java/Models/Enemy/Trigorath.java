@@ -12,7 +12,7 @@ public class Trigorath extends Enemy implements LocalRouting, Aggression, Moveab
 
 
     public Trigorath(int x, int y) {
-        super(x, y, 15, 2, 5, 3, 10);
+        super(x, y, 15, 2, 5, 3, 10, false);
         this.setHeight(Constant.getHeightOfTrighrath());
         this.setWidth(Constant.getWidthOfTrighrath());
         this.setxCenter(this.getX() + (int)this.getWidth() / 2);

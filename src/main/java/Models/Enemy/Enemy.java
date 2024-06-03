@@ -14,15 +14,16 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
     private int power = 6;
     Point[] points;
 
+    private boolean hovering;
 
-
-    public Enemy(int x, int y, int hp, int collectibleNumber, int xpForEachCollectible, int numSides, int power) {
+    public Enemy(int x, int y, int hp, int collectibleNumber, int xpForEachCollectible, int numSides, int power, boolean hovering) {
         super(x, y, hp);
         this.points = makePoint();
         this.power = power;
         this.numSides = numSides;
         this.collectibleNumber = collectibleNumber;
         this.xpForEachCollectible = xpForEachCollectible;
+        this.hovering = hovering;
     }
     public Point[] makePoint(){
         if(getHp() == 10){
@@ -126,5 +127,13 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
         for (Point point : this.getPoints()){
             point.setLocation(point.getX(), point.getY() + amountForAdd);
         }
+    }
+
+    public boolean isHovering() {
+        return hovering;
+    }
+
+    public void setHovering(boolean hovering) {
+        this.hovering = hovering;
     }
 }

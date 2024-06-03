@@ -21,6 +21,7 @@ public class MyProjectData {
     protected BufferedImage writOfAceso;
     protected BufferedImage writOfAres;
     protected BufferedImage writOfProteus;
+    protected BufferedImage omenoct;
 
     protected Font font10;
     protected Font font12;
@@ -60,6 +61,14 @@ public class MyProjectData {
         gameMenuImage = new ImageIcon("Game/GameMenuImage.jpg");
         gameIcon = new ImageIcon("Game/GameIcon.ico");
 
+
+        try {
+            String pathBackground = "Enemy/omenoct.png";
+            File fileBackground = new File(pathBackground);
+            omenoct = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         try {
             String pathBackground = "Enemy/square.png";
             File fileBackground = new File(pathBackground);
@@ -298,5 +307,13 @@ public class MyProjectData {
 
     public void setVertexOnEpsilon(BufferedImage vertexOnEpsilon) {
         this.vertexOnEpsilon = vertexOnEpsilon;
+    }
+
+    public BufferedImage getOmenoct() {
+        return omenoct;
+    }
+
+    public void setOmenoct(BufferedImage omenoct) {
+        this.omenoct = omenoct;
     }
 }

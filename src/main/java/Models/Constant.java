@@ -46,6 +46,11 @@ public class Constant {
     private static int heightOfSquarantine = 40;
     private static int speedOfSquarantine  = 5;
     private static int speedOfImpact = 10;
+    private static int widthOfOmenoct = 50;
+    private static int heightOfOmenoct = 50;
+    private static int speedOfOmenoct = 7;
+    private static int endXOmenoct = 0;
+    private static int endYOmenoct = 150;
     private static int savedXp;
 
     private int upKey, downKey, leftKey, rightKey, abilityKey, storeKey;
@@ -419,5 +424,45 @@ public class Constant {
 
     public void setReduceForeShrinkage(int reduceForeShrinkage) {
         this.reduceForeShrinkage = reduceForeShrinkage;
+    }
+
+    public static int getWidthOfOmenoct() {
+        return widthOfOmenoct;
+    }
+
+    public static void setWidthOfOmenoct(int widthOfOmenoct) {
+        Constant.widthOfOmenoct = widthOfOmenoct;
+    }
+
+    public static int getHeightOfOmenoct() {
+        return heightOfOmenoct;
+    }
+
+    public static void setHeightOfOmenoct(int heightOfOmenoct) {
+        Constant.heightOfOmenoct = heightOfOmenoct;
+    }
+
+    public static int getSpeedOfOmenoct() {
+        return speedOfOmenoct;
+    }
+
+    public static void setSpeedOfOmenoct(int speedOfOmenoct) {
+        Constant.speedOfOmenoct = speedOfOmenoct;
+    }
+
+    public static int getEndXOmenoct() {
+        return endXOmenoct;
+    }
+
+    public static void setEndXOmenoct(int endXOmenoct) {
+        Constant.endXOmenoct = endXOmenoct;
+    }
+
+    public static int getEndYOmenoct() {
+        return endYOmenoct;
+    }
+
+    public static void setEndYOmenoct(int endYOmenoct) {
+        Constant.endYOmenoct = endYOmenoct;
     }
 }

@@ -3,6 +3,7 @@ package Controller.Game;
 import Models.Constant;
 import Models.Enemy.Enemy;
 import Models.Enemy.EnemyWave;
+import Models.Enemy.Omenoct;
 import Models.Epsilon.Collectible;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
@@ -23,16 +24,19 @@ public class GameLoop{
     public GameLoop(Game game, Constant constant){
         this.constant = constant;
         this.game = game;
-        // PhaseOne phaseOne = new PhaseOne();
+        //PhaseOne phaseOne = new PhaseOne();
+
         EpsilonThread epsilonThread = new EpsilonThread();
         CalculatorThread calculatorThread = new CalculatorThread();
         EnemyThread enemyThread = new EnemyThread();
         GraphicThread graphicThread = new GraphicThread();
-        // phaseOne.start();
+        //phaseOne.start();
         calculatorThread.start();
         enemyThread.start();
         graphicThread.start();
         epsilonThread.start();
+
+
     }
     private class EpsilonThread extends Thread{
         @Override
@@ -72,8 +76,7 @@ public class GameLoop{
         @Override
         public void run() {
             while (!constant.isBossTriggered()){
-
-
+                game.getEnemyController().enemyMove();
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -328,7 +331,7 @@ public class GameLoop{
         }
         private void checkIntersection(){
             int index = 0;
-            Enemy enemy1 = new Enemy(0, 0, 1, 0, 0, 0, 0);
+            Enemy enemy1 = new Enemy(0, 0, 1, 0, 0, 0, 0, false);
             Shot shot1 = new Shot(0,0 );
             for(Enemy enemy : waves_Phase1[currentWaveIndex].getEnemies()){
                 index += 1;
@@ -370,7 +373,7 @@ public class GameLoop{
         }
         private void checkTheImpact(){
             int index = 0;
-            Enemy enemy12 = new Enemy(0, 0, 1, 0, 0, 0, 0);
+            Enemy enemy12 = new Enemy(0, 0, 1, 0, 0, 0, 0, false);
 
             for(Enemy enemy : waves_Phase1[currentWaveIndex].getEnemies()){
                 index += 1;

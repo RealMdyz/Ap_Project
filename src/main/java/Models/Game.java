@@ -1,5 +1,6 @@
 package Models;
 
+import Controller.Enemy.EnemyController;
 import Controller.Game.EpsilonShotController;
 import Controller.Game.Intersection;
 import Controller.Game.StoreController;
@@ -35,6 +36,7 @@ public class Game {
     protected MusicPlayer musicPlayer;
     private StorePanel storePanel;
     private TopPanel topPanel;
+    private EnemyController enemyController;
 
 
 
@@ -51,7 +53,9 @@ public class Game {
         updateToPPanel = new UpdateToPPanel(this, constant);
         epsilonShotController = new EpsilonShotController(this);
         storeController = new StoreController(this);
+        enemyController = new EnemyController(this);
         shrinkageController = new ShrinkageController(constant.getMinHeightForShrinkage(), constant.getMinWidthForShrinkage(), constant.getReduceForeShrinkage());
+
     }
 
 
@@ -149,6 +153,14 @@ public class Game {
 
     public void setShrinkageController(ShrinkageController shrinkageController) {
         this.shrinkageController = shrinkageController;
+    }
+
+    public EnemyController getEnemyController() {
+        return enemyController;
+    }
+
+    public void setEnemyController(EnemyController enemyController) {
+        this.enemyController = enemyController;
     }
 
     public void endGame(){

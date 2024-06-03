@@ -140,18 +140,11 @@ public class GameFrame extends JFrame {
         this.collectibles = collectibles;
     }
     public void addNewCollectoble(Enemy enemy){
-        if(enemy.getCollectibleNumber() == 1){
-            Collectible collectible = new Collectible(enemy.getX(), enemy.getY(), 0, 5, System.currentTimeMillis());
+
+        for(int i = 0; i  < enemy.getCollectibleNumber(); i++){
+            Collectible collectible = new Collectible(enemy.getX() + 10 * i, enemy.getY() + 10 * i, 0, 5, System.currentTimeMillis());
             gamePanel.add(collectible);
             collectibles.add(collectible);
-        }
-        else if(enemy.getCollectibleNumber() == 2){
-            Collectible collectible = new Collectible(enemy.getX(), enemy.getY(), 0, 5, System.currentTimeMillis());
-            gamePanel.add(collectible);
-            collectibles.add(collectible);
-            Collectible collectible1 = new Collectible(enemy.getX() + 50, enemy.getY() + 50, 0, 5, System.currentTimeMillis());
-            gamePanel.add(collectible1);
-            collectibles.add(collectible1);
         }
     }
     public void checkTheCollectibleTime(){
