@@ -23,6 +23,8 @@ public class MyProjectData {
     protected BufferedImage writOfProteus;
     protected BufferedImage omenoct;
 
+    protected BufferedImage necropick;
+
     protected Font font10;
     protected Font font12;
     protected Font font15;
@@ -66,6 +68,13 @@ public class MyProjectData {
             String pathBackground = "Enemy/omenoct.png";
             File fileBackground = new File(pathBackground);
             omenoct = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String pathBackground = "Enemy/necropick.png";
+            File fileBackground = new File(pathBackground);
+            necropick = ImageIO.read(fileBackground);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -315,5 +324,13 @@ public class MyProjectData {
 
     public void setOmenoct(BufferedImage omenoct) {
         this.omenoct = omenoct;
+    }
+
+    public BufferedImage getNecropick() {
+        return necropick;
+    }
+
+    public void setNecropick(BufferedImage necropick) {
+        this.necropick = necropick;
     }
 }

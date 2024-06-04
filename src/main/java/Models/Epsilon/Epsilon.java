@@ -13,6 +13,9 @@ import java.awt.image.BufferedImage;
 
 public class Epsilon extends ObjectsInGame implements Moveable {
 
+
+
+
     public static int levelOfWritOfAres = 0;
     public static int levelOfWritOfProteus = 1;
     public static boolean writeOfAceso = false;
@@ -21,7 +24,7 @@ public class Epsilon extends ObjectsInGame implements Moveable {
 
     private long startOfAthena = 0;
     private int radius = 35;
-
+    protected ArrayList<Shot> shots = new ArrayList<>();
     private int count = 0;
 
     public Epsilon(int x, int y) {

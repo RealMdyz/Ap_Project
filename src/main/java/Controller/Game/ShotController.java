@@ -1,14 +1,11 @@
 package Controller.Game;
 
-import Models.Constant;
-import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 import Models.Game;
-import View.Game.GameFrame;
 
-public class EpsilonShotController {
+public class ShotController {
     private Game game;
-    public EpsilonShotController(Game game){
+    public ShotController(Game game){
         this.game = game;
     }
     public void checkShot() {

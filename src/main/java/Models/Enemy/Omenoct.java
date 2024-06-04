@@ -14,7 +14,7 @@ public class Omenoct extends Enemy{
         this.setWidth(Constant.getWidthOfOmenoct());
         this.setxCenter(this.getX() + (int)this.getWidth() / 2);
         this.setyCenter(this.getY() + (int)this.getHeight() / 2);
-        setSize(Constant.getWidthOfSquarantine(), Constant.getHeightOfOmenoct());
+        setSize(Constant.getWidthOfOmenoct(), Constant.getHeightOfOmenoct());
         background = MyProjectData.getProjectData().getOmenoct();
 
     }

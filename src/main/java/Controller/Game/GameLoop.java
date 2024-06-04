@@ -3,7 +3,6 @@ package Controller.Game;
 import Models.Constant;
 import Models.Enemy.Enemy;
 import Models.Enemy.EnemyWave;
-import Models.Enemy.Omenoct;
 import Models.Epsilon.Collectible;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
@@ -26,6 +25,8 @@ public class GameLoop{
         this.game = game;
         //PhaseOne phaseOne = new PhaseOne();
 
+        //game.getEnemyController().addEnemy(new Necropick(120, 120));
+
         EpsilonThread epsilonThread = new EpsilonThread();
         CalculatorThread calculatorThread = new CalculatorThread();
         EnemyThread enemyThread = new EnemyThread();
@@ -45,7 +46,7 @@ public class GameLoop{
 
                 game.getGameFrame().getEpsilon().move(game.getGameFrame().getWidth(), game.getGameFrame().getHeight());
                 game.getEpsilonShotController().checkShot();
-                game.epsilonShotController.shotMove();
+                game.shotController.shotMove();
 
                 try {
                     Thread.sleep(10);
@@ -77,6 +78,8 @@ public class GameLoop{
         public void run() {
             while (!constant.isBossTriggered()){
                 game.getEnemyController().enemyMove();
+                game.getEnemyController().checkNecropickEsp();
+                game.getEnemyController().spawnProcess();
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {

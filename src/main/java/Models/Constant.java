@@ -51,6 +51,10 @@ public class Constant {
     private static int speedOfOmenoct = 7;
     private static int endXOmenoct = 0;
     private static int endYOmenoct = 150;
+
+    private static int widthOfNecropick = 50;
+    private static int heightOfNecropick = 50;
+    private static int speedOfNecropick = 7;
     private static int savedXp;
 
     private int upKey, downKey, leftKey, rightKey, abilityKey, storeKey;
@@ -465,4 +469,30 @@ public class Constant {
     public static void setEndYOmenoct(int endYOmenoct) {
         Constant.endYOmenoct = endYOmenoct;
     }
+
+    public static int getWidthOfNecropick() {
+        return widthOfNecropick;
+    }
+
+    public static void setWidthOfNecropick(int widthOfNecropick) {
+        Constant.widthOfNecropick = widthOfNecropick;
+    }
+
+    public static int getHeightOfNecropick() {
+        return heightOfNecropick;
+    }
+
+    public static void setHeightOfNecropick(int heightOfNecropick) {
+        Constant.heightOfNecropick = heightOfNecropick;
+    }
+
+    public static int getSpeedOfNecropick() {
+        return speedOfNecropick;
+    }
+
+    public static void setSpeedOfNecropick(int speedOfNecropick) {
+        Constant.speedOfNecropick = speedOfNecropick;
+    }
+
+
 }

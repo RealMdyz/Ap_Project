@@ -1,7 +1,7 @@
 package Models;
 
 import Controller.Enemy.EnemyController;
-import Controller.Game.EpsilonShotController;
+import Controller.Game.ShotController;
 import Controller.Game.Intersection;
 import Controller.Game.StoreController;
 import Controller.Menu.ShrinkageController;
@@ -28,7 +28,7 @@ public class Game {
 
     public UpdateToPPanel updateToPPanel;
     public ShrinkageController shrinkageController;
-    public EpsilonShotController epsilonShotController;
+    public ShotController shotController;
     public StoreController storeController;
     protected Intersection intersection;
     protected Epsilon epsilon;
@@ -51,7 +51,7 @@ public class Game {
         inputListener = new InputListener(gameFrame, constant);
         intersection = new Intersection();
         updateToPPanel = new UpdateToPPanel(this, constant);
-        epsilonShotController = new EpsilonShotController(this);
+        shotController = new ShotController(this);
         storeController = new StoreController(this);
         enemyController = new EnemyController(this);
         shrinkageController = new ShrinkageController(constant.getMinHeightForShrinkage(), constant.getMinWidthForShrinkage(), constant.getReduceForeShrinkage());
@@ -123,12 +123,12 @@ public class Game {
         this.updateToPPanel = updateToPPanel;
     }
 
-    public EpsilonShotController getEpsilonShotController() {
-        return epsilonShotController;
+    public ShotController getEpsilonShotController() {
+        return shotController;
     }
 
-    public void setEpsilonShotController(EpsilonShotController epsilonShotController) {
-        this.epsilonShotController = epsilonShotController;
+    public void setEpsilonShotController(ShotController shotController) {
+        this.shotController = shotController;
     }
 
     public StoreController getStoreController() {
