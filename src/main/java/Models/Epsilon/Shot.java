@@ -46,6 +46,11 @@ public class Shot extends ObjectsInGame implements Moveable {
         this.setX(this.getX() + this.xVelocity);
         this.setY(this.getY() + this.yVelocity);
     }
+    public boolean checkRemovedBoard(int xLimit, int yLimit){
+        if(this.getX() < 0 || this.getY() < 0 || this.getY() > yLimit || this.getX() > xLimit)
+            return true;
+        return false;
+    }
 
     public int getxVelocity() {
         return xVelocity;

@@ -27,10 +27,10 @@ public class MakeEnemy {
     }
     public Necropick makeNecropick(){
         Random random = new Random();
-        return new Necropick(random.nextInt() % 450, random.nextInt() % 450);
+        return new Necropick(random.nextInt() % 450 + 20, random.nextInt() % 450 + 20);
     }
     public Omenoct makeOmenoct(){
         Random random = new Random();
-        return new Omenoct(random.nextInt() % 450, random.nextInt() % 450);
+        return new Omenoct(random.nextInt() % 450 + 20, random.nextInt() % 450 + 20);
     }
 }

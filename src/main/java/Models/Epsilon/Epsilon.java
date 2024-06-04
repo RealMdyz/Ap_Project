@@ -215,4 +215,12 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     public void setVertices(ArrayList<Vertex> vertices) {
         this.vertices = vertices;
     }
+
+    public ArrayList<Shot> getShots() {
+        return shots;
+    }
+
+    public void setShots(ArrayList<Shot> shots) {
+        this.shots = shots;
+    }
 }

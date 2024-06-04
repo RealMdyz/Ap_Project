@@ -35,15 +35,7 @@ public class EnemyController {
         for(Enemy enemy : enemyArrayList){
             if (enemy instanceof Necropick) {
                 Necropick necropick = (Necropick) enemy;
-                if(System.currentTimeMillis() - necropick.getTime() > 12000){
-                    necropick.setTime(System.currentTimeMillis());
-                }
-                else if(System.currentTimeMillis() - necropick.getTime() < 8000){
-                    necropick.setVisible(false);
-                }
-                else {
-                    necropick.setVisible(true);
-                }
+                necropick.checkEsp(game);
             }
         }
     }

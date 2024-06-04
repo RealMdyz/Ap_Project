@@ -116,6 +116,12 @@ public class GameFrame extends JFrame {
         gamePanel.repaint();
 
     }
+    public void removeShotFromPanel(Shot shot){
+        gamePanel.remove(shot);
+        gamePanel.revalidate();
+        gamePanel.repaint();
+
+    }
     public void addToGamePanel(ObjectsInGame object){
         gamePanel.add(object);
         gamePanel.repaint();

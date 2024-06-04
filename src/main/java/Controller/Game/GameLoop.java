@@ -46,8 +46,6 @@ public class GameLoop{
 
                 game.getGameFrame().getEpsilon().move(game.getGameFrame().getWidth(), game.getGameFrame().getHeight());
                 game.getEpsilonShotController().checkShot();
-                game.shotController.shotMove();
-
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -77,6 +75,7 @@ public class GameLoop{
         @Override
         public void run() {
             while (!constant.isBossTriggered()){
+
                 game.getEnemyController().enemyMove();
                 game.getEnemyController().checkNecropickEsp();
                 game.getEnemyController().spawnProcess();
@@ -94,7 +93,7 @@ public class GameLoop{
         public void run() {
             while (!constant.isBossTriggered()){
 
-
+                game.shotController.shotMove();
                 game.storeController.openStore();
                 game.shrinkageController.panelReducedSize(game.getGameFrame());
                 try {
