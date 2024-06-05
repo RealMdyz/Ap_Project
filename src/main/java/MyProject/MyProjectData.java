@@ -24,6 +24,7 @@ public class MyProjectData {
     protected BufferedImage omenoct;
 
     protected BufferedImage necropick;
+    protected BufferedImage archmire;
 
     protected Font font10;
     protected Font font12;
@@ -63,7 +64,13 @@ public class MyProjectData {
         gameMenuImage = new ImageIcon("Game/GameMenuImage.jpg");
         gameIcon = new ImageIcon("Game/GameIcon.ico");
 
-
+        try {
+            String pathBackground = "Enemy/archmire.png";
+            File fileBackground = new File(pathBackground);
+            archmire = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         try {
             String pathBackground = "Enemy/omenoct.png";
             File fileBackground = new File(pathBackground);
@@ -328,6 +335,14 @@ public class MyProjectData {
 
     public BufferedImage getNecropick() {
         return necropick;
+    }
+
+    public BufferedImage getArchmire() {
+        return archmire;
+    }
+
+    public void setArchmire(BufferedImage archmire) {
+        this.archmire = archmire;
     }
 
     public void setNecropick(BufferedImage necropick) {

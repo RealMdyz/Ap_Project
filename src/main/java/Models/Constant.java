@@ -55,6 +55,11 @@ public class Constant {
     private static int widthOfNecropick = 50;
     private static int heightOfNecropick = 50;
     private static int speedOfNecropick = 7;
+
+
+    private static int widthOfArchmire = 50;
+    private static int heightOfArchmire = 50;
+    private static int speedOfArchmire = 7;
     private static int savedXp;
 
     private int upKey, downKey, leftKey, rightKey, abilityKey, storeKey;
@@ -494,5 +499,27 @@ public class Constant {
         Constant.speedOfNecropick = speedOfNecropick;
     }
 
+    public static int getWidthOfArchmire() {
+        return widthOfArchmire;
+    }
 
+    public static void setWidthOfArchmire(int widthOfArchmire) {
+        Constant.widthOfArchmire = widthOfArchmire;
+    }
+
+    public static int getHeightOfArchmire() {
+        return heightOfArchmire;
+    }
+
+    public static void setHeightOfArchmire(int heightOfArchmire) {
+        Constant.heightOfArchmire = heightOfArchmire;
+    }
+
+    public static int getSpeedOfArchmire() {
+        return speedOfArchmire;
+    }
+
+    public static void setSpeedOfArchmire(int speedOfArchmire) {
+        Constant.speedOfArchmire = speedOfArchmire;
+    }
 }
