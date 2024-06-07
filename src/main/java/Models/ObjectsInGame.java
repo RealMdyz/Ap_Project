@@ -73,7 +73,13 @@ public class ObjectsInGame extends JLabel {
     }
 
 
-
+    public boolean reduceHp(int powerOfAttack){
+        this.setHp(this.getHp() - powerOfAttack);
+        if(this.getHp() <= 0)
+            return true;
+        else
+            return false;
+    }
 
 
     public void changeBackground(BufferedImage newBackground) {

@@ -58,6 +58,17 @@ public class Necropick extends Enemy{
                     game.getGameFrame().getGamePanel().add(shot);
                 }
                 canShot = false;
+                int xEpsilon, yEpsilon;
+                xEpsilon = game.getGameFrame().getEpsilon().getX();
+                yEpsilon = game.getGameFrame().getEpsilon().getY();
+                if(xEpsilon + 45 < game.getGameFrame().getWidth() && yEpsilon + 45 < game.getGameFrame().getHeight()){
+                    this.setX(xEpsilon + 45);
+                    this.setY(yEpsilon + 45);
+                }
+                else if(xEpsilon - 45 > 0 && yEpsilon + 45 < game.getGameFrame().getHeight()){
+                    this.setX(xEpsilon - 45);
+                    this.setY(yEpsilon + 45);
+                }
             }
         }
     }
