@@ -4,7 +4,9 @@ import Models.Constant;
 import Models.Epsilon.Shot;
 import Models.Game;
 import MyProject.MyProjectData;
+import View.Game.GameFrame;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -17,8 +19,8 @@ public class Necropick extends Enemy{
     int[] y = {50, -50, 50, -50};
 
     boolean canShot = true;
-    public Necropick(int x, int y) {
-        super(x, y, 10, 4, 2, 0, 5, false);
+    public Necropick(int x, int y, GameFrame frame) {
+        super(x, y, 10, 4, 2, 0, 5, false, frame);
 
         this.setHeight(Constant.getHeightOfNecropick());
         this.setWidth(Constant.getWidthOfNecropick());
@@ -40,37 +42,9 @@ public class Necropick extends Enemy{
         addX(0);
         addX(0);
     }
-    public void checkEsp(Game game){
-        if(System.currentTimeMillis() - this.getTime() > 12000){
-            this.setTime(System.currentTimeMillis());
-        }
-        else if(System.currentTimeMillis() - this.getTime() < 8000){
-            this.setVisible(false);
-            canShot = true;
-        }
-        else {
-            this.setVisible(true);
-            if(canShot){
-                for(int i = 0; i < 4; i++){
-                    Shot shot = new Shot(getX(), getY());
-                    shot.setV(getX() + x[i],  getY() + y[i]);
-                    shots.add(shot);
-                    game.getGameFrame().getGamePanel().add(shot);
-                }
-                canShot = false;
-                int xEpsilon, yEpsilon;
-                xEpsilon = game.getGameFrame().getEpsilon().getX();
-                yEpsilon = game.getGameFrame().getEpsilon().getY();
-                if(xEpsilon + 45 < game.getGameFrame().getWidth() && yEpsilon + 45 < game.getGameFrame().getHeight()){
-                    this.setX(xEpsilon + 45);
-                    this.setY(yEpsilon + 45);
-                }
-                else if(xEpsilon - 45 > 0 && yEpsilon + 45 < game.getGameFrame().getHeight()){
-                    this.setX(xEpsilon - 45);
-                    this.setY(yEpsilon + 45);
-                }
-            }
-        }
+    public void checkEsp(Game game){ // find a close place from epsilon !
+
+
     }
 
     public long getTime() {

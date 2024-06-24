@@ -1,7 +1,9 @@
 package Models.Enemy;
 
 import Models.*;
+import View.Game.GameFrame;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -16,8 +18,8 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
 
     private boolean hovering;
 
-    public Enemy(int x, int y, int hp, int collectibleNumber, int xpForEachCollectible, int numSides, int power, boolean hovering) {
-        super(x, y, hp);
+    public Enemy(int x, int y, int hp, int collectibleNumber, int xpForEachCollectible, int numSides, int power, boolean hovering, GameFrame frame) {
+        super(x, y, hp, frame);
         this.points = makePoint();
         this.power = power;
         this.numSides = numSides;

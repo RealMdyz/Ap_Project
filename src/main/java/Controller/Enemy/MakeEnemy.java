@@ -29,22 +29,12 @@ public class MakeEnemy {
         return null;
     }
     public Necropick makeNecropick(){
-        Random random = new Random();
-        return new Necropick(random.nextInt() % 450 + 20, random.nextInt() % 450 + 20);
+        return null;
     }
     public Omenoct makeOmenoct(){
-        Random random = new Random();
-        return new Omenoct(random.nextInt() % 450 + 20, random.nextInt() % 450 + 20);
+        return null;
     }
     public Archmire makeArchmire(){
-        Random random = new Random();
-        if(random.nextInt() % 2 == 0){
-            // make mini archmire
-            return new Archmire(random.nextInt() % 450 + 20, random.nextInt() % 450 + 20, true);
-        }
-        else{
-            // make normal archmire
-            return new Archmire(random.nextInt() % 450 + 20, random.nextInt() % 450 + 20, false);
-        }
+        return null;
     }
 }

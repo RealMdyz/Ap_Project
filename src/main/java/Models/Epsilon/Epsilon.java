@@ -4,7 +4,9 @@ import Models.Constant;
 import Models.Moveable;
 import Models.ObjectsInGame;
 import MyProject.MyProjectData;
+import View.Game.GameFrame;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.awt.geom.AffineTransform;
@@ -12,9 +14,6 @@ import java.awt.image.BufferedImage;
 
 
 public class Epsilon extends ObjectsInGame implements Moveable {
-
-
-
 
     public static int levelOfWritOfAres = 0;
     public static int levelOfWritOfProteus = 1;
@@ -27,8 +26,8 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     protected ArrayList<Shot> shots = new ArrayList<>();
     private int count = 0;
 
-    public Epsilon(int x, int y) {
-        super(x, y, 100);
+    public Epsilon(int x, int y, GameFrame jFrame) {
+        super(x, y, 100, jFrame);
         this.setHeight(70);
         this.setWidth(70);
         this.setxCenter(this.getX() + (int)this.getWidth() / 2);
@@ -48,7 +47,8 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     @Override
     public void move(int xLimit, int yLimit) {
 
-      //  System.out.println(getxCenter() + " " + getyCenter());
+        System.out.println(getxCenter() + " " + getyCenter());
+        System.out.println(getxVelocity() + " " + getyVelocity());
         double t = ((double)System.currentTimeMillis() - (double)this.getImpactTime()) / 1000;
         t = Math.max(0, (1 - t));
         double x = (this.getxVelocityImpact()) * (t);
@@ -79,6 +79,7 @@ public class Epsilon extends ObjectsInGame implements Moveable {
         this.setxVelocity(this.getxVelocity() - (int)x);
         this.setyVelocity(this.getyVelocity() - (int)y);
 
+        this.getCurrentFrame().repaint();
     }
     public void changeSize(int newWidth, int newHeight) {
         this.setWidth(newWidth);
@@ -111,7 +112,7 @@ public class Epsilon extends ObjectsInGame implements Moveable {
             double angle = i * angleBetweenVertices;
             int vx = (int) (getX() + radius * Math.cos(angle));
             int vy = (int) (getY() + radius * Math.sin(angle));
-            vertices.add(new Vertex( vx, vy));
+            vertices.add(new Vertex( vx, vy, this.getCurrentFrame()));
         }
     }
     public void rotateVertices(double angle) {

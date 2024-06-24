@@ -22,14 +22,10 @@ public class EnemyController {
         makeEnemy = new MakeEnemy();
     }
     public void enemyMove(){
-        for(Enemy enemy : enemyArrayList){
-            enemy.move(game.getGameFrame().getWidth(), game.getGameFrame().getHeight());
-            game.getGameFrame().repaint();
-        }
+
     }
     public void addEnemy(Enemy enemy){
-        enemyArrayList.add(enemy);
-        game.getGameFrame().add(enemy);
+
     }
     public void checkNecropickEsp(){
         for(Enemy enemy : enemyArrayList){

@@ -18,14 +18,15 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
     private boolean isRunning;
 
-    protected GameFrame gameFrame;
     protected Constant constant;
-
+    protected ArrayList<GameFrame> gameFrames = new ArrayList<>();
+    protected GameFrame epsilonFrame;
     public UpdateToPPanel updateToPPanel;
     public ShrinkageController shrinkageController;
     public ShotController shotController;
@@ -43,12 +44,11 @@ public class Game {
     public Game(Constant constant){
         this.constant = constant;
         Constant.setIsRunning(true);
-        epsilon = new Epsilon(350, 350);
+        epsilonFrame = new GameFrame(constant, Constant.FIRST_HEIGHT, Constant.FIRST_WIDTH);
+        epsilon = new Epsilon(350, 350, epsilonFrame);
         musicPlayer = new MusicPlayer("Sounds/BackgroundMusic.wav", true);
         topPanel = new TopPanel();
-        gameFrame = new GameFrame(constant, epsilon, topPanel);
         storePanel = new StorePanel(constant,epsilon);
-        inputListener = new InputListener(gameFrame, constant);
         intersection = new Intersection();
         updateToPPanel = new UpdateToPPanel(this, constant);
         shotController = new ShotController(this);
@@ -56,16 +56,15 @@ public class Game {
         enemyController = new EnemyController(this);
         shrinkageController = new ShrinkageController(constant.getMinHeightForShrinkage(), constant.getMinWidthForShrinkage(), constant.getReduceForeShrinkage());
 
+        makeInputListenerForEpsilonFrame(epsilonFrame);
+        epsilonFrame.addToGamePanel(epsilon);
+    }
+    public void makeInputListenerForEpsilonFrame(GameFrame gameFrame){
+        inputListener = new InputListener(gameFrame, constant, epsilon);
     }
 
 
-    public GameFrame getGameFrame() {
-        return gameFrame;
-    }
 
-    public void setGameFrame(GameFrame gameFrame) {
-        this.gameFrame = gameFrame;
-    }
 
     public Constant getConstant() {
         return constant;
@@ -164,7 +163,7 @@ public class Game {
     }
 
     public void endGame(){
-        JOptionPane.showMessageDialog(gameFrame, "Earned XP: " + constant.getPlayerXP(), "XP Earned", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(new JFrame(),"Earned XP: " + constant.getPlayerXP(), "XP Earned", JOptionPane.INFORMATION_MESSAGE);
         File file = new File("gameData");
         int savedXp;
         int levelOfWritOfAres;
@@ -202,4 +201,27 @@ public class Game {
         MusicPlayer.playOnce(MyProjectData.getProjectData().getEndOfGameSound());
     }
 
+    public ArrayList<GameFrame> getGameFrames() {
+        return gameFrames;
+    }
+
+    public void setGameFrames(ArrayList<GameFrame> gameFrames) {
+        this.gameFrames = gameFrames;
+    }
+
+    public GameFrame getEpsilonFrame() {
+        return epsilonFrame;
+    }
+
+    public void setEpsilonFrame(GameFrame epsilonFrame) {
+        this.epsilonFrame = epsilonFrame;
+    }
+
+    public Epsilon getEpsilon() {
+        return epsilon;
+    }
+
+    public void setEpsilon(Epsilon epsilon) {
+        this.epsilon = epsilon;
+    }
 }

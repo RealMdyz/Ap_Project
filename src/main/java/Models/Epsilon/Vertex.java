@@ -3,7 +3,9 @@ package Models.Epsilon;
 import Models.Moveable;
 import Models.ObjectsInGame;
 import MyProject.MyProjectData;
+import View.Game.GameFrame;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class Vertex extends ObjectsInGame implements Moveable {
@@ -12,8 +14,8 @@ public class Vertex extends ObjectsInGame implements Moveable {
     private Color color;
     private double xFake, yFake;
 
-    public Vertex(int x, int y) {
-        super(x + 28, y + 28, 1);
+    public Vertex(int x, int y, GameFrame frame) {
+        super(x + 28, y + 28, 1, frame);
         this.x = x + 28;
         this.y = y + 28;
         xFake = this.getX();

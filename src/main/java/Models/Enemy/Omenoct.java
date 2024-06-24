@@ -2,13 +2,15 @@ package Models.Enemy;
 
 import Models.Constant;
 import MyProject.MyProjectData;
+import View.Game.GameFrame;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class Omenoct extends Enemy{
 
-    public Omenoct(int x, int y) {
-        super(x, y, 20, 8, 4, 8, 4, false);
+    public Omenoct(int x, int y, GameFrame frame) {
+        super(x, y, 20, 8, 4, 8, 4, false, frame);
 
         this.setHeight(Constant.getHeightOfOmenoct());
         this.setWidth(Constant.getWidthOfOmenoct());

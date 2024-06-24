@@ -13,7 +13,6 @@ public class UpdateToPPanel {
     }
 
     public void updateTopPanel(long startOfGame, int currentWaveIndex, int endWaveIndex){
-        game.getTopPanel().updateHPLabel(game.getGameFrame().getEpsilon().getHp());
         game.getTopPanel().updateXPLabel(Constant.getPlayerXP());
         game.getTopPanel().updateTimeLabel((System.currentTimeMillis() - startOfGame));
         game.getTopPanel().updateWaveLabel(currentWaveIndex, endWaveIndex);

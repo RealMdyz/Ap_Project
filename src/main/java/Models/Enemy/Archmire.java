@@ -2,7 +2,9 @@ package Models.Enemy;
 
 import Models.Constant;
 import MyProject.MyProjectData;
+import View.Game.GameFrame;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class Archmire extends Enemy{
@@ -12,8 +14,8 @@ public class Archmire extends Enemy{
     long aoeTime;
 
 
-    public Archmire(int x, int y, boolean isMini) {
-        super(x, y, 30, isMini? 2 : 5, isMini ? 3 : 6, 0, 0, true);
+    public Archmire(int x, int y, boolean isMini, GameFrame frame) {
+        super(x, y, 30, isMini? 2 : 5, isMini ? 3 : 6, 0, 0, true, frame);
         aoeTime = 5000;
         aoePower = 2;
         drownPower = 10;

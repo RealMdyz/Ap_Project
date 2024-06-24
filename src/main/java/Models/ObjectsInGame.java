@@ -1,5 +1,7 @@
 package Models;
 
+import View.Game.GameFrame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -24,15 +26,16 @@ public class ObjectsInGame extends JLabel {
     private double xVelocityImpact = 0;
     private double yVelocityImpact = 0;
     private long impactTime = 0;
-
     protected BufferedImage background;
 
-    public ObjectsInGame(int x, int y, int hp) {
+    protected GameFrame currentFrame;
+
+    public ObjectsInGame(int x, int y, int hp, GameFrame currentFrame) {
 
         this.x = x;
         this.y = y;
         this.hp = hp;
-
+        this.currentFrame = currentFrame;
     }
 
 
@@ -197,5 +200,13 @@ public class ObjectsInGame extends JLabel {
 
     public void setAngleForRotate(double angleForRotate) {
         this.angleForRotate = angleForRotate;
+    }
+
+    public GameFrame getCurrentFrame() {
+        return currentFrame;
+    }
+
+    public void setCurrentFrame(GameFrame currentFrame) {
+        this.currentFrame = currentFrame;
     }
 }

@@ -1,7 +1,6 @@
 package View.Menu;
 
 import Models.Constant;
-import Models.Enemy.EnemyWave;
 import Models.Epsilon.Epsilon;
 
 import javax.swing.*;

@@ -4,7 +4,9 @@ import Models.Constant;
 import Models.Moveable;
 import Models.ObjectsInGame;
 import MyProject.MyProjectData;
+import View.Game.GameFrame;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class Shot extends ObjectsInGame implements Moveable {
@@ -14,8 +16,8 @@ public class Shot extends ObjectsInGame implements Moveable {
 
     private int power = 5;
 
-    public Shot(int x, int y) {
-        super(x, y, 1);
+    public Shot(int x, int y, GameFrame frame) {
+        super(x, y, 1, frame);
         this.setHeight(70);
         this.setWidth(70);
         setSize(getWidth(), getHeight());

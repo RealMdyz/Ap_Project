@@ -3,15 +3,17 @@ package Models.Epsilon;
 import Models.Constant;
 import Models.ObjectsInGame;
 import MyProject.MyProjectData;
+import View.Game.GameFrame;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class Collectible extends ObjectsInGame {
 
     private int increaceXp;
     private long start = 0;
-    public Collectible(int x, int y, int hp, int increaceXp, long start) {
-        super(x, y, hp);
+    public Collectible(int x, int y, int hp, int increaceXp, long start, GameFrame frame) {
+        super(x, y, hp, frame);
         this.increaceXp = increaceXp;
         this.start = start;
         this.setHeight(20);

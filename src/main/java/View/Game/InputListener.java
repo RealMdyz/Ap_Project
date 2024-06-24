@@ -22,10 +22,10 @@ public class InputListener {
     int x = 0;
     int y = 0;
     private final Set<String> pressedKeys = new HashSet<>();
-    public InputListener(GameFrame gameFrame, Constant constant) {
+    public InputListener(GameFrame gameFrame, Constant constant, Epsilon epsilon) {
         this.gameFrame = gameFrame;
         this.constant = constant;
-        epsilon = gameFrame.getEpsilon();
+        this.epsilon = epsilon;
         createKeyBindings();
         createKeyActions();
 

@@ -20,15 +20,9 @@ public class GameFrame extends JFrame {
     Constant constant;
     JPanel panel;
     JPanel gamePanel;
-    Epsilon epsilon;
     private JButton exitButton;
-    TopPanel topPanel;
-    protected ArrayList<Shot> shots = new ArrayList<>();
-    protected ArrayList<Collectible>  collectibles = new ArrayList<>();
-    public GameFrame(Constant constant, Epsilon epsilon,TopPanel topPanel ){
-        this.topPanel = topPanel;
+    public GameFrame(Constant constant, int height, int width){
         this.constant = constant;
-        this.epsilon = epsilon;
         this.setTitle("Window Kill");
         this.setLayout(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -37,7 +31,7 @@ public class GameFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setUndecorated(true);
         this.setResizable(false);
-        this.setSize(Constant.FIRST_WIDTH, Constant.FIRST_HEIGHT);
+        this.setSize(height, width);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -75,23 +69,12 @@ public class GameFrame extends JFrame {
             }
         });
         panel.add(gamePanel);
-        panel.add(epsilon);
         gamePanel.repaint();
-
-        panel.add(topPanel, BorderLayout.NORTH);
     }
 
     @Override
     public void paintComponents(Graphics g) {
         super.paintComponents(g);
-    }
-
-    public Epsilon getEpsilon() {
-        return epsilon;
-    }
-
-    public void setEpsilon(Epsilon epsilon) {
-        this.epsilon = epsilon;
     }
 
     public Constant getConstant() {
@@ -102,32 +85,12 @@ public class GameFrame extends JFrame {
         this.constant = constant;
     }
 
-    public ArrayList<Shot> getShots() {
-        return shots;
-    }
-
-    public void setShots(ArrayList<Shot> shots) {
-        this.shots = shots;
-    }
-    public void removeOneShot(Shot shot){
-        gamePanel.remove(shot);
-        shots.remove(shot);
-        gamePanel.revalidate();
-        gamePanel.repaint();
-
-    }
     public void removeShotFromPanel(Shot shot){
         gamePanel.remove(shot);
         gamePanel.revalidate();
         gamePanel.repaint();
 
     }
-    public void addToGamePanel(ObjectsInGame object){
-        gamePanel.add(object);
-        gamePanel.repaint();
-       // System.out.println("Hello");
-    }
-
     public JPanel getGamePanel() {
         return gamePanel;
     }
@@ -138,35 +101,6 @@ public class GameFrame extends JFrame {
     public void addToPanel(JPanel jPanel){
         panel.add(jPanel, BorderLayout.NORTH);
     }
-
-    public ArrayList<Collectible> getCollectibles() {
-        return collectibles;
-    }
-    public void setCollectibles(ArrayList<Collectible> collectibles) {
-        this.collectibles = collectibles;
-    }
-    public void addNewCollectoble(Enemy enemy){
-
-        for(int i = 0; i  < enemy.getCollectibleNumber(); i++){
-            Collectible collectible = new Collectible(enemy.getX() + 10 * i, enemy.getY() + 10 * i, 0, 5, System.currentTimeMillis());
-            gamePanel.add(collectible);
-            collectibles.add(collectible);
-        }
-    }
-    public void checkTheCollectibleTime(){
-        Collectible collectible = new Collectible(0, 0, 0, 5, System.currentTimeMillis());
-        for (Collectible collectible1 : collectibles){
-            if(System.currentTimeMillis() - collectible1.getStart() > 5000){
-                collectible = collectible1;
-                break;
-            }
-        }
-        gamePanel.remove(collectible);
-        collectibles.remove(collectible);
-        gamePanel.repaint();
-
-    }
-
     public JPanel getPanel() {
         return panel;
     }
@@ -174,8 +108,15 @@ public class GameFrame extends JFrame {
     public void setPanel(JPanel panel) {
         this.panel = panel;
     }
-    public void addToGamePanelAnObject(ObjectsInGame object) {
+    public void addToGamePanel(ObjectsInGame object) {
         gamePanel.add(object);
+        // Update the layout of gamePanel to reflect the new object
+        gamePanel.revalidate();
+        // Repaint gamePanel to reflect the changes
+        gamePanel.repaint();
+    }
+    public void removeFromGamePanel(ObjectsInGame object) {
+        gamePanel.remove(object);
         // Update the layout of gamePanel to reflect the new object
         gamePanel.revalidate();
         // Repaint gamePanel to reflect the changes
