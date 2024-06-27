@@ -1,6 +1,7 @@
 package Models.Epsilon;
 
 import Models.Constant;
+import Models.Game;
 import Models.Moveable;
 import Models.ObjectsInGame;
 import MyProject.MyProjectData;
@@ -42,13 +43,33 @@ public class Epsilon extends ObjectsInGame implements Moveable {
         Graphics2D g2D = (Graphics2D) g;
         g2D.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
     }
+    public void specialPower(Game game){
+        shotMove();
+        if (game.getInputListener().getxMousePress() != -1 || game.getInputListener().getyMousePress() != -1) {
+            Shot shot = new Shot(this.getX(), this.getY(), currentFrame, true);
+            currentFrame.add(shot);
+            shots.add(shot);
+            shot.setV(game.getInputListener().getxMousePress(), game.getInputListener().getyMousePress());
+            if(Constant.isqPressed())
+                shot.setPower(shot.getPower() + Epsilon.getLevelOfWritOfAres());
+            game.getInputListener().setxMousePress(-1);
+            game.getInputListener().setyMousePress(-1);
+        }
+    }
+    private void shotMove(){
+        for(Shot shot : shots)
+            shot.move();
+
+    }
 
 
     @Override
-    public void move(int xLimit, int yLimit) {
+    public void move() {
+        int xLimit = currentFrame.getWidth();
+        int yLimit = currentFrame.getHeight();
 
-        System.out.println(getxCenter() + " " + getyCenter());
-        System.out.println(getxVelocity() + " " + getyVelocity());
+       // System.out.println(xLimit + " " + yLimit);
+        //System.out.println(this.getX() + " " + this.getY() + " " + this.getxVelocity() + " " + this.getyVelocity());
         double t = ((double)System.currentTimeMillis() - (double)this.getImpactTime()) / 1000;
         t = Math.max(0, (1 - t));
         double x = (this.getxVelocityImpact()) * (t);

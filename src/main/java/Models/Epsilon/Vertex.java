@@ -40,7 +40,9 @@ public class Vertex extends ObjectsInGame implements Moveable {
         this.color = color;
     }
     @Override
-    public void move(int xLimit, int yLimit){
+    public void move(){
+        int xLimit = currentFrame.getWidth();
+        int yLimit = currentFrame.getHeight();
         if(this.getX() <= 0  && this.getxVelocity() > 0){
             xFake += (this.getxVelocity());
             //     this.setX(this.getX() + this.getxVelocity());

@@ -3,6 +3,8 @@ package Controller.Menu;
 import Models.Constant;
 import Models.Game;
 
+import javax.swing.*;
+
 public class UpdateToPPanel {
 
     private final Game game;
@@ -12,9 +14,13 @@ public class UpdateToPPanel {
         this.constant = constant;
     }
 
-    public void updateTopPanel(long startOfGame, int currentWaveIndex, int endWaveIndex){
+    public void updateTopPanel(long startOfGame, int currentWaveIndex, int endWaveIndex, int xp, int hp){
         game.getTopPanel().updateXPLabel(Constant.getPlayerXP());
         game.getTopPanel().updateTimeLabel((System.currentTimeMillis() - startOfGame));
         game.getTopPanel().updateWaveLabel(currentWaveIndex, endWaveIndex);
+        game.getTopPanel().updateXPLabel(xp);
+        game.getTopPanel().updateHPLabel(hp);
+        ImageIcon imageIcon = new ImageIcon("Game/Writ of Astrape.png");
+        game.getTopPanel().updateAbilityAttackIcon(imageIcon);
     }
 }

@@ -28,45 +28,14 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
         this.hovering = hovering;
     }
     public Point[] makePoint(){
-        if(getHp() == 10){
-            Point[] points1 = new Point[4];
-            points1[0] = new Point();
-            points1[1] = new Point();
-            points1[2] = new Point();
-            points1[3] = new Point();
-
-            points1[0].setLocation(this.getX(), this.getY());
-
-            points1[1].setLocation(this.getX() + Constant.getWidthOfSquarantine(), this.getY());
-
-            points1[2].setLocation(this.getX() + Constant.getWidthOfSquarantine(), this.getY() + Constant.getHeightOfSquarantine());
-
-            points1[3].setLocation(this.getX(), this.getY() + Constant.getHeightOfSquarantine());
-
-            //System.out.println(points1[0].getX() + " " + points1[1].getX() + " " + points1[2].getX() + " " + points1[3].getX());
-
-            return points1;
-        }
-        else{
-            Point[] points1 = new Point[3];
-            points1[0] = new Point();
-            points1[0].x = getX();
-            points1[0].y = getY() + Constant.getHeightOfTrighrath();
-
-            points1[1] = new Point();
-            points1[1].x = getX() + (int)(Constant.getWidthOfTrighrath() / 2);
-            points1[1].y = getY();
-
-            points1[2] = new Point();
-            points1[2].x = getX() + Constant.getWidthOfTrighrath();
-            points1[2].y = getY() + Constant.getHeightOfTrighrath();
-
-            return points1;
-        }
+        return null;
     }
 
     @Override
     public void aggression() {
+
+    }
+    public void specialPowers(int xEpsilon, int yEpsilon){
 
     }
 
@@ -76,7 +45,7 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
     }
 
     @Override
-    public void move(int xLimit, int yLimit) {
+    public void move() {
 
     }
 

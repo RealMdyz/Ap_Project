@@ -58,43 +58,6 @@ public class InputListener {
     }
     private void createKeyActions() {
 
-        // Key Press Action:
-//        actionMap.put("moveLeft", new AbstractAction() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//
-//                    x = -1;
-//                    epsilon.setxVelocity(  (-(int)(Constant.getSensitivityForMoves() / 10) - 1));
-//
-//            }
-//        });
-//
-//        actionMap.put("moveRight", new AbstractAction() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                    x = 1;
-//                    epsilon.setxVelocity((int)(Constant.getSensitivityForMoves() / 10) + 1);
-//            }
-//        });
-//
-//        actionMap.put("moveUp", new AbstractAction() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                    y = -1;
-//                    epsilon.setyVelocity((- (int)(Constant.getSensitivityForMoves() / 10)- 1));
-//
-//            }
-//        });
-//
-//        actionMap.put("moveDown", new AbstractAction() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                    y = 1;
-//                    epsilon.setyVelocity(( + (int)(Constant.getSensitivityForMoves() / 10) + 1));
-//
-//            }
-//        });
-
         actionMap.put("moveUp", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -257,7 +220,6 @@ public class InputListener {
             } else if (pressedKeys.contains("down")) {
                 yVelocity = 1;
             }
-
             epsilon.setxVelocity(xVelocity * (int)(Constant.getSensitivityForMoves() / 10) + xVelocity);
             epsilon.setyVelocity(yVelocity * (int)(Constant.getSensitivityForMoves() / 10) + yVelocity);
         }

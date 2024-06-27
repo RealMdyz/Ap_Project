@@ -1,7 +1,6 @@
 package Models;
 
 import Controller.Enemy.EnemyController;
-import Controller.Game.ShotController;
 import Controller.Game.Intersection;
 import Controller.Game.StoreController;
 import Controller.Menu.ShrinkageController;
@@ -29,7 +28,6 @@ public class Game {
     protected GameFrame epsilonFrame;
     public UpdateToPPanel updateToPPanel;
     public ShrinkageController shrinkageController;
-    public ShotController shotController;
     public StoreController storeController;
     protected Intersection intersection;
     protected Epsilon epsilon;
@@ -44,23 +42,25 @@ public class Game {
     public Game(Constant constant){
         this.constant = constant;
         Constant.setIsRunning(true);
-        epsilonFrame = new GameFrame(constant, Constant.FIRST_HEIGHT, Constant.FIRST_WIDTH);
+        epsilonFrame = new GameFrame(constant, Constant.FIRST_HEIGHT, Constant.FIRST_WIDTH, false, false);
+        epsilonFrame.addExitButtonToThisFrame();
         epsilon = new Epsilon(350, 350, epsilonFrame);
+
         musicPlayer = new MusicPlayer("Sounds/BackgroundMusic.wav", true);
         topPanel = new TopPanel();
         storePanel = new StorePanel(constant,epsilon);
         intersection = new Intersection();
         updateToPPanel = new UpdateToPPanel(this, constant);
-        shotController = new ShotController(this);
         storeController = new StoreController(this);
         enemyController = new EnemyController(this);
         shrinkageController = new ShrinkageController(constant.getMinHeightForShrinkage(), constant.getMinWidthForShrinkage(), constant.getReduceForeShrinkage());
 
-        makeInputListenerForEpsilonFrame(epsilonFrame);
+        makeEpsilonFrame(epsilonFrame);
         epsilonFrame.addToGamePanel(epsilon);
     }
-    public void makeInputListenerForEpsilonFrame(GameFrame gameFrame){
+    public void makeEpsilonFrame(GameFrame gameFrame){
         inputListener = new InputListener(gameFrame, constant, epsilon);
+        epsilonFrame.addJPanel(topPanel);
     }
 
 
@@ -122,13 +122,6 @@ public class Game {
         this.updateToPPanel = updateToPPanel;
     }
 
-    public ShotController getEpsilonShotController() {
-        return shotController;
-    }
-
-    public void setEpsilonShotController(ShotController shotController) {
-        this.shotController = shotController;
-    }
 
     public StoreController getStoreController() {
         return storeController;

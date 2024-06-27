@@ -17,10 +17,15 @@ public class Constant {
 
 
     private final Object lockForStore = new Object();
-
+    public static final int NUMBER_OF_WAVE = 5;
+    public static final int RADIUS_FOR_APPEARING_NECROPICK = 200;
     public static final int FIRST_HEIGHT = 700;
     public static final int FIRST_WIDTH = 700;
     public static final int MAX_DISTANCE = 20;
+
+    public static final int WIDTH_OF_WYRM = 80;
+    public static final int HEIGHT_OF_WYRM = 80;
+
     public static final double ALPHA = 0.05;
 
     private static int level = 50;
@@ -51,7 +56,7 @@ public class Constant {
     private static int speedOfOmenoct = 7;
     private static int endXOmenoct = 0;
     private static int endYOmenoct = 150;
-
+    private static long everyShotOmenoct = 2000;
     private static int widthOfNecropick = 50;
     private static int heightOfNecropick = 50;
     private static int speedOfNecropick = 7;
@@ -59,6 +64,9 @@ public class Constant {
 
     private static int widthOfArchmire = 50;
     private static int heightOfArchmire = 50;
+    private static int widthOfMiniArchmire = 30;
+    private static int heightOfMiniArchmire = 30;
+
     private static int speedOfArchmire = 7;
     private static int savedXp;
 
@@ -319,6 +327,14 @@ public class Constant {
         Constant.savedXp = savedXp;
     }
 
+    public static long getEveryShotOmenoct() {
+        return everyShotOmenoct;
+    }
+
+    public static void setEveryShotOmenoct(long everyShotOmenoct) {
+        Constant.everyShotOmenoct = everyShotOmenoct;
+    }
+
     public static boolean isqPressed() {
         return qPressed;
     }
@@ -522,4 +538,21 @@ public class Constant {
     public static void setSpeedOfArchmire(int speedOfArchmire) {
         Constant.speedOfArchmire = speedOfArchmire;
     }
+
+    public static int getWidthOfMiniArchmire() {
+        return widthOfMiniArchmire;
+    }
+
+    public static void setWidthOfMiniArchmire(int widthOfMiniArchmire) {
+        Constant.widthOfMiniArchmire = widthOfMiniArchmire;
+    }
+
+    public static int getHeightOfMiniArchmire() {
+        return heightOfMiniArchmire;
+    }
+
+    public static void setHeightOfMiniArchmire(int heightOfMiniArchmire) {
+        Constant.heightOfMiniArchmire = heightOfMiniArchmire;
+    }
+
 }

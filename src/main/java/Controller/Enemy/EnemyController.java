@@ -19,13 +19,22 @@ public class EnemyController {
     public EnemyController(Game game){
         this.game = game;
         waveController = new WaveController();
-        makeEnemy = new MakeEnemy();
+        makeEnemy = new MakeEnemy(game);
+    }
+    public void controllingTheEnemies(){
+        spawnProcess();
+        for(Enemy enemy : enemyArrayList){
+            enemy.specialPowers(game.getEpsilon().getX(), game.getEpsilon().getY());
+        }
     }
     public void enemyMove(){
-
+        for(Enemy enemy : enemyArrayList){
+            enemy.move(enemy.getCurrentFrame().getWidth(), enemy.getCurrentFrame().getHeight());
+        }
     }
     public void addEnemy(Enemy enemy){
-
+        enemy.getCurrentFrame().addToGamePanel(enemy);
+        enemyArrayList.add(enemy);
     }
     public void checkNecropickEsp(){
         for(Enemy enemy : enemyArrayList){

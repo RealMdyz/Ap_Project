@@ -2,8 +2,6 @@ package View.Menu;
 
 import javax.swing.*;
 import java.awt.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class TopPanel extends JPanel {
     // Labels for displaying Wave, Elapsed Time, XP, and HP
@@ -12,6 +10,11 @@ public class TopPanel extends JPanel {
     private JLabel xpLabel;
     private JLabel hpLabel;
 
+    // Labels for displaying abilities and Epsilon capability
+    private JLabel abilityAttack;
+    private JLabel abilityDefend;
+    private JLabel abilityChangeShape;
+
     public TopPanel() {
         this.setVisible(true);
         this.setOpaque(false);
@@ -19,6 +22,8 @@ public class TopPanel extends JPanel {
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0)); // Adjust spacing as needed
 
         // Create and add labels to display Wave, Elapsed Time, XP, and HP
+
+
         waveLabel = new JLabel("Wave: ");
         this.add(waveLabel);
 
@@ -30,6 +35,17 @@ public class TopPanel extends JPanel {
 
         hpLabel = new JLabel("HP: ");
         this.add(hpLabel);
+
+        // Initialize labels for abilities and Epsilon capability
+        abilityAttack = new JLabel();
+        abilityDefend = new JLabel();
+        abilityChangeShape = new JLabel();
+
+        // Add ability and Epsilon labels to the panel
+        this.add(abilityAttack);
+        this.add(abilityDefend);
+        this.add(abilityChangeShape);
+
 
         // Optional: Customize appearance of labels if needed
         customizeLabels();
@@ -55,7 +71,7 @@ public class TopPanel extends JPanel {
 
     // Methods to update label texts
     public void updateWaveLabel(int wave, int endWave) {
-        if(wave == 3)
+        if (wave == 3)
             wave = 2;
         waveLabel.setText("Wave: " + (wave + 1) + "/" + endWave);
     }
@@ -69,13 +85,32 @@ public class TopPanel extends JPanel {
         timeLabel.setText("Time: " + formattedTime);
     }
 
-
     public void updateXPLabel(int xp) {
         xpLabel.setText("XP: " + xp);
     }
 
     public void updateHPLabel(int hp) {
         hpLabel.setText("HP: " + hp);
+    }
+
+    public void updateAbilityAttackIcon(ImageIcon icon) {
+        abilityAttack.setIcon(resizeIcon(icon, 50, 50));
+        abilityAttack.setVisible(true);
+    }
+
+    public void updateAbilityDefendIcon(ImageIcon icon) {
+        abilityDefend.setIcon(resizeIcon(icon, 50, 50));
+        abilityDefend.setVisible(true);
+    }
+
+    public void updateAbilityChangeShapeIcon(ImageIcon icon) {
+        abilityChangeShape.setIcon(resizeIcon(icon, 50, 50));
+        abilityChangeShape.setVisible(true);
+    }
+    private ImageIcon resizeIcon(ImageIcon icon, int width, int height) {
+        Image img = icon.getImage();
+        Image resizedImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new ImageIcon(resizedImg);
     }
 
     @Override

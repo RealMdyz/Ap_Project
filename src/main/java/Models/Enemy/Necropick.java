@@ -14,6 +14,7 @@ public class Necropick extends Enemy{
 
     long time = System.currentTimeMillis();
     private ArrayList<Shot> shots = new ArrayList<>();
+    private boolean setVisibilityAtThisTimeOfAppearing = false;
 
     int[] x = {-50, -50, 50, 50};
     int[] y = {50, -50, 50, -50};
@@ -37,7 +38,7 @@ public class Necropick extends Enemy{
     }
 
     @Override
-    public void move(int xLimit, int yLimit) {
+    public void move() {
         // EndPoint =
         addX(0);
         addX(0);
@@ -45,6 +46,33 @@ public class Necropick extends Enemy{
     public void checkEsp(Game game){ // find a close place from epsilon !
 
 
+    }
+
+    @Override
+    public void specialPowers(int xEpsilon, int yEpsilon) {
+        checkTimeForAppearAndDisappear(xEpsilon, yEpsilon);
+        moveShots();
+    }
+    private void checkTimeForAppearAndDisappear(int xEpsilon, int yEpsilon){
+        if(System.currentTimeMillis() - time < 8000){
+            this.setVisible(false);
+            this.setHovering(true);
+            setVisibilityAtThisTimeOfAppearing = false;
+        }
+        else if(System.currentTimeMillis() - time < 12000){
+            this.setVisible(true);
+            if(!setVisibilityAtThisTimeOfAppearing){
+                setVisibilityAtThisTimeOfAppearing = true;
+                Point newLocation = getRandomPointInCircle(Constant.RADIUS_FOR_APPEARING_NECROPICK, xEpsilon, yEpsilon); // شعاع دلخواه را جایگزین کنید
+                this.setX(newLocation.x);
+                this.setY(newLocation.y);
+                this.setHovering(false);
+                fireShots();
+            }
+        }
+        else{
+            time = System.currentTimeMillis();
+        }
     }
 
     public long getTime() {
@@ -62,4 +90,31 @@ public class Necropick extends Enemy{
     public void setShots(ArrayList<Shot> shots) {
         this.shots = shots;
     }
+    private Point getRandomPointInCircle(int radius, int xCenter, int yCenter) {
+        double angle = Math.random() * 2 * Math.PI;
+        double r = radius * Math.sqrt(Math.random());
+        int x = (int) (xCenter + r * Math.cos(angle));
+        int y = (int) (yCenter + r * Math.sin(angle));
+        return new Point(x, y);
+    }
+    private void fireShots() {
+        int shotCount = 8;
+        double angleStep = 2 * Math.PI / shotCount;
+        for (int i = 0; i < shotCount; i++) {
+            double angle = i * angleStep;
+            int xVelocity = (int) (Math.cos(angle) * Constant.getSpeedOfShot());
+            int yVelocity = (int) (Math.sin(angle) * Constant.getSpeedOfShot());
+            Shot shot = new Shot(this.getX(), this.getY(), this.currentFrame, true); // true به معنای صلب بودن تیر است
+            shot.setxVelocity(xVelocity);
+            shot.setyVelocity(yVelocity);
+            shots.add(shot);
+            this.currentFrame.add(shot); // اضافه کردن تیر به فریم
+        }
+    }
+    private void moveShots(){
+        for(Shot shot : shots){
+            shot.move();
+        }
+    }
+
 }

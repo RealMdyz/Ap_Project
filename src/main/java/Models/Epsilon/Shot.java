@@ -13,11 +13,13 @@ public class Shot extends ObjectsInGame implements Moveable {
     private int xVelocity = 0;
     private int yVelocity = 0;
     Constant constant;
+    boolean solb;
 
     private int power = 5;
 
-    public Shot(int x, int y, GameFrame frame) {
+    public Shot(int x, int y, GameFrame frame, boolean solb) {
         super(x, y, 1, frame);
+        this.solb = solb;
         this.setHeight(70);
         this.setWidth(70);
         setSize(getWidth(), getHeight());
@@ -44,7 +46,7 @@ public class Shot extends ObjectsInGame implements Moveable {
 
 
     @Override
-    public void move(int xLimit, int yLimit) {
+    public void move() {
         this.setX(this.getX() + this.xVelocity);
         this.setY(this.getY() + this.yVelocity);
     }
@@ -76,5 +78,13 @@ public class Shot extends ObjectsInGame implements Moveable {
 
     public void setPower(int power) {
         this.power = power;
+    }
+
+    public boolean isSolb() {
+        return solb;
+    }
+
+    public void setSolb(boolean solb) {
+        this.solb = solb;
     }
 }

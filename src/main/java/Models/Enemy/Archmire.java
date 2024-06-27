@@ -13,7 +13,6 @@ public class Archmire extends Enemy{
     int aoePower, drownPower;
     long aoeTime;
 
-
     public Archmire(int x, int y, boolean isMini, GameFrame frame) {
         super(x, y, 30, isMini? 2 : 5, isMini ? 3 : 6, 0, 0, true, frame);
         aoeTime = 5000;
@@ -24,7 +23,7 @@ public class Archmire extends Enemy{
         this.setxCenter(this.getX() + (int)this.getWidth() / 2);
         this.setyCenter(this.getY() + (int)this.getHeight() / 2);
         this.setVisible(true);
-        setSize(Constant.getWidthOfNecropick(), Constant.getHeightOfNecropick());
+        setSize(Constant.getHeightOfArchmire(), Constant.getWidthOfArchmire());
         background = MyProjectData.getProjectData().getArchmire();
 
     }
@@ -39,5 +38,37 @@ public class Archmire extends Enemy{
     public void move(int xLimit, int yLimit) {
         addX(0);
         addX(0);
+    }
+
+    public boolean isMini() {
+        return mini;
+    }
+
+    public void setMini(boolean mini) {
+        this.mini = mini;
+    }
+
+    public int getAoePower() {
+        return aoePower;
+    }
+
+    public void setAoePower(int aoePower) {
+        this.aoePower = aoePower;
+    }
+
+    public int getDrownPower() {
+        return drownPower;
+    }
+
+    public void setDrownPower(int drownPower) {
+        this.drownPower = drownPower;
+    }
+
+    public long getAoeTime() {
+        return aoeTime;
+    }
+
+    public void setAoeTime(long aoeTime) {
+        this.aoeTime = aoeTime;
     }
 }
