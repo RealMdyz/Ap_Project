@@ -62,13 +62,7 @@ public class ObjectsInGame extends JLabel {
             vy = speed * dy / distance * impactPercentage;
             impactTime = System.currentTimeMillis();
 
-            if(this.hp == 15){
-                setAngleForRotate(Constant.getRotateAfterImpact());
-            }
         }
-        // Adjust velocity based on impact percentage
-
-
 
         setxVelocityImpact(vx);
         setyVelocityImpact(vy);

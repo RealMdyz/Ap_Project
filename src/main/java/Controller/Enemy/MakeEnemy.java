@@ -40,10 +40,10 @@ public class MakeEnemy {
     }
     public Omenoct makeOmenoct(){
         Random random =new Random();
-        int locX = random.nextInt() % 350 + 45;
-        int locY = random.nextInt() % 350 + 45;
+        int locX = random.nextInt() % 450 + 50;
+        int locY = random.nextInt() % 450 + 50;
         int l = random.nextInt() % 2;
-        return new Omenoct(locX * l, locY * (1 - l), game.getEpsilonFrame());
+        return new Omenoct(Math.max(locX * l, Constant.getWidthOfOmenoct()) , Math.max(locY * (1 - l), Constant.getHeightOfOmenoct()), game.getEpsilonFrame());
     }
     public Archmire makeArchmire(){
         Random random = new Random();
@@ -65,7 +65,9 @@ public class MakeEnemy {
         GameFrame gameFrame = new GameFrame(game.getConstant(), Constant.WIDTH_OF_WYRM, Constant.HEIGHT_OF_WYRM, true, false);
         game.getGameFrames().add(gameFrame);
         gameFrame.setVisible(true);
+        game.getEpsilonFrame().requestFocus();
         gameFrame.setBounds(locX, locY, Constant.WIDTH_OF_WYRM, Constant.HEIGHT_OF_WYRM);
+
         return new Wyrm(15, 15, gameFrame);
     }
 }

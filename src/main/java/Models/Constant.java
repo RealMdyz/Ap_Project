@@ -25,6 +25,7 @@ public class Constant {
 
     public static final int WIDTH_OF_WYRM = 80;
     public static final int HEIGHT_OF_WYRM = 80;
+    public static final int SPEED_OF_WYRM = 4;
 
     public static final double ALPHA = 0.05;
 
@@ -44,12 +45,6 @@ public class Constant {
     private Map<String, Integer> keyMap;
     private static boolean openStore = false;
     private static int speedOfShot = 15;
-    private static int widthOfTrighrath = 40;
-    private static int heightOfTrighrath = 40;
-    private static int speedOfTrighrath = 7;
-    private static int widthOfSquarantine = 40;
-    private static int heightOfSquarantine = 40;
-    private static int speedOfSquarantine  = 5;
     private static int speedOfImpact = 10;
     private static int widthOfOmenoct = 50;
     private static int heightOfOmenoct = 50;
@@ -67,7 +62,7 @@ public class Constant {
     private static int widthOfMiniArchmire = 30;
     private static int heightOfMiniArchmire = 30;
 
-    private static int speedOfArchmire = 7;
+    private static int speedOfArchmire = 4;
     private static int savedXp;
 
     private int upKey, downKey, leftKey, rightKey, abilityKey, storeKey;
@@ -261,54 +256,6 @@ public class Constant {
 
     public static void setSpeedOfShot(int speedOfShot) {
         Constant.speedOfShot = speedOfShot;
-    }
-
-    public static int getWidthOfTrighrath() {
-        return widthOfTrighrath;
-    }
-
-    public static void setWidthOfTrighrath(int widthOfTrighrath) {
-        Constant.widthOfTrighrath = widthOfTrighrath;
-    }
-
-    public static int getHeightOfTrighrath() {
-        return heightOfTrighrath;
-    }
-
-    public static void setHeightOfTrighrath(int heightOfTrighrath) {
-        Constant.heightOfTrighrath = heightOfTrighrath;
-    }
-
-    public static int getWidthOfSquarantine() {
-        return widthOfSquarantine;
-    }
-
-    public static void setWidthOfSquarantine(int widthOfSquarantine) {
-        Constant.widthOfSquarantine = widthOfSquarantine;
-    }
-
-    public static int getHeightOfSquarantine() {
-        return heightOfSquarantine;
-    }
-
-    public static void setHeightOfSquarantine(int heightOfSquarantine) {
-        Constant.heightOfSquarantine = heightOfSquarantine;
-    }
-
-    public static int getSpeedOfTrighrath() {
-        return speedOfTrighrath;
-    }
-
-    public static void setSpeedOfTrighrath(int speedOfTrighrath) {
-        Constant.speedOfTrighrath = speedOfTrighrath;
-    }
-
-    public static int getSpeedOfSquarantine() {
-        return speedOfSquarantine;
-    }
-
-    public static void setSpeedOfSquarantine(int speedOfSquarantine) {
-        Constant.speedOfSquarantine = speedOfSquarantine;
     }
 
     public static int getSpeedOfImpact() {

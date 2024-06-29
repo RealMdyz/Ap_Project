@@ -51,41 +51,8 @@ public class Intersection {
         double epsilonRadius = epsilon.getRadius();
 
         // Iterate through each point in the enemy
-        for (Point enemyPoint : enemy.getPoints()) {
-            // Calculate the distance between the enemy point and the center of epsilon
-            double dx = enemyPoint.getX() - (epsilon.getX() + epsilon.getRadius());
-            double dy = enemyPoint.getY() - (epsilon.getY() + epsilon.getRadius());
-            double distance = Math.sqrt(dx * dx + dy * dy);
-            //System.out.println(dx);
-            //System.out.println(enemyPoint.getX() + " " + epsilon.getX() + epsilon.getRadius() + " "+ distance);
-            // Check if the distance is less than or equal to epsilon's radius
-            if (distance <= epsilonRadius) {
-                // If the distance is less than or equal to epsilon's radius, return false
-                return enemyPoint;
-            }
-
-        }
 
         // If no point in the enemy intersects with epsilon, return true
-        return null;
-    }
-    public Point intersectInTheEdge(Epsilon epsilon, Enemy enemy) {
-        Point[] enemyPoints = enemy.getPoints();
-        int numSides = enemy.getNumSides();
-
-        int epsilonX = epsilon.getX() + epsilon.getRadius();
-        int epsilonY = epsilon.getY() + epsilon.getRadius();
-        double epsilonRadius = epsilon.getRadius();
-
-        for (int i = 0; i < numSides; i++) {
-            Point p1 = enemyPoints[i];
-            Point p2 = enemyPoints[(i + 1) % numSides];
-            Point p3 = checkLineCircleCollision(p1, p2, epsilonX, epsilonY, epsilonRadius);
-            if (p3 != null && !p3.equals(p2) && !p3.equals(p1)) {
-                return p3;
-            }
-        }
-
         return null;
     }
 

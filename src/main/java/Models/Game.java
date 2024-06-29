@@ -2,6 +2,7 @@ package Models;
 
 import Controller.Enemy.EnemyController;
 import Controller.Game.Intersection;
+import Controller.Game.IntersectionController;
 import Controller.Game.StoreController;
 import Controller.Menu.ShrinkageController;
 import Controller.Menu.UpdateToPPanel;
@@ -36,6 +37,7 @@ public class Game {
     private StorePanel storePanel;
     private TopPanel topPanel;
     private EnemyController enemyController;
+    private IntersectionController intersectionController;
 
 
 
@@ -48,6 +50,7 @@ public class Game {
 
         musicPlayer = new MusicPlayer("Sounds/BackgroundMusic.wav", true);
         topPanel = new TopPanel();
+        intersectionController = new IntersectionController();
         storePanel = new StorePanel(constant,epsilon);
         intersection = new Intersection();
         updateToPPanel = new UpdateToPPanel(this, constant);
@@ -216,5 +219,13 @@ public class Game {
 
     public void setEpsilon(Epsilon epsilon) {
         this.epsilon = epsilon;
+    }
+
+    public IntersectionController getIntersectionController() {
+        return intersectionController;
+    }
+
+    public void setIntersectionController(IntersectionController intersectionController) {
+        this.intersectionController = intersectionController;
     }
 }

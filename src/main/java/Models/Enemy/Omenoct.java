@@ -1,12 +1,14 @@
 package Models.Enemy;
 
 import Models.Constant;
+import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 import MyProject.MyProjectData;
 import View.Game.GameFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.security.spec.ECPoint;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -41,7 +43,9 @@ public class Omenoct extends Enemy{
     }
 
     @Override
-    public void specialPowers(int xEpsilon, int yEpsilon) {
+    public void specialPowers(Epsilon epsilon) {
+        int xEpsilon = epsilon.getX();
+        int yEpsilon = epsilon.getY();
         shotAShot(xEpsilon, yEpsilon);
         moveShots();
     }

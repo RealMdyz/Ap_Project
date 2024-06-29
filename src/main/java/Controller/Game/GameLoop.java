@@ -75,7 +75,7 @@ public class GameLoop{
         @Override
         public void run() {
             while (!constant.isBossTriggered() && Constant.isIsRunning()){
-
+                game.getIntersectionController().controllingAllIntersections(game);
 
                 try {
                     Thread.sleep(10);
@@ -91,8 +91,8 @@ public class GameLoop{
         public void run() {
             while (!constant.isBossTriggered()){
                 game.getUpdateToPanel().updateTopPanel(startOfGame, indexWave, Constant.NUMBER_OF_WAVE, xp, game.getEpsilon().getHp());
-                game.getEpsilonFrame().requestFocusInWindow();
-                game.getEpsilonFrame().requestFocus();
+
+
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {

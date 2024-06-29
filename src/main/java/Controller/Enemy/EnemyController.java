@@ -24,12 +24,8 @@ public class EnemyController {
     public void controllingTheEnemies(){
         spawnProcess();
         for(Enemy enemy : enemyArrayList){
-            enemy.specialPowers(game.getEpsilon().getX(), game.getEpsilon().getY());
-        }
-    }
-    public void enemyMove(){
-        for(Enemy enemy : enemyArrayList){
-            enemy.move(enemy.getCurrentFrame().getWidth(), enemy.getCurrentFrame().getHeight());
+            enemy.specialPowers(game.getEpsilon());
+            enemy.move();
         }
     }
     public void addEnemy(Enemy enemy){
@@ -48,7 +44,7 @@ public class EnemyController {
         if(currentWaveEnemyDied >= waveController.getNumberOfEnemyInEachWave()[currentWaveIndex]){
 
         }
-        else if(waveController.getCurrentDelay() > (5 - currentWaveIndex) * 100){
+        else if(waveController.getCurrentDelay() > (5 - currentWaveIndex) * 1000){
             waveController.setCurrentDelay(0);
             Random random = new Random();
             addEnemy(makeEnemy.makeRandomEnemy(random.nextInt(), currentWaveIndex));

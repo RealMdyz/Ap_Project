@@ -1,6 +1,7 @@
 package Models.Enemy;
 
 import Models.*;
+import Models.Epsilon.Epsilon;
 import View.Game.GameFrame;
 
 import javax.swing.*;
@@ -14,13 +15,12 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
     private int xpForEachCollectible = 5;
     private int numSides;
     private int power = 6;
-    Point[] points;
+
 
     private boolean hovering;
 
     public Enemy(int x, int y, int hp, int collectibleNumber, int xpForEachCollectible, int numSides, int power, boolean hovering, GameFrame frame) {
         super(x, y, hp, frame);
-        this.points = makePoint();
         this.power = power;
         this.numSides = numSides;
         this.collectibleNumber = collectibleNumber;
@@ -35,7 +35,7 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
     public void aggression() {
 
     }
-    public void specialPowers(int xEpsilon, int yEpsilon){
+    public void specialPowers(Epsilon epsilon){
 
     }
 
@@ -80,24 +80,12 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
     public void setPower(int power) {
         this.power = power;
     }
-    public Point[] getPoints() {
-        return points;
-    }
 
-    public void setPoints(Point[] points) {
-        this.points = points;
-    }
     public void addX(int amountForAdd){
         this.setX(this.getX() + amountForAdd);
-        for (Point point : this.getPoints()){
-            point.setLocation(point.getX() + amountForAdd, point.getY());
-        }
     }
     public void addY(int amountForAdd){
         this.setY(this.getY() + amountForAdd);
-        for (Point point : this.getPoints()){
-            point.setLocation(point.getX(), point.getY() + amountForAdd);
-        }
     }
 
     public boolean isHovering() {

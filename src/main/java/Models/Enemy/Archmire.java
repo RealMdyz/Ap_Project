@@ -1,6 +1,7 @@
 package Models.Enemy;
 
 import Models.Constant;
+import Models.Epsilon.Epsilon;
 import MyProject.MyProjectData;
 import View.Game.GameFrame;
 
@@ -12,6 +13,7 @@ public class Archmire extends Enemy{
     boolean mini;
     int aoePower, drownPower;
     long aoeTime;
+    int xEpsilon, xEpsilonFrame, yEpsilon, yEpsilonFrame;
 
     public Archmire(int x, int y, boolean isMini, GameFrame frame) {
         super(x, y, 30, isMini? 2 : 5, isMini ? 3 : 6, 0, 0, true, frame);
@@ -35,9 +37,26 @@ public class Archmire extends Enemy{
     }
 
     @Override
-    public void move(int xLimit, int yLimit) {
-        addX(0);
-        addX(0);
+    public void specialPowers(Epsilon epsilon) {
+        xEpsilon = epsilon.getX();
+        xEpsilonFrame = epsilon.getCurrentFrame().getX();
+        yEpsilon = epsilon.getY();
+        yEpsilonFrame = epsilon.getCurrentFrame().getY();
+
+    }
+
+    @Override
+    public void move() {
+        int deltaX = xEpsilon + xEpsilonFrame - this.getX() - this.getCurrentFrame().getX();
+        int deltaY = yEpsilon + yEpsilonFrame - this.getY() - this.getCurrentFrame().getY();
+        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        double directionX = deltaX / distance;
+        double directionY = deltaY / distance;
+
+        addX((int)(directionX * Constant.getSpeedOfArchmire()));
+        addY((int)(directionY * Constant.getSpeedOfArchmire()));
+
+
     }
 
     public boolean isMini() {

@@ -1,6 +1,7 @@
 package Models.Enemy;
 
 import Models.Constant;
+import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 import Models.Game;
 import MyProject.MyProjectData;
@@ -41,7 +42,7 @@ public class Necropick extends Enemy{
     public void move() {
         // EndPoint =
         addX(0);
-        addX(0);
+        addY(0);
     }
     public void checkEsp(Game game){ // find a close place from epsilon !
 
@@ -49,7 +50,9 @@ public class Necropick extends Enemy{
     }
 
     @Override
-    public void specialPowers(int xEpsilon, int yEpsilon) {
+    public void specialPowers(Epsilon epsilon) {
+        int xEpsilon = epsilon.getX();
+        int yEpsilon = epsilon.getY();
         checkTimeForAppearAndDisappear(xEpsilon, yEpsilon);
         moveShots();
     }
