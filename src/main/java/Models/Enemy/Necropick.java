@@ -78,6 +78,12 @@ public class Necropick extends Enemy{
         }
     }
 
+    @Override
+    public void removeTheImpactOnTheFrame() {
+        for(Shot shot : shots)
+            currentFrame.removeFromGamePanel(shot);
+    }
+
     public long getTime() {
         return time;
     }
@@ -101,6 +107,7 @@ public class Necropick extends Enemy{
         return new Point(x, y);
     }
     private void fireShots() {
+        shots = new ArrayList<>();
         int shotCount = 8;
         double angleStep = 2 * Math.PI / shotCount;
         for (int i = 0; i < shotCount; i++) {

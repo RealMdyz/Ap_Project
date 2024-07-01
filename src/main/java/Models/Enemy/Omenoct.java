@@ -63,4 +63,17 @@ public class Omenoct extends Enemy{
             shot.move();
         }
     }
+
+    public ArrayList<Shot> getShots() {
+        return shots;
+    }
+    @Override
+    public void removeTheImpactOnTheFrame() {
+        for(Shot shot : shots)
+            currentFrame.removeFromGamePanel(shot);
+    }
+
+    public void setShots(ArrayList<Shot> shots) {
+        this.shots = shots;
+    }
 }

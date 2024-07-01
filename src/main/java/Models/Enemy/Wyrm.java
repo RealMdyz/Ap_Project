@@ -95,8 +95,37 @@ public class Wyrm extends Enemy{
     public boolean isClockWise() {
         return clockWise;
     }
+    @Override
+    public void removeTheImpactOnTheFrame() {
+        for(Shot shot : shots)
+            currentFrame.removeFromGamePanel(shot);
+    }
 
     public void setClockWise(boolean clockWise) {
         this.clockWise = clockWise;
+    }
+
+    public ArrayList<Shot> getShots() {
+        return shots;
+    }
+
+    public void setShots(ArrayList<Shot> shots) {
+        this.shots = shots;
+    }
+
+    public double getAngle() {
+        return angle;
+    }
+
+    public void setAngle(double angle) {
+        this.angle = angle;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
     }
 }

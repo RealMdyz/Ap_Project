@@ -27,6 +27,9 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
         this.xpForEachCollectible = xpForEachCollectible;
         this.hovering = hovering;
     }
+    public void removeTheImpactOnTheFrame(){
+
+    }
     public Point[] makePoint(){
         return null;
     }
@@ -38,6 +41,7 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
     public void specialPowers(Epsilon epsilon){
 
     }
+
 
     @Override
     public void localRouting(int xEpsilon, int yEpsilon) {

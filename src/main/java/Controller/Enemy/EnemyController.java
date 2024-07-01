@@ -7,6 +7,7 @@ import Models.Game;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Random;
 
 public class EnemyController {
@@ -27,10 +28,22 @@ public class EnemyController {
             enemy.specialPowers(game.getEpsilon());
             enemy.move();
         }
+        removingEnemiesWithZeroHp();
     }
     public void addEnemy(Enemy enemy){
         enemy.getCurrentFrame().addToGamePanel(enemy);
         enemyArrayList.add(enemy);
+    }
+    public void removingEnemiesWithZeroHp() {
+        Iterator<Enemy> iterator = enemyArrayList.iterator();
+        while (iterator.hasNext()) {
+            Enemy enemy = iterator.next();
+            if (enemy.getHp() <= 0) {
+                enemy.getCurrentFrame().removeFromGamePanel(enemy);
+                enemy.removeTheImpactOnTheFrame();
+                iterator.remove();
+            }
+        }
     }
     public void checkNecropickEsp(){
         for(Enemy enemy : enemyArrayList){

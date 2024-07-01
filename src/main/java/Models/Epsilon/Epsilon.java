@@ -21,6 +21,7 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     public static boolean writeOfAceso = false;
     private long prevAceso = 0;
     private ArrayList<Vertex> vertices = new ArrayList<>();
+    public int powerOfShot = 5;
 
     private long startOfAthena = 0;
     private int radius = 35;
@@ -244,5 +245,13 @@ public class Epsilon extends ObjectsInGame implements Moveable {
 
     public void setShots(ArrayList<Shot> shots) {
         this.shots = shots;
+    }
+
+    public int getPowerOfShot() {
+        return powerOfShot;
+    }
+
+    public void setPowerOfShot(int powerOfShot) {
+        this.powerOfShot = powerOfShot;
     }
 }

@@ -17,13 +17,14 @@ public class MakeEnemy {
     public Enemy makeRandomEnemy(int random, int currentWaveIndex){
         if(currentWaveIndex <= 2){
             random %= 4;
+            random = 2;
             if(random == 0){
                 return makeNecropick();
             }
             else if(random == 1){
                 return makeOmenoct();
             }
-            else if(random == 2){
+            else if(random == 2 ){
                 return makeArchmire();
             }
             else {
@@ -40,8 +41,8 @@ public class MakeEnemy {
     }
     public Omenoct makeOmenoct(){
         Random random =new Random();
-        int locX = random.nextInt() % 450 + 50;
-        int locY = random.nextInt() % 450 + 50;
+        int locX = random.nextInt() % 150 + 50;
+        int locY = random.nextInt() % 150 + 50;
         int l = random.nextInt() % 2;
         return new Omenoct(Math.max(locX * l, Constant.getWidthOfOmenoct()) , Math.max(locY * (1 - l), Constant.getHeightOfOmenoct()), game.getEpsilonFrame());
     }
