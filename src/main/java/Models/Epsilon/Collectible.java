@@ -43,4 +43,7 @@ public class Collectible extends ObjectsInGame {
     public void setStart(long start) {
         this.start = start;
     }
+    public boolean isExpiration(){
+        return System.currentTimeMillis() - start >= Constant.TIME_FOR_EACH_COLLECTIBLE;
+    }
 }

@@ -1,7 +1,10 @@
 package Controller.Game;
 
 import Models.Constant;
+import Models.Epsilon.Collectible;
 import Models.Game;
+
+import java.util.ArrayList;
 
 public class GameLoop{
     private Game game;
@@ -91,7 +94,7 @@ public class GameLoop{
         public void run() {
             while (!constant.isBossTriggered()){
                 game.getUpdateToPanel().updateTopPanel(startOfGame, indexWave, Constant.NUMBER_OF_WAVE, xp, game.getEpsilon().getHp());
-
+                game.getCollectibleController().checkTheExpirationTime();
 
                 try {
                     Thread.sleep(10);

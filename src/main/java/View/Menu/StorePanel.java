@@ -91,8 +91,8 @@ public class StorePanel extends JFrame implements ActionListener {
                     // For example:
                     // gameFrame.activateOhephaestus();
                     newImpact = true;
-                    newImpactX = epsilon.getxCenter();
-                    newImpactY = epsilon.getyCenter();
+                    newImpactX = epsilon.getCenterX();
+                    newImpactY = epsilon.getCenterY();
                     Constant.setOpenStore(false);
                 }
                 else {

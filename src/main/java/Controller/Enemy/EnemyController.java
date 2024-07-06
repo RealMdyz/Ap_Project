@@ -41,6 +41,7 @@ public class EnemyController {
             if (enemy.getHp() <= 0) {
                 enemy.getCurrentFrame().removeFromGamePanel(enemy);
                 enemy.removeTheImpactOnTheFrame();
+                game.getCollectibleController().addingCollectiblesAfterDie(enemy);
                 iterator.remove();
             }
         }

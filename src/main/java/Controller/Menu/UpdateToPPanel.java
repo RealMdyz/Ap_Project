@@ -18,7 +18,7 @@ public class UpdateToPPanel {
         game.getTopPanel().updateXPLabel(Constant.getPlayerXP());
         game.getTopPanel().updateTimeLabel((System.currentTimeMillis() - startOfGame));
         game.getTopPanel().updateWaveLabel(currentWaveIndex, endWaveIndex);
-        game.getTopPanel().updateXPLabel(xp);
+        game.getTopPanel().updateXPLabel(Constant.getPlayerXP());
         game.getTopPanel().updateHPLabel(hp);
         ImageIcon imageIcon = new ImageIcon("Game/Writ of Astrape.png");
         game.getTopPanel().updateAbilityAttackIcon(imageIcon);

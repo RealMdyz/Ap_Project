@@ -3,11 +3,7 @@ package Models;
 import View.Game.GameFrame;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.WritableRaster;
 
 public class ObjectsInGame extends JLabel {
 
@@ -31,7 +27,6 @@ public class ObjectsInGame extends JLabel {
     protected GameFrame currentFrame;
 
     public ObjectsInGame(int x, int y, int hp, GameFrame currentFrame) {
-
         this.x = x;
         this.y = y;
         this.hp = hp;
@@ -41,11 +36,9 @@ public class ObjectsInGame extends JLabel {
 
 
     public void doImpact(int xImpact, int yImpact,  int dis) {
-        this.setxCenter(this.getX() + (int)this.getWidth() / 2);
-        this.setyCenter(this.getY() + (int)this.getHeight() / 2);
         // Calculate the direction vector from the impact point to the object's position
-        double dx = getxCenter() - xImpact;
-        double dy = getyCenter() - yImpact;
+        double dx = getCenterX() - xImpact;
+        double dy = getCenterY() - yImpact;
 
         // Calculate the distance from the impact point to the object's position
         double distance = Math.sqrt(dx * dx + dy * dy);
@@ -172,16 +165,15 @@ public class ObjectsInGame extends JLabel {
         this.impactTime = impactTime;
     }
 
-    public int getxCenter() {
-        return xCenter;
-    }
-
     public void setxCenter(int xCenter) {
         this.xCenter = xCenter;
     }
 
-    public int getyCenter() {
-        return yCenter;
+    public int getCenterX(){
+        return (this.getX() + (this.getWidth() / 2));
+    }
+    public int getCenterY(){
+        return (this.getY() + (this.getHeight() / 2));
     }
 
     public void setyCenter(int yCenter) {
@@ -203,4 +195,7 @@ public class ObjectsInGame extends JLabel {
     public void setCurrentFrame(GameFrame currentFrame) {
         this.currentFrame = currentFrame;
     }
+
+
+
 }

@@ -1,11 +1,13 @@
 package Models;
 
 import Controller.Enemy.EnemyController;
+import Controller.Game.CollectibleController;
 import Controller.Game.Intersection;
 import Controller.Game.IntersectionController;
 import Controller.Game.StoreController;
 import Controller.Menu.ShrinkageController;
 import Controller.Menu.UpdateToPPanel;
+import Models.Epsilon.Collectible;
 import Models.Epsilon.Epsilon;
 import MyProject.MyProjectData;
 import View.Game.GameFrame;
@@ -38,8 +40,7 @@ public class Game {
     private TopPanel topPanel;
     private EnemyController enemyController;
     private IntersectionController intersectionController;
-
-
+    private CollectibleController collectibleController;
 
     public Game(Constant constant){
         this.constant = constant;
@@ -47,7 +48,6 @@ public class Game {
         epsilonFrame = new GameFrame(constant, Constant.FIRST_HEIGHT, Constant.FIRST_WIDTH, false, false);
         epsilonFrame.addExitButtonToThisFrame();
         epsilon = new Epsilon(350, 350, epsilonFrame);
-
         musicPlayer = new MusicPlayer("Sounds/BackgroundMusic.wav", true);
         topPanel = new TopPanel();
         intersectionController = new IntersectionController();
@@ -57,6 +57,7 @@ public class Game {
         storeController = new StoreController(this);
         enemyController = new EnemyController(this);
         shrinkageController = new ShrinkageController(constant.getMinHeightForShrinkage(), constant.getMinWidthForShrinkage(), constant.getReduceForeShrinkage());
+        collectibleController = new CollectibleController();
 
         makeEpsilonFrame(epsilonFrame);
         epsilonFrame.addToGamePanel(epsilon);
@@ -227,5 +228,13 @@ public class Game {
 
     public void setIntersectionController(IntersectionController intersectionController) {
         this.intersectionController = intersectionController;
+    }
+
+    public CollectibleController getCollectibleController() {
+        return collectibleController;
+    }
+
+    public void setCollectibleController(CollectibleController collectibleController) {
+        this.collectibleController = collectibleController;
     }
 }

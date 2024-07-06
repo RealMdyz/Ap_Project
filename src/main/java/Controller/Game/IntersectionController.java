@@ -1,6 +1,8 @@
 package Controller.Game;
 
+import Models.Constant;
 import Models.Enemy.*;
+import Models.Epsilon.Collectible;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 import Models.Game;
@@ -24,8 +26,19 @@ public class IntersectionController {
         checkIntersectionShotsToEpsilon(game);
         checkIntersectionShotsToEnemy(game);
         checkTheDrowmPowerOfArchmire(game);
+        checkTheIntersectionBetweenACollectibleAndEpsilon(game);
     }
-
+    public void checkTheIntersectionBetweenACollectibleAndEpsilon(Game game){
+        ArrayList<Collectible> collectibleArrayList = new ArrayList<>();
+        for(Collectible collectible : game.getCollectibleController().collectibles){
+            if(intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(game.getEpsilon(), collectible)){
+                game.getCollectibleController().intersectionHappen(collectible);
+                collectibleArrayList.add(collectible);
+                Constant.setPlayerXP(Constant.getPlayerXP() + collectible.getIncreaceXp());
+            }
+        }
+        game.getCollectibleController().getCollectibles().removeAll(collectibleArrayList);
+    }
     public void checkTheDrowmPowerOfArchmire(Game game){
         for (Enemy enemy : game.getEnemyController().getEnemyArrayList()) {
             if (enemy instanceof Archmire) {

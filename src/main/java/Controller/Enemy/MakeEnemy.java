@@ -17,8 +17,7 @@ public class MakeEnemy {
     public Enemy makeRandomEnemy(int random, int currentWaveIndex){
         if(currentWaveIndex <= 2){
             random %= 4;
-            random = 2;
-            if(random == 0){
+            if(random == 0) {
                 return makeNecropick();
             }
             else if(random == 1){
@@ -41,10 +40,10 @@ public class MakeEnemy {
     }
     public Omenoct makeOmenoct(){
         Random random =new Random();
-        int locX = random.nextInt() % 150 + 50;
-        int locY = random.nextInt() % 150 + 50;
-        int l = random.nextInt() % 2;
-        return new Omenoct(Math.max(locX * l, Constant.getWidthOfOmenoct()) , Math.max(locY * (1 - l), Constant.getHeightOfOmenoct()), game.getEpsilonFrame());
+        int locX = Math.abs(random.nextInt() % 350 + 50);
+        int locY = Math.abs(random.nextInt() % 450 + 50);
+        int randomSide  = Math.abs(random.nextInt() % 4);
+        return new Omenoct(locX , locY, randomSide, game.getEpsilonFrame());
     }
     public Archmire makeArchmire(){
         Random random = new Random();
