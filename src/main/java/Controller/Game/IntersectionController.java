@@ -16,10 +16,12 @@ import java.util.List;
 public class IntersectionController {
 
     Intersection intersection;
+    IntersectionHandler intersectionHandler;
     private List<Rectangle> aoeAreas;
     public IntersectionController(){
         intersection = new Intersection();
-        aoeAreas = new ArrayList<>();
+        //aoeAreas = new ArrayList<>();
+        intersectionHandler = new IntersectionHandler(intersection);
     }
     public void controllingAllIntersections(Game game){
         checkTheAddingAndRemovingTheEnemiesFromTheFramesToEpsilonFrame(game);
@@ -68,50 +70,15 @@ public class IntersectionController {
     private void checkIntersectionShotsToEpsilon(Game game) {
         for (Enemy enemy : game.getEnemyController().getEnemyArrayList()) {
             if (enemy instanceof Necropick) {
-                handleShotIntersections(game, (Necropick) enemy);
+                intersectionHandler.handleShotIntersections(game, (Necropick) enemy);
             } else if (enemy instanceof Wyrm) {
-                handleShotIntersections(game, (Wyrm) enemy);
+                intersectionHandler.handleShotIntersections(game, (Wyrm) enemy);
             } else if (enemy instanceof Omenoct) {
-                handleShotIntersections(game, (Omenoct) enemy);
+                intersectionHandler.handleShotIntersections(game, (Omenoct) enemy);
             }
         }
     }
 
-    private void handleShotIntersections(Game game, Necropick enemy) {
-        Iterator<Shot> iterator = enemy.getShots().iterator();
-        while (iterator.hasNext()) {
-            Shot shot = iterator.next();
-            if (intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(game.getEpsilon(), shot)) {
-                game.getEpsilon().setHp(game.getEpsilon().getHp() - enemy.getPower());
-                iterator.remove();
-                enemy.getCurrentFrame().removeFromGamePanel(shot);
-            }
-        }
-    }
-
-    private void handleShotIntersections(Game game, Wyrm enemy) {
-        Iterator<Shot> iterator = enemy.getShots().iterator();
-        while (iterator.hasNext()) {
-            Shot shot = iterator.next();
-            if (intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(game.getEpsilon(), shot)) {
-                game.getEpsilon().setHp(game.getEpsilon().getHp() - enemy.getPower());
-                iterator.remove();
-                enemy.getCurrentFrame().removeFromGamePanel(shot);
-            }
-        }
-    }
-
-    private void handleShotIntersections(Game game, Omenoct enemy) {
-        Iterator<Shot> iterator = enemy.getShots().iterator();
-        while (iterator.hasNext()) {
-            Shot shot = iterator.next();
-            if (intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(game.getEpsilon(), shot)) {
-                game.getEpsilon().setHp(game.getEpsilon().getHp() - enemy.getPower());
-                iterator.remove();
-                enemy.getCurrentFrame().removeFromGamePanel(shot);
-            }
-        }
-    }
     private void checkTheAddingAndRemovingTheEnemiesFromTheFramesToEpsilonFrame(Game game){
         GameFrame gameFrame = game.getEpsilonFrame();
         for(Enemy enemy : game.getEnemyController().getEnemyArrayList()){

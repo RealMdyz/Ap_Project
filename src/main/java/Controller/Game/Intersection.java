@@ -40,11 +40,11 @@ public class Intersection {
         return bounds1.intersects(bounds2);
     }
 
-    public static boolean isInAoE(Epsilon epsilon, Aoe aoe) {
-        int epsilonX = epsilon.getX();
-        int epsilonY = epsilon.getY();
-        int epsilonWidth = epsilon.getWidth();
-        int epsilonHeight = epsilon.getHeight();
+    public static boolean isInAoE(ObjectsInGame objectsInGame, Aoe aoe) {
+        int epsilonX = objectsInGame.getX();
+        int epsilonY = objectsInGame.getY();
+        int epsilonWidth = objectsInGame.getWidth();
+        int epsilonHeight = objectsInGame.getHeight();
 
         return epsilonX + epsilonWidth > aoe.getX() && epsilonX < aoe.getX() + aoe.getWidth() &&
                 epsilonY + epsilonHeight > aoe.getY() && epsilonY < aoe.getY() + aoe.getHeight();

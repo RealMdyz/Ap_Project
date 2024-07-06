@@ -107,6 +107,7 @@ public class Necropick extends Enemy{
         return new Point(x, y);
     }
     private void fireShots() {
+        shots.clear();
         shots = new ArrayList<>();
         int shotCount = 8;
         double angleStep = 2 * Math.PI / shotCount;

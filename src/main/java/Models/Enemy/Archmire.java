@@ -3,6 +3,7 @@ package Models.Enemy;
 import Controller.Game.Intersection;
 import Models.Constant;
 import Models.Epsilon.Epsilon;
+import Models.Game;
 import MyProject.MyProjectData;
 import View.Game.GameFrame;
 
@@ -20,16 +21,17 @@ public class Archmire extends Enemy{
     private int aoeDuration = 5000; // 5 seconds
     boolean mini;
     int aoePower, drownPower;
-    long lastAoeTime, lastDrownAttack = 0;
+    long lastAoeTime, lastDrownAttack = 0, lastSpawnAoe;
+    private final long TIME_AOE_LOOP = 400;
+
     int xEpsilon, xEpsilonFrame, yEpsilon, yEpsilonFrame;
-
-
 
     public Archmire(int x, int y, boolean isMini, GameFrame frame) {
         super(x, y, 30, isMini? 2 : 5, isMini ? 3 : 6, 0, 0, true, frame);
         lastAoeTime = System.currentTimeMillis();
         aoePower = 2;
         drownPower = 10;
+        lastSpawnAoe = 0;
         this.setHeight(Constant.getHeightOfArchmire());
         this.setWidth(Constant.getWidthOfArchmire());
         this.setxCenter(this.getX() + (int)this.getWidth() / 2);
@@ -45,12 +47,7 @@ public class Archmire extends Enemy{
         Graphics2D g2D = (Graphics2D) g;
         g2D.drawImage(background, 0, 0, Constant.getWidthOfNecropick(), Constant.getHeightOfNecropick(), null);
 
-        for (Aoe aoe : aoeList) {
-            g2D.setColor(new Color(255, 0, 0, 100)); // Semi-transparent red
-            g2D.fillRect(aoe.getX(), aoe.getY(), getWidth(), getHeight());
-        }
     }
-
     @Override
     public void specialPowers(Epsilon epsilon) {
         xEpsilon = epsilon.getX();
@@ -58,29 +55,37 @@ public class Archmire extends Enemy{
         yEpsilon = epsilon.getY();
         yEpsilonFrame = epsilon.getCurrentFrame().getY();
         checkAoEDamage(epsilon);
+        repaint();
+    }
+    public void addAoE(int x, int y) {
+        Aoe aoe = new Aoe(x, y, aoeDuration, aoePower, getWidth(), getHeight(), currentFrame);
+        aoeList.add(aoe);
+        currentFrame.addToGamePanel(aoe);
+        repaint();
     }
 
-    public void addAoE(int x, int y) {
-        Aoe aoe = new Aoe(x, y ,aoeDuration, getWidth(), getHeight());
-        aoeList.add(aoe);
-    }
-    private void updateAoE(long deltaTime) {
-        Iterator<Aoe> iterator = aoeList.iterator();
-        while (iterator.hasNext()) {
-            Aoe aoe = iterator.next();
-            if (aoe.isExpired()) {
-                iterator.remove();
+    private void updateAoE() {
+        ArrayList<Aoe> aoeArrayList = new ArrayList<>();
+        for(Aoe aoe : aoeList){
+            if(aoe.isExpired()){
+                aoe.getCurrentFrame().removeFromGamePanel(aoe);
+                aoeArrayList.add(aoe);
             }
         }
+        aoeList.removeAll(aoeArrayList);
     }
     public void checkAoEDamage(Epsilon epsilon) {
         for (Aoe aoe : aoeList) {
-            if (Intersection.isInAoE(epsilon, aoe) && System.currentTimeMillis() - aoe.getLastAttackFromMe() > 1000) {
-                epsilon.setHp(epsilon.getHp() - aoePower);
-                aoe.setLastAttackFromMe(System.currentTimeMillis());
-            }
+            aoe.checkAndReduceTheHP(epsilon);
         }
     }
+
+    @Override
+    public void removeTheImpactOnTheFrame() {
+        for(Aoe aoe : aoeList)
+            aoe.getCurrentFrame().removeFromGamePanel(aoe);
+    }
+
     @Override
     public void move() {
         int deltaX = xEpsilon + xEpsilonFrame - this.getX() - this.getCurrentFrame().getX();
@@ -92,10 +97,12 @@ public class Archmire extends Enemy{
         addX((int)(directionX * Constant.getSpeedOfArchmire()));
         addY((int)(directionY * Constant.getSpeedOfArchmire()));
 
-        if(Math.random() < 0.01){
+        if(System.currentTimeMillis() - lastSpawnAoe > TIME_AOE_LOOP){
             addAoE(this.getX(), this.getY());
-            repaint();
+            lastSpawnAoe = System.currentTimeMillis();
         }
+        updateAoE();
+        repaint();
     }
 
     public boolean isMini() {
