@@ -1,22 +1,24 @@
-package View.Menu;
+package View.Menu.StorePanel;
 
 import Models.Constant;
 import Models.Epsilon.Epsilon;
+import View.Menu.MessagePanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class StorePanel extends JFrame implements ActionListener {
+public class StorePanelGraphics extends JFrame implements ActionListener {
     Constant constant;
     JLabel xpLabel;
-    MessagePanel messagePanel;
+    StorePanelLogic storePanelLogic;
     Epsilon epsilon;
 
-    public boolean newImpact = false;
-    public int newImpactX, newImpactY;
-    public StorePanel(Constant constant, Epsilon epsilon){
+    public StorePanelGraphics(Constant constant, Epsilon epsilon){
+        storePanelLogic = new StorePanelLogic(constant, epsilon);
         this.constant = constant;
         this.epsilon = epsilon;
         this.setSize(650, 700);
@@ -76,6 +78,33 @@ public class StorePanel extends JFrame implements ActionListener {
         oApolloButton.setFocusPainted(false);
         oApolloButton.addActionListener(this);
         gradientPanel.add(oApolloButton);
+
+        JButton oDeimosButton = new JButton("Buy O' Deimos, Dismay (120 XP)");
+        oDeimosButton.setBounds(20, 270, 300, 50);
+        oDeimosButton.setFont(new Font("Arial", Font.BOLD, 14));
+        oDeimosButton.setForeground(Color.white);
+        oDeimosButton.setBackground(new Color(128, 0, 0)); // Dark red
+        oDeimosButton.setFocusPainted(false);
+        oDeimosButton.addActionListener(this);
+        gradientPanel.add(oDeimosButton);
+
+        JButton oHypnosButton = new JButton("Buy O' Hypnos, Slumber (150 XP)");
+        oHypnosButton.setBounds(20, 340, 300, 50);
+        oHypnosButton.setFont(new Font("Arial", Font.BOLD, 14));
+        oHypnosButton.setForeground(Color.white);
+        oHypnosButton.setBackground(new Color(0, 0, 128)); // Dark blue
+        oHypnosButton.setFocusPainted(false);
+        oHypnosButton.addActionListener(this);
+        gradientPanel.add(oHypnosButton);
+
+        JButton oPhonoiButton = new JButton("Buy O' Phonoi, Slaughter (200 XP)");
+        oPhonoiButton.setBounds(20, 410, 300, 50);
+        oPhonoiButton.setFont(new Font("Arial", Font.BOLD, 14));
+        oPhonoiButton.setForeground(Color.white);
+        oPhonoiButton.setBackground(new Color(255, 165, 0)); // Orange
+        oPhonoiButton.setFocusPainted(false);
+        oPhonoiButton.addActionListener(this);
+        gradientPanel.add(oPhonoiButton);
     }
 
     @Override
@@ -85,55 +114,67 @@ public class StorePanel extends JFrame implements ActionListener {
         switch (actionCommand) {
             case "Buy O' Hephaestus (100 XP)":
                 if (Constant.getPlayerXP() >= 100) {
-                    // Perform the purchase
                     Constant.setPlayerXP(Constant.getPlayerXP() - 100);
-                    // Implement the action for O' Hephaestus
-                    // For example:
-                    // gameFrame.activateOhephaestus();
-                    newImpact = true;
-                    newImpactX = epsilon.getCenterX();
-                    newImpactY = epsilon.getCenterY();
-                    Constant.setOpenStore(false);
                 }
                 else {
                     JOptionPane.showMessageDialog(this, "Not enough XP to buy O' Hephaestus!");
-                    Constant.setOpenStore(false);
                 }
+                Constant.setOpenStore(false);
                 break;
 
             case "Buy O' Athena (75 XP)":
                 if (Constant.getPlayerXP() >= 75) {
-                    // Perform the purchase
                     Constant.setPlayerXP(Constant.getPlayerXP() - 75);
-                    // Implement the action for O' Athena
-                    // For example:
-                    // gameFrame.activateOAthena();
-                    epsilon.setStartOfAthena(System.currentTimeMillis());
-                    Constant.setOpenStore(false);
                 } else {
                     JOptionPane.showMessageDialog(this, "Not enough XP to buy O' Athena!");
-                    Constant.setOpenStore(false);
                 }
+                Constant.setOpenStore(false);
                 break;
 
             case "Buy O' Apollo (50 XP)":
                 if (Constant.getPlayerXP() >= 50) {
-                    // Perform the purchase
                     Constant.setPlayerXP(Constant.getPlayerXP() - 50);
-                    // Implement the action for O' Apollo
-                    // For example:
-                    // gameFrame.activateOApollo();
-                    epsilon.setHp(Math.min(epsilon.getHp() + 10, 100));
-                    Constant.setOpenStore(false);
-
+                    epsilon.setHp(epsilon.getHp() + 10);
                 } else {
                     JOptionPane.showMessageDialog(this, "Not enough XP to buy O' Apollo!");
-                    Constant.setOpenStore(false);
                 }
+                Constant.setOpenStore(false);
+                break;
+
+            case "Buy O' Deimos, Dismay (120 XP)":
+                if (Constant.getPlayerXP() >= 120) {
+                    Constant.setPlayerXP(Constant.getPlayerXP() - 120);
+                    epsilon.getEpsilonLogic().setStartOfNonHoveringDistance(System.currentTimeMillis());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Not enough XP to buy O' Deimos, Dismay!");
+                }
+                Constant.setOpenStore(false);
+                break;
+
+            case "Buy O' Hypnos, Slumber (150 XP)":
+                if (Constant.getPlayerXP() >= 150) {
+                    Constant.setPlayerXP(Constant.getPlayerXP() - 150);
+                    Constant.setStartOFHypnosSlumber(System.currentTimeMillis());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Not enough XP to buy O' Hypnos, Slumber!");
+                }
+                Constant.setOpenStore(false);
+                break;
+
+            case "Buy O' Phonoi, Slaughter (200 XP)":
+                if (Constant.getPlayerXP() >= 200 && System.currentTimeMillis() - storePanelLogic.getLastPhonoiSlaughter() > 12000) {
+                    Constant.setPlayerXP(Constant.getPlayerXP() - 200);
+                    epsilon.getEpsilonLogic().setInPhonoiSlaughter(true);
+                    storePanelLogic.setLastPhonoiSlaughter(System.currentTimeMillis());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Not enough XP to buy O' Phonoi, Slaughter!");
+                }
+                Constant.setOpenStore(false);
                 break;
         }
         // Update XP label
         xpLabel.setText("Your XP: " + Constant.getPlayerXP());
+
     }
 
     @Override

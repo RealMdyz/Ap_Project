@@ -63,6 +63,7 @@ public class Constant {
     private static int heightOfArchmire = 50;
     private static int widthOfMiniArchmire = 30;
     private static int heightOfMiniArchmire = 30;
+    private static long startOFHypnosSlumber = 0;
 
     private static int speedOfArchmire = 4;
     private static int savedXp;
@@ -71,6 +72,7 @@ public class Constant {
 
     private static boolean qPressed = false;
     private boolean bossTriggered = false;
+
 
     public Constant(){
         savedXp = 0;
@@ -88,7 +90,7 @@ public class Constant {
         storeKey = keyMap.get("OpenShop");
         keyMap.put("ActivateAbility", KeyEvent.VK_Q);
         abilityKey = keyMap.get("ActivateAbility");
-
+        int levelOfAttack, levelOfDefend, levelOfChangeShape;
         File file = new File("gameData");
         if(!file.exists()){
             try {
@@ -106,13 +108,10 @@ public class Constant {
         try {
             scanner = new Scanner(file);
             savedXp = scanner.nextInt();
-            Epsilon.setLevelOfWritOfAres(scanner.nextInt());
-            Epsilon.setLevelOfWritOfProteus(scanner.nextInt());
-            int l = scanner.nextInt();
-            if(l == 0)
-                Epsilon.setWriteOfAceso(false);
-            else
-                Epsilon.setWriteOfAceso(true);
+            levelOfAttack = (scanner.nextInt());
+            levelOfDefend = (scanner.nextInt());
+            levelOfChangeShape = scanner.nextInt();
+
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -136,16 +135,15 @@ public class Constant {
 
         }
         Scanner scanner;
+        int levelOfAttack, levelOfDefend, levelOfChangeShape;
+
         try {
             scanner = new Scanner(file);
             savedXp = scanner.nextInt();
-            Epsilon.setLevelOfWritOfAres(scanner.nextInt());
-            Epsilon.setLevelOfWritOfProteus(scanner.nextInt());
-            int l = scanner.nextInt();
-            if(l == 0)
-                Epsilon.setWriteOfAceso(false);
-            else
-                Epsilon.setWriteOfAceso(true);
+            levelOfAttack = (scanner.nextInt());
+            levelOfDefend = (scanner.nextInt());
+            levelOfChangeShape = scanner.nextInt();
+
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -504,4 +502,11 @@ public class Constant {
         Constant.heightOfMiniArchmire = heightOfMiniArchmire;
     }
 
+    public static long getStartOFHypnosSlumber() {
+        return startOFHypnosSlumber;
+    }
+
+    public static void setStartOFHypnosSlumber(long startOFHypnosSlumber) {
+        Constant.startOFHypnosSlumber = startOFHypnosSlumber;
+    }
 }

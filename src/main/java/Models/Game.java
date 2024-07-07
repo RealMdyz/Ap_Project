@@ -7,12 +7,11 @@ import Controller.Game.IntersectionController;
 import Controller.Game.StoreController;
 import Controller.Menu.ShrinkageController;
 import Controller.Menu.UpdateToPPanel;
-import Models.Epsilon.Collectible;
 import Models.Epsilon.Epsilon;
 import MyProject.MyProjectData;
 import View.Game.GameFrame;
 import View.Game.InputListener;
-import View.Menu.StorePanel;
+import View.Menu.StorePanel.StorePanelGraphics;
 import View.Menu.TopPanel;
 import View.MusicPlayer;
 
@@ -36,7 +35,7 @@ public class Game {
     protected Epsilon epsilon;
     protected InputListener inputListener;
     protected MusicPlayer musicPlayer;
-    private StorePanel storePanel;
+    private StorePanelGraphics storePanel;
     private TopPanel topPanel;
     private EnemyController enemyController;
     private IntersectionController intersectionController;
@@ -51,7 +50,7 @@ public class Game {
         musicPlayer = new MusicPlayer("Sounds/BackgroundMusic.wav", true);
         topPanel = new TopPanel();
         intersectionController = new IntersectionController();
-        storePanel = new StorePanel(constant,epsilon);
+        storePanel = new StorePanelGraphics(constant,epsilon);
         intersection = new Intersection();
         updateToPPanel = new UpdateToPPanel(this, constant);
         storeController = new StoreController(this);
@@ -86,11 +85,11 @@ public class Game {
         this.inputListener = inputListener;
     }
 
-    public StorePanel getStorePanel() {
+    public StorePanelGraphics getStorePanel() {
         return storePanel;
     }
 
-    public void setStorePanel(StorePanel storePanel) {
+    public void setStorePanel(StorePanelGraphics storePanel) {
         this.storePanel = storePanel;
     }
 

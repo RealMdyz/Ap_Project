@@ -34,8 +34,11 @@ public class GameLoop{
         @Override
         public void run() {
             while (!constant.isBossTriggered() && Constant.isIsRunning()){
-                game.getEpsilon().move();
-                game.getEpsilon().specialPower(game);
+                if(!Constant.isOpenStore()){
+                    game.getEpsilon().move();
+                    game.getEpsilon().specialPower(game);
+                }
+
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -49,7 +52,12 @@ public class GameLoop{
         @Override
         public void run() {
             while (!constant.isBossTriggered() && Constant.isIsRunning()){
-
+                if(!Constant.isOpenStore()){
+                    game.getStorePanel().setVisible(false);
+                }
+                else{
+                    game.getStorePanel().setVisible(true);
+                }
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -63,8 +71,9 @@ public class GameLoop{
         @Override
         public void run() {
             while (!constant.isBossTriggered() && Constant.isIsRunning()){
-                game.getEnemyController().controllingTheEnemies();
-
+                if(!Constant.isOpenStore() && System.currentTimeMillis() - Constant.getStartOFHypnosSlumber() > 10000) {
+                    game.getEnemyController().controllingTheEnemies();
+                }
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -78,8 +87,9 @@ public class GameLoop{
         @Override
         public void run() {
             while (!constant.isBossTriggered() && Constant.isIsRunning()){
-                game.getIntersectionController().controllingAllIntersections(game);
-
+                if(!Constant.isOpenStore()) {
+                    game.getIntersectionController().controllingAllIntersections(game);
+                }
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -93,9 +103,10 @@ public class GameLoop{
         @Override
         public void run() {
             while (!constant.isBossTriggered()){
-                game.getUpdateToPanel().updateTopPanel(startOfGame, indexWave, Constant.NUMBER_OF_WAVE, xp, game.getEpsilon().getHp());
-                game.getCollectibleController().checkTheExpirationTime();
-
+                if(!Constant.isOpenStore()) {
+                    game.getUpdateToPanel().updateTopPanel(startOfGame, indexWave, Constant.NUMBER_OF_WAVE, xp, game.getEpsilon().getHp());
+                    game.getCollectibleController().checkTheExpirationTime();
+                }
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {

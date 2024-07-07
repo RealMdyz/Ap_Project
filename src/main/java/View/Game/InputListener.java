@@ -127,7 +127,8 @@ public class InputListener {
         actionMap.put("bStore", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Constant.setOpenStore(true);
+                if(System.currentTimeMillis() - Constant.getStartOFHypnosSlumber() > 10000)
+                     Constant.setOpenStore(true);
             }
         });
         actionMap.put("ability", new AbstractAction() {
@@ -245,7 +246,6 @@ public class InputListener {
 
                 double angleDegrees = Math.toDegrees(angle);
 
-                epsilon.rotateVertices(angleDegrees);
             }
         });
     }

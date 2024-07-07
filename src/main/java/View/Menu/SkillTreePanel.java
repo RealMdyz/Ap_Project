@@ -124,19 +124,16 @@ public class SkillTreePanel extends JPanel implements ActionListener {
             if(buttonText.equals("Writ of Ares")){
                 if(Constant.getSavedXp() >= 750){
                     Constant.setSavedXp(Constant.getSavedXp() - 750);
-                    Epsilon.setLevelOfWritOfAres(Epsilon.getLevelOfWritOfAres() + 2);
                 }
             }
             else if(buttonText.equals("Writ of Aceso")){
                 if(Constant.getSavedXp() >= 500){
                     Constant.setSavedXp(Constant.getSavedXp() - 500);
-                    Epsilon.setWriteOfAceso(true);
                 }
             }
             else if(buttonText.equals("Writ of Proteus")){
                 if(Constant.getSavedXp() >= 1000){
                     Constant.setSavedXp(Constant.getSavedXp() - 1000);
-                    Epsilon.setLevelOfWritOfProteus(Epsilon.getLevelOfWritOfProteus() + 1);
                 }
             }
              else if (buttonText.equals("OK")) {
@@ -147,9 +144,9 @@ public class SkillTreePanel extends JPanel implements ActionListener {
             //System.out.println(Constant.getSavedXp());
             File file = new File("gameData");
             int savedXp = Constant.getSavedXp();
-            int levelOfWritOfAres = Epsilon.getLevelOfWritOfAres();
-            int levelOfWritOfProteus = Epsilon.getLevelOfWritOfProteus();
-            int lForAceso = (Epsilon.isWriteOfAceso() ? 1 : 0);
+            int levelOfWritOfAres = 0;
+            int levelOfWritOfProteus = 0;
+            int lForAceso = 0;
             constant.writeInFile(savedXp + Constant.getPlayerXP(), levelOfWritOfAres, lForAceso, levelOfWritOfProteus);
             constant.updateToSkillAndXp();
         }

@@ -17,7 +17,6 @@ public class MakeEnemy {
     public Enemy makeRandomEnemy(int random, int currentWaveIndex){
         if(currentWaveIndex <= 2){
             random %= 4;
-            random = 2;
             if(random == 0) {
                 return makeNecropick();
             }
