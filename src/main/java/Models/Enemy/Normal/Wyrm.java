@@ -1,6 +1,7 @@
-package Models.Enemy;
+package Models.Enemy.Normal;
 
 import Models.Constant;
+import Models.Enemy.Enemy;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 import MyProject.MyProjectData;
@@ -9,7 +10,7 @@ import View.Game.GameFrame;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Wyrm extends Enemy{
+public class Wyrm extends Enemy {
 
     ArrayList<Shot> shots = new ArrayList<>();
     boolean clockWise = false;

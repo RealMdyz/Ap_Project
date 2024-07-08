@@ -1,9 +1,9 @@
 package Controller.Game;
 
 import Models.Constant;
-import Models.Enemy.*;
+import Models.Enemy.Enemy;
+import Models.Enemy.Normal.*;
 import Models.Epsilon.Collectible;
-import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 import Models.Game;
 import View.Game.GameFrame;

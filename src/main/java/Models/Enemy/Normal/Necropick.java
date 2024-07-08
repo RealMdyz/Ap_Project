@@ -1,17 +1,17 @@
-package Models.Enemy;
+package Models.Enemy.Normal;
 
 import Models.Constant;
+import Models.Enemy.Enemy;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 import Models.Game;
 import MyProject.MyProjectData;
 import View.Game.GameFrame;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Necropick extends Enemy{
+public class Necropick extends Enemy {
 
     long time = System.currentTimeMillis();
     private ArrayList<Shot> shots = new ArrayList<>();

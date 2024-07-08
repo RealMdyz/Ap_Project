@@ -27,6 +27,8 @@ public class MyProjectData {
     protected BufferedImage archmire;
     protected BufferedImage wyrm;
 
+    protected BufferedImage barricados ;
+
     protected Font font10;
     protected Font font12;
     protected Font font15;
@@ -68,6 +70,13 @@ public class MyProjectData {
             String pathBackground = "Enemy/wyrm.png";
             File fileBackground = new File(pathBackground);
             wyrm = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String pathBackground = "Enemy/Barricados.png";
+            File fileBackground = new File(pathBackground);
+            barricados = ImageIO.read(fileBackground);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -362,5 +371,13 @@ public class MyProjectData {
 
     public void setWyrm(BufferedImage wyrm) {
         this.wyrm = wyrm;
+    }
+
+    public BufferedImage getBarricados() {
+        return barricados;
+    }
+
+    public void setBarricados(BufferedImage barricados) {
+        this.barricados = barricados;
     }
 }

@@ -1,14 +1,11 @@
 package Controller.Game;
 
-import Models.Enemy.Enemy;
-import Models.Enemy.Necropick;
-import Models.Enemy.Omenoct;
-import Models.Enemy.Wyrm;
-import Models.Epsilon.Epsilon;
+import Models.Enemy.Normal.Necropick;
+import Models.Enemy.Normal.Omenoct;
+import Models.Enemy.Normal.Wyrm;
 import Models.Epsilon.Shot;
 import Models.Game;
 
-import java.security.spec.ECPoint;
 import java.util.ArrayList;
 
 public class IntersectionHandler {

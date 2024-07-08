@@ -1,12 +1,11 @@
 package Controller.Enemy;
 
-import Models.Constant;
 import Models.Enemy.Enemy;
-import Models.Enemy.Necropick;
+import Models.Enemy.MiniBos.Barricados.Barricados;
+import Models.Enemy.Normal.Necropick;
 import Models.Game;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -28,13 +27,13 @@ public class EnemyController {
             enemy.specialPowers(game.getEpsilon());
             enemy.move();
         }
-        removingEnemiesWithZeroHp();
+        removingEnemies();
     }
     public void addEnemy(Enemy enemy){
         enemy.getCurrentFrame().addToGamePanel(enemy);
         enemyArrayList.add(enemy);
     }
-    public void removingEnemiesWithZeroHp() {
+    public void removingEnemies() {
         Iterator<Enemy> iterator = enemyArrayList.iterator();
         while (iterator.hasNext()) {
             Enemy enemy = iterator.next();
@@ -44,7 +43,17 @@ public class EnemyController {
                 game.getCollectibleController().addingCollectiblesAfterDie(enemy);
                 iterator.remove();
             }
+            if(enemy instanceof Barricados){
+                Barricados barricados = (Barricados) enemy;
+                if(barricados.isExpired()){
+                    enemy.getCurrentFrame().removeFromGamePanel(enemy);
+                    enemy.getCurrentFrame().setVisible(false);
+                    game.getGameFrames().remove(enemy.getCurrentFrame());
+                    iterator.remove();
+                }
+            }
         }
+
     }
     public void checkNecropickEsp(){
         for(Enemy enemy : enemyArrayList){

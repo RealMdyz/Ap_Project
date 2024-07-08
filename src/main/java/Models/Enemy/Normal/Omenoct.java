@@ -1,18 +1,17 @@
-package Models.Enemy;
+package Models.Enemy.Normal;
 
 import Models.Constant;
+import Models.Enemy.Enemy;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 import MyProject.MyProjectData;
 import View.Game.GameFrame;
 
-import javax.swing.*;
 import java.awt.*;
-import java.security.spec.ECPoint;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Omenoct extends Enemy{
+public class Omenoct extends Enemy {
 
     public ArrayList<Shot> shots = new ArrayList<>();
     public long lastShotTime = 0;

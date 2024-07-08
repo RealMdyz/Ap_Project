@@ -1,11 +1,12 @@
 package Controller.Enemy;
 
 import Models.Constant;
-import Models.Enemy.*;
+import Models.Enemy.Enemy;
+import Models.Enemy.MiniBos.Barricados.Barricados;
+import Models.Enemy.Normal.*;
 import Models.Game;
 import View.Game.GameFrame;
 
-import javax.imageio.metadata.IIOMetadataController;
 import java.util.Random;
 
 public class MakeEnemy {
@@ -16,7 +17,8 @@ public class MakeEnemy {
 
     public Enemy makeRandomEnemy(int random, int currentWaveIndex){
         if(currentWaveIndex <= 2){
-            random %= 4;
+            random %= 5;
+            random = 4;
             if(random == 0) {
                 return makeNecropick();
             }
@@ -26,9 +28,13 @@ public class MakeEnemy {
             else if(random == 2 ){
                 return makeArchmire();
             }
-            else {
+            else if(random == 3){
                 return makeWyrm();
             }
+            else{
+                return makebarricados();
+            }
+
         }
         return null;
     }
@@ -62,12 +68,28 @@ public class MakeEnemy {
         Random random = new Random();
         int locX = random.nextInt() % 1000 + 45;
         int locY = random.nextInt() % 800 + 45;
-        GameFrame gameFrame = new GameFrame(game.getConstant(), Constant.WIDTH_OF_WYRM, Constant.HEIGHT_OF_WYRM, true, false);
+        GameFrame gameFrame = new GameFrame(game.getConstant(), 0, 0, true, false);
         game.getGameFrames().add(gameFrame);
         gameFrame.setVisible(true);
         game.getEpsilonFrame().requestFocus();
         gameFrame.setBounds(locX, locY, Constant.WIDTH_OF_WYRM, Constant.HEIGHT_OF_WYRM);
 
         return new Wyrm(15, 15, gameFrame);
+    }
+    private Barricados makebarricados(){
+        Random random = new Random();
+        int locX = Math.abs(random.nextInt() % 100);
+        int locY = Math.abs(random.nextInt() % 600);
+
+        boolean isSolb = random.nextBoolean();
+
+        GameFrame gameFrame = new GameFrame(game.getConstant(), Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS, true, isSolb);
+        game.getGameFrames().add(gameFrame);
+        gameFrame.setVisible(true);
+        game.getEpsilonFrame().requestFocus();
+        gameFrame.setBounds(locX, locY, Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS);
+
+        return new Barricados(gameFrame);
+
     }
 }

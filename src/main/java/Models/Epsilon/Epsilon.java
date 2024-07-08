@@ -1,5 +1,6 @@
 package Models.Epsilon;
 
+import Controller.Game.EpsilonController;
 import Models.Constant;
 import Models.Game;
 import Models.Moveable;
@@ -19,10 +20,12 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     private int radius = 35;
     protected ArrayList<Shot> shots = new ArrayList<>();
     EpsilonLogic epsilonLogic;
+    EpsilonController epsilonController;
 
     public Epsilon(int x, int y, GameFrame jFrame) {
         super(x, y, 100, jFrame);
         epsilonLogic = new EpsilonLogic();
+        epsilonController = new EpsilonController();
         this.setHeight(70);
         this.setWidth(70);
         setSize(this.getWidth(), this.getHeight());
@@ -79,5 +82,13 @@ public class Epsilon extends ObjectsInGame implements Moveable {
 
     public void setEpsilonLogic(EpsilonLogic epsilonLogic) {
         this.epsilonLogic = epsilonLogic;
+    }
+
+    public EpsilonController getEpsilonController() {
+        return epsilonController;
+    }
+
+    public void setEpsilonController(EpsilonController epsilonController) {
+        this.epsilonController = epsilonController;
     }
 }

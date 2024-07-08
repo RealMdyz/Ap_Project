@@ -37,6 +37,7 @@ public class GameLoop{
                 if(!Constant.isOpenStore()){
                     game.getEpsilon().move();
                     game.getEpsilon().specialPower(game);
+                    game.getEpsilon().getEpsilonController().setTheEpsilonFrameSize(game);
                 }
 
                 try {

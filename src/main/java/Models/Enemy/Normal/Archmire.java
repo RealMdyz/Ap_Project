@@ -1,20 +1,16 @@
-package Models.Enemy;
+package Models.Enemy.Normal;
 
-import Controller.Game.Intersection;
 import Models.Constant;
+import Models.Enemy.Enemy;
 import Models.Epsilon.Epsilon;
-import Models.Game;
 import MyProject.MyProjectData;
 import View.Game.GameFrame;
 
-import javax.swing.*;
 import java.awt.*;
-import java.util.Iterator;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class Archmire extends Enemy{
+public class Archmire extends Enemy {
 
 
     private List<Aoe> aoeList;
