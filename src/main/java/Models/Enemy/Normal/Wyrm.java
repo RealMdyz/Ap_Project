@@ -20,10 +20,9 @@ public class Wyrm extends Enemy {
     private boolean movingTowardsEpsilon = true;
     public Wyrm(int x, int y, GameFrame frame) {
         super(x, y, 12, 2, 8, 0, 8, false, frame);
+        this.setVisible(true);
         this.setHeight(Constant.WIDTH_OF_WYRM);
         this.setWidth(Constant.HEIGHT_OF_WYRM);
-        this.setxCenter(this.getX() + (int)this.getWidth() / 2);
-        this.setyCenter(this.getY() + (int)this.getHeight() / 2);
         setSize(Constant.WIDTH_OF_WYRM, Constant.HEIGHT_OF_WYRM);
         background = MyProjectData.getProjectData().getWyrm();
     }

@@ -57,6 +57,9 @@ public class Omenoct extends Enemy {
                 ///System.out.println(this.getX() + " " + this.getY() + " " +targetX + "  " + targetY + " " + deltaX + " " + deltaY + " " + side);
             }
         }
+        else{
+
+        }
         repaint();
     }
 
@@ -106,13 +109,13 @@ public class Omenoct extends Enemy {
     }
     public boolean isInSide() {
         switch (side) {
-            case 0: // بالا
+            case 0:
                 return (getY() >= -tolerance && getY() <= tolerance);
-            case 1: // پایین
+            case 1:
                 return (getY() >= currentFrame.getHeight() - this.getHeight() - tolerance && getY() <= currentFrame.getHeight() - this.getHeight() + tolerance);
-            case 2: // چپ
+            case 2:
                 return getX() >= -tolerance && getX() <= tolerance;
-            case 3: // راست
+            case 3:
                 return getX() >=  currentFrame.getWidth() - this.getWidth() - tolerance && getX() <=  currentFrame.getWidth() - this.getWidth() + tolerance;
         }
         return false;

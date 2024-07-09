@@ -44,7 +44,7 @@ public class Game {
     public Game(Constant constant){
         this.constant = constant;
         Constant.setIsRunning(true);
-        epsilonFrame = new GameFrame(constant, Constant.FIRST_HEIGHT, Constant.FIRST_WIDTH, false, false);
+        epsilonFrame = new GameFrame(Constant.FIRST_HEIGHT, Constant.FIRST_WIDTH, false, false);
         epsilonFrame.addExitButtonToThisFrame();
         epsilon = new Epsilon(350, 350, epsilonFrame);
         musicPlayer = new MusicPlayer("Sounds/BackgroundMusic.wav", true);

@@ -11,15 +11,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class GameFrame extends JFrame {
-    Constant constant;
     JPanel gamePanel;
     private JButton exitButton;
     private boolean isometric, solb;
 
-    public GameFrame(Constant constant, int height, int width, boolean isometric, boolean solb){
+    public GameFrame(int height, int width, boolean isometric, boolean solb){
         this.isometric = isometric;
         this.solb = solb;
-        this.constant = constant;
         this.setTitle("Window Kill");
         this.setLayout(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -61,14 +59,6 @@ public class GameFrame extends JFrame {
     @Override
     public void paintComponents(Graphics g) {
         super.paintComponents(g);
-    }
-
-    public Constant getConstant() {
-        return constant;
-    }
-
-    public void setConstant(Constant constant) {
-        this.constant = constant;
     }
     public JPanel getGamePanel() {
         return gamePanel;

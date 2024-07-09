@@ -18,7 +18,7 @@ public class MakeEnemy {
     public Enemy makeRandomEnemy(int random, int currentWaveIndex){
         if(currentWaveIndex <= 2){
             random %= 5;
-            random = 4;
+            random = 3;
             if(random == 0) {
                 return makeNecropick();
             }
@@ -68,7 +68,8 @@ public class MakeEnemy {
         Random random = new Random();
         int locX = random.nextInt() % 1000 + 45;
         int locY = random.nextInt() % 800 + 45;
-        GameFrame gameFrame = new GameFrame(game.getConstant(), 0, 0, true, false);
+
+        GameFrame gameFrame = new GameFrame(0, 0, true, false);
         game.getGameFrames().add(gameFrame);
         gameFrame.setVisible(true);
         game.getEpsilonFrame().requestFocus();
@@ -83,13 +84,12 @@ public class MakeEnemy {
 
         boolean isSolb = random.nextBoolean();
 
-        GameFrame gameFrame = new GameFrame(game.getConstant(), Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS, true, isSolb);
+        GameFrame gameFrame = new GameFrame(Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS, true, isSolb);
         game.getGameFrames().add(gameFrame);
         gameFrame.setVisible(true);
         game.getEpsilonFrame().requestFocus();
         gameFrame.setBounds(locX, locY, Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS);
 
         return new Barricados(gameFrame);
-
     }
 }

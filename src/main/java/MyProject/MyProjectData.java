@@ -26,9 +26,8 @@ public class MyProjectData {
     protected BufferedImage necropick;
     protected BufferedImage archmire;
     protected BufferedImage wyrm;
-
+    protected BufferedImage orb ;
     protected BufferedImage barricados ;
-
     protected Font font10;
     protected Font font12;
     protected Font font15;
@@ -70,6 +69,13 @@ public class MyProjectData {
             String pathBackground = "Enemy/wyrm.png";
             File fileBackground = new File(pathBackground);
             wyrm = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String pathBackground = "Enemy/orb.png";
+            File fileBackground = new File(pathBackground);
+            orb = ImageIO.read(fileBackground);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -379,5 +385,13 @@ public class MyProjectData {
 
     public void setBarricados(BufferedImage barricados) {
         this.barricados = barricados;
+    }
+
+    public BufferedImage getOrb() {
+        return orb;
+    }
+
+    public void setOrb(BufferedImage orb) {
+        this.orb = orb;
     }
 }
