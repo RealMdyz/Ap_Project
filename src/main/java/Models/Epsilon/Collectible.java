@@ -10,11 +10,11 @@ import java.awt.*;
 
 public class Collectible extends ObjectsInGame {
 
-    private int increaceXp;
+    private int increaseXp;
     private long start = 0;
-    public Collectible(int x, int y, int hp, int increaceXp, long start, GameFrame frame) {
+    public Collectible(int x, int y, int hp, int increaseXp, long start, GameFrame frame) {
         super(x, y, hp, frame);
-        this.increaceXp = increaceXp;
+        this.increaseXp = increaseXp;
         this.start = start;
         this.setHeight(20);
         this.setWidth(20);
@@ -28,12 +28,12 @@ public class Collectible extends ObjectsInGame {
         g2D.drawImage(background, 0, 0, 20, 20, null);
     }
 
-    public int getIncreaceXp() {
-        return increaceXp;
+    public int getIncreaseXp() {
+        return increaseXp;
     }
 
-    public void setIncreaceXp(int increaceXp) {
-        this.increaceXp = increaceXp;
+    public void setIncreaseXp(int increaseXp) {
+        this.increaseXp = increaseXp;
     }
 
     public long getStart() {

@@ -36,7 +36,7 @@ public class IntersectionController {
             if(intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(game.getEpsilon(), collectible)){
                 game.getCollectibleController().intersectionHappen(collectible);
                 collectibleArrayList.add(collectible);
-                Constant.setPlayerXP(Constant.getPlayerXP() + collectible.getIncreaceXp());
+                Constant.setPlayerXP(Constant.getPlayerXP() + collectible.getIncreaseXp());
             }
         }
         game.getCollectibleController().getCollectibles().removeAll(collectibleArrayList);
@@ -53,19 +53,24 @@ public class IntersectionController {
         }
     }
     public void checkIntersectionShotsToEnemy(Game game) {
-        Iterator<Shot> shotIterator = game.getEpsilon().getShots().iterator();
-        while (shotIterator.hasNext()) {
-            Shot shot = shotIterator.next();
-            for (Enemy enemy : game.getEnemyController().getEnemyArrayList()) {
-                if (intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(enemy, shot)) {
-                    enemy.setHp(enemy.getHp() - game.getEpsilon().getPowerOfShot());
-                    shot.getCurrentFrame().removeFromGamePanel(shot);
-                    shotIterator.remove();
-
-                    break;
+        ArrayList<Shot> shotsToRemove = new ArrayList<>();
+        synchronized (this){
+            for (Shot shot : game.getEpsilon().getShots()) {
+                for (Enemy enemy : game.getEnemyController().getEnemyArrayList()) {
+                    if (intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(enemy, shot)) {
+                        enemy.setHp(enemy.getHp() - game.getEpsilon().getPowerOfShot());
+                        shot.getCurrentFrame().removeFromGamePanel(shot);
+                        shotsToRemove.add(shot);
+                        break;
+                    }
                 }
             }
         }
+
+        synchronized (this) {
+            game.getEpsilon().getShots().removeAll(shotsToRemove);
+        }
+
     }
     private void checkIntersectionShotsToEpsilon(Game game) {
         for (Enemy enemy : game.getEnemyController().getEnemyArrayList()) {

@@ -29,7 +29,8 @@ public class EnemyController {
     }
     public void controllingTheEnemies(){
         spawnProcess();
-        blackOrbSpawnProcess();
+        if(currentWaveIndex > 3)
+            blackOrbSpawnProcess();
         for(Enemy enemy : enemyArrayList){
             enemy.specialPowers(game.getEpsilon());
             enemy.move();
@@ -37,7 +38,7 @@ public class EnemyController {
         removingEnemies();
     }
     public void blackOrbSpawnProcess(){
-        if(lastBlackOrbDone && Math.random() < 0.05 && blackOrbs.size() == 0){
+        if(lastBlackOrbDone && Math.random() < 0.0005 && blackOrbs.size() == 0){
             int x = 1000 + new Random().nextInt() % 30 + Math.abs(new Random().nextInt() % 180);
             int y = 300 + new Random().nextInt() % 30 +  Math.abs(new Random().nextInt() % 180);
             BlackOrb blackOrb = new BlackOrb(x, y);
@@ -57,6 +58,7 @@ public class EnemyController {
         enemyArrayList.add(enemy);
     }
     public void removingEnemies() {
+
         Iterator<Enemy> iterator = enemyArrayList.iterator();
         while (iterator.hasNext()) {
             Enemy enemy = iterator.next();
@@ -65,6 +67,7 @@ public class EnemyController {
                 enemy.removeTheImpactOnTheFrame();
                 game.getCollectibleController().addingCollectiblesAfterDie(enemy);
                 iterator.remove();
+                currentWaveEnemyDied += 1;
             }
             if(enemy instanceof Barricados){
                 Barricados barricados = (Barricados) enemy;
@@ -73,6 +76,7 @@ public class EnemyController {
                     enemy.getCurrentFrame().setVisible(false);
                     game.getGameFrames().remove(enemy.getCurrentFrame());
                     iterator.remove();
+                    currentWaveEnemyDied += 1;
                 }
             }
         }
@@ -87,8 +91,9 @@ public class EnemyController {
         }
     }
     public void spawnProcess(){
-        if(currentWaveEnemyDied >= waveController.getNumberOfEnemyInEachWave()[currentWaveIndex]){
 
+        if(currentWaveEnemyDied >= waveController.getNumberOfEnemyInEachWave()[currentWaveIndex]){
+            currentWaveIndex += 1;
         }
         else if(waveController.getCurrentDelay() > (5 - currentWaveIndex) * 1000){
             waveController.setCurrentDelay(0);
@@ -104,5 +109,13 @@ public class EnemyController {
 
     public void setEnemyArrayList(ArrayList<Enemy> enemyArrayList) {
         this.enemyArrayList = enemyArrayList;
+    }
+
+    public int getCurrentWaveIndex() {
+        return currentWaveIndex;
+    }
+
+    public void setCurrentWaveIndex(int currentWaveIndex) {
+        this.currentWaveIndex = currentWaveIndex;
     }
 }

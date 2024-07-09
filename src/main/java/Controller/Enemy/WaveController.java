@@ -13,7 +13,9 @@ public class WaveController {
         startOfWave = new int[5];
         for(int i = 0; i < 5; i++){
             numberOfEnemyInEachWave[i] = Constant.getLevel() / 20 * (3) + (i + 1);
+            System.out.println(i + " " + numberOfEnemyInEachWave[i]);
         }
+
     }
 
     public int[] getNumberOfEnemyInEachWave() {

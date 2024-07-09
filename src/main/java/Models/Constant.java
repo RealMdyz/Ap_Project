@@ -34,7 +34,7 @@ public class Constant {
 
     public static final double ALPHA = 0.05;
 
-    private static int level = 50;
+    private static int level = 10;
     private static int sensitivityForMoves = 50;
     private static long abilityStartTime = -100000;
     private static int playerXP = 0;

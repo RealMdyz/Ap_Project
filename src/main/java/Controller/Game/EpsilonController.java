@@ -5,6 +5,7 @@ import Models.Game;
 import View.Game.GameFrame;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class EpsilonController {
     boolean firstTime = true;
@@ -14,16 +15,22 @@ public class EpsilonController {
 
     public void setTheEpsilonFrameSize(Game game) {
         ArrayList<Shot> removedShots = new ArrayList<>();
-        for (Shot shot : game.getEpsilon().getShots()) {
-            if (isCollidingWithFrameEdge(shot, game.getEpsilonFrame()) && !isCollidingWithRigidFrame(shot, game)) {
-                enlargeEpsilonFrame(game, shot);
-                shot.getCurrentFrame().removeFromGamePanel(shot);
-                removedShots.add(shot);
+        synchronized (this) {
+            Iterator<Shot> iterator = game.getEpsilon().getShots().iterator();
+            for(Shot shot : game.getEpsilon().getShots()){
+                if (isCollidingWithFrameEdge(shot, game.getEpsilonFrame()) && !isCollidingWithRigidFrame(shot, game)) {
+                    enlargeEpsilonFrame(game, shot);
+                    shot.getCurrentFrame().removeFromGamePanel(shot);
+                    removedShots.add(shot);
+                }
             }
         }
-        game.getEpsilon().getShots().removeAll(removedShots);
 
-        if(firstTime || Math.random() < 0.05){
+        synchronized (this) {
+            game.getEpsilon().getShots().removeAll(removedShots);
+        }
+
+        if (firstTime || Math.random() < 0.05) {
             reduceEpsilonFrameSize(game);
         }
     }

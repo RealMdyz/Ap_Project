@@ -105,7 +105,7 @@ public class GameLoop{
         public void run() {
             while (!constant.isBossTriggered()){
                 if(!Constant.isOpenStore()) {
-                    game.getUpdateToPanel().updateTopPanel(startOfGame, indexWave, Constant.NUMBER_OF_WAVE, xp, game.getEpsilon().getHp());
+                    game.getUpdateToPanel().updateTopPanel(startOfGame, game.getEnemyController().getCurrentWaveIndex(), Constant.NUMBER_OF_WAVE, xp, game.getEpsilon().getHp());
                     game.getCollectibleController().checkTheExpirationTime();
                 }
                 try {

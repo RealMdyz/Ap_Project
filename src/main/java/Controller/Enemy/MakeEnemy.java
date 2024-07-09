@@ -16,9 +16,27 @@ public class MakeEnemy {
     }
 
     public Enemy makeRandomEnemy(int random, int currentWaveIndex){
+        System.out.println(currentWaveIndex);
         if(currentWaveIndex <= 2){
-            random %= 5;
-            random = 3;
+            random %= 3;
+            random = Math.abs(random);
+            if(random == 0) {
+                return makeNecropick();
+            }
+            else if(random == 1){
+                return makeOmenoct();
+            }
+            else if(random == 2 ){
+                return makeArchmire();
+            }
+            else{
+                return makeWyrm();
+            }
+
+        }
+        else{
+            random %= 4;
+            random = Math.abs(random);
             if(random == 0) {
                 return makeNecropick();
             }
@@ -31,12 +49,11 @@ public class MakeEnemy {
             else if(random == 3){
                 return makeWyrm();
             }
-            else{
+            else {
                 return makebarricados();
             }
-
         }
-        return null;
+
     }
     public Necropick makeNecropick(){
         Random random =new Random();
