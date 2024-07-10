@@ -2,10 +2,12 @@ package Controller.Game;
 
 import Models.Constant;
 import Models.Enemy.Enemy;
+import Models.Enemy.MiniBos.Barricados.Barricados;
 import Models.Enemy.Normal.*;
 import Models.Epsilon.Collectible;
 import Models.Epsilon.Shot;
 import Models.Game;
+import Models.Side;
 import View.Game.GameFrame;
 
 import java.awt.*;
@@ -29,6 +31,27 @@ public class IntersectionController {
         checkIntersectionShotsToEnemy(game);
         checkTheDrowmPowerOfArchmire(game);
         checkTheIntersectionBetweenACollectibleAndEpsilon(game);
+        checkTheIntersectionBetweenBarricadosFrameAndWyrmFrame(game);
+    }
+    public void checkTheIntersectionBetweenBarricadosFrameAndWyrmFrame(Game game) {
+        List<Enemy> enemies = game.getEnemyController().getEnemyArrayList();
+        for (Enemy enemy : enemies) {
+            if (enemy instanceof Wyrm) {
+                Wyrm wyrm = (Wyrm) enemy;
+                boolean c = true;
+                for (Enemy otherEnemy : enemies) {
+                    if (otherEnemy instanceof Barricados) {
+                        Barricados barricados = (Barricados) otherEnemy;
+                        if (FrameIntersection.twoFrameIntersection(barricados.getCurrentFrame(), wyrm.getCurrentFrame())) {
+                            c = false;
+                            break;
+                        }
+                    }
+                }
+                wyrm.setMovingTowardsEpsilon(c);
+            }
+
+        }
     }
     public void checkTheIntersectionBetweenACollectibleAndEpsilon(Game game){
         ArrayList<Collectible> collectibleArrayList = new ArrayList<>();
@@ -82,7 +105,7 @@ public class IntersectionController {
                 Wyrm wyrm = (Wyrm) enemy;
                 intersectionHandler.handleShotIntersections(game, (Wyrm) enemy);
                 for(Enemy enemy1 : game.getEnemyController().getEnemyArrayList()){
-                    if(intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(enemy1, wyrm) && !enemy1.equals(wyrm)){
+                    if(enemy.getCurrentFrame().equals(enemy1) && intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(enemy1, wyrm) && !enemy1.equals(wyrm)){
                         wyrm.changingClockwiseOrCounterClockwise();
                     }
                 }

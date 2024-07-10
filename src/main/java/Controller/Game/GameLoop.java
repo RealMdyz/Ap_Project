@@ -10,6 +10,7 @@ public class GameLoop{
     private Game game;
     private Constant constant;
     private long startOfGame = System.currentTimeMillis();
+    private final Object lock = new Object();
     private int xp = 0;
     public GameLoop(Game game, Constant constant){
         this.constant = constant;

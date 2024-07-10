@@ -10,6 +10,7 @@ import java.awt.*;
 public class Barricados extends Enemy {
 
     private long spawnTime;
+    private static int EXPIRATION_TIME = 120000;
     public Barricados(GameFrame frame) {
         super(0, 0, 99999, 0, 0, 4, 0, false, frame);
         this.setHeight(Constant.SIDE_LENGTH_OF_BARRICADOS);
@@ -26,7 +27,7 @@ public class Barricados extends Enemy {
 
     }
     public boolean isExpired(){
-        if(System.currentTimeMillis() - spawnTime > 120000){
+        if(System.currentTimeMillis() - spawnTime > EXPIRATION_TIME){
             return true;
         }
         return false;

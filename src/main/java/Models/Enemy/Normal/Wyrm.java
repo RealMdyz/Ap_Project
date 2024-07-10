@@ -4,6 +4,7 @@ import Models.Constant;
 import Models.Enemy.Enemy;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
+import Models.Side;
 import MyProject.MyProjectData;
 import View.Game.GameFrame;
 
@@ -36,10 +37,11 @@ public class Wyrm extends Enemy {
     public void move() {
         int deltaX = xEpsilon + xEpsilonFrame - this.getX() - this.getCurrentFrame().getX();
         int deltaY = yEpsilon + yEpsilonFrame - this.getY() - this.getCurrentFrame().getY();
+        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         if (movingTowardsEpsilon) {
 
             // حرکت به سمت Epsilon
-            double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
 
             if (distance > radius) {
                 double directionX = deltaX / distance;
@@ -53,7 +55,7 @@ public class Wyrm extends Enemy {
             } else {
                 movingTowardsEpsilon = false;
             }
-        } else {
+        } else if(distance <= radius){
             // حرکت در یک دایره در اطراف Epsilon
             angle += clockWise ? 0.005 : -0.005;
             if(!epsilonFrame.equals(currentFrame))
@@ -135,4 +137,11 @@ public class Wyrm extends Enemy {
         this.radius = radius;
     }
 
+    public boolean isMovingTowardsEpsilon() {
+        return movingTowardsEpsilon;
+    }
+
+    public void setMovingTowardsEpsilon(boolean movingTowardsEpsilon) {
+        this.movingTowardsEpsilon = movingTowardsEpsilon;
+    }
 }
