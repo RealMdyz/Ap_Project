@@ -17,7 +17,7 @@ public class MakeEnemy {
 
     public Enemy makeRandomEnemy(int random, int currentWaveIndex){
         System.out.println(currentWaveIndex);
-        boolean test = true;
+        boolean test = false;
         if(test){
             random %= 2;
             random = Math.abs(random);

@@ -32,10 +32,11 @@ public class Constant {
     public static final int SPEED_OF_NORMAL_ENEMY = 4;
     public static final long TIME_FOR_EACH_COLLECTIBLE = 5000;
     public static final int RADIUS_OF_IMPACT = 100;
+    public static final int SPAWN_PROCESS_RATE = 2500;
 
     public static final double ALPHA = 0.05;
 
-    private static int level = 10;
+    private static int level = 50;
     private static int sensitivityForMoves = 50;
     private static long abilityStartTime = -100000;
     private static int playerXP = 0;

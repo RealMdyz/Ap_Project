@@ -14,17 +14,18 @@ public class EpsilonController {
     }
 
     public void setTheEpsilonFrameSize(Game game) {
-        ArrayList<Shot> removedShots = new ArrayList<>();
+        Iterator<Shot> shotIterator = game.getEpsilon().getShots().iterator();
 
-        for(Shot shot : game.getEpsilon().getShots()){
+        while (shotIterator.hasNext()) {
+            Shot shot = shotIterator.next();
             if (isCollidingWithFrameEdge(shot, game.getEpsilonFrame()) && !isCollidingWithRigidFrame(shot, game)) {
                 enlargeEpsilonFrame(game, shot);
                 shot.getCurrentFrame().removeFromGamePanel(shot);
-                removedShots.add(shot);
+                synchronized (game.getEpsilon().getShots()){
+                    shotIterator.remove();
+                }
             }
         }
-        game.getEpsilon().getShots().removeAll(removedShots);
-
 
         if (firstTime || Math.random() < 0.01) {
             reduceEpsilonFrameSize(game);

@@ -18,7 +18,7 @@ public class Omenoct extends Enemy {
     public long lastShotTime = 0;
     private int side;
     private int targetX, targetY;
-    private int tolerance = 2;
+    private int tolerance = 3;
     private Epsilon epsilon;
     private ArrayList<Vertex> vertices;
     public Omenoct(int x, int y, int side, GameFrame frame) {
@@ -56,6 +56,7 @@ public class Omenoct extends Enemy {
     @Override
     public void move() {
         if(currentFrame.equals(epsilon.getCurrentFrame())){
+            setTargetPosition();
             if(isInSide()){
                 addX(0);
                 addX(0);

@@ -53,19 +53,27 @@ public class IntersectionController {
         }
     }
     public void checkIntersectionShotsToEnemy(Game game) {
-        ArrayList<Shot> shotsToRemove = new ArrayList<>();
-        for (Shot shot : game.getEpsilon().getShots()) {
-            for (Enemy enemy : game.getEnemyController().getEnemyArrayList()) {
-                if (intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(enemy, shot)) {
-                    enemy.setHp(enemy.getHp() - game.getEpsilon().getPowerOfShot());
-                    shot.getCurrentFrame().removeFromGamePanel(shot);
-                    shotsToRemove.add(shot);
-                    break;
+        synchronized (game.getEnemyController().getEnemyArrayList()) {
+            Iterator<Shot> shotIterator = game.getEpsilon().getShots().iterator();
+
+            while (shotIterator.hasNext()) {
+                Shot shot = shotIterator.next();
+                synchronized (game.getEnemyController().getEnemyArrayList()) {
+                    for (Enemy enemy : game.getEnemyController().getEnemyArrayList()) {
+                        if (intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(enemy, shot)) {
+                            enemy.setHp(enemy.getHp() - game.getEpsilon().getPowerOfShot());
+                            shot.getCurrentFrame().removeFromGamePanel(shot);
+                            synchronized (game.getEpsilon().getShots()) {
+                                shotIterator.remove();
+                            }
+                            break;
+                        }
+                    }
                 }
             }
         }
-        game.getEpsilon().getShots().removeAll(shotsToRemove);
     }
+
     private void checkIntersectionShotsToEpsilonAndOtherDataIntersectionOfNormalEnemies(Game game) {
         for (Enemy enemy : game.getEnemyController().getEnemyArrayList()) {
             if (enemy instanceof Necropick) {

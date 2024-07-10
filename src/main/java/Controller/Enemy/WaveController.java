@@ -4,41 +4,41 @@ import Models.Constant;
 
 public class WaveController {
 
-    private int[] numberOfEnemyInEachWave;
-    private int[] startOfWave;
+    private int[] enemiesToKillEachWave;
     private long currentDelay = 0;
+    private long waveStartTime;
+    private double spawnRateMultiplier = 1.0;
 
     public WaveController(){
-        numberOfEnemyInEachWave = new int[5];
-        startOfWave = new int[5];
+        enemiesToKillEachWave = new int[5];
         for(int i = 0; i < 5; i++){
-            numberOfEnemyInEachWave[i] = Constant.getLevel() / 20 * (3) + (i + 1);
-            System.out.println(i + " " + numberOfEnemyInEachWave[i]);
+            enemiesToKillEachWave[i] = Constant.getLevel() / 20 * (3) + (i + 1) * 2;
+
+            System.out.println(i + " " + enemiesToKillEachWave[i]);
         }
-
+        waveStartTime = System.currentTimeMillis();
     }
 
-    public int[] getNumberOfEnemyInEachWave() {
-        return numberOfEnemyInEachWave;
-    }
 
-    public void setNumberOfEnemyInEachWave(int[] numberOfEnemyInEachWave) {
-        this.numberOfEnemyInEachWave = numberOfEnemyInEachWave;
-    }
-
-    public int[] getStartOfWave() {
-        return startOfWave;
-    }
-
-    public void setStartOfWave(int[] startOfWave) {
-        this.startOfWave = startOfWave;
+    public int[] getEnemiesToKillEachWave() {
+        return enemiesToKillEachWave;
     }
 
     public long getCurrentDelay() {
         return currentDelay;
     }
 
-    public void setCurrentDelay(int currentDelay) {
+    public void setCurrentDelay(long currentDelay) {
         this.currentDelay = currentDelay;
+    }
+
+    public void resetWaveStartTime() {
+        waveStartTime = System.currentTimeMillis();
+    }
+
+    public double getSpawnRateMultiplier() {
+        long elapsedTime = System.currentTimeMillis() - waveStartTime;
+        spawnRateMultiplier = 1.0 + (elapsedTime / 60000.0); // افزایش سختی به ازای هر دقیقه
+        return spawnRateMultiplier;
     }
 }

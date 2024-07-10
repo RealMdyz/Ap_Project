@@ -1,5 +1,6 @@
 package Controller.Enemy;
 
+import Models.Constant;
 import Models.Enemy.Enemy;
 import Models.Enemy.MiniBos.Barricados.Barricados;
 import Models.Enemy.MiniBos.BlackOrb.BlackOrb;
@@ -91,16 +92,27 @@ public class EnemyController {
         }
     }
     public void spawnProcess(){
-
-        if(currentWaveEnemyDied >= waveController.getNumberOfEnemyInEachWave()[currentWaveIndex]){
-            currentWaveIndex += 1;
+        if(currentWaveIndex >= waveController.getEnemiesToKillEachWave().length){
+            return;
         }
-        else if(waveController.getCurrentDelay() > (5 - currentWaveIndex) * 1000){
+
+        if(currentWaveEnemyDied >= waveController.getEnemiesToKillEachWave()[currentWaveIndex]){
+            if(enemyArrayList.isEmpty()){
+                currentWaveIndex += 1;
+                currentWaveEnemyDied = 0;
+                waveController.resetWaveStartTime();
+            }
+        } else if(waveController.getCurrentDelay() >  Constant.SPAWN_PROCESS_RATE / waveController.getSpawnRateMultiplier()){
             waveController.setCurrentDelay(0);
             Random random = new Random();
             addEnemy(makeEnemy.makeRandomEnemy(random.nextInt(), currentWaveIndex));
         }
-        waveController.setCurrentDelay((int) (waveController.getCurrentDelay() + 10));
+
+        double p = 1 / ((double)(currentWaveIndex) + 1);
+        if(p != 1)
+            System.out.println(p);
+        if(Math.random() < p)
+            waveController.setCurrentDelay(waveController.getCurrentDelay() + 10);
     }
 
     public ArrayList<Enemy> getEnemyArrayList() {
