@@ -11,19 +11,20 @@ import java.awt.*;
 public class Vertex extends ObjectsInGame implements Moveable {
     private int x;
     private int y;
+    private int power;
     private Color color;
+    private long lastAttackFromMe = 0;
     private double xFake, yFake;
 
-    public Vertex(int x, int y, GameFrame frame) {
-        super(x + 28, y + 28, 1, frame);
-        this.x = x + 28;
-        this.y = y + 28;
+    public Vertex(int x, int y, int power, GameFrame frame) {
+        super(x, y , 1, frame);
+        this.x = x;
+        this.y = y;
+        this.power = power;
         xFake = this.getX();
         yFake = this.getY();
         this.setHeight(15);
         this.setWidth(15);
-        this.setxCenter(this.getX() + (int)this.getWidth() / 2);
-        this.setyCenter(this.getY() + (int)this.getHeight() / 2);
         setSize(this.getWidth(), this.getHeight());
         this.color = Color.RED;
         background = MyProjectData.getProjectData().getVertexOnEpsilon();
@@ -115,6 +116,22 @@ public class Vertex extends ObjectsInGame implements Moveable {
     public void setY(int y) {
         this.y = y;
         this.yFake = y;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
+    }
+
+    public long getLastAttackFromMe() {
+        return lastAttackFromMe;
+    }
+
+    public void setLastAttackFromMe(long lastAttackFromMe) {
+        this.lastAttackFromMe = lastAttackFromMe;
     }
 }
 

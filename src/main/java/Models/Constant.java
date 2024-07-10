@@ -31,6 +31,7 @@ public class Constant {
     public static final int SPEED_OF_WYRM = 4;
     public static final int SPEED_OF_NORMAL_ENEMY = 4;
     public static final long TIME_FOR_EACH_COLLECTIBLE = 5000;
+    public static final int RADIUS_OF_IMPACT = 100;
 
     public static final double ALPHA = 0.05;
 

@@ -17,7 +17,18 @@ public class MakeEnemy {
 
     public Enemy makeRandomEnemy(int random, int currentWaveIndex){
         System.out.println(currentWaveIndex);
-        if(currentWaveIndex <= 2){
+        boolean test = true;
+        if(test){
+            random %= 2;
+            random = Math.abs(random);
+            if(random == 0) {
+                return makeWyrm();
+            }
+            else {
+                return makeOmenoct();
+            }
+        }
+        else if(currentWaveIndex <= 2){
             random %= 3;
             random = Math.abs(random);
             if(random == 0) {
@@ -37,6 +48,7 @@ public class MakeEnemy {
         else{
             random %= 4;
             random = Math.abs(random);
+
             if(random == 0) {
                 return makeNecropick();
             }

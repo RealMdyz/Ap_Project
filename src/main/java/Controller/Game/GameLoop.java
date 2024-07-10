@@ -10,7 +10,6 @@ public class GameLoop{
     private Game game;
     private Constant constant;
     private long startOfGame = System.currentTimeMillis();
-    private int indexWave;
     private int xp = 0;
     public GameLoop(Game game, Constant constant){
         this.constant = constant;
@@ -33,11 +32,10 @@ public class GameLoop{
     private class EpsilonThread extends Thread{
         @Override
         public void run() {
-            while (!constant.isBossTriggered() && Constant.isIsRunning()){
+            while (Constant.isIsRunning()){
                 if(!Constant.isOpenStore()){
                     game.getEpsilon().move();
                     game.getEpsilon().specialPower(game);
-                    game.getEpsilon().getEpsilonController().setTheEpsilonFrameSize(game);
                 }
 
                 try {
@@ -52,7 +50,7 @@ public class GameLoop{
     private class GraphicThread extends Thread{
         @Override
         public void run() {
-            while (!constant.isBossTriggered() && Constant.isIsRunning()){
+            while (Constant.isIsRunning()){
                 if(!Constant.isOpenStore()){
                     game.getStorePanel().setVisible(false);
                 }
@@ -90,6 +88,9 @@ public class GameLoop{
             while (!constant.isBossTriggered() && Constant.isIsRunning()){
                 if(!Constant.isOpenStore()) {
                     game.getIntersectionController().controllingAllIntersections(game);
+                    game.getCheckTheStateOfTheGame().allThing(game);
+                    game.getEpsilon().getEpsilonController().setTheEpsilonFrameSize(game);
+
                 }
                 try {
                     Thread.sleep(10);
@@ -103,7 +104,7 @@ public class GameLoop{
     private class GraphicThread1 extends Thread{
         @Override
         public void run() {
-            while (!constant.isBossTriggered()){
+            while (!constant.isBossTriggered() && Constant.isIsRunning()){
                 if(!Constant.isOpenStore()) {
                     game.getUpdateToPanel().updateTopPanel(startOfGame, game.getEnemyController().getCurrentWaveIndex(), Constant.NUMBER_OF_WAVE, xp, game.getEpsilon().getHp());
                     game.getCollectibleController().checkTheExpirationTime();

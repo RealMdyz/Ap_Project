@@ -4,6 +4,7 @@ import Models.Constant;
 import Models.Enemy.Enemy;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
+import Models.Epsilon.Vertex;
 import MyProject.MyProjectData;
 import View.Game.GameFrame;
 
@@ -19,17 +20,33 @@ public class Omenoct extends Enemy {
     private int targetX, targetY;
     private int tolerance = 2;
     private Epsilon epsilon;
+    private ArrayList<Vertex> vertices;
     public Omenoct(int x, int y, int side, GameFrame frame) {
         super(x, y, 20, 8, 4, 8, 4, false, frame);
         this.side = side;
         this.setHeight(Constant.getHeightOfOmenoct());
         this.setWidth(Constant.getWidthOfOmenoct());
-        this.setxCenter(this.getX() + (int)this.getWidth() / 2);
-        this.setyCenter(this.getY() + (int)this.getHeight() / 2);
         setSize(Constant.getWidthOfOmenoct(), Constant.getHeightOfOmenoct());
         background = MyProjectData.getProjectData().getOmenoct();
         setTargetPosition();
+        addVertices();
     }
+    private void addVertices() {
+        vertices = new ArrayList<>();
+        int centerX = this.getX() + this.getWidth() / 2;
+        int centerY = this.getY() + this.getHeight() / 2;
+        int radius = Math.min(this.getWidth(), this.getHeight()) / 2;
+
+        for (int i = 0; i < 2; i++) {
+            double angle = Math.toRadians((360.0 / 2) * i);
+            int vertexX = (int) (centerX + radius * Math.cos(angle));
+            int vertexY = (int) (centerY + radius * Math.sin(angle));
+            Vertex vertex = new Vertex(vertexX - 7, vertexY - 7, 8, this.currentFrame);
+            vertices.add(vertex);
+            currentFrame.addToGamePanel(vertex); // Add vertex to the game panel
+        }
+    }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
@@ -94,6 +111,8 @@ public class Omenoct extends Enemy {
     public void removeTheImpactOnTheFrame() {
         for(Shot shot : shots)
             currentFrame.removeFromGamePanel(shot);
+        for(Vertex vertex : vertices)
+            vertex.getCurrentFrame().removeFromGamePanel(vertex);
     }
 
     public void setShots(ArrayList<Shot> shots) {
@@ -147,5 +166,24 @@ public class Omenoct extends Enemy {
         }
     }
 
+    @Override
+    public void addX(int amount){
+        for(Vertex vertex : vertices)
+            vertex.setX(vertex.getX() + amount);
+        this.setX(this.getX() + amount);
+    }
+    @Override
+    public void addY(int amount){
+        for(Vertex vertex : vertices)
+            vertex.setY(vertex.getY() + amount);
+        this.setY(this.getY() + amount);
+    }
 
+    public ArrayList<Vertex> getVertices() {
+        return vertices;
+    }
+
+    public void setVertices(ArrayList<Vertex> vertices) {
+        this.vertices = vertices;
+    }
 }

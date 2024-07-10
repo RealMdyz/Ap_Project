@@ -8,6 +8,7 @@ import Controller.Game.StoreController;
 import Controller.Menu.ShrinkageController;
 import Controller.Menu.UpdateToPPanel;
 import Models.Epsilon.Epsilon;
+import Models.Games.CheckTheStateOfTheGame;
 import MyProject.MyProjectData;
 import View.Game.GameFrame;
 import View.Game.InputListener;
@@ -40,6 +41,7 @@ public class Game {
     private EnemyController enemyController;
     private IntersectionController intersectionController;
     private CollectibleController collectibleController;
+    private CheckTheStateOfTheGame checkTheStateOfTheGame;
 
     public Game(Constant constant){
         this.constant = constant;
@@ -57,7 +59,7 @@ public class Game {
         enemyController = new EnemyController(this);
         shrinkageController = new ShrinkageController(constant.getMinHeightForShrinkage(), constant.getMinWidthForShrinkage(), constant.getReduceForeShrinkage());
         collectibleController = new CollectibleController();
-
+        checkTheStateOfTheGame = new CheckTheStateOfTheGame();
         makeEpsilonFrame(epsilonFrame);
         epsilonFrame.addToGamePanel(epsilon);
     }
@@ -235,5 +237,13 @@ public class Game {
 
     public void setCollectibleController(CollectibleController collectibleController) {
         this.collectibleController = collectibleController;
+    }
+
+    public CheckTheStateOfTheGame getCheckTheStateOfTheGame() {
+        return checkTheStateOfTheGame;
+    }
+
+    public void setCheckTheStateOfTheGame(CheckTheStateOfTheGame checkTheStateOfTheGame) {
+        this.checkTheStateOfTheGame = checkTheStateOfTheGame;
     }
 }

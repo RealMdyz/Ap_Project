@@ -3,8 +3,12 @@ package Controller.Game;
 import Models.Enemy.Normal.Necropick;
 import Models.Enemy.Normal.Omenoct;
 import Models.Enemy.Normal.Wyrm;
+import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
+import Models.Epsilon.Vertex;
 import Models.Game;
+import Models.Games.ImpactManager;
+import Models.ObjectsInGame;
 
 import java.util.ArrayList;
 
@@ -49,5 +53,20 @@ public class IntersectionHandler {
         }
         enemy.getShots().removeAll(shotArrayList);
     }
+    public boolean handleIntersectionVertexToObjectInGame(ArrayList<Vertex> vertices, ObjectsInGame object) {
+        boolean c = false;
+        for (Vertex vertex : vertices) {
+            if (intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(vertex, object) && System.currentTimeMillis() - vertex.getLastAttackFromMe() > 100) {
+                object.setHp(object.getHp() - vertex.getPower());
+                vertex.setLastAttackFromMe(System.currentTimeMillis());
+                ImpactManager.checkAndDoingTheImpact(object, vertex.getX(), vertex.getY());
+                c = true;
+            }
+        }
+        return c;
+    }
+
+
+
 
 }

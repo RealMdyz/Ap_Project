@@ -15,22 +15,18 @@ public class EpsilonController {
 
     public void setTheEpsilonFrameSize(Game game) {
         ArrayList<Shot> removedShots = new ArrayList<>();
-        synchronized (this) {
-            Iterator<Shot> iterator = game.getEpsilon().getShots().iterator();
-            for(Shot shot : game.getEpsilon().getShots()){
-                if (isCollidingWithFrameEdge(shot, game.getEpsilonFrame()) && !isCollidingWithRigidFrame(shot, game)) {
-                    enlargeEpsilonFrame(game, shot);
-                    shot.getCurrentFrame().removeFromGamePanel(shot);
-                    removedShots.add(shot);
-                }
+
+        for(Shot shot : game.getEpsilon().getShots()){
+            if (isCollidingWithFrameEdge(shot, game.getEpsilonFrame()) && !isCollidingWithRigidFrame(shot, game)) {
+                enlargeEpsilonFrame(game, shot);
+                shot.getCurrentFrame().removeFromGamePanel(shot);
+                removedShots.add(shot);
             }
         }
+        game.getEpsilon().getShots().removeAll(removedShots);
 
-        synchronized (this) {
-            game.getEpsilon().getShots().removeAll(removedShots);
-        }
 
-        if (firstTime || Math.random() < 0.05) {
+        if (firstTime || Math.random() < 0.01) {
             reduceEpsilonFrameSize(game);
         }
     }
@@ -41,7 +37,7 @@ public class EpsilonController {
         int reductionAmount = 4;
 
         // فقط اگر سایز فریم بیشتر از 400x400 باشد، آن را کوچک کنیم
-        if (frameWidth > 450  && frameHeight > 450) {
+        if (frameWidth > 500  && frameHeight > 500) {
             epsilonFrame.setSize(frameWidth - reductionAmount, frameHeight - reductionAmount);
             epsilonFrame.setLocation(epsilonFrame.getX() + reductionAmount / 2, epsilonFrame.getY() + reductionAmount / 2);
 
@@ -104,4 +100,5 @@ public class EpsilonController {
         epsilonFrame.revalidate();
         epsilonFrame.repaint();
     }
+
 }

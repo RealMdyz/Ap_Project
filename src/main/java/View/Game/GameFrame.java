@@ -3,7 +3,6 @@ package View.Game;
 import Models.Constant;
 import Models.ObjectsInGame;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,7 +13,6 @@ public class GameFrame extends JFrame {
     JPanel gamePanel;
     private JButton exitButton;
     private boolean isometric, solb;
-
     public GameFrame(int height, int width, boolean isometric, boolean solb){
         this.isometric = isometric;
         this.solb = solb;
@@ -55,7 +53,6 @@ public class GameFrame extends JFrame {
         });
         gamePanel.repaint();
     }
-
     @Override
     public void paintComponents(Graphics g) {
         super.paintComponents(g);
@@ -66,7 +63,6 @@ public class GameFrame extends JFrame {
     public void setGamePanel(JPanel gamePanel) {
         this.gamePanel = gamePanel;
     }
-
     public void addToGamePanel(ObjectsInGame object) {
         gamePanel.add(object);
         // Update the layout of gamePanel to reflect the new object
@@ -114,5 +110,4 @@ public class GameFrame extends JFrame {
     public void setSolb(boolean solb) {
         this.solb = solb;
     }
-
 }

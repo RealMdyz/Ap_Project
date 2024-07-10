@@ -22,8 +22,9 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     EpsilonLogic epsilonLogic;
     EpsilonController epsilonController;
 
+
     public Epsilon(int x, int y, GameFrame jFrame) {
-        super(x, y, 100, jFrame);
+        super(x, y, 100000, jFrame);
         epsilonLogic = new EpsilonLogic();
         epsilonController = new EpsilonController();
         this.setHeight(70);

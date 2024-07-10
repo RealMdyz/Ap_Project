@@ -91,6 +91,12 @@ public class Wyrm extends Enemy {
             shot.move();
         }
     }
+    public void changingClockwiseOrCounterClockwise(){
+        if(clockWise)
+            clockWise = false;
+        else
+            clockWise = true;
+    }
 
     public boolean isClockWise() {
         return clockWise;
@@ -128,4 +134,5 @@ public class Wyrm extends Enemy {
     public void setRadius(int radius) {
         this.radius = radius;
     }
+
 }

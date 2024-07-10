@@ -25,7 +25,7 @@ public class IntersectionController {
     }
     public void controllingAllIntersections(Game game){
         checkTheAddingAndRemovingTheEnemiesFromTheFramesToEpsilonFrame(game);
-        checkIntersectionShotsToEpsilon(game);
+        checkIntersectionShotsToEpsilonAndOtherDataIntersectionOfNormalEnemies(game);
         checkIntersectionShotsToEnemy(game);
         checkTheDrowmPowerOfArchmire(game);
         checkTheIntersectionBetweenACollectibleAndEpsilon(game);
@@ -54,32 +54,41 @@ public class IntersectionController {
     }
     public void checkIntersectionShotsToEnemy(Game game) {
         ArrayList<Shot> shotsToRemove = new ArrayList<>();
-        synchronized (this){
-            for (Shot shot : game.getEpsilon().getShots()) {
-                for (Enemy enemy : game.getEnemyController().getEnemyArrayList()) {
-                    if (intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(enemy, shot)) {
-                        enemy.setHp(enemy.getHp() - game.getEpsilon().getPowerOfShot());
-                        shot.getCurrentFrame().removeFromGamePanel(shot);
-                        shotsToRemove.add(shot);
-                        break;
-                    }
+        for (Shot shot : game.getEpsilon().getShots()) {
+            for (Enemy enemy : game.getEnemyController().getEnemyArrayList()) {
+                if (intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(enemy, shot)) {
+                    enemy.setHp(enemy.getHp() - game.getEpsilon().getPowerOfShot());
+                    shot.getCurrentFrame().removeFromGamePanel(shot);
+                    shotsToRemove.add(shot);
+                    break;
                 }
             }
         }
-
-        synchronized (this) {
-            game.getEpsilon().getShots().removeAll(shotsToRemove);
-        }
-
+        game.getEpsilon().getShots().removeAll(shotsToRemove);
     }
-    private void checkIntersectionShotsToEpsilon(Game game) {
+    private void checkIntersectionShotsToEpsilonAndOtherDataIntersectionOfNormalEnemies(Game game) {
         for (Enemy enemy : game.getEnemyController().getEnemyArrayList()) {
             if (enemy instanceof Necropick) {
                 intersectionHandler.handleShotIntersections(game, (Necropick) enemy);
             } else if (enemy instanceof Wyrm) {
+                Wyrm wyrm = (Wyrm) enemy;
                 intersectionHandler.handleShotIntersections(game, (Wyrm) enemy);
+                for(Enemy enemy1 : game.getEnemyController().getEnemyArrayList()){
+                    if(intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(enemy1, wyrm) && !enemy1.equals(wyrm)){
+                        wyrm.changingClockwiseOrCounterClockwise();
+                    }
+                }
             } else if (enemy instanceof Omenoct) {
+                Omenoct omenoct = (Omenoct) enemy;
                 intersectionHandler.handleShotIntersections(game, (Omenoct) enemy);
+                if(intersectionHandler.handleIntersectionVertexToObjectInGame(omenoct.getVertices(), game.getEpsilon())){
+                    omenoct.changeSide();
+                }
+                for(Enemy enemy1 : game.getEnemyController().getEnemyArrayList()){
+                    if(intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(enemy1, omenoct) && !enemy1.equals(omenoct)){
+                        omenoct.changeSide();
+                    }
+                }
             }
         }
     }
