@@ -97,7 +97,6 @@ public class EnemyController {
         if(currentWaveIndex >= waveController.getEnemiesToKillEachWave().length){
             return;
         }
-
         if(currentWaveEnemyDied >= waveController.getEnemiesToKillEachWave()[currentWaveIndex]){
             if(enemyArrayList.isEmpty()){
                 currentWaveIndex += 1;
@@ -110,9 +109,8 @@ public class EnemyController {
             addEnemy(makeEnemy.makeRandomEnemy(random.nextInt(), currentWaveIndex));
         }
 
-        double p = 1 / ((double)(currentWaveIndex * currentWaveIndex) + 1);
-        if(Math.random() < p)
-            waveController.setCurrentDelay(waveController.getCurrentDelay() + 10);
+
+        waveController.setCurrentDelay(waveController.getCurrentDelay() + (long) (2L * currentWaveIndex + 5));
     }
 
     public ArrayList<Enemy> getEnemyArrayList() {

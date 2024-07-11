@@ -15,6 +15,8 @@ public class UpdateToPPanel {
     }
 
     public void updateTopPanel(long startOfGame, int currentWaveIndex, int endWaveIndex, int xp, int hp){
+        if(currentWaveIndex >= 5)
+            currentWaveIndex = 4;
         game.getTopPanel().updateXPLabel(Constant.getPlayerXP());
         game.getTopPanel().updateTimeLabel((System.currentTimeMillis() - startOfGame));
         game.getTopPanel().updateWaveLabel(currentWaveIndex, endWaveIndex);

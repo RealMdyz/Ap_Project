@@ -23,6 +23,7 @@ public class GameLoop{
         GraphicThread graphicThread = new GraphicThread();
         GraphicThread1 graphicThread1 = new GraphicThread1();
 
+
         calculatorThread.start();
         enemyThread.start();
         graphicThread.start();
@@ -54,6 +55,8 @@ public class GameLoop{
             while (Constant.isIsRunning()){
                 if(!Constant.isOpenStore()){
                     game.getStorePanel().setVisible(false);
+                    game.getCheckTheStateOfTheGame().allThing(game);
+
                 }
                 else{
                     game.getStorePanel().setVisible(true);
@@ -67,10 +70,27 @@ public class GameLoop{
 
         }
     }
+    private class GraphicThread1 extends Thread{
+        @Override
+        public void run() {
+            while (Constant.isIsRunning()){
+                if(!Constant.isOpenStore()) {
+                    game.getUpdateToPanel().updateTopPanel(startOfGame, game.getEnemyController().getCurrentWaveIndex(), Constant.NUMBER_OF_WAVE, xp, game.getEpsilon().getHp());
+                    game.getCollectibleController().checkTheExpirationTime();
+                }
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
+    }
     private class EnemyThread extends Thread{
         @Override
         public void run() {
-            while (!constant.isBossTriggered() && Constant.isIsRunning()){
+            while (!Constant.isBossTriggered() && Constant.isIsRunning()){
                 if(!Constant.isOpenStore() && System.currentTimeMillis() - Constant.getStartOFHypnosSlumber() > 10000) {
                     game.getEnemyController().controllingTheEnemies();
                 }
@@ -86,29 +106,10 @@ public class GameLoop{
     private class CalculatorThread extends Thread{
         @Override
         public void run() {
-            while (!constant.isBossTriggered() && Constant.isIsRunning()){
+            while (!Constant.isBossTriggered() && Constant.isIsRunning()){
                 if(!Constant.isOpenStore()) {
                     game.getIntersectionController().controllingAllIntersections(game);
-                    game.getCheckTheStateOfTheGame().allThing(game);
                     game.getEpsilon().getEpsilonController().setTheEpsilonFrameSize(game);
-
-                }
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-        }
-    }
-    private class GraphicThread1 extends Thread{
-        @Override
-        public void run() {
-            while (!constant.isBossTriggered() && Constant.isIsRunning()){
-                if(!Constant.isOpenStore()) {
-                    game.getUpdateToPanel().updateTopPanel(startOfGame, game.getEnemyController().getCurrentWaveIndex(), Constant.NUMBER_OF_WAVE, xp, game.getEpsilon().getHp());
-                    game.getCollectibleController().checkTheExpirationTime();
                 }
                 try {
                     Thread.sleep(10);

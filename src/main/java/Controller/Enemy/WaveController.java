@@ -12,7 +12,7 @@ public class WaveController {
     public WaveController(){
         enemiesToKillEachWave = new int[5];
         for(int i = 0; i < 5; i++){
-            enemiesToKillEachWave[i] = Constant.getLevel() / 20 * (3) + (i + 1) * 2;
+            enemiesToKillEachWave[i] = Constant.getLevel() / 20 * (i) + 1;
 
             System.out.println(i + " " + enemiesToKillEachWave[i]);
         }

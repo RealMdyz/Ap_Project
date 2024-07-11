@@ -36,7 +36,7 @@ public class Constant {
 
     public static final double ALPHA = 0.05;
 
-    private static int level = 50;
+    private static int level = 0;
     private static int sensitivityForMoves = 50;
     private static long abilityStartTime = -100000;
     private static int playerXP = 0;
@@ -76,7 +76,7 @@ public class Constant {
     private int upKey, downKey, leftKey, rightKey, abilityKey, storeKey;
 
     private static boolean qPressed = false;
-    private boolean bossTriggered = false;
+    private static boolean bossTriggered = false;
 
 
     public Constant(){
@@ -367,12 +367,12 @@ public class Constant {
         Constant.rotateAfterImpact = rotateAfterImpact;
     }
 
-    public boolean isBossTriggered() {
+    public static boolean isBossTriggered() {
         return bossTriggered;
     }
 
-    public void setBossTriggered(boolean bossTriggered) {
-        this.bossTriggered = bossTriggered;
+    public static void setBossTriggered(boolean bossTriggered) {
+        Constant.bossTriggered = bossTriggered;
     }
 
     public int getMinWidthForShrinkage() {
