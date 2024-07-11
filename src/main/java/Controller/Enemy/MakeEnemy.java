@@ -17,7 +17,7 @@ public class MakeEnemy {
 
     public Enemy makeRandomEnemy(int random, int currentWaveIndex){
         System.out.println(currentWaveIndex);
-        boolean test = true;
+        boolean test = false;
         if(test){
             random %= 2;
             random = Math.abs(random);
@@ -97,8 +97,6 @@ public class MakeEnemy {
         Random random = new Random();
         int locX = random.nextInt() % 1000 + 45;
         int locY = random.nextInt() % 800 + 45;
-        locX = 0;
-        locY = 300;
         GameFrame gameFrame = new GameFrame(0, 0, true, false);
         game.getGameFrames().add(gameFrame);
         gameFrame.setVisible(true);

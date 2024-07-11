@@ -1,8 +1,10 @@
 package Controller.Game;
 
+import Models.Enemy.Enemy;
 import Models.Enemy.Normal.Aoe;
 import Models.Epsilon.Shot;
 import Models.ObjectsInGame;
+import View.Game.GameFrame;
 
 import java.awt.*;
 
@@ -45,6 +47,20 @@ public class Intersection {
 
         return epsilonX + epsilonWidth > aoe.getX() && epsilonX < aoe.getX() + aoe.getWidth() &&
                 epsilonY + epsilonHeight > aoe.getY() && epsilonY < aoe.getY() + aoe.getHeight();
+    }
+    public boolean isInThisFrame(Enemy enemy, GameFrame gameFrame){
+        int xNesbatBeWindowOfEnemy = enemy.getX() + enemy.getCurrentFrame().getX();
+        int yNesbatBeWindowOfEnemy = enemy.getY() + enemy.getCurrentFrame().getY();
+        int widthEnemy = enemy.getWidth();
+        int heightEnemy = enemy.getHeight();
+        int xGameFrame = gameFrame.getX();
+        int yGameFrame = gameFrame.getY();
+        int widthGameFrame = gameFrame.getWidth();
+        int heightGameFrame = gameFrame.getHeight();
+        Rectangle enemyBounds = new Rectangle(xNesbatBeWindowOfEnemy, yNesbatBeWindowOfEnemy, widthEnemy, heightEnemy);
+        Rectangle frameBounds = new Rectangle(xGameFrame, yGameFrame, widthGameFrame, heightGameFrame);
+
+        return enemyBounds.intersects(frameBounds);
     }
 }
 

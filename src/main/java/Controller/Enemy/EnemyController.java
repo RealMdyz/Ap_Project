@@ -30,8 +30,7 @@ public class EnemyController {
     }
     public void controllingTheEnemies(){
         spawnProcess();
-        if(currentWaveIndex > 3)
-            blackOrbSpawnProcess();
+        blackOrbSpawnProcess();
         for(Enemy enemy : enemyArrayList){
             enemy.specialPowers(game.getEpsilon());
             enemy.move();
@@ -39,7 +38,7 @@ public class EnemyController {
         removingEnemies();
     }
     public void blackOrbSpawnProcess(){
-        if(lastBlackOrbDone && Math.random() < 0.0005 && blackOrbs.size() == 0){
+        if(lastBlackOrbDone && Math.random() < 0.005 && blackOrbs.size() == 0){
             int x = 1000 + new Random().nextInt() % 30 + Math.abs(new Random().nextInt() % 180);
             int y = 300 + new Random().nextInt() % 30 +  Math.abs(new Random().nextInt() % 180);
             BlackOrb blackOrb = new BlackOrb(x, y);
@@ -50,8 +49,11 @@ public class EnemyController {
             BlackOrb blackOrb = blackOrbs.get(blackOrbs.size() - 1);
             blackOrb.spawnAChuck(game);
             blackOrb.setLastChuckSpawnTime(System.currentTimeMillis());
-            if(blackOrb.getSpawnChuck() == 5)
+            if(blackOrb.getSpawnChuck() == 5){
                 lastBlackOrbDone = true;
+                blackOrb.reDrawLasers();
+            }
+
         }
     }
     public void addEnemy(Enemy enemy){
@@ -108,9 +110,7 @@ public class EnemyController {
             addEnemy(makeEnemy.makeRandomEnemy(random.nextInt(), currentWaveIndex));
         }
 
-        double p = 1 / ((double)(currentWaveIndex) + 1);
-        if(p != 1)
-            System.out.println(p);
+        double p = 1 / ((double)(currentWaveIndex * currentWaveIndex) + 1);
         if(Math.random() < p)
             waveController.setCurrentDelay(waveController.getCurrentDelay() + 10);
     }
@@ -129,5 +129,13 @@ public class EnemyController {
 
     public void setCurrentWaveIndex(int currentWaveIndex) {
         this.currentWaveIndex = currentWaveIndex;
+    }
+
+    public ArrayList<BlackOrb> getBlackOrbs() {
+        return blackOrbs;
+    }
+
+    public void setBlackOrbs(ArrayList<BlackOrb> blackOrbs) {
+        this.blackOrbs = blackOrbs;
     }
 }

@@ -3,6 +3,9 @@ package Controller.Game;
 import Models.Constant;
 import Models.Enemy.Enemy;
 import Models.Enemy.MiniBos.Barricados.Barricados;
+import Models.Enemy.MiniBos.BlackOrb.BlackOrb;
+import Models.Enemy.MiniBos.BlackOrb.BlackOrbChuck;
+import Models.Enemy.MiniBos.BlackOrb.Line;
 import Models.Enemy.Normal.*;
 import Models.Epsilon.Collectible;
 import Models.Epsilon.Shot;
@@ -19,10 +22,8 @@ public class IntersectionController {
 
     Intersection intersection;
     IntersectionHandler intersectionHandler;
-    private List<Rectangle> aoeAreas;
     public IntersectionController(){
         intersection = new Intersection();
-        //aoeAreas = new ArrayList<>();
         intersectionHandler = new IntersectionHandler(intersection);
     }
     public void controllingAllIntersections(Game game){
@@ -32,6 +33,21 @@ public class IntersectionController {
         checkTheDrowmPowerOfArchmire(game);
         checkTheIntersectionBetweenACollectibleAndEpsilon(game);
         checkTheIntersectionBetweenBarricadosFrameAndWyrmFrame(game);
+        checkTheLinePowerOfBlackOrbChunks(game);
+    }
+    public void checkTheLinePowerOfBlackOrbChunks(Game game){
+
+        for(BlackOrb blackOrb : game.getEnemyController().getBlackOrbs()){
+            if(blackOrb.betweenTwoOfMyChunks(game.getEpsilon())){
+                game.getEpsilon().reduceHp(BlackOrb.LINE_POWER_OF_BLACK_ORB);
+            }
+            for(Enemy enemy : game.getEnemyController().getEnemyArrayList()){
+                if(blackOrb.betweenTwoOfMyChunks(enemy)){
+                    enemy.reduceHp(BlackOrb.LINE_POWER_OF_BLACK_ORB);
+                }
+            }
+
+        }
     }
     public void checkTheIntersectionBetweenBarricadosFrameAndWyrmFrame(Game game) {
         List<Enemy> enemies = game.getEnemyController().getEnemyArrayList();
@@ -121,13 +137,21 @@ public class IntersectionController {
                     }
                 }
             }
+            else if(enemy instanceof Archmire){
+                Archmire archmire = (Archmire) enemy;
+                for(Enemy enemy1 : game.getEnemyController().getEnemyArrayList()){
+                    if(!enemy1.equals(enemy))
+                         archmire.checkAoEDamage(enemy1);
+                }
+                archmire.checkAoEDamage(game.getEpsilon());
+            }
         }
     }
 
     private void checkTheAddingAndRemovingTheEnemiesFromTheFramesToEpsilonFrame(Game game){
         GameFrame gameFrame = game.getEpsilonFrame();
         for(Enemy enemy : game.getEnemyController().getEnemyArrayList()){
-            if(isInThisFrame(enemy, gameFrame) && !enemy.getCurrentFrame().equals(gameFrame)){
+            if(intersection.isInThisFrame(enemy, gameFrame) && !enemy.getCurrentFrame().equals(gameFrame)){
                 gameFrame.addToGamePanel(enemy);
                 int xNesbatWindow = enemy.getX() + enemy.getCurrentFrame().getX();
                 int yNesbatWindow = enemy.getY() + enemy.getCurrentFrame().getY();
@@ -136,25 +160,27 @@ public class IntersectionController {
                 enemy.getCurrentFrame().setVisible(false);
                 enemy.getCurrentFrame().removeFromGamePanel(enemy);
                 enemy.setCurrentFrame(gameFrame);
-
             }
 
         }
+        for(BlackOrb blackOrb : game.getEnemyController().getBlackOrbs()){
+            for(BlackOrbChuck blackOrbChuck : blackOrb.getBlackOrbChucks()){
+                if (!blackOrbChuck.getCurrentFrame().equals(gameFrame) && intersection.isInThisFrame(blackOrbChuck, game.getEpsilon().getCurrentFrame())){
+                    gameFrame.addToGamePanel(blackOrbChuck);
+                    int xNesbatWindow = blackOrbChuck.getX() + blackOrbChuck.getCurrentFrame().getX();
+                    int yNesbatWindow = blackOrbChuck.getY() + blackOrbChuck.getCurrentFrame().getY();
+                    blackOrbChuck.setX(xNesbatWindow - gameFrame.getX());
+                    blackOrbChuck.setY(yNesbatWindow - gameFrame.getY());
+                    blackOrbChuck.getCurrentFrame().setVisible(false);
+                    blackOrbChuck.getCurrentFrame().removeFromGamePanel(blackOrbChuck);
+                    blackOrbChuck.setCurrentFrame(gameFrame);
+                    System.out.println("Hello1");
+                    blackOrb.reDrawLasers();
+                    blackOrb.rePoint();
+                }
+            }
+        }
 
-    }
-    public boolean isInThisFrame(Enemy enemy, GameFrame gameFrame){
-        int xNesbatBeWindowOfEnemy = enemy.getX() + enemy.getCurrentFrame().getX();
-        int yNesbatBeWindowOfEnemy = enemy.getY() + enemy.getCurrentFrame().getY();
-        int widthEnemy = enemy.getWidth();
-        int heightEnemy = enemy.getHeight();
-        int xGameFrame = gameFrame.getX();
-        int yGameFrame = gameFrame.getY();
-        int widthGameFrame = gameFrame.getWidth();
-        int heightGameFrame = gameFrame.getHeight();
-        Rectangle enemyBounds = new Rectangle(xNesbatBeWindowOfEnemy, yNesbatBeWindowOfEnemy, widthEnemy, heightEnemy);
-        Rectangle frameBounds = new Rectangle(xGameFrame, yGameFrame, widthGameFrame, heightGameFrame);
-
-        return enemyBounds.intersects(frameBounds);
     }
 
 

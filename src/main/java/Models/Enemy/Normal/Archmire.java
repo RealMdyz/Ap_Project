@@ -3,6 +3,7 @@ package Models.Enemy.Normal;
 import Models.Constant;
 import Models.Enemy.Enemy;
 import Models.Epsilon.Epsilon;
+import Models.ObjectsInGame;
 import MyProject.MyProjectData;
 import View.Game.GameFrame;
 
@@ -50,7 +51,6 @@ public class Archmire extends Enemy {
         xEpsilonFrame = epsilon.getCurrentFrame().getX();
         yEpsilon = epsilon.getY();
         yEpsilonFrame = epsilon.getCurrentFrame().getY();
-        checkAoEDamage(epsilon);
         repaint();
     }
     public void addAoE(int x, int y) {
@@ -70,9 +70,9 @@ public class Archmire extends Enemy {
         }
         aoeList.removeAll(aoeArrayList);
     }
-    public void checkAoEDamage(Epsilon epsilon) {
+    public void checkAoEDamage(ObjectsInGame objectsInGame) {
         for (Aoe aoe : aoeList) {
-            aoe.checkAndReduceTheHP(epsilon);
+            aoe.checkAndReduceTheHP(objectsInGame);
         }
     }
 
