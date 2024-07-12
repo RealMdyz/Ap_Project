@@ -21,6 +21,13 @@ public class MyProjectData {
     protected BufferedImage writOfAceso;
     protected BufferedImage writOfAres;
     protected BufferedImage writOfProteus;
+    protected BufferedImage writOfAstrape;
+    protected BufferedImage writOfCerberus;
+    protected BufferedImage writOfChiron;
+    protected BufferedImage writOfDolus;
+    protected BufferedImage writOfEmpusa;
+    protected BufferedImage writOfMelampus;
+
     protected BufferedImage omenoct;
 
     protected BufferedImage necropick;
@@ -49,11 +56,9 @@ public class MyProjectData {
     private String enterAnEnemy = "Sounds/shoot.wav";
 
     private MyProjectData() {
-
         importImages();
         importFonts();
         importObjectsInGame();
-
     }
 
     public static MyProjectData getProjectData() {
@@ -65,6 +70,48 @@ public class MyProjectData {
     private void importImages(){
         gameMenuImage = new ImageIcon("Game/GameMenuImage.jpg");
         gameIcon = new ImageIcon("Game/GameIcon.ico");
+        try {
+            String pathBackground = "Game/Writ of Dolus.png";
+            File fileBackground = new File(pathBackground);
+            writOfDolus = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String pathBackground = "Game/Writ of Empusa.png";
+            File fileBackground = new File(pathBackground);
+            writOfEmpusa = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String pathBackground = "Game/Writ of Chiron.png";
+            File fileBackground = new File(pathBackground);
+            writOfChiron = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String pathBackground = "Game/Writ of Melampus.png";
+            File fileBackground = new File(pathBackground);
+            writOfMelampus = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String pathBackground = "Game/Writ of Cerberus.png";
+            File fileBackground = new File(pathBackground);
+            writOfCerberus = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String pathBackground = "Game/Writ of Astrape.png";
+            File fileBackground = new File(pathBackground);
+            writOfAstrape = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         try {
             String pathBackground = "Enemy/wyrm.png";
             File fileBackground = new File(pathBackground);
@@ -393,5 +440,53 @@ public class MyProjectData {
 
     public void setOrb(BufferedImage orb) {
         this.orb = orb;
+    }
+
+    public BufferedImage getWritOfAstrape() {
+        return writOfAstrape;
+    }
+
+    public void setWritOfAstrape(BufferedImage writOfAstrape) {
+        this.writOfAstrape = writOfAstrape;
+    }
+
+    public BufferedImage getWritOfCerberus() {
+        return writOfCerberus;
+    }
+
+    public void setWritOfCerberus(BufferedImage writOfCerberus) {
+        this.writOfCerberus = writOfCerberus;
+    }
+
+    public BufferedImage getWritOfChiron() {
+        return writOfChiron;
+    }
+
+    public void setWritOfChiron(BufferedImage writOfChiron) {
+        this.writOfChiron = writOfChiron;
+    }
+
+    public BufferedImage getWritOfDolus() {
+        return writOfDolus;
+    }
+
+    public void setWritOfDolus(BufferedImage writOfDolus) {
+        this.writOfDolus = writOfDolus;
+    }
+
+    public BufferedImage getWritOfEmpusa() {
+        return writOfEmpusa;
+    }
+
+    public void setWritOfEmpusa(BufferedImage writOfEmpusa) {
+        this.writOfEmpusa = writOfEmpusa;
+    }
+
+    public BufferedImage getWritOfMelampus() {
+        return writOfMelampus;
+    }
+
+    public void setWritOfMelampus(BufferedImage writOfMelampus) {
+        this.writOfMelampus = writOfMelampus;
     }
 }

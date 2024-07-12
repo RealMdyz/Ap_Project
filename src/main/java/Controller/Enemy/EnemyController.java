@@ -30,7 +30,8 @@ public class EnemyController {
     }
     public void controllingTheEnemies(){
         spawnProcess();
-        blackOrbSpawnProcess();
+        if(currentWaveIndex > 3)
+            blackOrbSpawnProcess();
         for(Enemy enemy : enemyArrayList){
             enemy.specialPowers(game.getEpsilon());
             enemy.move();

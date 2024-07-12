@@ -22,6 +22,7 @@ public class Archmire extends Enemy {
     private final long TIME_AOE_LOOP = 400;
 
     int xEpsilon, xEpsilonFrame, yEpsilon, yEpsilonFrame;
+    Epsilon epsilon;
 
     public Archmire(int x, int y, boolean isMini, GameFrame frame) {
         super(x, y, 30, isMini? 2 : 5, isMini ? 3 : 6, 0, 0, true, frame);
@@ -47,6 +48,7 @@ public class Archmire extends Enemy {
     }
     @Override
     public void specialPowers(Epsilon epsilon) {
+        this.epsilon = epsilon;
         xEpsilon = epsilon.getX();
         xEpsilonFrame = epsilon.getCurrentFrame().getX();
         yEpsilon = epsilon.getY();
@@ -89,14 +91,15 @@ public class Archmire extends Enemy {
         double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         double directionX = deltaX / distance;
         double directionY = deltaY / distance;
-
-        addX((int)(directionX * Constant.getSpeedOfArchmire()));
-        addY((int)(directionY * Constant.getSpeedOfArchmire()));
-
-        if(System.currentTimeMillis() - lastSpawnAoe > TIME_AOE_LOOP){
-            addAoE(this.getX(), this.getY());
-            lastSpawnAoe = System.currentTimeMillis();
+        if(distance > Constant.NON_HOVERING_DISTANCE || !epsilon.getEpsilonLogic().isInDeimosDismay()){
+            addX((int)(directionX * Constant.getSpeedOfArchmire()));
+            addY((int)(directionY * Constant.getSpeedOfArchmire()));
+            if(System.currentTimeMillis() - lastSpawnAoe > TIME_AOE_LOOP){
+                addAoE(this.getX(), this.getY());
+                lastSpawnAoe = System.currentTimeMillis();
+            }
         }
+
         updateAoE();
         repaint();
     }

@@ -100,7 +100,7 @@ public class IntersectionController {
                 synchronized (game.getEnemyController().getEnemyArrayList()) {
                     for (Enemy enemy : game.getEnemyController().getEnemyArrayList()) {
                         if (intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(enemy, shot)) {
-                            enemy.setHp(enemy.getHp() - game.getEpsilon().getPowerOfShot());
+                            enemy.setHp(enemy.getHp() - shot.getPower());
                             shot.getCurrentFrame().removeFromGamePanel(shot);
                             synchronized (game.getEpsilon().getShots()) {
                                 shotIterator.remove();

@@ -33,6 +33,7 @@ public class Constant {
     public static final long TIME_FOR_EACH_COLLECTIBLE = 5000;
     public static final int RADIUS_OF_IMPACT = 100;
     public static final int SPAWN_PROCESS_RATE = 2500;
+    public static final int NON_HOVERING_DISTANCE = 150;
 
     public static final double ALPHA = 0.05;
 
@@ -81,7 +82,6 @@ public class Constant {
 
     public Constant(){
         savedXp = 0;
-
         keyMap = new HashMap<>();
         keyMap.put("Left", KeyEvent.VK_A);
         leftKey = keyMap.get("Left");
@@ -173,8 +173,8 @@ public class Constant {
             printWriter = new PrintWriter(file);
             printWriter.println(xpForSave);
             printWriter.println(levelAres);
-            printWriter.println(levelProteus);
             printWriter.println(levelAceso);
+            printWriter.println(levelProteus);
             printWriter.flush();
             printWriter.close();
         }

@@ -109,13 +109,14 @@ public class LoginPageShare extends JFrame implements ActionListener {
 
     }
 
-    private void SkillTree(){
-            SkillTreePanel skillTreePanel = new SkillTreePanel(this, constant);
-            skillTreePanel.setPreferredSize(new Dimension(650, 700)); // Set preferred size
-            skillTreePanel.setVisible(true);
-            backgroundPanel.add(skillTreePanel, Integer.valueOf(2)); // Add with a higher layer number
+    private void SkillTree() {
+        SkillTreePanel skillTreePanel = new SkillTreePanel(this, constant); // تغییر به اینجا
+        skillTreePanel.setPreferredSize(new Dimension(650, 700));
+        skillTreePanel.setVisible(true);
 
-            repaint();
+        backgroundPanel.add(skillTreePanel, Integer.valueOf(2));
+        backgroundPanel.revalidate(); // اطمینان از به روز رسانی
+        backgroundPanel.repaint(); // اطمینان از به روز رسانی
     }
 
 

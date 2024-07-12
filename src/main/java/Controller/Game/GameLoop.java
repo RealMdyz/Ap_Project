@@ -11,7 +11,6 @@ public class GameLoop{
     private Constant constant;
     private long startOfGame = System.currentTimeMillis();
     private final Object lock = new Object();
-    private int xp = 0;
     public GameLoop(Game game, Constant constant){
         this.constant = constant;
         this.game = game;
@@ -56,10 +55,10 @@ public class GameLoop{
                 if(!Constant.isOpenStore()){
                     game.getStorePanel().setVisible(false);
                     game.getCheckTheStateOfTheGame().allThing(game);
-
                 }
                 else{
-                    game.getStorePanel().setVisible(true);
+                    if(System.currentTimeMillis() - Constant.getStartOFHypnosSlumber() > 10000)
+                      game.getStorePanel().setVisible(true);
                 }
                 try {
                     Thread.sleep(10);
@@ -75,7 +74,7 @@ public class GameLoop{
         public void run() {
             while (Constant.isIsRunning()){
                 if(!Constant.isOpenStore()) {
-                    game.getUpdateToPanel().updateTopPanel(startOfGame, game.getEnemyController().getCurrentWaveIndex(), Constant.NUMBER_OF_WAVE, xp, game.getEpsilon().getHp());
+                    game.getUpdateToPanel().updateTopPanel(startOfGame, game.getEnemyController().getCurrentWaveIndex(), Constant.NUMBER_OF_WAVE,game.getEpsilon().getHp());
                     game.getCollectibleController().checkTheExpirationTime();
                 }
                 try {

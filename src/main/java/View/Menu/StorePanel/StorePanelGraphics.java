@@ -2,14 +2,12 @@ package View.Menu.StorePanel;
 
 import Models.Constant;
 import Models.Epsilon.Epsilon;
-import View.Menu.MessagePanel;
+import Models.Games.StorePanelLogic;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class StorePanelGraphics extends JFrame implements ActionListener {
     Constant constant;
@@ -166,8 +164,11 @@ public class StorePanelGraphics extends JFrame implements ActionListener {
                     Constant.setPlayerXP(Constant.getPlayerXP() - 200);
                     epsilon.getEpsilonLogic().setInPhonoiSlaughter(true);
                     storePanelLogic.setLastPhonoiSlaughter(System.currentTimeMillis());
-                } else {
+                } else if(Constant.getPlayerXP() < 200){
                     JOptionPane.showMessageDialog(this, "Not enough XP to buy O' Phonoi, Slaughter!");
+                }
+                else {
+                    JOptionPane.showMessageDialog(this, "COOOLLLLLLLLLLLLLLLLLLLLLDown");
                 }
                 Constant.setOpenStore(false);
                 break;

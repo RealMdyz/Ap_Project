@@ -68,6 +68,9 @@ public class EpsilonLogic {
     public void setPosVertex(){
 
     }
+    public boolean isInDeimosDismay(){
+        return System.currentTimeMillis() - startOfNonHoveringDistance < 10000;
+    }
 
     public boolean isInPhonoiSlaughter() {
         return isInPhonoiSlaughter;
@@ -84,4 +87,5 @@ public class EpsilonLogic {
     public void setStartOfNonHoveringDistance(long startOfNonHoveringDistance) {
         this.startOfNonHoveringDistance = startOfNonHoveringDistance;
     }
+
 }

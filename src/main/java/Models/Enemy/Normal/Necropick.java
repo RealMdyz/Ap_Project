@@ -19,6 +19,7 @@ public class Necropick extends Enemy {
 
     int[] x = {-50, -50, 50, 50};
     int[] y = {50, -50, 50, -50};
+    Epsilon epsilon;
 
     boolean canShot = true;
     public Necropick(int x, int y, GameFrame frame) {
@@ -51,6 +52,7 @@ public class Necropick extends Enemy {
 
     @Override
     public void specialPowers(Epsilon epsilon) {
+        this.epsilon = epsilon;
         int xEpsilon = epsilon.getX();
         int yEpsilon = epsilon.getY();
         checkTimeForAppearAndDisappear(xEpsilon, yEpsilon);
@@ -102,6 +104,8 @@ public class Necropick extends Enemy {
     private Point getRandomPointInCircle(int radius, int xCenter, int yCenter) {
         double angle = Math.random() * 2 * Math.PI;
         double r = radius * Math.sqrt(Math.random());
+        if(epsilon.getEpsilonLogic().isInDeimosDismay())
+            r = Constant.NON_HOVERING_DISTANCE;
         int x = (int) (xCenter + r * Math.cos(angle));
         int y = (int) (yCenter + r * Math.sin(angle));
         return new Point(x, y);

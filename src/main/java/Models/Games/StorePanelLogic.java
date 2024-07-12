@@ -1,4 +1,4 @@
-package View.Menu.StorePanel;
+package Models.Games;
 
 import Models.Constant;
 import Models.Epsilon.Epsilon;

@@ -16,7 +16,7 @@ public class Wyrm extends Enemy {
     ArrayList<Shot> shots = new ArrayList<>();
     boolean clockWise = false;
     private double angle = 0;
-    private int radius = 300, xEpsilon, yEpsilon, xEpsilonFrame, yEpsilonFrame;
+    private int radius = Constant.NON_HOVERING_DISTANCE, xEpsilon, yEpsilon, xEpsilonFrame, yEpsilonFrame;
     private GameFrame epsilonFrame;
     private boolean movingTowardsEpsilon = true;
     public Wyrm(int x, int y, GameFrame frame) {
@@ -57,7 +57,7 @@ public class Wyrm extends Enemy {
             }
         } else if(distance <= radius){
             // حرکت در یک دایره در اطراف Epsilon
-            angle += clockWise ? 0.005 : -0.005;
+            angle += clockWise ? 0.05 : -0.05;
             if(!epsilonFrame.equals(currentFrame))
                 this.currentFrame.setLocation((int) (xEpsilon + xEpsilonFrame + radius * Math.cos(angle)), (int) (yEpsilonFrame + yEpsilon + radius * Math.sin(angle)));
             else{

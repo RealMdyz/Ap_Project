@@ -35,6 +35,7 @@ public class CheckTheStateOfTheGame {
                 gameFrame.setVisible(false);
             game.getMusicPlayer().stop();
             game.getEpsilonFrame().setVisible(false);
+            Constant.setSavedXp(Constant.getPlayerXP() + Constant.getSavedXp());
         }
     }
     private void setTheStartState(Game game){
