@@ -45,6 +45,7 @@ public class Constant {
     private int minHeightForShrinkage = 450;
     private int reduceForeShrinkage = 3;
     private static boolean isRunning;
+    private static boolean openCheckPointPanel = false;
 
     private static int sound = 50;
     private static boolean  rotateVertices = false;
@@ -513,5 +514,13 @@ public class Constant {
 
     public static void setStartOFHypnosSlumber(long startOFHypnosSlumber) {
         Constant.startOFHypnosSlumber = startOFHypnosSlumber;
+    }
+
+    public static boolean isOpenCheckPointPanel() {
+        return openCheckPointPanel;
+    }
+
+    public static void setOpenCheckPointPanel(boolean openCheckPointPanel) {
+        Constant.openCheckPointPanel = openCheckPointPanel;
     }
 }

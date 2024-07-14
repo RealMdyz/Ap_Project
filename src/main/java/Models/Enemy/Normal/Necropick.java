@@ -45,11 +45,6 @@ public class Necropick extends Enemy {
         addX(0);
         addY(0);
     }
-    public void checkEsp(Game game){ // find a close place from epsilon !
-
-
-    }
-
     @Override
     public void specialPowers(Epsilon epsilon) {
         this.epsilon = epsilon;

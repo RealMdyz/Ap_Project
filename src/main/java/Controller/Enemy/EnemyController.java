@@ -2,14 +2,13 @@ package Controller.Enemy;
 
 import Models.Constant;
 import Models.Enemy.Enemy;
-import Models.Enemy.MiniBos.Barricados.Barricados;
-import Models.Enemy.MiniBos.BlackOrb.BlackOrb;
+import Models.Enemy.MiniBoss.Barricados.Barricados;
+import Models.Enemy.MiniBoss.BlackOrb.BlackOrb;
 import Models.Enemy.Normal.Necropick;
 import Models.Game;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Random;
 
 public class EnemyController {
@@ -19,7 +18,6 @@ public class EnemyController {
     private boolean lastBlackOrbDone = true;
     private int currentWaveIndex = 0;
     private int currentWaveEnemyDied = 0;
-
     private WaveController waveController;
     private MakeEnemy makeEnemy;
 
@@ -86,14 +84,6 @@ public class EnemyController {
         }
 
     }
-    public void checkNecropickEsp(){
-        for(Enemy enemy : enemyArrayList){
-            if (enemy instanceof Necropick) {
-                Necropick necropick = (Necropick) enemy;
-                necropick.checkEsp(game);
-            }
-        }
-    }
     public void spawnProcess(){
         if(currentWaveIndex >= waveController.getEnemiesToKillEachWave().length){
             return;
@@ -103,6 +93,9 @@ public class EnemyController {
                 currentWaveIndex += 1;
                 currentWaveEnemyDied = 0;
                 waveController.resetWaveStartTime();
+                game.getCheckPointController().control(currentWaveIndex, game.getEpsilon());
+                waveController.getEndOfEachWave()[currentWaveIndex - 1] = System.currentTimeMillis();
+                waveController.getStartOfEachWave()[currentWaveIndex] = System.currentTimeMillis();
             }
         } else if(waveController.getCurrentDelay() >  Constant.SPAWN_PROCESS_RATE / waveController.getSpawnRateMultiplier()){
             waveController.setCurrentDelay(0);
@@ -136,5 +129,13 @@ public class EnemyController {
 
     public void setBlackOrbs(ArrayList<BlackOrb> blackOrbs) {
         this.blackOrbs = blackOrbs;
+    }
+
+    public WaveController getWaveController() {
+        return waveController;
+    }
+
+    public void setWaveController(WaveController waveController) {
+        this.waveController = waveController;
     }
 }

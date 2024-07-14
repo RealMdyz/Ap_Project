@@ -6,8 +6,7 @@ import Models.Game;
 import View.Game.GameFrame;
 
 public class CheckTheStateOfTheGame {
-
-    boolean haveACheckPoint = false;
+    int haveACheckPoint = 0;
     public CheckTheStateOfTheGame(){
 
     }
@@ -16,10 +15,10 @@ public class CheckTheStateOfTheGame {
         checkTheState(game);
     }
     private void saveGameData(Game game){
-
+        //GameData.saveGame(game);
     }
     private void checkTheState(Game game){
-        if(game.getEpsilon().getHp() <= 0 && !haveACheckPoint){
+        if(game.getEpsilon().getHp() <= 0 && haveACheckPoint == 0){
             gameEnd(game);
         }
         if(game.getEnemyController().getCurrentWaveIndex() == 5){
@@ -36,6 +35,8 @@ public class CheckTheStateOfTheGame {
             game.getMusicPlayer().stop();
             game.getEpsilonFrame().setVisible(false);
             Constant.setSavedXp(Constant.getPlayerXP() + Constant.getSavedXp());
+            // GameData gameData = (GameData.loadGame());
+            // System.out.println(gameData.epsilon.getX() + " " + gameData.epsilon.getY());
         }
     }
     private void setTheStartState(Game game){

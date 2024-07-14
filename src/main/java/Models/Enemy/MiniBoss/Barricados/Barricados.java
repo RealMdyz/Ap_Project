@@ -1,4 +1,4 @@
-package Models.Enemy.MiniBos.Barricados;
+package Models.Enemy.MiniBoss.Barricados;
 
 import Models.Constant;
 import Models.Enemy.Enemy;

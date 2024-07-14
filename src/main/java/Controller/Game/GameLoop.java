@@ -34,7 +34,7 @@ public class GameLoop{
         @Override
         public void run() {
             while (Constant.isIsRunning()){
-                if(!Constant.isOpenStore()){
+                if(!Constant.isOpenStore() && !Constant.isOpenCheckPointPanel()){
                     game.getEpsilon().move();
                     game.getEpsilon().specialPower(game);
                 }
@@ -73,7 +73,7 @@ public class GameLoop{
         @Override
         public void run() {
             while (Constant.isIsRunning()){
-                if(!Constant.isOpenStore()) {
+                if(!Constant.isOpenStore() && !Constant.isOpenCheckPointPanel()) {
                     game.getUpdateToPanel().updateTopPanel(startOfGame, game.getEnemyController().getCurrentWaveIndex(), Constant.NUMBER_OF_WAVE,game.getEpsilon().getHp());
                     game.getCollectibleController().checkTheExpirationTime();
                 }
@@ -90,7 +90,7 @@ public class GameLoop{
         @Override
         public void run() {
             while (!Constant.isBossTriggered() && Constant.isIsRunning()){
-                if(!Constant.isOpenStore() && System.currentTimeMillis() - Constant.getStartOFHypnosSlumber() > 10000) {
+                if(!Constant.isOpenStore() && !Constant.isOpenCheckPointPanel() && System.currentTimeMillis() - Constant.getStartOFHypnosSlumber() > 10000) {
                     game.getEnemyController().controllingTheEnemies();
                 }
                 try {
@@ -106,7 +106,7 @@ public class GameLoop{
         @Override
         public void run() {
             while (!Constant.isBossTriggered() && Constant.isIsRunning()){
-                if(!Constant.isOpenStore()) {
+                if(!Constant.isOpenStore() && !Constant.isOpenCheckPointPanel()) {
                     game.getIntersectionController().controllingAllIntersections(game);
                     game.getEpsilon().getEpsilonController().setTheEpsilonFrameSize(game);
                 }

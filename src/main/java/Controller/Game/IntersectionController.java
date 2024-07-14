@@ -2,18 +2,15 @@ package Controller.Game;
 
 import Models.Constant;
 import Models.Enemy.Enemy;
-import Models.Enemy.MiniBos.Barricados.Barricados;
-import Models.Enemy.MiniBos.BlackOrb.BlackOrb;
-import Models.Enemy.MiniBos.BlackOrb.BlackOrbChuck;
-import Models.Enemy.MiniBos.BlackOrb.Line;
+import Models.Enemy.MiniBoss.Barricados.Barricados;
+import Models.Enemy.MiniBoss.BlackOrb.BlackOrb;
+import Models.Enemy.MiniBoss.BlackOrb.BlackOrbChuck;
 import Models.Enemy.Normal.*;
 import Models.Epsilon.Collectible;
 import Models.Epsilon.Shot;
 import Models.Game;
-import Models.Side;
 import View.Game.GameFrame;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,6 +31,15 @@ public class IntersectionController {
         checkTheIntersectionBetweenACollectibleAndEpsilon(game);
         checkTheIntersectionBetweenBarricadosFrameAndWyrmFrame(game);
         checkTheLinePowerOfBlackOrbChunks(game);
+        checkTheCheckPointIntersection(game);
+    }
+    public void checkTheCheckPointIntersection(Game game){
+        if(game.getEnemyController().getCurrentWaveIndex() == 1 && game.getCheckPointController().wave2CheckPoint != null && intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(game.getEpsilon(), game.getCheckPointController().wave2CheckPoint)){
+            game.getCheckPointController().checkPointStart(game);
+        }
+        else if(game.getEnemyController().getCurrentWaveIndex() == 3 && game.getCheckPointController().wave4CheckPoint != null && intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(game.getEpsilon(), game.getCheckPointController().wave4CheckPoint)){
+            game.getCheckPointController().checkPointStart(game);
+        }
     }
     public void checkTheLinePowerOfBlackOrbChunks(Game game){
 
@@ -92,6 +98,7 @@ public class IntersectionController {
         }
     }
     public void checkIntersectionShotsToEnemy(Game game) {
+        List<Shot> shotsToRemove = new ArrayList<>();
         synchronized (game.getEnemyController().getEnemyArrayList()) {
             Iterator<Shot> shotIterator = game.getEpsilon().getShots().iterator();
 
@@ -102,14 +109,16 @@ public class IntersectionController {
                         if (intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(enemy, shot)) {
                             enemy.setHp(enemy.getHp() - shot.getPower());
                             shot.getCurrentFrame().removeFromGamePanel(shot);
-                            synchronized (game.getEpsilon().getShots()) {
-                                shotIterator.remove();
-                            }
+                            shotsToRemove.add(shot);
                             break;
                         }
                     }
                 }
             }
+        }
+
+        synchronized (game.getEpsilon().getShots()) {
+            game.getEpsilon().getShots().removeAll(shotsToRemove);
         }
     }
 

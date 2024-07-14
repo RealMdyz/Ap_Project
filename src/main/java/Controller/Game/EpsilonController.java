@@ -14,17 +14,20 @@ public class EpsilonController {
     }
 
     public void setTheEpsilonFrameSize(Game game) {
-        Iterator<Shot> shotIterator = game.getEpsilon().getShots().iterator();
+        synchronized (game.getEpsilon().getShots()) {
+            Iterator<Shot> shotIterator = game.getEpsilon().getShots().iterator();
+            ArrayList<Shot> shotsToRemove = new ArrayList<>();
 
-        while (shotIterator.hasNext()) {
-            Shot shot = shotIterator.next();
-            if (isCollidingWithFrameEdge(shot, game.getEpsilonFrame()) && !isCollidingWithRigidFrame(shot, game)) {
-                enlargeEpsilonFrame(game, shot);
-                shot.getCurrentFrame().removeFromGamePanel(shot);
-                synchronized (game.getEpsilon().getShots()){
-                    shotIterator.remove();
+            while (shotIterator.hasNext()) {
+                Shot shot = shotIterator.next();
+                if (isCollidingWithFrameEdge(shot, game.getEpsilonFrame()) && !isCollidingWithRigidFrame(shot, game)) {
+                    enlargeEpsilonFrame(game, shot);
+                    shot.getCurrentFrame().removeFromGamePanel(shot);
+                    shotsToRemove.add(shot);
                 }
             }
+
+            game.getEpsilon().getShots().removeAll(shotsToRemove);
         }
 
         if (firstTime || Math.random() < 0.01) {
@@ -36,8 +39,6 @@ public class EpsilonController {
         int frameWidth = epsilonFrame.getWidth();
         int frameHeight = epsilonFrame.getHeight();
         int reductionAmount = 4;
-
-        // فقط اگر سایز فریم بیشتر از 400x400 باشد، آن را کوچک کنیم
         if (frameWidth > 500  && frameHeight > 500) {
             epsilonFrame.setSize(frameWidth - reductionAmount, frameHeight - reductionAmount);
             epsilonFrame.setLocation(epsilonFrame.getX() + reductionAmount / 2, epsilonFrame.getY() + reductionAmount / 2);
@@ -56,7 +57,6 @@ public class EpsilonController {
         int frameWidth = epsilonFrame.getWidth();
         int frameHeight = epsilonFrame.getHeight();
 
-        // بررسی برخورد شلیک با دیواره‌های فریم
         return shotX <= 0 || shotX >= frameWidth - shot.getWidth() ||
                 shotY <= 0 || shotY >= frameHeight - shot.getHeight();
     }

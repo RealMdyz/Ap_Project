@@ -1,4 +1,4 @@
-package Models.Enemy.MiniBos.BlackOrb;
+package Models.Enemy.MiniBoss.BlackOrb;
 
 import Models.Constant;
 import Models.Game;

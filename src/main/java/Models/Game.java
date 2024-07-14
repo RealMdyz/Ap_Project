@@ -1,10 +1,7 @@
 package Models;
 
 import Controller.Enemy.EnemyController;
-import Controller.Game.CollectibleController;
-import Controller.Game.Intersection;
-import Controller.Game.IntersectionController;
-import Controller.Game.StoreController;
+import Controller.Game.*;
 import Controller.Menu.ShrinkageController;
 import Controller.Menu.UpdateToPPanel;
 import Models.Epsilon.Epsilon;
@@ -42,7 +39,7 @@ public class Game {
     private IntersectionController intersectionController;
     private CollectibleController collectibleController;
     private CheckTheStateOfTheGame checkTheStateOfTheGame;
-
+    private CheckPointController checkPointController;
     public Game(Constant constant){
         this.constant = constant;
         Constant.setIsRunning(true);
@@ -60,8 +57,10 @@ public class Game {
         shrinkageController = new ShrinkageController(constant.getMinHeightForShrinkage(), constant.getMinWidthForShrinkage(), constant.getReduceForeShrinkage());
         collectibleController = new CollectibleController();
         checkTheStateOfTheGame = new CheckTheStateOfTheGame();
+        checkPointController = new CheckPointController(epsilon);
         makeEpsilonFrame(epsilonFrame);
         epsilonFrame.addToGamePanel(epsilon);
+
     }
     public void makeEpsilonFrame(GameFrame gameFrame){
         inputListener = new InputListener(gameFrame, constant, epsilon);
@@ -245,5 +244,13 @@ public class Game {
 
     public void setCheckTheStateOfTheGame(CheckTheStateOfTheGame checkTheStateOfTheGame) {
         this.checkTheStateOfTheGame = checkTheStateOfTheGame;
+    }
+
+    public CheckPointController getCheckPointController() {
+        return checkPointController;
+    }
+
+    public void setCheckPointController(CheckPointController checkPointController) {
+        this.checkPointController = checkPointController;
     }
 }

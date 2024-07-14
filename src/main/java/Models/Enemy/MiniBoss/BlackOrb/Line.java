@@ -1,6 +1,4 @@
-package Models.Enemy.MiniBos.BlackOrb;
-
-import Models.ObjectsInGame;
+package Models.Enemy.MiniBoss.BlackOrb;
 
 import java.awt.*;
 
