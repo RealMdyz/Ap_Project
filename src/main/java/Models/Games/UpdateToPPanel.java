@@ -1,4 +1,4 @@
-package Controller.Menu;
+package Models.Games;
 
 import Models.Constant;
 import Models.Game;

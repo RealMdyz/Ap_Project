@@ -3,9 +3,10 @@ package Models;
 import Controller.Enemy.EnemyController;
 import Controller.Game.*;
 import Controller.Menu.ShrinkageController;
-import Controller.Menu.UpdateToPPanel;
+import Models.Games.UpdateToPPanel;
 import Models.Epsilon.Epsilon;
 import Models.Games.CheckTheStateOfTheGame;
+import Models.Games.SkillTreeLogic;
 import MyProject.MyProjectData;
 import View.Game.GameFrame;
 import View.Game.InputListener;
@@ -40,6 +41,7 @@ public class Game {
     private CollectibleController collectibleController;
     private CheckTheStateOfTheGame checkTheStateOfTheGame;
     private CheckPointController checkPointController;
+    private SkillTreeLogic skillTreeLogic;
     public Game(Constant constant){
         this.constant = constant;
         Constant.setIsRunning(true);
@@ -58,6 +60,7 @@ public class Game {
         collectibleController = new CollectibleController();
         checkTheStateOfTheGame = new CheckTheStateOfTheGame();
         checkPointController = new CheckPointController(epsilon);
+        skillTreeLogic = new SkillTreeLogic(this);
         makeEpsilonFrame(epsilonFrame);
         epsilonFrame.addToGamePanel(epsilon);
 
@@ -252,5 +255,13 @@ public class Game {
 
     public void setCheckPointController(CheckPointController checkPointController) {
         this.checkPointController = checkPointController;
+    }
+
+    public SkillTreeLogic getSkillTreeLogic() {
+        return skillTreeLogic;
+    }
+
+    public void setSkillTreeLogic(SkillTreeLogic skillTreeLogic) {
+        this.skillTreeLogic = skillTreeLogic;
     }
 }

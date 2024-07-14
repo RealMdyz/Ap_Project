@@ -25,7 +25,7 @@ public class Constant {
     public static final int SIDE_LENGTH_OF_BARRICADOS = 150;
     public static final int SIDE_LENGTH_OF_BlACK_ORB = 70;
     public static final int ORB_SIZE = 50;
-
+    public static final int ABILITY_XP = 0;
     public static final int WIDTH_OF_WYRM = 80;
     public static final int HEIGHT_OF_WYRM = 80;
     public static final int SPEED_OF_WYRM = 4;
@@ -64,7 +64,7 @@ public class Constant {
     private static int widthOfNecropick = 50;
     private static int heightOfNecropick = 50;
     private static int speedOfNecropick = 7;
-
+    public static int levelOfAttack, levelOfDefend, levelOfChangeShape;
 
     private static int widthOfArchmire = 50;
     private static int heightOfArchmire = 50;
@@ -96,7 +96,6 @@ public class Constant {
         storeKey = keyMap.get("OpenShop");
         keyMap.put("ActivateAbility", KeyEvent.VK_Q);
         abilityKey = keyMap.get("ActivateAbility");
-        int levelOfAttack, levelOfDefend, levelOfChangeShape;
         File file = new File("gameData");
         if(!file.exists()){
             try {
@@ -122,8 +121,7 @@ public class Constant {
         catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-       // System.out.println(savedXp + " " + Epsilon.getLevelOfWritOfAres() + " " + Epsilon.getLevelOfWritOfProteus() + " " + Epsilon.isWriteOfAceso());
-
+        //System.out.println("Level OF Attack: "  + levelOfAttack);
 
     }
     public void updateToSkillAndXp(){
@@ -141,7 +139,6 @@ public class Constant {
 
         }
         Scanner scanner;
-        int levelOfAttack, levelOfDefend, levelOfChangeShape;
 
         try {
             scanner = new Scanner(file);

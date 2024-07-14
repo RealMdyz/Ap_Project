@@ -26,6 +26,7 @@ public class Vertex extends ObjectsInGame implements Moveable {
         this.setHeight(15);
         this.setWidth(15);
         setSize(this.getWidth(), this.getHeight());
+        this.setVisible(true);
         this.color = Color.RED;
         background = MyProjectData.getProjectData().getVertexOnEpsilon();
     }

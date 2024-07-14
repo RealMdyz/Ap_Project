@@ -114,7 +114,7 @@ public class Necropick extends Enemy {
             double angle = i * angleStep;
             int xVelocity = (int) (Math.cos(angle) * Constant.getSpeedOfShot());
             int yVelocity = (int) (Math.sin(angle) * Constant.getSpeedOfShot());
-            Shot shot = new Shot(this.getX(), this.getY(), this.currentFrame, true); // true به معنای صلب بودن تیر است
+            Shot shot = new Shot(this.getX(), this.getY(), this.getPower(), this.currentFrame, true); // true به معنای صلب بودن تیر است
             shot.setxVelocity(xVelocity);
             shot.setyVelocity(yVelocity);
             shots.add(shot);

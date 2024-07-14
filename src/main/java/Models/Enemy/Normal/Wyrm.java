@@ -83,7 +83,7 @@ public class Wyrm extends Enemy {
         moveShots();
     }
     private void shotAShot(int xEpsilon, int yEpsilon){
-        Shot shot = new Shot(this.getX(), this.getY(), this.currentFrame, false);
+        Shot shot = new Shot(this.getX(), this.getY(), this.getPower(), this.currentFrame, false);
         shot.setV(xEpsilon, yEpsilon);
         shots.add(shot);
         currentFrame.addToGamePanel(shot);

@@ -134,10 +134,10 @@ public class InputListener {
         actionMap.put("ability", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Constant.getPlayerXP() >= 100 && System.currentTimeMillis() - Constant.getAbilityStartTime() > 5 * 60000){
+                if(Constant.getPlayerXP() >= Constant.ABILITY_XP && System.currentTimeMillis() - Constant.getAbilityStartTime() > 5 * 60000){
                     //System.out.println(System.currentTimeMillis());
                     Constant.setAbilityStartTime(System.currentTimeMillis());
-                    Constant.setPlayerXP(Constant.getPlayerXP() - 100);
+                    Constant.setPlayerXP(Constant.getPlayerXP() - Constant.ABILITY_XP);
                     Constant.setqPressed(true);
                 }
                 else if(System.currentTimeMillis() - Constant.getAbilityStartTime() > 5 * 60000){

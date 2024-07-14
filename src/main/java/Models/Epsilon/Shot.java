@@ -15,11 +15,12 @@ public class Shot extends ObjectsInGame implements Moveable {
     Constant constant;
     boolean solb;
 
-    private int power = 5;
+    private int power;
 
-    public Shot(int x, int y, GameFrame frame, boolean solb) {
+    public Shot(int x, int y, int power, GameFrame frame, boolean solb) {
         super(x, y, 1, frame);
         this.solb = solb;
+        this.power = power;
         this.setHeight(70);
         this.setWidth(70);
         setSize(getWidth(), getHeight());

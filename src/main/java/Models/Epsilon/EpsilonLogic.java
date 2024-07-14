@@ -7,15 +7,19 @@ import java.util.ArrayList;
 
 public class EpsilonLogic {
 
-    private ArrayList<Vertex> vertices = new ArrayList<>();
+    private ArrayList<Vertex> verticesForCerberus = new ArrayList<>();
+    private ArrayList<Vertex>  verticesForProteus = new ArrayList<>();
     private long startOfNonHoveringDistance = 0 ;
     private boolean isInPhonoiSlaughter = false;
+    private long lastWritOfAceso = 0;
+    private long lastWritOfAstrape = 0;
+    private long lastWritOfCerberus = 0;
     public EpsilonLogic(){
 
     }
     protected void fireShot(Game game){
         if (game.getInputListener().getxMousePress() != -1 || game.getInputListener().getyMousePress() != -1) {
-            Shot shot = new Shot(game.getEpsilon().getX(), game.getEpsilon().getY(), game.getEpsilon().getCurrentFrame(), true);
+            Shot shot = new Shot(game.getEpsilon().getX(), game.getEpsilon().getY(), game.getEpsilon().getPowerOfShot(), game.getEpsilon().getCurrentFrame(), true);
             if(isInPhonoiSlaughter)
                 shot.setPower(50);
             isInPhonoiSlaughter = false;
@@ -41,33 +45,43 @@ public class EpsilonLogic {
         epsilon.setxVelocity(epsilon.getxVelocity() + (int)x);
         epsilon.setyVelocity(epsilon.getyVelocity() + (int)y);
 
-        for(Vertex vertex : vertices){
-            vertex.setxVelocity(epsilon.getxVelocity());
-            vertex.setyVelocity(epsilon.getyVelocity());
-            vertex.move(xLimit, yLimit);
-        }
-
         if(epsilon.getX() <= 0  && epsilon.getxVelocity() > 0)
-            epsilon.setX(epsilon.getX() + epsilon.getxVelocity());
+            addX(epsilon.getxVelocity(), epsilon);
         else if(epsilon.getX() >= xLimit - epsilon.getWidth() - 10 && epsilon.getxVelocity() < 0)
-            epsilon.setX(epsilon.getX() + epsilon.getxVelocity());
+            addX(epsilon.getxVelocity(), epsilon);
         else if(epsilon.getX() >= 0 && epsilon.getX() <= xLimit - epsilon.getWidth() - 10)
-            epsilon.setX(epsilon.getX() + epsilon.getxVelocity());
+            addX(epsilon.getxVelocity(), epsilon);
         if(epsilon.getY() <= 0  && epsilon.getyVelocity() > 0)
-            epsilon.setY(epsilon.getY() + epsilon.getyVelocity());
+            addY(epsilon.getyVelocity(), epsilon);
         else if(epsilon.getY() >= yLimit - epsilon.getHeight() && epsilon.getyVelocity() < 0)
-            epsilon.setY(epsilon.getY() + epsilon.getyVelocity());
+            addY(epsilon.getyVelocity(), epsilon);
         else if(epsilon.getY() >= 0 && epsilon.getY() <= yLimit - epsilon.getHeight())
-            epsilon.setY(epsilon.getY() + epsilon.getyVelocity());
+            addY(epsilon.getyVelocity(), epsilon);
         //System.out.println(x + " " + y);
         epsilon.setxVelocity(epsilon.getxVelocity() - (int)x);
         epsilon.setyVelocity(epsilon.getyVelocity() - (int)y);
 
         epsilon.getCurrentFrame().repaint();
     }
-    public void setPosVertex(){
-
+    private void addX(int amount, Epsilon epsilon){
+        epsilon.setX(epsilon.getX() + amount);
+        for(Vertex vertex : verticesForCerberus){
+            vertex.setX(vertex.getX() + amount);
+        }
+        for(Vertex vertex : verticesForProteus){
+            vertex.setX(vertex.getX() + amount);
+        }
     }
+    private void addY(int amount, Epsilon epsilon){
+        epsilon.setY(epsilon.getY() + amount);
+        for(Vertex vertex : verticesForCerberus){
+            vertex.setY(vertex.getY() + amount);
+        }
+        for(Vertex vertex : verticesForProteus){
+            vertex.setY(vertex.getY() + amount);
+        }
+    }
+
     public boolean isInDeimosDismay(){
         return System.currentTimeMillis() - startOfNonHoveringDistance < 10000;
     }
@@ -88,4 +102,55 @@ public class EpsilonLogic {
         this.startOfNonHoveringDistance = startOfNonHoveringDistance;
     }
 
+    public long getLastWritOfAceso() {
+        return lastWritOfAceso;
+    }
+    public boolean isWritOfAstrapeAvailable(){
+        if(System.currentTimeMillis() - lastWritOfAstrape > 500){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isWritOfCerberusAvailable(){
+        if(System.currentTimeMillis() - lastWritOfCerberus > 15000){
+            return true;
+        }
+        return false;
+    }
+    public void setLastWritOfAceso(long lastWritOfAceso) {
+        this.lastWritOfAceso = lastWritOfAceso;
+    }
+
+    public ArrayList<Vertex> getVerticesForCerberus() {
+        return verticesForCerberus;
+    }
+
+    public void setVerticesForCerberus(ArrayList<Vertex> verticesForCerberus) {
+        this.verticesForCerberus = verticesForCerberus;
+    }
+
+    public ArrayList<Vertex> getVerticesForProteus() {
+        return verticesForProteus;
+    }
+
+    public void setVerticesForProteus(ArrayList<Vertex> verticesForProteus) {
+        this.verticesForProteus = verticesForProteus;
+    }
+
+    public long getLastWritOfAstrape() {
+        return lastWritOfAstrape;
+    }
+
+    public void setLastWritOfAstrape(long lastWritOfAstrape) {
+        this.lastWritOfAstrape = lastWritOfAstrape;
+    }
+
+    public long getLastWritOfCerberus() {
+        return lastWritOfCerberus;
+    }
+
+    public void setLastWritOfCerberus(long lastWritOfCerberus) {
+        this.lastWritOfCerberus = lastWritOfCerberus;
+    }
 }

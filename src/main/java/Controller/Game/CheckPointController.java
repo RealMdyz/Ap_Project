@@ -34,7 +34,7 @@ public class CheckPointController {
             game.getEpsilon().getCurrentFrame().add(game.getCheckPointController().checkPointPanel);
             game.getCheckPointController().checkPointPanel.updateXpLabel(calculatePR(game));
             game.getCheckPointController().checkPointPanel.setVisible(true);
-            game.getCheckPointController().wave4CheckPoint.getCurrentFrame().removeFromGamePanel(game.getCheckPointController().wave2CheckPoint);
+            game.getCheckPointController().wave4CheckPoint.getCurrentFrame().removeFromGamePanel(game.getCheckPointController().wave4CheckPoint);
             game.getCheckPointController().wave4CheckPoint.repaint();
             game.getCheckPointController().wave4CheckPoint = null;
             Constant.setOpenCheckPointPanel(true);

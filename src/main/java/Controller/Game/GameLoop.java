@@ -37,6 +37,7 @@ public class GameLoop{
                 if(!Constant.isOpenStore() && !Constant.isOpenCheckPointPanel()){
                     game.getEpsilon().move();
                     game.getEpsilon().specialPower(game);
+                    game.getSkillTreeLogic().runSkills();
                 }
 
                 try {

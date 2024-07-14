@@ -30,13 +30,13 @@ public class Intersection {
         // Check if the distance is less than the sum of the radii
         return distance < (shotRadius + objectRadius);
     }
-    public boolean checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(ObjectsInGame object1, ObjectsInGame object2) {
+    public static boolean checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(ObjectsInGame object1, ObjectsInGame object2) {
         // Get the bounding boxes of the objects
         Rectangle bounds1 = new Rectangle(object1.getX(), object1.getY(), object1.getWidth(), object1.getHeight());
         Rectangle bounds2 = new Rectangle(object2.getX(), object2.getY(), object2.getWidth(), object2.getHeight());
 
         // Check if the bounding boxes intersect
-        return bounds1.intersects(bounds2);
+        return bounds1.intersects(bounds2) && object1.getCurrentFrame().equals(object2.getCurrentFrame());
     }
 
     public static boolean isInAoE(ObjectsInGame objectsInGame, Aoe aoe) {
@@ -48,6 +48,26 @@ public class Intersection {
         return epsilonX + epsilonWidth > aoe.getX() && epsilonX < aoe.getX() + aoe.getWidth() &&
                 epsilonY + epsilonHeight > aoe.getY() && epsilonY < aoe.getY() + aoe.getHeight();
     }
+    public static boolean isCompletelyInside(ObjectsInGame object1, ObjectsInGame object2) {
+        // گرفتن مختصات چهار گوشه شیء داخلی (this)
+        int thisLeft = object1.getX();
+        int thisRight = object1.getX() + object1.getWidth();
+        int thisTop = object1.getY();
+        int thisBottom = object1.getY() + object1.getHeight();
+
+        // گرفتن مختصات چهار گوشه شیء خارجی (other)
+        int otherLeft = object2.getX();
+        int otherRight = object2.getX() + object2.getWidth();
+        int otherTop = object2.getY();
+        int otherBottom = object2.getY() + object2.getHeight();
+
+        // بررسی اینکه آیا هر چهار گوشه شیء داخلی درون شیء خارجی قرار دارند
+        return thisLeft >= otherLeft &&
+                thisRight <= otherRight &&
+                thisTop >= otherTop &&
+                thisBottom <= otherBottom;
+    }
+
     public boolean isInThisFrame(Enemy enemy, GameFrame gameFrame){
         int xNesbatBeWindowOfEnemy = enemy.getX() + enemy.getCurrentFrame().getX();
         int yNesbatBeWindowOfEnemy = enemy.getY() + enemy.getCurrentFrame().getY();
