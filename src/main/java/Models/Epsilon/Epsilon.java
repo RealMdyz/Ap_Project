@@ -45,7 +45,7 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     @Override
     public boolean reduceHp(int powerOfAttack, AttackType attackType, EntityType from) {
         if(attackType.equals(AttackType.MELEE)){
-            if(Constant.levelOfDefend <= 2 || Math.random() < 0.05){
+            if(Constant.isqPressed() && Constant.levelOfDefend <= 2 || Math.random() < 0.05){
                 // reduce nothing !
             }
             else{

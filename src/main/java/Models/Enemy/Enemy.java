@@ -51,9 +51,9 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
     }
     public boolean reduceHp(int powerOfAttack, AttackType attackType, EntityType from){
         this.setHp(this.getHp() - powerOfAttack);
-        if(from.equals(EntityType.EPSILON) && Constant.levelOfDefend >= 3)
+        if(Constant.isqPressed() && from.equals(EntityType.EPSILON) && Constant.levelOfDefend >= 3)
             epsilon.reduceHp(-3, AttackType.REDUCE_FOR_INCREASE, EntityType.NOF_FOUND);
-        System.out.println(Constant.levelOfDefend);;
+
         if(this.getHp() <= 0)
             return true;
         else

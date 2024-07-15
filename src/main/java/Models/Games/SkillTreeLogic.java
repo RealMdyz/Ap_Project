@@ -11,7 +11,6 @@ import Models.Epsilon.Vertex;
 import java.util.Random;
 
 public class SkillTreeLogic {
-    // هر چیزی مربوط بهش میشه رو اینجا میزنم و اینجا ران میکنم
     Game game;
     boolean writOfCerberusOpenBefore = false;
     boolean writOfProteusOpenBefore = false;

@@ -41,15 +41,14 @@ public class CollectibleController {
         }
     }
     public void checkTheExpirationTime(){
-        Iterator<Collectible> iterator = collectibles.iterator();
-        while (iterator.hasNext()) {
-            Collectible collectible = iterator.next();
-            if (collectible.isExpiration()) {
+        ArrayList<Collectible> collectibleArrayList = new ArrayList<>();
+        for(Collectible collectible : collectibles){
+            if(collectible.isExpiration()){
                 collectible.getCurrentFrame().removeFromGamePanel(collectible);
-
-                iterator.remove();
+                collectibleArrayList.add(collectible);
             }
         }
+        collectibles.removeAll(collectibleArrayList);
     }
     public ArrayList<Collectible> getCollectibles() {
         return collectibles;

@@ -9,6 +9,7 @@ import Models.Enemy.MiniBoss.BlackOrb.BlackOrbChuck;
 import Models.Enemy.Normal.*;
 import Models.EntityType;
 import Models.Epsilon.Collectible;
+import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 import Models.Game;
 import View.Game.GameFrame;
@@ -34,6 +35,24 @@ public class IntersectionController {
         checkTheIntersectionBetweenBarricadosFrameAndWyrmFrame(game);
         checkTheLinePowerOfBlackOrbChunks(game);
         checkTheCheckPointIntersection(game);
+        //checkTheIntersectionForBlackOrb(game);
+    }
+    public void checkTheIntersectionForBlackOrb(Game game){
+        Shot shot1 = new Shot(0, 0, 0, game.getEpsilon().getCurrentFrame(), false);
+        for(Shot shot : game.getEpsilon().getShots()){
+            for(BlackOrb blackOrb : game.getEnemyController().getBlackOrbs()){
+                for(BlackOrbChuck blackOrbChuck : blackOrb.getBlackOrbChucks()){
+                    if(intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(blackOrbChuck, shot)){
+                        blackOrbChuck.reduceHp(shot.getPower(), AttackType.RANGED, EntityType.EPSILON);
+                        shot1 = shot;
+                        break;
+                    }
+                }
+            }
+        }
+        game.getEpsilon().getCurrentFrame().removeFromGamePanel(shot1);
+        game.getEpsilon().getShots().remove(shot1);
+
     }
     public void checkTheCheckPointIntersection(Game game){
         if(game.getEnemyController().getCurrentWaveIndex() == 1 && game.getCheckPointController().wave2CheckPoint != null && intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(game.getEpsilon(), game.getCheckPointController().wave2CheckPoint)){

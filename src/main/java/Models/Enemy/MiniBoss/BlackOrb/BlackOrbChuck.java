@@ -4,6 +4,7 @@ import Models.AttackType;
 import Models.Constant;
 import Models.Enemy.Enemy;
 import Models.EntityType;
+import Models.Epsilon.Epsilon;
 import MyProject.MyProjectData;
 import View.Game.GameFrame;
 
@@ -14,6 +15,7 @@ import java.util.List;
 public class BlackOrbChuck extends Enemy {
     private List<Line> linesToDraw = new ArrayList<>();
     public final int xPos, yPos;
+    Epsilon epsilon;
 
     public BlackOrbChuck(GameFrame gameFrame) {
         super(10, 10, 30, 1, 30, 0, 12, true, gameFrame);
@@ -27,11 +29,25 @@ public class BlackOrbChuck extends Enemy {
     }
 
     @Override
+    public void specialPowers(Epsilon epsilon) {
+        this.epsilon = epsilon;
+    }
+
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
         g2D.drawImage(background, 0, 0, getWidth(), getHeight(), null);
 
+    }
+    public boolean reduceHp(int powerOfAttack, AttackType attackType, EntityType from){
+        this.setHp(this.getHp() - powerOfAttack);
+        if(Constant.isqPressed() && from.equals(EntityType.EPSILON) && Constant.levelOfDefend >= 3)
+            epsilon.reduceHp(-3, AttackType.REDUCE_FOR_INCREASE, EntityType.NOF_FOUND);
+        if(this.getHp() <= 0)
+            return true;
+        else
+            return false;
     }
     public void drawLaserOnGameFrame() {
         Graphics g = currentFrame.getGraphics();
@@ -53,6 +69,7 @@ public class BlackOrbChuck extends Enemy {
         linesToDraw.add(new Line(p1, p2));
         repaint(); // بازخوانی مجدد پنجره برای رسم خطوط جدید
     }
+
 
     public List<Line> getLinesToDraw() {
         return linesToDraw;

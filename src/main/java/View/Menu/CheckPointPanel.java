@@ -18,7 +18,6 @@ public class CheckPointPanel extends JPanel implements ActionListener {
 
     public CheckPointPanel(Epsilon epsilon) {
         this.epsilon = epsilon;
-        this.setLocation(100, 100);
         this.setSize(650, 700);
         setLayout(new BorderLayout());
         setBackground(new Color(240, 240, 240));

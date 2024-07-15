@@ -28,7 +28,7 @@ public class Intersection {
         double distance = Math.sqrt(Math.pow(shotCenterX - objectCenterX, 2) + Math.pow(shotCenterY - objectCenterY, 2));
 
         // Check if the distance is less than the sum of the radii
-        return distance < (shotRadius + objectRadius);
+        return distance < (shotRadius + objectRadius) && shot.getCurrentFrame().equals(objectsInGame.getCurrentFrame());
     }
     public static boolean checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(ObjectsInGame object1, ObjectsInGame object2) {
         // Get the bounding boxes of the objects

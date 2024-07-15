@@ -6,6 +6,7 @@ import View.Game.GameFrame;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class EpsilonController {
     boolean firstTime = true;
@@ -14,12 +15,15 @@ public class EpsilonController {
     }
 
     public void setTheEpsilonFrameSize(Game game) {
-        synchronized (game.getEpsilon().getShots()) {
-            Iterator<Shot> shotIterator = game.getEpsilon().getShots().iterator();
-            ArrayList<Shot> shotsToRemove = new ArrayList<>();
+        List<Shot> shotsToRemove = new ArrayList<>();
+        List<Shot> shotsCopy;
 
-            while (shotIterator.hasNext()) {
-                Shot shot = shotIterator.next();
+        synchronized (game.getEpsilon().getShots()) {
+            // Create a copy of the shots list
+            shotsCopy = new ArrayList<>(game.getEpsilon().getShots());
+
+            // Identify shots to remove
+            for (Shot shot : shotsCopy) {
                 if (isCollidingWithFrameEdge(shot, game.getEpsilonFrame()) && !isCollidingWithRigidFrame(shot, game)) {
                     enlargeEpsilonFrame(game, shot);
                     shot.getCurrentFrame().removeFromGamePanel(shot);
@@ -27,6 +31,7 @@ public class EpsilonController {
                 }
             }
 
+            // Remove identified shots from the original list
             game.getEpsilon().getShots().removeAll(shotsToRemove);
         }
 

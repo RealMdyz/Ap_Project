@@ -4,6 +4,7 @@ import Models.Constant;
 import Models.Enemy.Enemy;
 import Models.Enemy.MiniBoss.Barricados.Barricados;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrb;
+import Models.Enemy.MiniBoss.BlackOrb.BlackOrbChuck;
 import Models.Enemy.Normal.Necropick;
 import Models.Game;
 
@@ -28,8 +29,15 @@ public class EnemyController {
     }
     public void controllingTheEnemies(){
         spawnProcess();
-        if(currentWaveIndex > 3)
+        if(currentWaveIndex > 3){
             blackOrbSpawnProcess();
+            for(BlackOrb blackOrb : blackOrbs){
+                for(BlackOrbChuck blackOrbChuck : blackOrb.getBlackOrbChucks())
+                    blackOrbChuck.specialPowers(game.getEpsilon());
+            }
+
+        }
+
         for(Enemy enemy : enemyArrayList){
             enemy.specialPowers(game.getEpsilon());
             enemy.move();
@@ -82,6 +90,23 @@ public class EnemyController {
                 }
             }
         }
+        if(lastBlackOrbDone){
+            for(BlackOrb blackOrb : blackOrbs){
+                for(BlackOrbChuck blackOrbChuck : blackOrb.getBlackOrbChucks()){
+                    if(blackOrbChuck.getHp() <= 0){
+                        blackOrbChuck.getCurrentFrame().removeFromGamePanel(blackOrbChuck);
+                        blackOrbChuck.getCurrentFrame().setVisible(false);
+                        game.getGameFrames().remove(blackOrbChuck.getCurrentFrame());
+                        blackOrb.getBlackOrbChucks().remove(blackOrbChuck);
+                        currentWaveEnemyDied += 1;
+                        break;
+                    }
+                }
+            }
+        }
+
+
+
 
     }
     public void spawnProcess(){

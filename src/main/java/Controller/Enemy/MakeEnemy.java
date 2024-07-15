@@ -25,11 +25,11 @@ public class MakeEnemy {
                 return makeWyrm();
             }
             else {
-                return makebarricados();
+                return makeOmenoct();
             }
         }
         else if(currentWaveIndex <= 2){
-            random %= 3;
+            random %= 4;
             random = Math.abs(random);
             if(random == 0) {
                 return makeNecropick();
@@ -46,7 +46,7 @@ public class MakeEnemy {
 
         }
         else{
-            random %= 4;
+            random %= 5;
             random = Math.abs(random);
 
             if(random == 0) {
