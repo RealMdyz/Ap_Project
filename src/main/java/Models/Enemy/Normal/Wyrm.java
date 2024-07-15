@@ -1,7 +1,9 @@
 package Models.Enemy.Normal;
 
+import Models.AttackType;
 import Models.Constant;
 import Models.Enemy.Enemy;
+import Models.EntityType;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 import Models.Side;
@@ -19,6 +21,7 @@ public class Wyrm extends Enemy {
     private int radius = Constant.NON_HOVERING_DISTANCE, xEpsilon, yEpsilon, xEpsilonFrame, yEpsilonFrame;
     private GameFrame epsilonFrame;
     private boolean movingTowardsEpsilon = true;
+    Epsilon epsilon;
     public Wyrm(int x, int y, GameFrame frame) {
         super(x, y, 12, 2, 8, 0, 8, false, frame);
         this.setVisible(true);
@@ -72,6 +75,7 @@ public class Wyrm extends Enemy {
 
     @Override
     public void specialPowers(Epsilon epsilon) {
+        this.epsilon = epsilon;
         this.xEpsilon = epsilon.getX();
         this.yEpsilon = epsilon.getY();
         xEpsilonFrame = epsilon.getCurrentFrame().getX();
@@ -88,6 +92,7 @@ public class Wyrm extends Enemy {
         shots.add(shot);
         currentFrame.addToGamePanel(shot);
     }
+
     private void moveShots(){
         for(Shot shot : shots){
             shot.move();
@@ -107,6 +112,15 @@ public class Wyrm extends Enemy {
     public void removeTheImpactOnTheFrame() {
         for(Shot shot : shots)
             currentFrame.removeFromGamePanel(shot);
+    }
+    public boolean reduceHp(int powerOfAttack, AttackType attackType, EntityType from){
+        this.setHp(this.getHp() - powerOfAttack);
+        if(from.equals(EntityType.EPSILON) && Constant.levelOfDefend >= 3)
+            epsilon.reduceHp(-3, AttackType.REDUCE_FOR_INCREASE, EntityType.NOF_FOUND);
+        if(this.getHp() <= 0)
+            return true;
+        else
+            return false;
     }
 
     public void setClockWise(boolean clockWise) {

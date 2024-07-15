@@ -95,7 +95,8 @@ public class EnemyController {
                 waveController.resetWaveStartTime();
                 game.getCheckPointController().control(currentWaveIndex, game.getEpsilon());
                 waveController.getEndOfEachWave()[currentWaveIndex - 1] = System.currentTimeMillis();
-                waveController.getStartOfEachWave()[currentWaveIndex] = System.currentTimeMillis();
+                if (currentWaveIndex < 5)
+                    waveController.getStartOfEachWave()[currentWaveIndex] = System.currentTimeMillis();
             }
         } else if(waveController.getCurrentDelay() >  Constant.SPAWN_PROCESS_RATE / waveController.getSpawnRateMultiplier()){
             waveController.setCurrentDelay(0);

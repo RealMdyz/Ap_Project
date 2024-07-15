@@ -1,18 +1,12 @@
 package Models.Epsilon;
 
 import Controller.Game.EpsilonController;
-import Models.Constant;
-import Models.Game;
-import Models.Moveable;
-import Models.ObjectsInGame;
+import Models.*;
 import MyProject.MyProjectData;
 import View.Game.GameFrame;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 
 
 public class Epsilon extends ObjectsInGame implements Moveable {
@@ -46,6 +40,30 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     private void shotMove(){
         for(Shot shot : shots)
             shot.move();
+    }
+
+    @Override
+    public boolean reduceHp(int powerOfAttack, AttackType attackType, EntityType from) {
+        if(attackType.equals(AttackType.MELEE)){
+            if(Constant.levelOfDefend <= 2 || Math.random() < 0.05){
+                // reduce nothing !
+            }
+            else{
+                this.setHp(this.getHp() - powerOfAttack);
+            }
+        }
+        else{
+            this.setHp(this.getHp() - powerOfAttack);
+        }
+        if(this.getHp() <= 0){
+            return true;
+        }
+        return false;
+    }
+    public void reduceSizeBy10Percent() {
+        this.setWidth((int) (this.getWidth() * 0.9));
+        this.setHeight((int) (this.getHeight() * 0.9));
+        setSize(this.getWidth(), this.getHeight());
     }
 
     @Override

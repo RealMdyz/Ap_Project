@@ -14,6 +14,7 @@ public class EpsilonLogic {
     private long lastWritOfAceso = 0;
     private long lastWritOfAstrape = 0;
     private long lastWritOfCerberus = 0;
+    private long lastWriteOfProteus = 0;
     public EpsilonLogic(){
 
     }
@@ -118,6 +119,12 @@ public class EpsilonLogic {
         }
         return false;
     }
+    public boolean isWritOfProteusAvailable(){
+        if(System.currentTimeMillis() - lastWriteOfProteus > 500){
+            return true;
+        }
+        return false;
+    }
     public void setLastWritOfAceso(long lastWritOfAceso) {
         this.lastWritOfAceso = lastWritOfAceso;
     }
@@ -152,5 +159,13 @@ public class EpsilonLogic {
 
     public void setLastWritOfCerberus(long lastWritOfCerberus) {
         this.lastWritOfCerberus = lastWritOfCerberus;
+    }
+
+    public long getLastWriteOfProteus() {
+        return lastWriteOfProteus;
+    }
+
+    public void setLastWriteOfProteus(long lastWriteOfProteus) {
+        this.lastWriteOfProteus = lastWriteOfProteus;
     }
 }

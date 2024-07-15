@@ -1,8 +1,10 @@
 package Controller.Game;
 
+import Models.AttackType;
 import Models.Enemy.Normal.Necropick;
 import Models.Enemy.Normal.Omenoct;
 import Models.Enemy.Normal.Wyrm;
+import Models.EntityType;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 import Models.Epsilon.Vertex;
@@ -22,7 +24,7 @@ public class IntersectionHandler {
         ArrayList<Shot> shotArrayList = new ArrayList<>();
         for(Shot shot : enemy.getShots()){
             if(intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(game.getEpsilon(), shot)){
-                game.getEpsilon().setHp(game.getEpsilon().getHp() - enemy.getPower());
+                game.getEpsilon().reduceHp(enemy.getPower(), AttackType.RANGED, EntityType.ENEMY);
                 shotArrayList.add(shot);
                 enemy.getCurrentFrame().removeFromGamePanel(shot);
             }
@@ -34,7 +36,7 @@ public class IntersectionHandler {
         ArrayList<Shot> shotArrayList = new ArrayList<>();
         for(Shot shot : enemy.getShots()){
             if(intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(game.getEpsilon(), shot)){
-                game.getEpsilon().setHp(game.getEpsilon().getHp() - enemy.getPower());
+                game.getEpsilon().reduceHp(enemy.getPower(), AttackType.RANGED, EntityType.ENEMY);
                 shotArrayList.add(shot);
                 enemy.getCurrentFrame().removeFromGamePanel(shot);
             }
@@ -46,20 +48,20 @@ public class IntersectionHandler {
         ArrayList<Shot> shotArrayList = new ArrayList<>();
         for(Shot shot : enemy.getShots()){
             if(intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(game.getEpsilon(), shot)){
-                game.getEpsilon().setHp(game.getEpsilon().getHp() - enemy.getPower());
+                game.getEpsilon().reduceHp(enemy.getPower(), AttackType.RANGED, EntityType.ENEMY);
                 shotArrayList.add(shot);
                 enemy.getCurrentFrame().removeFromGamePanel(shot);
             }
         }
         enemy.getShots().removeAll(shotArrayList);
     }
-    public boolean handleIntersectionVertexToObjectInGame(ArrayList<Vertex> vertices, ObjectsInGame object) {
+    public boolean handleIntersectionVertexToObjectInGameForEnemiesVertexAndEpsilon(ArrayList<Vertex> vertices, Epsilon epsilon) {
         boolean c = false;
         for (Vertex vertex : vertices) {
-            if (intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(vertex, object) && System.currentTimeMillis() - vertex.getLastAttackFromMe() > 100) {
-                object.setHp(object.getHp() - vertex.getPower());
+            if (intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(vertex, epsilon) && System.currentTimeMillis() - vertex.getLastAttackFromMe() > 100) {
+                epsilon.reduceHp(vertex.getPower(), AttackType.MELEE, EntityType.ENEMY);
                 vertex.setLastAttackFromMe(System.currentTimeMillis());
-                ImpactManager.checkAndDoingTheImpact(object, vertex.getX(), vertex.getY());
+                ImpactManager.checkAndDoingTheImpact(epsilon, vertex.getX(), vertex.getY());
                 c = true;
             }
         }

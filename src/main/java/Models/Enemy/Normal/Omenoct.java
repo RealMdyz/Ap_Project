@@ -1,7 +1,9 @@
 package Models.Enemy.Normal;
 
+import Models.AttackType;
 import Models.Constant;
 import Models.Enemy.Enemy;
+import Models.EntityType;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 import Models.Epsilon.Vertex;
@@ -98,6 +100,15 @@ public class Omenoct extends Enemy {
             currentFrame.addToGamePanel(shot);
             lastShotTime = System.currentTimeMillis();
         }
+    }
+    public boolean reduceHp(int powerOfAttack, AttackType attackType, EntityType from){
+        this.setHp(this.getHp() - powerOfAttack);
+        if(from.equals(EntityType.EPSILON) && Constant.levelOfDefend >= 3)
+            epsilon.reduceHp(-3, AttackType.REDUCE_FOR_INCREASE, EntityType.NOF_FOUND);
+        if(this.getHp() <= 0)
+            return true;
+        else
+            return false;
     }
     private void moveShots(){
         for(Shot shot : shots){

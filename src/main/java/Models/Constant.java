@@ -25,7 +25,7 @@ public class Constant {
     public static final int SIDE_LENGTH_OF_BARRICADOS = 150;
     public static final int SIDE_LENGTH_OF_BlACK_ORB = 70;
     public static final int ORB_SIZE = 50;
-    public static final int ABILITY_XP = 0;
+    public static final int ABILITY_XP = 100;
     public static final int WIDTH_OF_WYRM = 80;
     public static final int HEIGHT_OF_WYRM = 80;
     public static final int SPEED_OF_WYRM = 4;

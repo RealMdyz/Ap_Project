@@ -63,7 +63,7 @@ public class ObjectsInGame extends JLabel {
     }
 
 
-    public boolean reduceHp(int powerOfAttack){
+    public boolean reduceHp(int powerOfAttack, AttackType attackType, EntityType from){
         this.setHp(this.getHp() - powerOfAttack);
         if(this.getHp() <= 0)
             return true;

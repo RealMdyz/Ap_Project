@@ -1,7 +1,9 @@
 package Models.Enemy.MiniBoss.BlackOrb;
 
+import Models.AttackType;
 import Models.Constant;
 import Models.Enemy.Enemy;
+import Models.EntityType;
 import MyProject.MyProjectData;
 import View.Game.GameFrame;
 

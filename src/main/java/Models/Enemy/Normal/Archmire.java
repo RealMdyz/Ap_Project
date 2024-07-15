@@ -1,7 +1,9 @@
 package Models.Enemy.Normal;
 
+import Models.AttackType;
 import Models.Constant;
 import Models.Enemy.Enemy;
+import Models.EntityType;
 import Models.Epsilon.Epsilon;
 import Models.ObjectsInGame;
 import MyProject.MyProjectData;
@@ -102,6 +104,16 @@ public class Archmire extends Enemy {
 
         updateAoE();
         repaint();
+
+    }
+    public boolean reduceHp(int powerOfAttack, AttackType attackType, EntityType from){
+        this.setHp(this.getHp() - powerOfAttack);
+        if(from.equals(EntityType.EPSILON) && Constant.levelOfDefend >= 3)
+            epsilon.reduceHp(-3, AttackType.REDUCE_FOR_INCREASE, EntityType.NOF_FOUND);
+        if(this.getHp() <= 0)
+            return true;
+        else
+            return false;
     }
 
     public boolean isMini() {

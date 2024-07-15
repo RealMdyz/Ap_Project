@@ -1,11 +1,13 @@
 package Controller.Game;
 
+import Models.AttackType;
 import Models.Constant;
 import Models.Enemy.Enemy;
 import Models.Enemy.MiniBoss.Barricados.Barricados;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrb;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrbChuck;
 import Models.Enemy.Normal.*;
+import Models.EntityType;
 import Models.Epsilon.Collectible;
 import Models.Epsilon.Shot;
 import Models.Game;
@@ -45,11 +47,11 @@ public class IntersectionController {
 
         for(BlackOrb blackOrb : game.getEnemyController().getBlackOrbs()){
             if(blackOrb.betweenTwoOfMyChunks(game.getEpsilon())){
-                game.getEpsilon().reduceHp(BlackOrb.LINE_POWER_OF_BLACK_ORB);
+                game.getEpsilon().reduceHp(BlackOrb.LINE_POWER_OF_BLACK_ORB, AttackType.LASER, EntityType.ENEMY);
             }
             for(Enemy enemy : game.getEnemyController().getEnemyArrayList()){
                 if(blackOrb.betweenTwoOfMyChunks(enemy)){
-                    enemy.reduceHp(BlackOrb.LINE_POWER_OF_BLACK_ORB);
+                    enemy.reduceHp(BlackOrb.LINE_POWER_OF_BLACK_ORB, AttackType.LASER, EntityType.ENEMY);
                 }
             }
 
@@ -107,7 +109,7 @@ public class IntersectionController {
                 synchronized (game.getEnemyController().getEnemyArrayList()) {
                     for (Enemy enemy : game.getEnemyController().getEnemyArrayList()) {
                         if (intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(enemy, shot)) {
-                            enemy.setHp(enemy.getHp() - shot.getPower());
+                            enemy.reduceHp(shot.getPower(), AttackType.RANGED, EntityType.EPSILON);
                             shot.getCurrentFrame().removeFromGamePanel(shot);
                             shotsToRemove.add(shot);
                             break;
@@ -137,7 +139,7 @@ public class IntersectionController {
             } else if (enemy instanceof Omenoct) {
                 Omenoct omenoct = (Omenoct) enemy;
                 intersectionHandler.handleShotIntersections(game, (Omenoct) enemy);
-                if(intersectionHandler.handleIntersectionVertexToObjectInGame(omenoct.getVertices(), game.getEpsilon())){
+                if(intersectionHandler.handleIntersectionVertexToObjectInGameForEnemiesVertexAndEpsilon(omenoct.getVertices(), game.getEpsilon())){
                     omenoct.changeSide();
                 }
                 for(Enemy enemy1 : game.getEnemyController().getEnemyArrayList()){

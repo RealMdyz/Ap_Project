@@ -4,10 +4,7 @@ import Models.*;
 import Models.Epsilon.Epsilon;
 import View.Game.GameFrame;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 
 public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Moveable {
 
@@ -15,7 +12,7 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
     private int xpForEachCollectible = 5;
     private int numSides;
     private int power = 6;
-
+    Epsilon epsilon;
 
     private boolean hovering;
 
@@ -51,6 +48,16 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
     @Override
     public void move() {
 
+    }
+    public boolean reduceHp(int powerOfAttack, AttackType attackType, EntityType from){
+        this.setHp(this.getHp() - powerOfAttack);
+        if(from.equals(EntityType.EPSILON) && Constant.levelOfDefend >= 3)
+            epsilon.reduceHp(-3, AttackType.REDUCE_FOR_INCREASE, EntityType.NOF_FOUND);
+        System.out.println(Constant.levelOfDefend);;
+        if(this.getHp() <= 0)
+            return true;
+        else
+            return false;
     }
 
     public int getCollectibleNumber() {

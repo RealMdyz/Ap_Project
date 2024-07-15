@@ -1,8 +1,9 @@
 package View.Menu;
 
+import Models.AttackType;
 import Models.Constant;
+import Models.EntityType;
 import Models.Epsilon.Epsilon;
-import MyProject.MyProjectData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -98,7 +99,7 @@ public class CheckPointPanel extends JPanel implements ActionListener {
         int xpCost = (int)pr;
         if (Constant.getPlayerXP() >= xpCost) {
             Constant.setPlayerXP(Constant.getPlayerXP() - xpCost);
-            epsilon.reduceHp(-10);
+            epsilon.reduceHp(-10, AttackType.REDUCE_FOR_INCREASE, EntityType.NOF_FOUND);
             JOptionPane.showMessageDialog(this, "Game Saved And Your Hp is increase by 10");
         } else {
             JOptionPane.showMessageDialog(this, "You Don't Have Enough Xp !", "Error", JOptionPane.ERROR_MESSAGE);
@@ -109,7 +110,7 @@ public class CheckPointPanel extends JPanel implements ActionListener {
     }
 
     private void getReward() {
-        int prReward = (int) (0.1 * Constant.getPlayerXP()); // محاسبه 10% PR
+        int prReward = (int) (0.1 * pr); // محاسبه 10% PR
         Constant.setPlayerXP(prReward + Constant.getPlayerXP());
         JOptionPane.showMessageDialog(this, "You Get " + prReward + "Xp.");
         this.setVisible(false);
