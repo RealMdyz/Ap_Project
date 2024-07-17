@@ -17,16 +17,11 @@ public class MakeEnemy {
 
     public Enemy makeRandomEnemy(int random, int currentWaveIndex){
         System.out.println(currentWaveIndex);
-        boolean test = false;
+        boolean test = true;
         if(test){
             random %= 2;
             random = Math.abs(random);
-            if(random == 0) {
-                return makeWyrm();
-            }
-            else {
-                return makeOmenoct();
-            }
+            return makeOmenoct();
         }
         else if(currentWaveIndex <= 2){
             random %= 4;

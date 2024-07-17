@@ -2,6 +2,8 @@ package Models.Games;
 
 import Models.Constant;
 import Models.Enemy.Enemy;
+import Models.Enemy.MiniBoss.BlackOrb.BlackOrb;
+import Models.Enemy.MiniBoss.BlackOrb.BlackOrbChuck;
 import Models.Game;
 import View.Game.GameFrame;
 
@@ -22,9 +24,11 @@ public class CheckTheStateOfTheGame {
             gameEnd(game);
         }
         if(game.getEnemyController().getCurrentWaveIndex() == 5){
-            Constant.setBossTriggered(true);
             setTheStartState(game);
+            game.getBossFightManger().trigger(game);
+            Constant.setBossTriggered(true);
             game.getEnemyController().setCurrentWaveIndex(7);
+            game.getEpsilon().getCurrentFrame().requestFocus();
         }
     }
     private void gameEnd(Game game){
@@ -44,9 +48,7 @@ public class CheckTheStateOfTheGame {
             for(GameFrame gameFrame : game.getGameFrames())
                 gameFrame.setVisible(false);
             game.getEpsilonFrame().setVisible(true);
-            game.getEpsilon().setX(350);
-            game.getEpsilon().setY(350);
-            game.getEpsilonFrame().setSize(700, 700);
+            game.getEpsilon().getCurrentFrame().setSize(400, 400);
             game.getEpsilonFrame().setLocationRelativeTo(null);
             try {
                 Thread.sleep(100);
@@ -56,6 +58,11 @@ public class CheckTheStateOfTheGame {
             for(Enemy enemy : game.getEnemyController().getEnemyArrayList()){
                 enemy.getCurrentFrame().removeFromGamePanel(enemy);
                 enemy.removeTheImpactOnTheFrame();
+            }
+            for(BlackOrb blackOrb : game.getEnemyController().getBlackOrbs()){
+                for(BlackOrbChuck blackOrbChuck : blackOrb.getBlackOrbChucks()){
+                    blackOrbChuck.getCurrentFrame().removeFromGamePanel(blackOrbChuck);
+                }
             }
 
         }

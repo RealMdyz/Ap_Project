@@ -1,5 +1,6 @@
 package Controller.Game;
 
+import Controller.BossFight.BossFightManger;
 import Models.Constant;
 import Models.Epsilon.Collectible;
 import Models.Game;
@@ -22,6 +23,8 @@ public class GameLoop{
         GraphicThread graphicThread = new GraphicThread();
         GraphicThread1 graphicThread1 = new GraphicThread1();
 
+        SmileyCalculatorThread smileyCalculatorThread = new SmileyCalculatorThread();
+        SmileyMoverThread smileyMoverThread = new SmileyMoverThread();
 
         calculatorThread.start();
         enemyThread.start();
@@ -29,15 +32,53 @@ public class GameLoop{
         epsilonThread.start();
         graphicThread1.start();
 
+        smileyMoverThread.start();
+        smileyCalculatorThread.start();
+
+    }
+    private class SmileyMoverThread extends Thread{
+        @Override
+        public void run() {
+            while (Constant.isIsRunning()){
+                if(Constant.isBossTriggered()){
+                    game.getBossFightManger().control(game);
+                }
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
+    }
+    private class SmileyCalculatorThread extends Thread{
+        @Override
+        public void run() {
+            while (Constant.isIsRunning()){
+                if(Constant.isBossTriggered()){
+
+                }
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
     }
     private class EpsilonThread extends Thread{
         @Override
         public void run() {
             while (Constant.isIsRunning()){
                 if(!Constant.isOpenStore() && !Constant.isOpenCheckPointPanel()){
-                    game.getEpsilon().move();
-                    game.getEpsilon().specialPower(game);
-                    game.getSkillTreeLogic().runSkills();
+                    if(game.getBossFightManger().isFirstSpawnOfBossFight() || !Constant.isBossTriggered()){
+                        game.getEpsilon().move();
+                        game.getEpsilon().specialPower(game);
+                        game.getSkillTreeLogic().runSkills();
+                    }
+
                 }
 
                 try {

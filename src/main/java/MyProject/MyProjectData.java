@@ -35,6 +35,10 @@ public class MyProjectData {
     protected BufferedImage wyrm;
     protected BufferedImage orb ;
     protected BufferedImage barricados ;
+
+    protected BufferedImage smileyFace;
+    protected BufferedImage smileyLeftHand ;
+    protected BufferedImage smileyRightHand ;
     protected Font font10;
     protected Font font12;
     protected Font font15;
@@ -70,6 +74,27 @@ public class MyProjectData {
     private void importImages(){
         gameMenuImage = new ImageIcon("Game/GameMenuImage.jpg");
         gameIcon = new ImageIcon("Game/GameIcon.ico");
+        try {
+            String pathBackground = "Enemy/RightHand.png";
+            File fileBackground = new File(pathBackground);
+            smileyRightHand = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String pathBackground = "Enemy/LeftHand.png";
+            File fileBackground = new File(pathBackground);
+            smileyLeftHand = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String pathBackground = "Enemy/SmileyFace.png";
+            File fileBackground = new File(pathBackground);
+            smileyFace = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         try {
             String pathBackground = "Game/Writ of Dolus.png";
             File fileBackground = new File(pathBackground);
@@ -488,5 +513,29 @@ public class MyProjectData {
 
     public void setWritOfMelampus(BufferedImage writOfMelampus) {
         this.writOfMelampus = writOfMelampus;
+    }
+
+    public BufferedImage getSmileyFace() {
+        return smileyFace;
+    }
+
+    public void setSmileyFace(BufferedImage smileyFace) {
+        this.smileyFace = smileyFace;
+    }
+
+    public BufferedImage getSmileyLeftHand() {
+        return smileyLeftHand;
+    }
+
+    public void setSmileyLeftHand(BufferedImage smileyLeftHand) {
+        this.smileyLeftHand = smileyLeftHand;
+    }
+
+    public BufferedImage getSmileyRightHand() {
+        return smileyRightHand;
+    }
+
+    public void setSmileyRightHand(BufferedImage smileyRightHand) {
+        this.smileyRightHand = smileyRightHand;
     }
 }

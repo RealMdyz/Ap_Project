@@ -1,5 +1,6 @@
 package Models;
 
+import Controller.BossFight.BossFightManger;
 import Controller.Enemy.EnemyController;
 import Controller.Game.*;
 import Controller.Menu.ShrinkageController;
@@ -42,6 +43,7 @@ public class Game {
     private CheckTheStateOfTheGame checkTheStateOfTheGame;
     private CheckPointController checkPointController;
     private SkillTreeLogic skillTreeLogic;
+    private BossFightManger bossFightManger;
     public Game(Constant constant){
         this.constant = constant;
         Constant.setIsRunning(true);
@@ -61,6 +63,7 @@ public class Game {
         checkTheStateOfTheGame = new CheckTheStateOfTheGame();
         checkPointController = new CheckPointController(epsilon);
         skillTreeLogic = new SkillTreeLogic(this);
+        bossFightManger = new BossFightManger();
         makeEpsilonFrame(epsilonFrame);
         epsilonFrame.addToGamePanel(epsilon);
 
@@ -263,5 +266,13 @@ public class Game {
 
     public void setSkillTreeLogic(SkillTreeLogic skillTreeLogic) {
         this.skillTreeLogic = skillTreeLogic;
+    }
+
+    public BossFightManger getBossFightManger() {
+        return bossFightManger;
+    }
+
+    public void setBossFightManger(BossFightManger bossFightManger) {
+        this.bossFightManger = bossFightManger;
     }
 }

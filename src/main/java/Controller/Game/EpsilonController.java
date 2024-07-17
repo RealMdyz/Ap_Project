@@ -35,7 +35,7 @@ public class EpsilonController {
             game.getEpsilon().getShots().removeAll(shotsToRemove);
         }
 
-        if (firstTime || Math.random() < 0.01) {
+        if (firstTime || Math.random() < 0.03) {
             reduceEpsilonFrameSize(game);
         }
     }
@@ -44,7 +44,7 @@ public class EpsilonController {
         int frameWidth = epsilonFrame.getWidth();
         int frameHeight = epsilonFrame.getHeight();
         int reductionAmount = 4;
-        if (frameWidth > 500  && frameHeight > 500) {
+        if (frameWidth > 400  && frameHeight > 400) {
             epsilonFrame.setSize(frameWidth - reductionAmount, frameHeight - reductionAmount);
             epsilonFrame.setLocation(epsilonFrame.getX() + reductionAmount / 2, epsilonFrame.getY() + reductionAmount / 2);
 
