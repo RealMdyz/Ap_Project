@@ -42,6 +42,7 @@ public class GameLoop{
             while (Constant.isIsRunning()){
                 if(Constant.isBossTriggered()){
                     game.getBossFightManger().control(game);
+                    game.getEpsilon().getEpsilonController().handelEpsilonShotInBossFight(game);
                 }
                 try {
                     Thread.sleep(10);

@@ -197,5 +197,12 @@ public class ObjectsInGame extends JLabel {
     }
 
 
+    public int getXRelativeToTheScreen(){
+        return  this.getX() + this.getCurrentFrame().getX();
+    }
+    public int getYRelativeToTheScreen(){
+        return  this.getY() + this.getCurrentFrame().getY();
+    }
+
 
 }

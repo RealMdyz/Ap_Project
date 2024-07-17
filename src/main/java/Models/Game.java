@@ -4,6 +4,7 @@ import Controller.BossFight.BossFightManger;
 import Controller.Enemy.EnemyController;
 import Controller.Game.*;
 import Controller.Menu.ShrinkageController;
+import Models.BossFight.BossFightAttackParadigm;
 import Models.Games.UpdateToPPanel;
 import Models.Epsilon.Epsilon;
 import Models.Games.CheckTheStateOfTheGame;
@@ -44,6 +45,7 @@ public class Game {
     private CheckPointController checkPointController;
     private SkillTreeLogic skillTreeLogic;
     private BossFightManger bossFightManger;
+    private BossFightAttackParadigm bossFightAttackParadigm;
     public Game(Constant constant){
         this.constant = constant;
         Constant.setIsRunning(true);
@@ -63,7 +65,8 @@ public class Game {
         checkTheStateOfTheGame = new CheckTheStateOfTheGame();
         checkPointController = new CheckPointController(epsilon);
         skillTreeLogic = new SkillTreeLogic(this);
-        bossFightManger = new BossFightManger();
+        bossFightAttackParadigm = new BossFightAttackParadigm();
+        bossFightManger = new BossFightManger(bossFightAttackParadigm);
         makeEpsilonFrame(epsilonFrame);
         epsilonFrame.addToGamePanel(epsilon);
 

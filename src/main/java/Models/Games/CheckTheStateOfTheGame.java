@@ -25,6 +25,11 @@ public class CheckTheStateOfTheGame {
         }
         if(game.getEnemyController().getCurrentWaveIndex() == 5){
             setTheStartState(game);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             game.getBossFightManger().trigger(game);
             Constant.setBossTriggered(true);
             game.getEnemyController().setCurrentWaveIndex(7);

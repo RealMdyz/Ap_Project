@@ -74,6 +74,9 @@ public class EpsilonController {
         }
         return false;
     }
+    public void handelEpsilonShotInBossFight(Game game){
+
+    }
 
     private void enlargeEpsilonFrame(Game game, Shot shot) {
         GameFrame epsilonFrame = game.getEpsilonFrame();
@@ -88,18 +91,48 @@ public class EpsilonController {
             // برخورد به دیواره سمت چپ
             epsilonFrame.setSize(frameWidth + movementAmount, frameHeight);
             epsilonFrame.setLocation(epsilonFrame.getX() - enlargementAmount, epsilonFrame.getY());
-        } else if (shotX >= frameWidth - shot.getWidth()) {
+            for(GameFrame gameFrame : game.getGameFrames()){
+                if(gameFrame.isSolb() && FrameIntersection.twoFrameIntersection(epsilonFrame, gameFrame)){
+                    epsilonFrame.setSize(frameWidth - movementAmount, frameHeight);
+                    epsilonFrame.setLocation(epsilonFrame.getX() + enlargementAmount, epsilonFrame.getY());
+                    break;
+                }
+            }
+        }
+        else if (shotX >= frameWidth - shot.getWidth()) {
             // برخورد به دیواره سمت راست
             epsilonFrame.setSize(frameWidth + enlargementAmount, frameHeight);
             epsilonFrame.setLocation(epsilonFrame.getX() + movementAmount, epsilonFrame.getY());
+
+            for(GameFrame gameFrame : game.getGameFrames()){
+                if(gameFrame.isSolb() && FrameIntersection.twoFrameIntersection(epsilonFrame, gameFrame)){
+                    epsilonFrame.setSize(frameWidth - enlargementAmount, frameHeight);
+                    epsilonFrame.setLocation(epsilonFrame.getX() - movementAmount, epsilonFrame.getY());
+                    break;
+                }
+            }
         } else if (shotY <= 0) {
             // برخورد به دیواره بالا
             epsilonFrame.setSize(frameWidth, frameHeight + movementAmount);
             epsilonFrame.setLocation(epsilonFrame.getX(), epsilonFrame.getY() - enlargementAmount);
+            for(GameFrame gameFrame : game.getGameFrames()){
+                if(gameFrame.isSolb() && FrameIntersection.twoFrameIntersection(epsilonFrame, gameFrame)){
+                    epsilonFrame.setSize(frameWidth, frameHeight - movementAmount);
+                    epsilonFrame.setLocation(epsilonFrame.getX(), epsilonFrame.getY() + enlargementAmount);
+                    break;
+                }
+            }
         } else if (shotY >= frameHeight - shot.getHeight()) {
             // برخورد به دیواره پایین
             epsilonFrame.setSize(frameWidth, frameHeight + enlargementAmount);
             epsilonFrame.setLocation(epsilonFrame.getX(), epsilonFrame.getY() + movementAmount);
+            for(GameFrame gameFrame : game.getGameFrames()){
+                if(gameFrame.isSolb() && FrameIntersection.twoFrameIntersection(epsilonFrame, gameFrame)){
+                    epsilonFrame.setSize(frameWidth, frameHeight - enlargementAmount);
+                    epsilonFrame.setLocation(epsilonFrame.getX(), epsilonFrame.getY() - movementAmount);
+                    break;
+                }
+            }
         }
 
         epsilonFrame.getGamePanel().setSize(epsilonFrame.getWidth(), epsilonFrame.getHeight());

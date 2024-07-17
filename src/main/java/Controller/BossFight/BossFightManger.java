@@ -1,6 +1,7 @@
 package Controller.BossFight;
 
 import Controller.Game.FrameIntersection;
+import Models.BossFight.BossFightAttackParadigm;
 import Models.BossFight.SmileyFace;
 import Models.BossFight.SmileyLeftHand;
 import Models.BossFight.SmileyRightHand;
@@ -17,21 +18,39 @@ public class BossFightManger {
     SmileyLeftHand smileyLeftHand;
     private  boolean firstSpawnOfBossFight = false;
     private boolean intersectWithEpsilonFrameAtTheStart = false;
-    public BossFightManger(){
-
+    public static boolean openAttackToSmileyFace = false;
+    public static boolean openAttackToSmileyHands = false;
+    BossFightAttackParadigm bossFightAttackParadigm;
+    public BossFightManger(BossFightAttackParadigm bossFightAttackParadigm){
+        this.bossFightAttackParadigm = bossFightAttackParadigm;
     }
     public void control(Game game){
         if(!firstSpawnOfBossFight){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             if(!intersectWithEpsilonFrameAtTheStart)
-                 smileyFace.getCurrentFrame().setLocation(smileyFace.getCurrentFrame().getX() + 2, smileyFace.getCurrentFrame().getY() + 2);
+                 smileyFace.getCurrentFrame().setLocation(smileyFace.getCurrentFrame().getX() + 1, smileyFace.getCurrentFrame().getY() + 1);
             else{
                 smileyRightHand.getCurrentFrame().setVisible(true);
                 smileyLeftHand.getCurrentFrame().setVisible(true);
                 firstSpawnOfBossFight = true;
+                game.getGameFrames().add(smileyFace.getCurrentFrame());
+                game.getGameFrames().add(smileyLeftHand.getCurrentFrame());
+                game.getGameFrames().add(smileyRightHand.getCurrentFrame());
+                game.getEpsilon().requestFocus();
             }
             if(FrameIntersection.twoFrameIntersection(smileyFace.getCurrentFrame(), game.getEpsilon().getCurrentFrame())){
                 intersectWithEpsilonFrameAtTheStart = true;
-                smileyFace.getCurrentFrame().setLocation(smileyFace.getCurrentFrame().getX() - 2, smileyFace.getCurrentFrame().getY() - 2);
+                smileyFace.getCurrentFrame().setLocation(smileyFace.getCurrentFrame().getX() - 1, smileyFace.getCurrentFrame().getY() - 1);
+            }
+        }
+        else{
+            if(smileyRightHand.getHp() > 0 && smileyLeftHand.getHp() > 0){
+                bossFightAttackParadigm.squeezeAttackManager(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
+                bossFightAttackParadigm.projectileAttackManger(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
             }
         }
     }
@@ -83,5 +102,21 @@ public class BossFightManger {
 
     public void setFirstSpawnOfBossFight(boolean firstSpawnOfBossFight) {
         this.firstSpawnOfBossFight = firstSpawnOfBossFight;
+    }
+
+    public static boolean isOpenAttackToSmileyFace() {
+        return openAttackToSmileyFace;
+    }
+
+    public static void setOpenAttackToSmileyFace(boolean openAttackToSmileyFace) {
+        BossFightManger.openAttackToSmileyFace = openAttackToSmileyFace;
+    }
+
+    public static boolean isOpenAttackToSmileyHands() {
+        return openAttackToSmileyHands;
+    }
+
+    public static void setOpenAttackToSmileyHands(boolean openAttackToSmileyHands) {
+        BossFightManger.openAttackToSmileyHands = openAttackToSmileyHands;
     }
 }
