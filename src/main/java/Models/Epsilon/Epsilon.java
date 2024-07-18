@@ -34,12 +34,9 @@ public class Epsilon extends ObjectsInGame implements Moveable {
         g2D.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
     }
     public void specialPower(Game game){
-        shotMove();
-        epsilonLogic.fireShot(game);
-    }
-    private void shotMove(){
-        for(Shot shot : shots)
-            shot.move();
+        if(!Constant.isBossTriggered()){
+            epsilonLogic.fireShot(game);
+        }
     }
 
     @Override

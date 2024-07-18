@@ -203,6 +203,16 @@ public class ObjectsInGame extends JLabel {
     public int getYRelativeToTheScreen(){
         return  this.getY() + this.getCurrentFrame().getY();
     }
+    public void changeFrameAndPaint(GameFrame gameFrame){
+        this.getCurrentFrame().removeFromGamePanel(this);
+
+        this.setX(this.getXRelativeToTheScreen() - gameFrame.getX());
+        this.setY(this.getYRelativeToTheScreen() - gameFrame.getY());
+
+        this.setCurrentFrame(gameFrame);
+        this.getCurrentFrame().addToGamePanel(this);
+        this.repaint();
+    }
 
 
 }

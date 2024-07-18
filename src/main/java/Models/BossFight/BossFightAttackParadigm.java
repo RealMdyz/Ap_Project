@@ -1,11 +1,13 @@
 package Models.BossFight;
 
+import Controller.BossFight.BossFightManger;
 import Controller.Game.Intersection;
 import Models.AttackType;
 import Models.EntityType;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 
+import java.security.BasicPermission;
 import java.util.ArrayList;
 
 public class BossFightAttackParadigm {
@@ -23,12 +25,16 @@ public class BossFightAttackParadigm {
     }
     public void squeezeAttackManager(Epsilon epsilon, SmileyFace smileyFace, SmileyLeftHand smileyLeftHand, SmileyRightHand smileyRightHand){
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastSqueeze < SQUEEZE_INTERVAL) {
+        if (currentTime - lastSqueeze > SQUEEZE_INTERVAL && currentTime - lastSqueeze < 3 * SQUEEZE_INTERVAL) {
             smileyLeftHand.getCurrentFrame().setSolb(false);
             smileyRightHand.getCurrentFrame().setSolb(false);
+            BossFightManger.setOpenAttackToSmileyFace(false);
             return; // Not enough time has passed since the last squeeze attack
         }
-        if (epsilon.getXRelativeToTheScreen() + 30 > smileyFace.getXRelativeToTheScreen() && epsilon.getXRelativeToTheScreen() - 30 < smileyFace.getXRelativeToTheScreen()) {
+        else if(currentTime - lastSqueeze < SQUEEZE_INTERVAL){
+            // attack in process!
+        }
+        else if (epsilon.getXRelativeToTheScreen() + 30 > smileyFace.getXRelativeToTheScreen() && epsilon.getXRelativeToTheScreen() - 30 < smileyFace.getXRelativeToTheScreen()) {
             // Check if Epsilon is between Smiley's hands
             if (smileyFace.getXRelativeToTheScreen() > smileyLeftHand.getXRelativeToTheScreen() && smileyFace.getXRelativeToTheScreen() < smileyRightHand.getXRelativeToTheScreen()) {
                 // Execute squeeze attack
@@ -36,8 +42,9 @@ public class BossFightAttackParadigm {
                 // Add logic to handle squeeze attack (e.g., inflict damage to Epsilon)
                 smileyLeftHand.getCurrentFrame().setSolb(true);
                 smileyRightHand.getCurrentFrame().setSolb(true);
-                smileyRightHand.setY(epsilon.getCurrentFrame().getY());
-                smileyLeftHand.setY(epsilon.getCurrentFrame().getY() - smileyLeftHand.getWidth());
+                smileyRightHand.getCurrentFrame().setLocation(epsilon.getCurrentFrame().getX()+ epsilon.getCurrentFrame().getWidth(),smileyRightHand.getCurrentFrame().getY());
+                smileyLeftHand.getCurrentFrame().setLocation(epsilon.getCurrentFrame().getX() - smileyLeftHand.getCurrentFrame().getWidth(), smileyLeftHand.getCurrentFrame().getY());
+                BossFightManger.setOpenAttackToSmileyFace(true);
                 System.out.println("Squeeze Attack Executed!");
             }
         }
@@ -48,12 +55,12 @@ public class BossFightAttackParadigm {
         if (currentTime - lastProjectile < PROJECTILE_INTERVAL) {
             smileyFace.move(epsilon);
             // Do the projectileAttack
-            if(Math.random() < 0.005){
+            if(Math.random() < 0.05){
                 Shot shot1 = new Shot(-100, smileyLeftHand.getYRelativeToTheScreen() - epsilon.getCurrentFrame().getY(), 5, epsilon.getCurrentFrame(), false);
                 shot1.setxVelocity(+5);
                 shot1.setyVelocity(0);
                 shot1.getCurrentFrame().addToGamePanel(shot1);
-                Shot shot2 = new Shot(1500, smileyLeftHand.getYRelativeToTheScreen() - epsilon.getCurrentFrame().getY(), 5, epsilon.getCurrentFrame(), false);
+                Shot shot2 = new Shot(1500, smileyRightHand.getYRelativeToTheScreen() - epsilon.getCurrentFrame().getY(), 5, epsilon.getCurrentFrame(), false);
                 shot2.setxVelocity(-5);
                 shot2.setyVelocity(0);
                 shot2.getCurrentFrame().addToGamePanel(shot2);
@@ -71,6 +78,7 @@ public class BossFightAttackParadigm {
                 smileyFace.getCurrentFrame().addToGamePanel(smileyFace);
                 epsilon.getCurrentFrame().removeFromGamePanel(smileyFace);
             }
+            BossFightManger.setOpenAttackToSmileyHands(false);
 
         }
         else{
@@ -78,8 +86,8 @@ public class BossFightAttackParadigm {
             smileyFace.getCurrentFrame().removeFromGamePanel(smileyFace);
             epsilon.getCurrentFrame().addToGamePanel(smileyFace);
             smileyFace.isInEpsilonFrameForProjectile = true;
+            BossFightManger.setOpenAttackToSmileyHands(true);
         }
-
         ArrayList<Shot> shotArrayList = new ArrayList<>();
         for(Shot shot : shotsForProjectile){
             shot.move();

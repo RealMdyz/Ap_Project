@@ -68,7 +68,7 @@ public class Intersection {
                 thisBottom <= otherBottom;
     }
 
-    public boolean isInThisFrame(Enemy enemy, GameFrame gameFrame){
+    public static boolean isInThisFrame(ObjectsInGame enemy, GameFrame gameFrame){
         int xNesbatBeWindowOfEnemy = enemy.getX() + enemy.getCurrentFrame().getX();
         int yNesbatBeWindowOfEnemy = enemy.getY() + enemy.getCurrentFrame().getY();
         int widthEnemy = enemy.getWidth();

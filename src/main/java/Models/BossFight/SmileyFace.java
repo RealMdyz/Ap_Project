@@ -1,7 +1,9 @@
 package Models.BossFight;
 
+import Models.AttackType;
 import Models.Constant;
 import Models.Enemy.Enemy;
+import Models.EntityType;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 import MyProject.MyProjectData;
@@ -15,9 +17,11 @@ public class SmileyFace extends Enemy {
     public boolean isInEpsilonFrameForProjectile = false;
     public double angle = 0;
     public int radius = 150;
+    Epsilon epsilon;
 
-    public SmileyFace(int x, int y, GameFrame frame) {
+    public SmileyFace(int x, int y, GameFrame frame, Epsilon epsilon) {
         super(x, y, 300, 0, 0, 0, 0, false, frame);
+        this.epsilon = epsilon;
         this.setHeight(Constant.NORMAL_BOSS_FIGHT_CHUNK_SIZE);
         this.setWidth(Constant.NORMAL_BOSS_FIGHT_CHUNK_SIZE);
         this.setVisible(true);
@@ -35,6 +39,16 @@ public class SmileyFace extends Enemy {
             this.setX((int) (epsilon.getX() + radius * Math.cos(angle)));
             this.setY((int) (epsilon.getY() + radius * Math.sin(angle)));
         }
+    }
+    public boolean reduceHp(int powerOfAttack, AttackType attackType, EntityType from){
+        this.setHp(this.getHp() - powerOfAttack);
+        if(Constant.isqPressed() && from.equals(EntityType.EPSILON) && Constant.levelOfDefend >= 3)
+            epsilon.reduceHp(-3, AttackType.REDUCE_FOR_INCREASE, EntityType.NOF_FOUND);
+
+        if(this.getHp() <= 0)
+            return true;
+        else
+            return false;
     }
 
     public boolean isInEpsilonFrameForProjectile() {
