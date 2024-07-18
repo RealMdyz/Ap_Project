@@ -11,6 +11,7 @@ import View.Game.GameFrame;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class SmileyFace extends Enemy {
 
@@ -42,6 +43,7 @@ public class SmileyFace extends Enemy {
     }
     public boolean reduceHp(int powerOfAttack, AttackType attackType, EntityType from){
         this.setHp(this.getHp() - powerOfAttack);
+        this.setRandomPosAfterGettingAttack();
         if(Constant.isqPressed() && from.equals(EntityType.EPSILON) && Constant.levelOfDefend >= 3)
             epsilon.reduceHp(-3, AttackType.REDUCE_FOR_INCREASE, EntityType.NOF_FOUND);
 
@@ -49,6 +51,10 @@ public class SmileyFace extends Enemy {
             return true;
         else
             return false;
+    }
+    private void setRandomPosAfterGettingAttack(){
+        this.setX(Math.abs(new Random().nextInt(this.getCurrentFrame().getWidth() - this.getWidth())));
+        this.setY(Math.abs(new Random().nextInt(this.getCurrentFrame().getHeight() - this.getHeight())));
     }
 
     public boolean isInEpsilonFrameForProjectile() {

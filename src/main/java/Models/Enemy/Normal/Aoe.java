@@ -77,4 +77,12 @@ public class Aoe extends ObjectsInGame {
     public void setLastAttackFromMe(long lastAttackFromMe) {
         this.lastAttackFromMe = lastAttackFromMe;
     }
+
+    public int getPower() {
+        return power;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
+    }
 }

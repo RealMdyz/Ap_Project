@@ -3,25 +3,71 @@ package Models.BossFight;
 import Controller.BossFight.BossFightManger;
 import Controller.Game.Intersection;
 import Models.AttackType;
+import Models.Enemy.Normal.Aoe;
 import Models.EntityType;
+import Models.Epsilon.Collectible;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 
 import java.security.BasicPermission;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class BossFightAttackParadigm {
 
     private long lastSqueeze = 0;
     private long lastProjectile = 0;
+    private long lastVomit = 0;
     private static final long SQUEEZE_INTERVAL = 10000; // 10 seconds
-    private static final long PROJECTILE_INTERVAL = 5000; // 30 seconds
+    private static final long PROJECTILE_INTERVAL = 5000; // 5 seconds
+    private static final long VOMIT_INTERVAL = 5000; // 5 seconds
+
+    ArrayList<Aoe> vomitAoeArea = new ArrayList<>();
 
 
     ArrayList<Shot> shotsForProjectile = new ArrayList<>();
 
     public BossFightAttackParadigm(){
 
+    }
+    public void powerPunchAttackManager(Epsilon epsilon, SmileyPunch smileyPunch){
+
+    }
+    public void quakeAttackManager(Epsilon epsilon, SmileyPunch smileyPunch){
+
+    }
+    public void vomitAttackManger(Epsilon epsilon, SmileyFace smileyFace, SmileyLeftHand smileyLeftHand, SmileyRightHand smileyRightHand){
+        long currentTime = System.currentTimeMillis();
+        if(currentTime - lastVomit < VOMIT_INTERVAL && !smileyFace.isInEpsilonFrameForProjectile){
+            // Do Vomit Attack
+            if(Math.random() < 0.01){
+                Aoe aoe = new Aoe(epsilon.getX() + new Random().nextInt(120), epsilon.getY() + + new Random().nextInt(120), 2000, 2, 40, 40, epsilon.getCurrentFrame());
+                vomitAoeArea.add(aoe);
+                aoe.getCurrentFrame().addToGamePanel(aoe);
+                aoe.repaint();
+                System.out.println("DoVomitAttack");
+            }
+        }
+        else if(currentTime - lastVomit < 2 * VOMIT_INTERVAL){
+            // Do Nothing
+            BossFightManger.setOpenAttackToSmileyHands(false);
+        }
+        else{
+            BossFightManger.setOpenAttackToSmileyHands(true);
+            lastVomit = currentTime;
+        }
+        ArrayList<Aoe> expiredAoe = new ArrayList<>();
+        for(Aoe aoe : vomitAoeArea){
+            if(Intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(aoe, epsilon) && currentTime - aoe.getLastAttackFromMe() > 1000){
+                epsilon.reduceHp(aoe.getPower(), AttackType.AOE, EntityType.ENEMY);
+                aoe.setLastAttackFromMe(currentTime);
+            }
+            if(aoe.isExpired()){
+                aoe.getCurrentFrame().removeFromGamePanel(aoe);
+                expiredAoe.add(aoe);
+            }
+        }
+        vomitAoeArea.removeAll(expiredAoe);
     }
     public void squeezeAttackManager(Epsilon epsilon, SmileyFace smileyFace, SmileyLeftHand smileyLeftHand, SmileyRightHand smileyRightHand){
         long currentTime = System.currentTimeMillis();
@@ -55,7 +101,7 @@ public class BossFightAttackParadigm {
         if (currentTime - lastProjectile < PROJECTILE_INTERVAL) {
             smileyFace.move(epsilon);
             // Do the projectileAttack
-            if(Math.random() < 0.05){
+            if(Math.random() < 0.005){
                 Shot shot1 = new Shot(-100, smileyLeftHand.getYRelativeToTheScreen() - epsilon.getCurrentFrame().getY(), 5, epsilon.getCurrentFrame(), false);
                 shot1.setxVelocity(+5);
                 shot1.setyVelocity(0);

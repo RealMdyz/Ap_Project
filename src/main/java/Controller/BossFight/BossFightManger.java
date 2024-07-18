@@ -1,21 +1,20 @@
 package Controller.BossFight;
 
 import Controller.Game.FrameIntersection;
-import Models.BossFight.BossFightAttackParadigm;
-import Models.BossFight.SmileyFace;
-import Models.BossFight.SmileyLeftHand;
-import Models.BossFight.SmileyRightHand;
+import Models.BossFight.*;
 import Models.Constant;
 import Models.Epsilon.Collectible;
 import Models.Game;
 import View.Game.GameFrame;
 
+import java.awt.*;
 import java.io.Console;
 
 public class BossFightManger {
     SmileyFace smileyFace;
     SmileyRightHand smileyRightHand;
     SmileyLeftHand smileyLeftHand;
+    SmileyPunch smileyPunch;
     private  boolean firstSpawnOfBossFight = false;
     private boolean intersectWithEpsilonFrameAtTheStart = false;
     public static boolean openAttackToSmileyFace = false;
@@ -40,7 +39,7 @@ public class BossFightManger {
                 game.getGameFrames().add(smileyFace.getCurrentFrame());
                 game.getGameFrames().add(smileyLeftHand.getCurrentFrame());
                 game.getGameFrames().add(smileyRightHand.getCurrentFrame());
-                game.getEpsilon().requestFocus();
+                game.getEpsilon().getCurrentFrame().requestFocus();
             }
             if(FrameIntersection.twoFrameIntersection(smileyFace.getCurrentFrame(), game.getEpsilon().getCurrentFrame())){
                 intersectWithEpsilonFrameAtTheStart = true;
@@ -52,8 +51,12 @@ public class BossFightManger {
                 bossFightAttackParadigm.squeezeAttackManager(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
                 bossFightAttackParadigm.projectileAttackManger(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
             }
+            if(smileyFace.getHp() < 200 && smileyPunch != null){
+                bossFightAttackParadigm.vomitAttackManger(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
+
+            }
         }
-        checkTheStateOfTheSmileyChuck();
+        checkTheStateOfTheSmileyChuck(game);
     }
     public void trigger(Game game){
         GameFrame smileyFaceFrame = new GameFrame(200, 200, false, false);
@@ -72,8 +75,23 @@ public class BossFightManger {
         smileyRightHandFrame.setVisible(false);
         smileyLeftHandFrame.setVisible(false);
     }
-    public void checkTheStateOfTheSmileyChuck(){
+    public void triggerPunch(Game game){
+        GameFrame smileyPunchFrame = new GameFrame(200, 200, false, false);
+        smileyPunchFrame.setLocation(1250, 600);
+        smileyPunch = new SmileyPunch(60, 60, smileyPunchFrame, game.getEpsilon());
+        smileyPunchFrame.addToGamePanel(smileyPunch);
+        smileyPunchFrame.setVisible(true);
+        game.getEpsilon().getCurrentFrame().requestFocus();
+
+    }
+    public void checkTheStateOfTheSmileyChuck(Game game){
        // System.out.println(smileyFace.getHp() + " " + smileyLeftHand.getHp() + " " + smileyRightHand.getHp());
+        if(smileyFace.getHp() < 200){
+            triggerPunch(game);
+        }
+    }
+    public void spawnThePunch(){
+
     }
 
     public SmileyFace getSmileyFace() {

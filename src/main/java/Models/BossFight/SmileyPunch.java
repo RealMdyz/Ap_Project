@@ -9,18 +9,17 @@ import MyProject.MyProjectData;
 import View.Game.GameFrame;
 
 import java.awt.*;
-import java.util.Random;
 
-public class SmileyRightHand extends Enemy {
+public class SmileyPunch extends Enemy {
     Epsilon epsilon;
-    public SmileyRightHand(int x, int y, GameFrame frame, Epsilon epsilon) {
-        super(x, y, 100, 0, 0, 0, 0, false, frame);
+    public SmileyPunch(int x, int y, GameFrame frame, Epsilon epsilon) {
+        super(x, y, 99999, 0, 0, 0, 0, false, frame);
         this.setHeight(Constant.NORMAL_BOSS_FIGHT_CHUNK_SIZE);
         this.setWidth(Constant.NORMAL_BOSS_FIGHT_CHUNK_SIZE);
-        this.epsilon = epsilon;
         this.setVisible(true);
+        this.epsilon = epsilon;
         setSize(Constant.NORMAL_BOSS_FIGHT_CHUNK_SIZE, Constant.NORMAL_BOSS_FIGHT_CHUNK_SIZE);
-        background = MyProjectData.getProjectData().getSmileyRightHand();
+        background = MyProjectData.getProjectData().getSmileyPunch();
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -30,17 +29,11 @@ public class SmileyRightHand extends Enemy {
     }
     public boolean reduceHp(int powerOfAttack, AttackType attackType, EntityType from){
         this.setHp(this.getHp() - powerOfAttack);
-        this.setRandomPosAfterGettingAttack();
         if(Constant.isqPressed() && from.equals(EntityType.EPSILON) && Constant.levelOfDefend >= 3)
             epsilon.reduceHp(-3, AttackType.REDUCE_FOR_INCREASE, EntityType.NOF_FOUND);
-
         if(this.getHp() <= 0)
             return true;
         else
             return false;
-    }
-    private void setRandomPosAfterGettingAttack(){
-        this.setX(Math.abs(new Random().nextInt(this.getCurrentFrame().getWidth() - this.getWidth())));
-        this.setY(Math.abs(new Random().nextInt(this.getCurrentFrame().getHeight() - this.getHeight())));
     }
 }
