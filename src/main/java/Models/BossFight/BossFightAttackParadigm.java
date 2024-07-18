@@ -12,15 +12,23 @@ import Models.Epsilon.Shot;
 import java.security.BasicPermission;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class BossFightAttackParadigm {
 
     private long lastSqueeze = 0;
     private long lastProjectile = 0;
     private long lastVomit = 0;
+    private long lastPowerPunch = 0;
+    private long lastQuake = 0;
     private static final long SQUEEZE_INTERVAL = 10000; // 10 seconds
     private static final long PROJECTILE_INTERVAL = 5000; // 5 seconds
     private static final long VOMIT_INTERVAL = 5000; // 5 seconds
+    private static final int RADIUS_OF_QUAKE_IMPACT = 700;
+    private static final long POWER_PUNCH_INTERVAL = 6000; // 5 seconds
+    private static final long QUAKE_INTERVAL = 9000;
+    private static boolean onTheQuakeAttack = false;
 
     ArrayList<Aoe> vomitAoeArea = new ArrayList<>();
 
@@ -30,12 +38,71 @@ public class BossFightAttackParadigm {
     public BossFightAttackParadigm(){
 
     }
-    public void powerPunchAttackManager(Epsilon epsilon, SmileyPunch smileyPunch){
-
-    }
     public void quakeAttackManager(Epsilon epsilon, SmileyPunch smileyPunch){
+        long currentTime = System.currentTimeMillis();
+        if(currentTime - lastQuake < QUAKE_INTERVAL) {
+            // Do Nothing
 
+        }
+        else if(currentTime - lastQuake < 3 * QUAKE_INTERVAL){
+            onTheQuakeAttack = false;
+        }
+        else {
+            // Reset the rigid state and vulnerability status after attack
+            smileyPunch.getCurrentFrame().setLocation(epsilon.getCurrentFrame().getX() + epsilon.getCurrentFrame().getWidth() / 2, epsilon.getCurrentFrame().getY() + epsilon.getCurrentFrame().getHeight());
+            epsilon.doImpact(epsilon.getCurrentFrame().getWidth() / 2, epsilon.getCurrentFrame().getHeight(), RADIUS_OF_QUAKE_IMPACT);
+            lastQuake = currentTime;
+            onTheQuakeAttack = true;
+            System.out.println("Quake Executed!");
+        }
     }
+
+    public void powerPunchAttackManager(Epsilon epsilon, SmileyPunch smileyPunch, SmileyRightHand smileyRightHand, SmileyLeftHand smileyLeftHand){
+        long currentTime = System.currentTimeMillis();
+
+        // Determine if the attack can be performed based on timing or other conditions
+        if(currentTime - lastPowerPunch < POWER_PUNCH_INTERVAL) {
+            // Do Nothing
+        }
+        else if(currentTime - lastPowerPunch < 3 * POWER_PUNCH_INTERVAL){
+            smileyLeftHand.getCurrentFrame().setSolb(false);
+            smileyRightHand.getCurrentFrame().setSolb(false);
+            BossFightManger.setOpenAttackToSmileyFace(false);
+            BossFightManger.setOpenAttackToSmileyHands(false);
+        }
+        else {
+            smileyLeftHand.getCurrentFrame().setSolb(true);
+            smileyRightHand.getCurrentFrame().setSolb(true);
+
+            // Determine which wall to strike
+            int wallToHit = new Random().nextInt(4); // 0: top, 1: right, 2: bottom, 3: left
+            switch (wallToHit) {
+                case 0: // Top
+                    smileyPunch.getCurrentFrame().setLocation(smileyPunch.getCurrentFrame().getX(), epsilon.getCurrentFrame().getY() - smileyPunch.getCurrentFrame().getHeight());
+                    break;
+                case 1: // Right
+                    smileyPunch.getCurrentFrame().setLocation(epsilon.getCurrentFrame().getX() + epsilon.getCurrentFrame().getWidth(), smileyPunch.getCurrentFrame().getY());
+                    break;
+                case 2: // Bottom
+                    smileyPunch.getCurrentFrame().setLocation(smileyPunch.getCurrentFrame().getX(), epsilon.getCurrentFrame().getY() + epsilon.getCurrentFrame().getHeight());
+                    break;
+                case 3: // Left
+                    smileyPunch.getCurrentFrame().setLocation(epsilon.getCurrentFrame().getX() - smileyPunch.getCurrentFrame().getWidth(), smileyPunch.getCurrentFrame().getY());
+                    break;
+            }
+
+            // Execute the punch
+            epsilon.reduceFrameSize(wallToHit);
+
+            // Make Smiley vulnerable during this attack
+            BossFightManger.setOpenAttackToSmileyFace(true);
+            BossFightManger.setOpenAttackToSmileyHands(true);
+            // Update the last squeeze time
+            lastPowerPunch = currentTime;
+            System.out.println("Power Punch Executed!");
+        }
+    }
+
     public void vomitAttackManger(Epsilon epsilon, SmileyFace smileyFace, SmileyLeftHand smileyLeftHand, SmileyRightHand smileyRightHand){
         long currentTime = System.currentTimeMillis();
         if(currentTime - lastVomit < VOMIT_INTERVAL && !smileyFace.isInEpsilonFrameForProjectile){
@@ -152,4 +219,11 @@ public class BossFightAttackParadigm {
 
     }
 
+    public static boolean isOnTheQuakeAttack() {
+        return onTheQuakeAttack;
+    }
+
+    public static void setOnTheQuakeAttack(boolean onTheQuakeAttack) {
+        BossFightAttackParadigm.onTheQuakeAttack = onTheQuakeAttack;
+    }
 }

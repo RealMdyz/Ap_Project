@@ -51,9 +51,10 @@ public class BossFightManger {
                 bossFightAttackParadigm.squeezeAttackManager(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
                 bossFightAttackParadigm.projectileAttackManger(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
             }
-            if(smileyFace.getHp() < 200 && smileyPunch != null){
+            if(smileyFace.getHp() < Constant.SPAWN_SMILEY_PUNCH_HP && smileyPunch != null){
                 bossFightAttackParadigm.vomitAttackManger(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
-
+                bossFightAttackParadigm.powerPunchAttackManager(game.getEpsilon(), smileyPunch, smileyRightHand, smileyLeftHand);
+                bossFightAttackParadigm.quakeAttackManager(game.getEpsilon(), smileyPunch);
             }
         }
         checkTheStateOfTheSmileyChuck(game);
@@ -86,14 +87,10 @@ public class BossFightManger {
     }
     public void checkTheStateOfTheSmileyChuck(Game game){
        // System.out.println(smileyFace.getHp() + " " + smileyLeftHand.getHp() + " " + smileyRightHand.getHp());
-        if(smileyFace.getHp() < 200){
+        if(smileyFace.getHp() <  Constant.SPAWN_SMILEY_PUNCH_HP && smileyPunch == null){
             triggerPunch(game);
         }
     }
-    public void spawnThePunch(){
-
-    }
-
     public SmileyFace getSmileyFace() {
         return smileyFace;
     }

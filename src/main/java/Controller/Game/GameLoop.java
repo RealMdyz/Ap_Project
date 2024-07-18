@@ -42,7 +42,6 @@ public class GameLoop{
             while (Constant.isIsRunning()){
                 if(Constant.isBossTriggered()){
                     game.getBossFightManger().control(game);
-                    game.getEpsilon().getEpsilonController().handelEpsilonShotInBossFight(game);
                 }
                 try {
                     Thread.sleep(10);
@@ -79,8 +78,11 @@ public class GameLoop{
                         game.getEpsilon().specialPower(game);
                         game.getSkillTreeLogic().runSkills();
                     }
-
+                    if(Constant.isBossTriggered()){
+                        game.getEpsilon().getEpsilonController().handelEpsilonShotInBossFight(game);
+                    }
                 }
+
 
                 try {
                     Thread.sleep(10);
@@ -120,6 +122,7 @@ public class GameLoop{
                     game.getUpdateToPanel().updateTopPanel(startOfGame, game.getEnemyController().getCurrentWaveIndex(), Constant.NUMBER_OF_WAVE,game.getEpsilon().getHp());
                     game.getCollectibleController().checkTheExpirationTime();
                 }
+
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {

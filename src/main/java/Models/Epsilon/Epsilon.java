@@ -107,4 +107,25 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     public void setEpsilonController(EpsilonController epsilonController) {
         this.epsilonController = epsilonController;
     }
+
+    public void reduceFrameSize(int wallToHit) {
+        // wallToHit: 0 = top, 1 = right, 2 = bottom, 3 = left
+        int height = this.getCurrentFrame().getHeight();
+        int width = this.getCurrentFrame().getWidth();
+        switch (wallToHit) {
+            case 0: // Top
+                height *= (0.9);
+                break;
+            case 1: // Right
+                width *= (0.9);
+                break;
+            case 2: // Bottom
+                height *= (0.9);
+                break;
+            case 3: // Left
+                width *= (0.9);
+                break;
+        }
+        getCurrentFrame().setSize(width, height);
+    }
 }

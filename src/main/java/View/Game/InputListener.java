@@ -1,5 +1,6 @@
 package View.Game;
 
+import Models.BossFight.BossFightAttackParadigm;
 import Models.Constant;
 import Models.Epsilon.Epsilon;
 
@@ -94,6 +95,8 @@ public class InputListener {
         actionMap.put("moveUpReleased", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(BossFightAttackParadigm.isOnTheQuakeAttack())
+                    pressedKeys.remove("down");
                 pressedKeys.remove("up");
                 updateVelocity();
             }
@@ -102,6 +105,8 @@ public class InputListener {
         actionMap.put("moveDownReleased", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(BossFightAttackParadigm.isOnTheQuakeAttack())
+                    pressedKeys.remove("up");
                 pressedKeys.remove("down");
                 updateVelocity();
             }
@@ -110,6 +115,8 @@ public class InputListener {
         actionMap.put("moveLeftReleased", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(BossFightAttackParadigm.isOnTheQuakeAttack())
+                    pressedKeys.remove("right");
                 pressedKeys.remove("left");
                 updateVelocity();
             }
@@ -118,6 +125,8 @@ public class InputListener {
         actionMap.put("moveRightReleased", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(BossFightAttackParadigm.isOnTheQuakeAttack())
+                    pressedKeys.remove("left");
                 pressedKeys.remove("right");
                 updateVelocity();
             }
@@ -195,6 +204,26 @@ public class InputListener {
 
     }
     private void updateVelocity() {
+
+        if (BossFightAttackParadigm.isOnTheQuakeAttack()) {
+            // Invert controls during quake attack
+            if (pressedKeys.contains("up") && !pressedKeys.contains("down")) {
+                pressedKeys.remove("up");
+                pressedKeys.add("down");
+            } else if (pressedKeys.contains("down") && !pressedKeys.contains("up")) {
+                pressedKeys.remove("down");
+                pressedKeys.add("up");
+            }
+
+            if (pressedKeys.contains("left") && !pressedKeys.contains("right")) {
+                pressedKeys.remove("left");
+                pressedKeys.add("right");
+            } else if (pressedKeys.contains("right") && !pressedKeys.contains("left")) {
+                pressedKeys.remove("right");
+                pressedKeys.add("left");
+            }
+        }
+
         // Check if opposing keys are pressed
         if ((pressedKeys.contains("up") && pressedKeys.contains("down"))) {
             // If opposing keys are pressed, stop the character
