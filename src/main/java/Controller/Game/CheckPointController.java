@@ -64,6 +64,7 @@ public class CheckPointController {
 
             wave2CheckPoint = new CheckPoint(x, y, epsilon.getCurrentFrame());
             epsilon.getCurrentFrame().addToGamePanel(wave2CheckPoint);
+            wave2CheckPoint.setStartOfMe(System.currentTimeMillis());
         }
         else if(waveIndex == 3){
             int x0 = epsilon.getX();
@@ -80,6 +81,7 @@ public class CheckPointController {
 
             wave4CheckPoint = new CheckPoint(x, y, epsilon.getCurrentFrame());
             epsilon.getCurrentFrame().addToGamePanel(wave4CheckPoint);
+            wave4CheckPoint.setStartOfMe(System.currentTimeMillis());
         }
     }
 

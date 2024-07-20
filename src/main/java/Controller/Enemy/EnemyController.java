@@ -98,6 +98,7 @@ public class EnemyController {
                         if(!blackOrbChuck.getCurrentFrame().equals(game.getEpsilon().getCurrentFrame()))
                             blackOrbChuck.getCurrentFrame().setVisible(false);
                         game.getGameFrames().remove(blackOrbChuck.getCurrentFrame());
+                        game.getCollectibleController().addingCollectiblesAfterDie(blackOrbChuck);
                         blackOrb.getBlackOrbChucks().remove(blackOrbChuck);
                         currentWaveEnemyDied += 1;
                         break;

@@ -9,6 +9,8 @@ import java.awt.*;
 
 public class CheckPoint extends ObjectsInGame {
 
+    private long startOfMe = 0;
+
     public CheckPoint(int x, int y, GameFrame currentFrame) {
         super(x, y, 0, currentFrame);
         this.setHeight(20);
@@ -23,5 +25,16 @@ public class CheckPoint extends ObjectsInGame {
         g2D.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
     }
 
+    public long getStartOfMe() {
+        return startOfMe;
+    }
 
+    public void setStartOfMe(long startOfMe) {
+        this.startOfMe = startOfMe;
+    }
+    public boolean isExpire(){
+        if(System.currentTimeMillis() - startOfMe > 10000 && startOfMe != 0)
+            return true;
+        return false;
+    }
 }

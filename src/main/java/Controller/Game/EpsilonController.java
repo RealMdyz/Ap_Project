@@ -18,33 +18,11 @@ public class EpsilonController {
     }
 
     public void setTheEpsilonFrameSize(Game game) {
-        List<Shot> shotsToRemove = new ArrayList<>();
-        List<Shot> shotsCopy;
-
-        synchronized (game.getEpsilon().getShots()) {
-            // Create a copy of the shots list
-            shotsCopy = new ArrayList<>(game.getEpsilon().getShots());
-            // Identify shots to remove
-            for (Shot shot : shotsCopy) {
-                shot.move();
-                shot.repaint();
-                shot.getCurrentFrame().repaint();
-                if (isCollidingWithFrameEdge(shot, game.getEpsilonFrame()) && !isCollidingWithRigidFrame(shot, game)) {
-                    enlargeEpsilonFrame(game, shot);
-                    shot.getCurrentFrame().removeFromGamePanel(shot);
-                    shotsToRemove.add(shot);
-                }
-            }
-
-            // Remove identified shots from the original list
-            game.getEpsilon().getShots().removeAll(shotsToRemove);
-        }
-
         if (firstTime || Math.random() < 0.03) {
             reduceEpsilonFrameSize(game);
         }
     }
-    private void reduceEpsilonFrameSize(Game game) {
+    public void reduceEpsilonFrameSize(Game game) {
         GameFrame epsilonFrame = game.getEpsilonFrame();
         int frameWidth = epsilonFrame.getWidth();
         int frameHeight = epsilonFrame.getHeight();
@@ -60,7 +38,7 @@ public class EpsilonController {
             firstTime = false;
         }
     }
-    private boolean isCollidingWithFrameEdge(Shot shot, GameFrame epsilonFrame) {
+    public boolean isCollidingWithFrameEdge(Shot shot, GameFrame epsilonFrame) {
         int shotX = shot.getX();
         int shotY = shot.getY();
         int frameWidth = epsilonFrame.getWidth();
@@ -70,7 +48,7 @@ public class EpsilonController {
                 shotY <= 0 || shotY >= frameHeight - shot.getHeight();
     }
 
-    private boolean isCollidingWithRigidFrame(Shot shot, Game game) {
+    public boolean isCollidingWithRigidFrame(Shot shot, Game game) {
         for (GameFrame frame : game.getGameFrames()) {
             if (frame.isSolb() && frame.getBounds().intersects(shot.getBounds())) {
                 return true;
@@ -128,7 +106,7 @@ public class EpsilonController {
 
     }
 
-    private boolean enlargeEpsilonFrame(Game game, Shot shot) {
+    public boolean enlargeEpsilonFrame(Game game, Shot shot) {
         GameFrame epsilonFrame = game.getEpsilonFrame();
         int shotX = shot.getX();
         int shotY = shot.getY();

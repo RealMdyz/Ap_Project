@@ -97,7 +97,7 @@ public class CheckPointPanel extends JPanel implements ActionListener {
 
     private void saveGame() {
         int xpCost = (int)pr;
-        if (Constant.getPlayerXP() >= 0) {
+        if (Constant.getPlayerXP() >= pr) {
             Constant.setPlayerXP(Constant.getPlayerXP() - xpCost);
             epsilon.reduceHp(-10, AttackType.REDUCE_FOR_INCREASE, EntityType.NOF_FOUND);
             JOptionPane.showMessageDialog(this, "Game Saved And Your Hp is increase by 10");

@@ -16,7 +16,7 @@ public class MakeEnemy {
     }
 
     public Enemy makeRandomEnemy(int random, int currentWaveIndex){
-        boolean test = true;
+        boolean test = false;
         if(test){
             return makeOmenoct();
         }

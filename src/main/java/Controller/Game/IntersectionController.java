@@ -36,9 +36,37 @@ public class IntersectionController {
         checkTheIntersectionBetweenBarricadosFrameAndWyrmFrame(game);
         checkTheLinePowerOfBlackOrbChunks(game);
         checkTheCheckPointIntersection(game);
-        //checkTheIntersectionForBlackOrb(game);
+        checkTheEpsilonShotIntersectionToHisFrame(game);
+        checkTheIntersectionForBlackOrb(game);
+    }
+    public void checkTheEpsilonShotIntersectionToHisFrame(Game game){
+        List<Shot> shotsToRemove = new ArrayList<>();
+        List<Shot> shotsCopy;
+
+        synchronized (game.getEpsilon().getShots()) {
+            // Create a copy of the shots list
+            shotsCopy = new ArrayList<>(game.getEpsilon().getShots());
+            // Identify shots to remove
+            for (Shot shot : shotsCopy) {
+                shot.move();
+                shot.repaint();
+                shot.getCurrentFrame().repaint();
+                if (game.getEpsilon().getEpsilonController().isCollidingWithFrameEdge(shot, game.getEpsilonFrame()) && !game.getEpsilon().getEpsilonController().isCollidingWithRigidFrame(shot, game)) {
+                    game.getEpsilon().getEpsilonController().enlargeEpsilonFrame(game, shot);
+                    shot.getCurrentFrame().removeFromGamePanel(shot);
+                    shotsToRemove.add(shot);
+                }
+            }
+
+            // Remove identified shots from the original list
+            game.getEpsilon().getShots().removeAll(shotsToRemove);
+        }
     }
     public void checkTheIntersectionForBlackOrb(Game game){
+
+        if(!game.getEnemyController().isLastBlackOrbDone())
+            return;
+
         Shot shot1 = new Shot(0, 0, 0, game.getEpsilon().getCurrentFrame(), false);
         for(Shot shot : game.getEpsilon().getShots()){
             for(BlackOrb blackOrb : game.getEnemyController().getBlackOrbs()){
@@ -64,6 +92,18 @@ public class IntersectionController {
             game.getCheckPointController().checkPointStart(game);
             CheckTheStateOfTheGame.haveACheckPoint = 4;
         }
+
+        if(game.getEnemyController().getCurrentWaveIndex() > 1 &&  game.getCheckPointController().wave2CheckPoint != null){
+            game.getCheckPointController().wave2CheckPoint.getCurrentFrame().removeFromGamePanel(game.getCheckPointController().wave2CheckPoint);
+            game.getCheckPointController().wave2CheckPoint.repaint();
+            game.getCheckPointController().wave2CheckPoint = null;
+        }
+        if(game.getEnemyController().getCurrentWaveIndex() > 3 &&  game.getCheckPointController().wave4CheckPoint != null){
+            game.getCheckPointController().wave4CheckPoint.getCurrentFrame().removeFromGamePanel(game.getCheckPointController().wave2CheckPoint);
+            game.getCheckPointController().wave4CheckPoint.repaint();
+            game.getCheckPointController().wave4CheckPoint = null;
+        }
+
     }
     public void checkTheLinePowerOfBlackOrbChunks(Game game){
 
