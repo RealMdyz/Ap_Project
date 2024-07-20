@@ -110,4 +110,12 @@ public class GameFrame extends JFrame {
     public void setSolb(boolean solb) {
         this.solb = solb;
     }
+
+    public JButton getExitButton() {
+        return exitButton;
+    }
+
+    public void setExitButton(JButton exitButton) {
+        this.exitButton = exitButton;
+    }
 }

@@ -278,4 +278,20 @@ public class Game {
     public void setBossFightManger(BossFightManger bossFightManger) {
         this.bossFightManger = bossFightManger;
     }
+
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    public void setRunning(boolean running) {
+        isRunning = running;
+    }
+
+    public BossFightAttackParadigm getBossFightAttackParadigm() {
+        return bossFightAttackParadigm;
+    }
+
+    public void setBossFightAttackParadigm(BossFightAttackParadigm bossFightAttackParadigm) {
+        this.bossFightAttackParadigm = bossFightAttackParadigm;
+    }
 }

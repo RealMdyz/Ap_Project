@@ -205,5 +205,11 @@ public class EpsilonController {
         return false;
     }
 
+    public boolean isFirstTime() {
+        return firstTime;
+    }
 
+    public void setFirstTime(boolean firstTime) {
+        this.firstTime = firstTime;
+    }
 }

@@ -17,25 +17,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameData {
-    private ArrayList<Enemy> enemyArrayList;
-    private ArrayList<BlackOrb> blackOrbs;
-    private Epsilon epsilon;
-    private Constant constant;
-
-    public GameData(ArrayList<Enemy> enemyArrayList, ArrayList<BlackOrb> blackOrbs, Epsilon epsilon, Constant constant) {
-        this.enemyArrayList = enemyArrayList;
-        this.blackOrbs = blackOrbs;
-        this.epsilon = epsilon;
-        this.constant = constant;
+    private Game game;
+    public GameData(Game game) {
+        this.game = game;
     }
 
     public static void saveGame(Game game) {
         GameData gameData = new GameData(
-                game.getEnemyController().getEnemyArrayList(),
-                game.getEnemyController().getBlackOrbs(),
-                game.getEpsilon(),
-                game.getConstant()
-
+            game
         );
 
         ObjectMapper mapper = new ObjectMapper();
@@ -61,35 +50,11 @@ public class GameData {
         }
     }
 
-    public ArrayList<Enemy> getEnemyArrayList() {
-        return enemyArrayList;
+    public Game getGame() {
+        return game;
     }
 
-    public void setEnemyArrayList(ArrayList<Enemy> enemyArrayList) {
-        this.enemyArrayList = enemyArrayList;
-    }
-
-    public ArrayList<BlackOrb> getBlackOrbs() {
-        return blackOrbs;
-    }
-
-    public void setBlackOrbs(ArrayList<BlackOrb> blackOrbs) {
-        this.blackOrbs = blackOrbs;
-    }
-
-    public Epsilon getEpsilon() {
-        return epsilon;
-    }
-
-    public void setEpsilon(Epsilon epsilon) {
-        this.epsilon = epsilon;
-    }
-
-    public Constant getConstant() {
-        return constant;
-    }
-
-    public void setConstant(Constant constant) {
-        this.constant = constant;
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

@@ -7,21 +7,36 @@ import Models.Enemy.MiniBoss.BlackOrb.BlackOrbChuck;
 import Models.Game;
 import View.Game.GameFrame;
 
+import java.util.ArrayList;
+
 public class CheckTheStateOfTheGame {
-    int haveACheckPoint = 0;
+    public static  int haveACheckPoint = 0;
     public CheckTheStateOfTheGame(){
 
     }
     public void allThing(Game game){
-        saveGameData(game);
+        //saveGameData(game);
         checkTheState(game);
     }
     private void saveGameData(Game game){
-        //GameData.saveGame(game);
+        GameData.saveGame(game);
     }
     private void checkTheState(Game game){
         if(game.getEpsilon().getHp() <= 0 && haveACheckPoint == 0){
             gameEnd(game);
+        }
+        else if(game.getEpsilon().getHp() <= 0 && haveACheckPoint != 0){
+            if(haveACheckPoint == 2){
+                setTheStartState(game);
+                game.getEnemyController().setCurrentWaveIndex(1);
+            }
+            else if(haveACheckPoint == 4){
+                setTheStartState(game);
+                game.getEnemyController().setCurrentWaveIndex(3);
+            }
+            haveACheckPoint = 0;
+            game.getEpsilon().setHp(10);
+
         }
         if(game.getEnemyController().getCurrentWaveIndex() == 5){
             setTheStartState(game);
@@ -52,7 +67,7 @@ public class CheckTheStateOfTheGame {
         synchronized (this){
             for(GameFrame gameFrame : game.getGameFrames())
                 gameFrame.setVisible(false);
-            game.getEpsilonFrame().setVisible(true);
+            game.getEpsilon().getCurrentFrame().setVisible(true);
             game.getEpsilon().getCurrentFrame().setSize(400, 400);
             game.getEpsilonFrame().setLocationRelativeTo(null);
             try {
@@ -69,7 +84,17 @@ public class CheckTheStateOfTheGame {
                     blackOrbChuck.getCurrentFrame().removeFromGamePanel(blackOrbChuck);
                 }
             }
-
+            game.getEnemyController().setEnemyArrayList(new ArrayList<>());
+            game.getEnemyController().setBlackOrbs(new ArrayList<>());
+            game.getEnemyController().setLastBlackOrbDone(false);
         }
+    }
+
+    public static int getHaveACheckPoint() {
+        return haveACheckPoint;
+    }
+
+    public static void setHaveACheckPoint(int haveACheckPoint) {
+        CheckTheStateOfTheGame.haveACheckPoint = haveACheckPoint;
     }
 }

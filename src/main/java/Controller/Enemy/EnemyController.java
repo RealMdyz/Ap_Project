@@ -95,7 +95,8 @@ public class EnemyController {
                 for(BlackOrbChuck blackOrbChuck : blackOrb.getBlackOrbChucks()){
                     if(blackOrbChuck.getHp() <= 0){
                         blackOrbChuck.getCurrentFrame().removeFromGamePanel(blackOrbChuck);
-                        blackOrbChuck.getCurrentFrame().setVisible(false);
+                        if(!blackOrbChuck.getCurrentFrame().equals(game.getEpsilon().getCurrentFrame()))
+                            blackOrbChuck.getCurrentFrame().setVisible(false);
                         game.getGameFrames().remove(blackOrbChuck.getCurrentFrame());
                         blackOrb.getBlackOrbChucks().remove(blackOrbChuck);
                         currentWaveEnemyDied += 1;
@@ -163,5 +164,29 @@ public class EnemyController {
 
     public void setWaveController(WaveController waveController) {
         this.waveController = waveController;
+    }
+
+    public boolean isLastBlackOrbDone() {
+        return lastBlackOrbDone;
+    }
+
+    public void setLastBlackOrbDone(boolean lastBlackOrbDone) {
+        this.lastBlackOrbDone = lastBlackOrbDone;
+    }
+
+    public int getCurrentWaveEnemyDied() {
+        return currentWaveEnemyDied;
+    }
+
+    public void setCurrentWaveEnemyDied(int currentWaveEnemyDied) {
+        this.currentWaveEnemyDied = currentWaveEnemyDied;
+    }
+
+    public MakeEnemy getMakeEnemy() {
+        return makeEnemy;
+    }
+
+    public void setMakeEnemy(MakeEnemy makeEnemy) {
+        this.makeEnemy = makeEnemy;
     }
 }

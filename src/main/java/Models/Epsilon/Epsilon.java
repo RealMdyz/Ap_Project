@@ -128,4 +128,5 @@ public class Epsilon extends ObjectsInGame implements Moveable {
         }
         getCurrentFrame().setSize(width, height);
     }
+
 }

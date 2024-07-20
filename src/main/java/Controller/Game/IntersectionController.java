@@ -12,6 +12,7 @@ import Models.Epsilon.Collectible;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 import Models.Game;
+import Models.Games.CheckTheStateOfTheGame;
 import View.Game.GameFrame;
 
 import java.util.ArrayList;
@@ -57,9 +58,11 @@ public class IntersectionController {
     public void checkTheCheckPointIntersection(Game game){
         if(game.getEnemyController().getCurrentWaveIndex() == 1 && game.getCheckPointController().wave2CheckPoint != null && intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(game.getEpsilon(), game.getCheckPointController().wave2CheckPoint)){
             game.getCheckPointController().checkPointStart(game);
+            CheckTheStateOfTheGame.haveACheckPoint = 2;
         }
         else if(game.getEnemyController().getCurrentWaveIndex() == 3 && game.getCheckPointController().wave4CheckPoint != null && intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(game.getEpsilon(), game.getCheckPointController().wave4CheckPoint)){
             game.getCheckPointController().checkPointStart(game);
+            CheckTheStateOfTheGame.haveACheckPoint = 4;
         }
     }
     public void checkTheLinePowerOfBlackOrbChunks(Game game){
