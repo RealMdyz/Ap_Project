@@ -8,6 +8,7 @@ import Models.EntityType;
 import Models.Epsilon.Collectible;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
+import View.Game.GameFrame;
 
 import java.security.BasicPermission;
 import java.util.ArrayList;
@@ -22,20 +23,82 @@ public class BossFightAttackParadigm {
     private long lastVomit = 0;
     private long lastPowerPunch = 0;
     private long lastQuake = 0;
+    private long lastRapidFire = 0;
+    private long lastSlap = 0;
     private static final long SQUEEZE_INTERVAL = 10000; // 10 seconds
     private static final long PROJECTILE_INTERVAL = 5000; // 5 seconds
     private static final long VOMIT_INTERVAL = 5000; // 5 seconds
     private static final int RADIUS_OF_QUAKE_IMPACT = 700;
     private static final long POWER_PUNCH_INTERVAL = 6000; // 5 seconds
     private static final long QUAKE_INTERVAL = 9000;
+    private static final long RAPID_FIRE_INTERVAL = 30000;
+    private static final long SLAP_INTERVAL = 2000;
+
+
     private static boolean onTheQuakeAttack = false;
 
     ArrayList<Aoe> vomitAoeArea = new ArrayList<>();
 
-
     ArrayList<Shot> shotsForProjectile = new ArrayList<>();
 
     public BossFightAttackParadigm(){
+
+    }
+    public void slapAttackManger(Epsilon epsilon, SmileyRightHand smileyRightHand){
+        long currentTime = System.currentTimeMillis();
+        if(smileyRightHand.getHp() > 0 && Math.random() < 0.0001 && lastSlap == 0){
+            GameFrame gameFrame = smileyRightHand.getCurrentFrame();
+            smileyRightHand.changeFrameAndPaint(epsilon.getCurrentFrame());
+            smileyRightHand.setCurrentFrame(gameFrame);
+            smileyRightHand.setX(epsilon.getX() + epsilon.getWidth() - Math.abs(new Random().nextInt(20)));
+            smileyRightHand.setY(epsilon.getY() + epsilon.getHeight() - Math.abs(new Random().nextInt(20)));
+            epsilon.doImpact(smileyRightHand.getX(), smileyRightHand.getY(), 150);
+            epsilon.reduceHp(smileyRightHand.getPower(), AttackType.MELEE, EntityType.ENEMY);
+            lastSlap = currentTime;
+            System.out.println("Do Slap");
+        }
+        if(currentTime - lastSlap > SLAP_INTERVAL && lastSlap != 0){
+            smileyRightHand.changeFrameAndPaint(smileyRightHand.getCurrentFrame());
+            smileyRightHand.setRandomPosAfterGettingAttack();
+            lastSlap = 0;
+        }
+    }
+    public void rapidFireAttackManger(Epsilon epsilon, SmileyFace smileyFace){
+        long currentTime = System.currentTimeMillis();
+        if(currentTime - lastRapidFire < RAPID_FIRE_INTERVAL){
+            if(Math.random() < 0.01){
+                Shot shot = new Shot(smileyFace.getCenterX(), smileyFace.getCenterY(), smileyFace.getPower(), smileyFace.getCurrentFrame(), false);
+                shot.getCurrentFrame().addToGamePanel(shot);
+                shot.setRandomV();
+                smileyFace.getRapidFireShots().add(shot);
+                System.out.println("Rapid Is Fire !");
+            }
+        }
+        else if(currentTime - lastRapidFire < 2 * RAPID_FIRE_INTERVAL){
+            BossFightManger.setOpenAttackToSmileyFace(false);
+        }
+        else{
+            lastRapidFire = currentTime;
+            BossFightManger.setOpenAttackToSmileyFace(true);
+        }
+        ArrayList<Shot> shotArrayList = new ArrayList<>();
+        for(Shot shot : smileyFace.getRapidFireShots()){
+            shot.move();
+            if(Intersection.isInThisFrame(shot, epsilon.getCurrentFrame()) && !shot.getCurrentFrame().equals(epsilon.getCurrentFrame())){
+                shot.changeFrameAndPaint(epsilon.getCurrentFrame());
+
+            }
+            else if (shot.getXRelativeToTheScreen() < -200 || shot.getXRelativeToTheScreen() > 2500 || shot.getYRelativeToTheScreen() < -200 || shot.getYRelativeToTheScreen()> 2500){
+                shotArrayList.add(shot);
+                shot.getCurrentFrame().removeFromGamePanel(shot);
+            }
+            else if(Intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(shot, epsilon)){
+                epsilon.reduceHp(shot.getPower(), AttackType.RANGED, EntityType.ENEMY);
+                shotArrayList.add(shot);
+                shot.getCurrentFrame().removeFromGamePanel(shot);
+            }
+        }
+        smileyFace.getRapidFireShots().removeAll(shotArrayList);
 
     }
     public void quakeAttackManager(Epsilon epsilon, SmileyPunch smileyPunch){

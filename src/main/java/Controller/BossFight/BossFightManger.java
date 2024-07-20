@@ -4,6 +4,7 @@ import Controller.Game.FrameIntersection;
 import Models.BossFight.*;
 import Models.Constant;
 import Models.Epsilon.Collectible;
+import Models.Epsilon.Epsilon;
 import Models.Game;
 import View.Game.GameFrame;
 
@@ -47,15 +48,27 @@ public class BossFightManger {
             }
         }
         else{
-            if(smileyRightHand.getHp() > 0 && smileyLeftHand.getHp() > 0){
-                bossFightAttackParadigm.squeezeAttackManager(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
-                bossFightAttackParadigm.projectileAttackManger(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
+            boolean test = false;
+            if(test){
+                bossFightAttackParadigm.slapAttackManger(game.getEpsilon(), smileyRightHand);
+                bossFightAttackParadigm.rapidFireAttackManger(game.getEpsilon(), smileyFace);
             }
-            if(smileyFace.getHp() < Constant.SPAWN_SMILEY_PUNCH_HP && smileyPunch != null){
-                bossFightAttackParadigm.vomitAttackManger(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
-                bossFightAttackParadigm.powerPunchAttackManager(game.getEpsilon(), smileyPunch, smileyRightHand, smileyLeftHand);
-                bossFightAttackParadigm.quakeAttackManager(game.getEpsilon(), smileyPunch);
+            else{
+                if(smileyRightHand.getHp() > 0 && smileyLeftHand.getHp() > 0){
+                    bossFightAttackParadigm.squeezeAttackManager(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
+                    bossFightAttackParadigm.projectileAttackManger(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
+                }
+                if(smileyFace.getHp() < Constant.SPAWN_SMILEY_PUNCH_HP && smileyPunch != null){
+                    bossFightAttackParadigm.vomitAttackManger(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
+                    bossFightAttackParadigm.powerPunchAttackManager(game.getEpsilon(), smileyPunch, smileyRightHand, smileyLeftHand);
+                    bossFightAttackParadigm.quakeAttackManager(game.getEpsilon(), smileyPunch);
+                    bossFightAttackParadigm.slapAttackManger(game.getEpsilon(), smileyRightHand);
+                    bossFightAttackParadigm.rapidFireAttackManger(game.getEpsilon(), smileyFace);
+                    bossFightAttackParadigm.slapAttackManger(game.getEpsilon(), smileyRightHand);
+                    bossFightAttackParadigm.rapidFireAttackManger(game.getEpsilon(), smileyFace);
+                }
             }
+
         }
         checkTheStateOfTheSmileyChuck(game);
     }
@@ -83,6 +96,7 @@ public class BossFightManger {
         smileyPunchFrame.addToGamePanel(smileyPunch);
         smileyPunchFrame.setVisible(true);
         game.getEpsilon().getCurrentFrame().requestFocus();
+        game.getGameFrames().add(smileyPunchFrame);
 
     }
     public void checkTheStateOfTheSmileyChuck(Game game){

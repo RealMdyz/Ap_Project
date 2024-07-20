@@ -14,7 +14,7 @@ import java.util.Random;
 public class SmileyRightHand extends Enemy {
     Epsilon epsilon;
     public SmileyRightHand(int x, int y, GameFrame frame, Epsilon epsilon) {
-        super(x, y, 100, 0, 0, 0, 0, false, frame);
+        super(x, y, 100, 0, 0, 0, 25, false, frame);
         this.setHeight(Constant.NORMAL_BOSS_FIGHT_CHUNK_SIZE);
         this.setWidth(Constant.NORMAL_BOSS_FIGHT_CHUNK_SIZE);
         this.epsilon = epsilon;
@@ -39,7 +39,7 @@ public class SmileyRightHand extends Enemy {
         else
             return false;
     }
-    private void setRandomPosAfterGettingAttack(){
+    public void setRandomPosAfterGettingAttack(){
         this.setX(Math.abs(new Random().nextInt(this.getCurrentFrame().getWidth() - this.getWidth())));
         this.setY(Math.abs(new Random().nextInt(this.getCurrentFrame().getHeight() - this.getHeight())));
     }
