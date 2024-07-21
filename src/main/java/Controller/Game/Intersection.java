@@ -13,7 +13,7 @@ public class Intersection {
     public Intersection(){
 
     }
-    public boolean checkTheIntersectionBetweenAShotAndAObjectInGame(ObjectsInGame objectsInGame, Shot shot) {
+    public static boolean checkTheIntersectionBetweenAShotAndAObjectInGame(ObjectsInGame objectsInGame, Shot shot) {
         // Calculate the center of the shot
         int shotCenterX = shot.getX() + shot.getWidth() / 2;
         int shotCenterY = shot.getY() + shot.getHeight() / 2;

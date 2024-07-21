@@ -46,6 +46,7 @@ public class Game {
     private SkillTreeLogic skillTreeLogic;
     private BossFightManger bossFightManger;
     private BossFightAttackParadigm bossFightAttackParadigm;
+    private ArchmireAoeController archmireAoeController;
     public Game(Constant constant){
         this.constant = constant;
         Constant.setIsRunning(true);
@@ -67,6 +68,7 @@ public class Game {
         skillTreeLogic = new SkillTreeLogic(this);
         bossFightAttackParadigm = new BossFightAttackParadigm();
         bossFightManger = new BossFightManger(bossFightAttackParadigm);
+        archmireAoeController = new ArchmireAoeController();
         makeEpsilonFrame(epsilonFrame);
         epsilonFrame.addToGamePanel(epsilon);
         getGameFrames().add(epsilonFrame);
@@ -294,5 +296,13 @@ public class Game {
 
     public void setBossFightAttackParadigm(BossFightAttackParadigm bossFightAttackParadigm) {
         this.bossFightAttackParadigm = bossFightAttackParadigm;
+    }
+
+    public ArchmireAoeController getArchmireAoeController() {
+        return archmireAoeController;
+    }
+
+    public void setArchmireAoeController(ArchmireAoeController archmireAoeController) {
+        this.archmireAoeController = archmireAoeController;
     }
 }

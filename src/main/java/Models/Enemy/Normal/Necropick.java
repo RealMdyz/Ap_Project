@@ -56,8 +56,8 @@ public class Necropick extends Enemy {
         moveShots();
     }
     private void checkTimeForAppearAndDisappear(int xEpsilon, int yEpsilon){
-        if(!currentFrame.equals(epsilon.getCurrentFrame()))
-            this.changeFrameAndPaint(epsilon.getCurrentFrame());
+        /*if(!currentFrame.equals(epsilon.getCurrentFrame()))
+            this.changeFrameAndPaint(epsilon.getCurrentFrame());*/
         long current = System.currentTimeMillis();
         if(current - time < 7500){
             this.setVisible(false);

@@ -28,6 +28,7 @@ public class BlackOrb {
 
             BlackOrbChuck blackOrbChuck = new BlackOrbChuck(gameFrame);
             gameFrame.addToGamePanel(blackOrbChuck);
+            blackOrbChuck.setVisible(false);
             gameFrame.repaint();
             blackOrbChucks.add(blackOrbChuck);
         }
@@ -59,6 +60,8 @@ public class BlackOrb {
 
     }
     public void drawLasers() {
+        if(spawnChuck < 5)
+                return;
         for (int i = 0; i < blackOrbChucks.size(); i++) {
             for (int j = 0; j < blackOrbChucks.size(); j++) {
                 if(i == j)
@@ -75,7 +78,6 @@ public class BlackOrb {
                         chuck2.getY() + chuck2.getHeight() / 2 + chuck2.getCurrentFrame().getY() - chuck1.getCurrentFrame().getY()
                 );
 
-                //System.out.println(p1.x + " " + p1.y + " " + p2.x + " " + p2.y);
                 chuck1.addLineToDraw(p1, p2);
                 lastLaserAttack[i][j] = 0;
             }
@@ -99,6 +101,10 @@ public class BlackOrb {
         blackOrbChuck.getCurrentFrame().setVisible(true);
         game.getEpsilonFrame().requestFocus();
         spawnChuck += 1;
+        if(spawnChuck == 5){
+            for(BlackOrbChuck blackOrbChuck1 : blackOrbChucks)
+                blackOrbChuck1.setVisible(true);
+        }
     }
 
     public long getLastChuckSpawnTime() {
@@ -125,6 +131,7 @@ public class BlackOrb {
         this.blackOrbChucks = blackOrbChucks;
     }
     public boolean betweenTwoOfMyChunks(ObjectsInGame objectsInGame) {
+
         for (int i = 0; i < blackOrbChucks.size(); i++) {
             for (int j = 0; j < blackOrbChucks.size(); j++) {
                 if (i != j) {
@@ -136,7 +143,7 @@ public class BlackOrb {
                     int x2 = chuck2.getCurrentFrame().getX() + chuck2.getX() + chuck2.getWidth() / 2;
                     int y2 = chuck2.getCurrentFrame().getY() + chuck2.getY() + chuck2.getHeight() / 2;
 
-                    if (System.currentTimeMillis() - lastLaserAttack[i][j] > 1000 && isPointBetweenTwoPoints(objectsInGame.getCenterX(), objectsInGame.getCenterY(), x1, y1, x2, y2)) {
+                    if (System.currentTimeMillis() - lastLaserAttack[i][j] > 1000 && isPointBetweenTwoPoints(objectsInGame.getCenterX() + objectsInGame.getCurrentFrame().getX(), objectsInGame.getCenterY() + objectsInGame.getCurrentFrame().getY(), x1, y1, x2, y2)) {
                         lastLaserAttack[i][j] = System.currentTimeMillis();
                         lastLaserAttack[j][i] = System.currentTimeMillis();
                         return true;
@@ -151,9 +158,15 @@ public class BlackOrb {
         double distance1 = Math.sqrt((px - x1) * (px - x1) + (py - y1) * (py - y1));
         double distance2 = Math.sqrt((px - x2) * (px - x2) + (py - y2) * (py - y2));
         double lineLength = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-        double tolerance = 10; // Tolérance en pixels
+        double tolerance = 25; // Tolérance en pixels
+       // System.out.println(px + " " + py + " " + x1 + " " + y1 + " " + x2 + " " + y2);
+        // بررسی مجموع فاصله‌ها
         if (Math.abs(distance1 + distance2 - lineLength) <= tolerance) {
-            return (px - x1) * (y2 - y1) == (py - y1) * (x2 - x1);
+            // محاسبه فاصله عمود از خط
+            double area = Math.abs((x2 - x1) * (py - y1) - (px - x1) * (y2 - y1));
+            double lineDistance = area / lineLength;
+
+            return lineDistance <= tolerance;
         }
         return false;
     }

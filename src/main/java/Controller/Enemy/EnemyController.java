@@ -31,13 +31,12 @@ public class EnemyController {
     }
     public void controllingTheEnemies(){
         spawnProcess();
-        if(currentWaveIndex == 4){
+        if(currentWaveIndex == 0){
             blackOrbSpawnProcess();
             for(BlackOrb blackOrb : blackOrbs){
                 for(BlackOrbChuck blackOrbChuck : blackOrb.getBlackOrbChucks())
                     blackOrbChuck.specialPowers(game.getEpsilon());
             }
-
         }
         for(Enemy enemy : enemyArrayList){
             enemy.specialPowers(game.getEpsilon());
@@ -91,6 +90,7 @@ public class EnemyController {
             }
         }
         if(lastBlackOrbDone){
+            BlackOrb blackOrb1 = new BlackOrb(0, 0);
             for(BlackOrb blackOrb : blackOrbs){
                 for(BlackOrbChuck blackOrbChuck : blackOrb.getBlackOrbChucks()){
                     if(blackOrbChuck.getHp() <= 0){
@@ -104,7 +104,10 @@ public class EnemyController {
                         break;
                     }
                 }
+                if(blackOrb.getBlackOrbChucks().size() == 0)
+                    blackOrb1 = blackOrb;
             }
+            blackOrbs.remove(blackOrb1);
         }
     }
     public void spawnProcess(){
@@ -112,7 +115,7 @@ public class EnemyController {
             return;
         }
         if(currentWaveEnemyDied >= waveController.getEnemiesToKillEachWave()[currentWaveIndex]){
-            if(enemyArrayList.isEmpty()){
+            if(enemyArrayList.isEmpty() && blackOrbs.isEmpty()){
                 currentWaveIndex += 1;
                 currentWaveEnemyDied = 0;
                 waveController.resetWaveStartTime();
@@ -127,16 +130,6 @@ public class EnemyController {
             addEnemy(makeEnemy.makeRandomEnemy(random.nextInt(), currentWaveIndex));
         }
         waveController.setCurrentDelay(waveController.getCurrentDelay() + (long) (2L * currentWaveIndex + 5));
-    }
-    public void fadingTheAoeAre() {
-        for (Enemy enemy : enemyArrayList) {
-            if (enemy instanceof Archmire) {
-                Archmire archmire = (Archmire) enemy;
-                for (Aoe aoe : archmire.getAoeList()) {
-                    aoe.fade();
-                }
-            }
-        }
     }
 
     public ArrayList<Enemy> getEnemyArrayList() {

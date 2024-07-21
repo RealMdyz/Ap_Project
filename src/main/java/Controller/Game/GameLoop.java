@@ -23,8 +23,8 @@ public class GameLoop{
         GraphicThread graphicThread = new GraphicThread();
         GraphicThread1 graphicThread1 = new GraphicThread1();
 
-        SmileyCalculatorThread smileyCalculatorThread = new SmileyCalculatorThread();
-        SmileyMoverThread smileyMoverThread = new SmileyMoverThread();
+
+        SmileyThread smileyMoverThread = new SmileyThread();
 
         calculatorThread.start();
         enemyThread.start();
@@ -32,32 +32,16 @@ public class GameLoop{
         epsilonThread.start();
         graphicThread1.start();
 
+
         smileyMoverThread.start();
-        smileyCalculatorThread.start();
 
     }
-    private class SmileyMoverThread extends Thread{
+    private class SmileyThread extends Thread{
         @Override
         public void run() {
             while (Constant.isIsRunning()){
                 if(Constant.isBossTriggered()){
                     game.getBossFightManger().control(game);
-                }
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-        }
-    }
-    private class SmileyCalculatorThread extends Thread{
-        @Override
-        public void run() {
-            while (Constant.isIsRunning()){
-                if(Constant.isBossTriggered()){
-
                 }
                 try {
                     Thread.sleep(10);
@@ -81,8 +65,6 @@ public class GameLoop{
                         game.getEpsilon().getEpsilonController().handelEpsilonShotInBossFight(game);
                     }
                 }
-
-
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -99,6 +81,9 @@ public class GameLoop{
                 if(!Constant.isOpenStore()){
                     game.getStorePanel().setVisible(false);
                     game.getCheckTheStateOfTheGame().allThing(game);
+                    game.getEpsilon().getEpsilonController().setTheEpsilonFrameSize(game);
+                    game.getEpsilon().getEpsilonController().fireShot(game);
+                    game.getIntersectionController().getCheckIntersectionShotsToEnemy().checkIntersectionShotsToEnemy(game);
                 }
                 else{
                     if(System.currentTimeMillis() - Constant.getStartOFHypnosSlumber() > 10000)
@@ -121,9 +106,7 @@ public class GameLoop{
                     game.getUpdateToPanel().updateTopPanel(startOfGame, game.getEnemyController().getCurrentWaveIndex(), Constant.NUMBER_OF_WAVE,game.getEpsilon().getHp());
                     game.getCollectibleController().checkTheExpirationTime();
                     game.getCollectibleController().checkTheIntersectionBetweenACollectibleAndEpsilon(game);
-                    game.getEnemyController().fadingTheAoeAre();
                 }
-
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -139,6 +122,7 @@ public class GameLoop{
             while (!Constant.isBossTriggered() && Constant.isIsRunning()){
                 if(!Constant.isOpenStore() && !Constant.isOpenCheckPointPanel() && System.currentTimeMillis() - Constant.getStartOFHypnosSlumber() > 10000) {
                     game.getEnemyController().controllingTheEnemies();
+                    game.getArchmireAoeController().control(game);
                 }
                 try {
                     Thread.sleep(10);
@@ -155,8 +139,6 @@ public class GameLoop{
             while (!Constant.isBossTriggered() && Constant.isIsRunning()){
                 if(!Constant.isOpenStore() && !Constant.isOpenCheckPointPanel()) {
                     game.getIntersectionController().controllingAllIntersections(game);
-                    game.getEpsilon().getEpsilonController().setTheEpsilonFrameSize(game);
-                    game.getEpsilon().getEpsilonController().fireShot(game);
                 }
                 try {
                     Thread.sleep(10);

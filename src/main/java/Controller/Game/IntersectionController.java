@@ -1,5 +1,6 @@
 package Controller.Game;
 
+import Controller.Enemy.CheckIntersectionShotsToEnemy;
 import Models.AttackType;
 import Models.Constant;
 import Models.Enemy.Enemy;
@@ -23,14 +24,15 @@ public class IntersectionController {
 
     Intersection intersection;
     IntersectionHandler intersectionHandler;
+    CheckIntersectionShotsToEnemy checkIntersectionShotsToEnemy;
     public IntersectionController(){
         intersection = new Intersection();
         intersectionHandler = new IntersectionHandler(intersection);
+        checkIntersectionShotsToEnemy = new CheckIntersectionShotsToEnemy();
     }
     public void controllingAllIntersections(Game game){
         checkTheAddingAndRemovingTheEnemiesFromTheFramesToEpsilonFrame(game);
         checkIntersectionShotsToEpsilonAndOtherDataIntersectionOfNormalEnemies(game);
-        checkIntersectionShotsToEnemy(game);
         checkTheDrowmPowerOfArchmire(game);
         checkTheIntersectionBetweenBarricadosFrameAndWyrmFrame(game);
         checkTheLinePowerOfBlackOrbChunks(game);
@@ -150,7 +152,6 @@ public class IntersectionController {
 
     }
     public void checkTheLinePowerOfBlackOrbChunks(Game game){
-
         for(BlackOrb blackOrb : game.getEnemyController().getBlackOrbs()){
             if(blackOrb.betweenTwoOfMyChunks(game.getEpsilon())){
                 game.getEpsilon().reduceHp(BlackOrb.LINE_POWER_OF_BLACK_ORB, AttackType.LASER, EntityType.ENEMY);
@@ -160,6 +161,7 @@ public class IntersectionController {
                     enemy.reduceHp(BlackOrb.LINE_POWER_OF_BLACK_ORB, AttackType.LASER, EntityType.ENEMY);
                 }
             }
+
 
         }
     }
@@ -194,21 +196,6 @@ public class IntersectionController {
             }
         }
     }
-    public void checkIntersectionShotsToEnemy(Game game) {
-        ArrayList<Shot> shotArrayList = new ArrayList<>();
-        for(Shot shot : game.getEpsilon().getShots()){
-            for (Enemy enemy : game.getEnemyController().getEnemyArrayList()) {
-                if (intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(enemy, shot)) {
-                    enemy.reduceHp(shot.getPower(), AttackType.RANGED, EntityType.EPSILON);
-                    shot.getCurrentFrame().removeFromGamePanel(shot);
-                    shotArrayList.add(shot);
-                    break;
-                }
-            }
-        }
-        game.getEpsilon().getShots().removeAll(shotArrayList);
-
-    }
 
     private void checkIntersectionShotsToEpsilonAndOtherDataIntersectionOfNormalEnemies(Game game) {
         for (Enemy enemy : game.getEnemyController().getEnemyArrayList()) {
@@ -234,14 +221,7 @@ public class IntersectionController {
                     }
                 }
             }
-            else if(enemy instanceof Archmire){
-                Archmire archmire = (Archmire) enemy;
-                for(Enemy enemy1 : game.getEnemyController().getEnemyArrayList()){
-                    if(!enemy1.equals(enemy))
-                         archmire.checkAoEDamage(enemy1);
-                }
-                archmire.checkAoEDamage(game.getEpsilon());
-            }
+
         }
     }
 
@@ -266,7 +246,6 @@ public class IntersectionController {
                     blackOrbChuck.getCurrentFrame().setVisible(false);
                     blackOrbChuck.getCurrentFrame().removeFromGamePanel(blackOrbChuck);
                     blackOrbChuck.setCurrentFrame(gameFrame);
-                    System.out.println("Changing BlackOrbFrame");
                     blackOrb.reDrawLasers();
                     blackOrb.rePoint();
                 }
@@ -275,5 +254,11 @@ public class IntersectionController {
 
     }
 
+    public CheckIntersectionShotsToEnemy getCheckIntersectionShotsToEnemy() {
+        return checkIntersectionShotsToEnemy;
+    }
 
+    public void setCheckIntersectionShotsToEnemy(CheckIntersectionShotsToEnemy checkIntersectionShotsToEnemy) {
+        this.checkIntersectionShotsToEnemy = checkIntersectionShotsToEnemy;
+    }
 }

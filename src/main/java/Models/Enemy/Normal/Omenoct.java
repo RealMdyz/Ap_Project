@@ -90,8 +90,8 @@ public class Omenoct extends Enemy {
             }
         }
         else{
-            if(!currentFrame.equals(epsilon.getCurrentFrame()))
-                this.changeFrameAndPaint(epsilon.getCurrentFrame());
+            /*if(!currentFrame.equals(epsilon.getCurrentFrame()))
+            this.changeFrameAndPaint(epsilon.getCurrentFrame());*/
         }
         repaint();
     }

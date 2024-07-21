@@ -36,7 +36,7 @@ public class Enemy extends ObjectsInGame implements LocalRouting, Aggression, Mo
 
     }
     public void specialPowers(Epsilon epsilon){
-
+        this.epsilon = epsilon;
     }
 
 

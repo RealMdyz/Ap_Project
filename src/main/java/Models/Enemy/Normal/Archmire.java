@@ -21,8 +21,7 @@ public class Archmire extends Enemy {
     boolean mini;
     int aoePower, drownPower;
     long lastAoeTime, lastDrownAttack = 0, lastSpawnAoe;
-    private final long TIME_AOE_LOOP = 400;
-
+    public static final long TIME_AOE_LOOP = 400;
     int xEpsilon, xEpsilonFrame, yEpsilon, yEpsilonFrame;
     Epsilon epsilon;
 
@@ -34,8 +33,6 @@ public class Archmire extends Enemy {
         lastSpawnAoe = 0;
         this.setHeight(Constant.getHeightOfArchmire());
         this.setWidth(Constant.getWidthOfArchmire());
-        this.setxCenter(this.getX() + (int)this.getWidth() / 2);
-        this.setyCenter(this.getY() + (int)this.getHeight() / 2);
         this.setVisible(true);
         setSize(Constant.getHeightOfArchmire(), Constant.getWidthOfArchmire());
         background = MyProjectData.getProjectData().getArchmire();
@@ -46,7 +43,6 @@ public class Archmire extends Enemy {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
         g2D.drawImage(background, 0, 0, Constant.getWidthOfNecropick(), Constant.getHeightOfNecropick(), null);
-
     }
     @Override
     public void specialPowers(Epsilon epsilon) {
@@ -64,16 +60,6 @@ public class Archmire extends Enemy {
         repaint();
     }
 
-    private void updateAoE() {
-        ArrayList<Aoe> aoeArrayList = new ArrayList<>();
-        for(Aoe aoe : aoeList){
-            if(aoe.isExpired()){
-                aoe.getCurrentFrame().removeFromGamePanel(aoe);
-                aoeArrayList.add(aoe);
-            }
-        }
-        aoeList.removeAll(aoeArrayList);
-    }
     public void checkAoEDamage(ObjectsInGame objectsInGame) {
         for (Aoe aoe : aoeList) {
             aoe.checkAndReduceTheHP(objectsInGame, EntityType.ENEMY);
@@ -88,8 +74,8 @@ public class Archmire extends Enemy {
 
     @Override
     public void move() {
-        if(!currentFrame.equals(epsilon.getCurrentFrame()))
-            this.changeFrameAndPaint(epsilon.getCurrentFrame());
+        /*if(!currentFrame.equals(epsilon.getCurrentFrame()))
+            this.changeFrameAndPaint(epsilon.getCurrentFrame());*/
         int deltaX = xEpsilon + xEpsilonFrame - this.getX() - this.getCurrentFrame().getX();
         int deltaY = yEpsilon + yEpsilonFrame - this.getY() - this.getCurrentFrame().getY();
         double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -98,13 +84,8 @@ public class Archmire extends Enemy {
         if(distance > Constant.NON_HOVERING_DISTANCE || !epsilon.getEpsilonLogic().isInDeimosDismay()){
             addX((int)(directionX * Constant.getSpeedOfArchmire()));
             addY((int)(directionY * Constant.getSpeedOfArchmire()));
-            if(System.currentTimeMillis() - lastSpawnAoe > TIME_AOE_LOOP){
-                addAoE(this.getX(), this.getY());
-                lastSpawnAoe = System.currentTimeMillis();
-            }
         }
 
-        updateAoE();
         repaint();
 
     }

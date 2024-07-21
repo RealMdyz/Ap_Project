@@ -96,6 +96,7 @@ public class SkillTreeLogic {
                 for(Vertex vertex : game.getEpsilon().getEpsilonLogic().getVerticesForProteus()){
                     for(Enemy enemy : game.getEnemyController().getEnemyArrayList()){
                         if(Intersection.isCompletelyInside(vertex, enemy)){
+                            enemy.specialPowers(game.getEpsilon());
                             enemy.reduceHp(10, AttackType.MELEE, EntityType.EPSILON);
                             enemy.doImpact(vertex.getX(), vertex.getY(), Constant.RADIUS_OF_IMPACT);
                             game.getEpsilon().getEpsilonLogic().setLastWriteOfProteus(System.currentTimeMillis());

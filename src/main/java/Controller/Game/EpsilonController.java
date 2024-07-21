@@ -18,7 +18,6 @@ public class EpsilonController {
     public EpsilonController(EpsilonLogic epsilonLogic) {
         this.epsilonLogic = epsilonLogic;
     }
-
     public void setTheEpsilonFrameSize(Game game) {
         if (firstTime || Math.random() < 0.04) {
             reduceEpsilonFrameSize(game);
@@ -43,11 +42,7 @@ public class EpsilonController {
         int frameHeight = epsilonFrame.getHeight();
         int reductionAmount = 4;
         if (frameWidth > 400  && frameHeight > 400) {
-            epsilonFrame.setSize(frameWidth - reductionAmount, frameHeight - reductionAmount);
-            epsilonFrame.setLocation(epsilonFrame.getX() + reductionAmount / 2, epsilonFrame.getY() + reductionAmount / 2);
-            epsilonFrame.getGamePanel().setSize(epsilonFrame.getWidth(), epsilonFrame.getHeight());
-            epsilonFrame.revalidate();
-            epsilonFrame.repaint();
+            epsilonFrame.setBounds(epsilonFrame.getX() + reductionAmount / 2, epsilonFrame.getY() + reductionAmount / 2, frameWidth - reductionAmount, frameHeight - reductionAmount);
         }
         else{
             firstTime = false;
