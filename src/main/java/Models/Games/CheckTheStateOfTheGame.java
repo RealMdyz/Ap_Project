@@ -1,11 +1,16 @@
 package Models.Games;
 
+import Controller.Enemy.EnemyController;
+import Controller.Game.GameLoop;
+import Models.BossFight.SmileyFace;
 import Models.Constant;
 import Models.Enemy.Enemy;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrb;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrbChuck;
+import Models.Epsilon.Epsilon;
 import Models.Game;
 import View.Game.GameFrame;
+import View.Menu.GameOverPanel;
 
 import java.util.ArrayList;
 
@@ -49,6 +54,21 @@ public class CheckTheStateOfTheGame {
             game.getBossFightManger().trigger(game);
             Constant.setBossTriggered(true);
             game.getEpsilon().getCurrentFrame().requestFocus();
+        }
+        if(Constant.isBossTriggered() && game.getBossFightManger().getSmileyFace().getHp() <= 0){
+            SmileyFace smileyFace = game.getBossFightManger().getSmileyFace();
+            smileyFace.setBackground("کله ی مرده");
+            Epsilon epsilon = game.getEpsilon();
+            smileyFace.setHeight(smileyFace.getHeight() - 1);
+            smileyFace.setHeight(smileyFace.getWidth() - 1);
+            epsilon.setHeight(epsilon.getHeight() + 3);
+            epsilon.setWidth(epsilon.getWidth() + 3);
+            if(smileyFace.getHeight() == 0){
+
+                GameOverPanel gameOverPanel = new GameOverPanel(epsilon.getEpsilonController().numberOfShot, Epsilon.successfulShots, EnemyController.enemiesKilled, Constant.getPlayerXP(), System.currentTimeMillis() - GameLoop.startOfGame);
+                gameOverPanel.setVisible(true);
+                gameEnd(game);
+            }
         }
     }
     private void gameEnd(Game game){

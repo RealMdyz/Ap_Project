@@ -1,9 +1,11 @@
 package Controller.Enemy;
 
+import Controller.Game.EpsilonController;
 import Controller.Game.Intersection;
 import Models.AttackType;
 import Models.Enemy.Enemy;
 import Models.EntityType;
+import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 import Models.Game;
 
@@ -26,6 +28,7 @@ public class CheckIntersectionShotsToEnemy {
             }
         }
         game.getEpsilon().getShots().removeAll(shotArrayList);
+        Epsilon.successfulShots += shotArrayList.size();
     }
 
 

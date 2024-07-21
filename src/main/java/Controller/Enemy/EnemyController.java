@@ -5,10 +5,8 @@ import Models.Enemy.Enemy;
 import Models.Enemy.MiniBoss.Barricados.Barricados;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrb;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrbChuck;
-import Models.Enemy.Normal.Aoe;
-import Models.Enemy.Normal.Archmire;
-import Models.Enemy.Normal.Necropick;
 import Models.Game;
+import Models.Games.MakeEnemy;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,6 +21,7 @@ public class EnemyController {
     private int currentWaveEnemyDied = 0;
     private WaveController waveController;
     private MakeEnemy makeEnemy;
+    public static int enemiesKilled = 0;
 
     public EnemyController(Game game){
         this.game = game;
@@ -31,7 +30,7 @@ public class EnemyController {
     }
     public void controllingTheEnemies(){
         spawnProcess();
-        if(currentWaveIndex == 0){
+        if(currentWaveIndex == 4){
             blackOrbSpawnProcess();
             for(BlackOrb blackOrb : blackOrbs){
                 for(BlackOrbChuck blackOrbChuck : blackOrb.getBlackOrbChucks())
@@ -77,6 +76,7 @@ public class EnemyController {
                 game.getCollectibleController().addingCollectiblesAfterDie(enemy);
                 iterator.remove();
                 currentWaveEnemyDied += 1;
+                enemiesKilled += 1;
             }
             if(enemy instanceof Barricados){
                 Barricados barricados = (Barricados) enemy;
@@ -86,6 +86,8 @@ public class EnemyController {
                     game.getGameFrames().remove(enemy.getCurrentFrame());
                     iterator.remove();
                     currentWaveEnemyDied += 1;
+                    enemiesKilled += 1;
+
                 }
             }
         }
@@ -101,6 +103,8 @@ public class EnemyController {
                         game.getCollectibleController().addingCollectiblesAfterDie(blackOrbChuck);
                         blackOrb.getBlackOrbChucks().remove(blackOrbChuck);
                         currentWaveEnemyDied += 1;
+                        enemiesKilled += 1;
+
                         break;
                     }
                 }

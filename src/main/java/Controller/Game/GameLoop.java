@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class GameLoop{
     private Game game;
     private Constant constant;
-    private long startOfGame = System.currentTimeMillis();
+    public static long startOfGame = System.currentTimeMillis();
     private final Object lock = new Object();
     public GameLoop(Game game, Constant constant){
         this.constant = constant;

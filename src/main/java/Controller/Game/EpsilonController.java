@@ -3,6 +3,7 @@ package Controller.Game;
 import Controller.BossFight.BossFightManger;
 import Models.AttackType;
 import Models.EntityType;
+import Models.Epsilon.Epsilon;
 import Models.Epsilon.EpsilonLogic;
 import Models.Epsilon.Shot;
 import Models.Game;
@@ -15,6 +16,7 @@ import java.util.List;
 public class EpsilonController {
     boolean firstTime = true;
     EpsilonLogic epsilonLogic;
+    public int numberOfShot = 0;
     public EpsilonController(EpsilonLogic epsilonLogic) {
         this.epsilonLogic = epsilonLogic;
     }
@@ -34,6 +36,7 @@ public class EpsilonController {
             shot.setV(game.getInputListener().getxMousePress(), game.getInputListener().getyMousePress());
             game.getInputListener().setxMousePress(-1);
             game.getInputListener().setyMousePress(-1);
+            numberOfShot += 1;
         }
     }
     public void reduceEpsilonFrameSize(Game game) {
@@ -43,6 +46,9 @@ public class EpsilonController {
         int reductionAmount = 4;
         if (frameWidth > 400  && frameHeight > 400) {
             epsilonFrame.setBounds(epsilonFrame.getX() + reductionAmount / 2, epsilonFrame.getY() + reductionAmount / 2, frameWidth - reductionAmount, frameHeight - reductionAmount);
+            epsilonFrame.getGamePanel().setSize(epsilonFrame.getWidth(), epsilonFrame.getHeight());
+            epsilonFrame.revalidate();
+            epsilonFrame.repaint();
         }
         else{
             firstTime = false;
@@ -83,6 +89,7 @@ public class EpsilonController {
             if(shot.getCurrentFrame().equals(game.getEpsilon().getCurrentFrame()) && enlargeEpsilonFrame(game, shot)){
                 shotArrayList.add(shot);
                 shot.getCurrentFrame().removeFromGamePanel(shot);
+
             }
             else if (shot.getXRelativeToTheScreen() < -200 || shot.getXRelativeToTheScreen() > 2500 || shot.getYRelativeToTheScreen() < -200 || shot.getYRelativeToTheScreen()> 2500){
                 shotArrayList.add(shot);
@@ -92,16 +99,22 @@ public class EpsilonController {
                 game.getBossFightManger().getSmileyFace().reduceHp(shot.getPower(), AttackType.RANGED, EntityType.EPSILON);
                 shotArrayList.add(shot);
                 shot.getCurrentFrame().removeFromGamePanel(shot);
+                Epsilon.successfulShots += 1;
+
             }
             else if(BossFightManger.isOpenAttackToSmileyHands() && Intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(shot, game.getBossFightManger().getSmileyLeftHand())){
                 game.getBossFightManger().getSmileyLeftHand().reduceHp(shot.getPower(), AttackType.RANGED, EntityType.EPSILON);
                 shotArrayList.add(shot);
                 shot.getCurrentFrame().removeFromGamePanel(shot);
+                Epsilon.successfulShots += 1;
+
             }
             else if(BossFightManger.isOpenAttackToSmileyHands() && Intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(shot, game.getBossFightManger().getSmileyRightHand())){
                 game.getBossFightManger().getSmileyRightHand().reduceHp(shot.getPower(), AttackType.RANGED, EntityType.EPSILON);
                 shotArrayList.add(shot);
                 shot.getCurrentFrame().removeFromGamePanel(shot);
+                Epsilon.successfulShots += 1;
+
             }
         }
         game.getEpsilon().getShots().removeAll(shotArrayList);

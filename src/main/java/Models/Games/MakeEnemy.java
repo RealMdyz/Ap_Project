@@ -1,4 +1,4 @@
-package Controller.Enemy;
+package Models.Games;
 
 import Controller.Game.FrameIntersection;
 import Models.Constant;

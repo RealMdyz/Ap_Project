@@ -25,6 +25,8 @@ public class BossFightManger {
         this.bossFightAttackParadigm = bossFightAttackParadigm;
     }
     public void control(Game game){
+        if(smileyFace.getHp() <= 0)
+            return;
         if(!firstSpawnOfBossFight){
             try {
                 Thread.sleep(100);
@@ -48,28 +50,24 @@ public class BossFightManger {
             }
         }
         else{
-            boolean test = false;
-            if(test){
+
+            if(smileyRightHand.getHp() > 0 && smileyLeftHand.getHp() > 0){
+                bossFightAttackParadigm.squeezeAttackManager(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
+                bossFightAttackParadigm.projectileAttackManger(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
+            }
+            if(smileyFace.getHp() < Constant.SPAWN_SMILEY_PUNCH_HP && smileyPunch != null){
+                bossFightAttackParadigm.vomitAttackManger(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
+                bossFightAttackParadigm.powerPunchAttackManager(game.getEpsilon(), smileyPunch, smileyRightHand, smileyLeftHand);
+                bossFightAttackParadigm.quakeAttackManager(game.getEpsilon(), smileyPunch);
+                bossFightAttackParadigm.slapAttackManger(game.getEpsilon(), smileyRightHand);
+                bossFightAttackParadigm.rapidFireAttackManger(game.getEpsilon(), smileyFace);
                 bossFightAttackParadigm.slapAttackManger(game.getEpsilon(), smileyRightHand);
                 bossFightAttackParadigm.rapidFireAttackManger(game.getEpsilon(), smileyFace);
             }
-            else{
-                if(smileyRightHand.getHp() > 0 && smileyLeftHand.getHp() > 0){
-                    bossFightAttackParadigm.squeezeAttackManager(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
-                    bossFightAttackParadigm.projectileAttackManger(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
-                }
-                if(smileyFace.getHp() < Constant.SPAWN_SMILEY_PUNCH_HP && smileyPunch != null){
-                    bossFightAttackParadigm.vomitAttackManger(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
-                    bossFightAttackParadigm.powerPunchAttackManager(game.getEpsilon(), smileyPunch, smileyRightHand, smileyLeftHand);
-                    bossFightAttackParadigm.quakeAttackManager(game.getEpsilon(), smileyPunch);
-                    bossFightAttackParadigm.slapAttackManger(game.getEpsilon(), smileyRightHand);
-                    bossFightAttackParadigm.rapidFireAttackManger(game.getEpsilon(), smileyFace);
-                    bossFightAttackParadigm.slapAttackManger(game.getEpsilon(), smileyRightHand);
-                    bossFightAttackParadigm.rapidFireAttackManger(game.getEpsilon(), smileyFace);
-                }
-            }
 
         }
+
+
         checkTheStateOfTheSmileyChuck(game);
     }
     public void trigger(Game game){
