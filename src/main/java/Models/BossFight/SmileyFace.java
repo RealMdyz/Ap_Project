@@ -22,7 +22,7 @@ public class SmileyFace extends Enemy {
     ArrayList<Shot> rapidFireShots = new ArrayList<>();
 
     public SmileyFace(int x, int y, GameFrame frame, Epsilon epsilon) {
-        super(x, y, 300, 0, 0, 0, 5, false, frame);
+        super(x, y, 0, 0, 0, 0, 5, false, frame);
         this.epsilon = epsilon;
         this.setHeight(Constant.NORMAL_BOSS_FIGHT_CHUNK_SIZE);
         this.setWidth(Constant.NORMAL_BOSS_FIGHT_CHUNK_SIZE);

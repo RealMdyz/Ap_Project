@@ -1,23 +1,20 @@
 package Controller.Game;
 
 import Controller.Enemy.CheckIntersectionShotsToEnemy;
+import Controller.Enemy.NormalEnemyPowerIntersection;
 import Models.AttackType;
-import Models.Constant;
 import Models.Enemy.Enemy;
 import Models.Enemy.MiniBoss.Barricados.Barricados;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrb;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrbChuck;
 import Models.Enemy.Normal.*;
 import Models.EntityType;
-import Models.Epsilon.Collectible;
-import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
 import Models.Game;
 import Models.Games.CheckTheStateOfTheGame;
 import View.Game.GameFrame;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class IntersectionController {
@@ -25,10 +22,12 @@ public class IntersectionController {
     Intersection intersection;
     IntersectionHandler intersectionHandler;
     CheckIntersectionShotsToEnemy checkIntersectionShotsToEnemy;
+    NormalEnemyPowerIntersection normalEnemyPowerIntersection;
     public IntersectionController(){
         intersection = new Intersection();
         intersectionHandler = new IntersectionHandler(intersection);
         checkIntersectionShotsToEnemy = new CheckIntersectionShotsToEnemy();
+        normalEnemyPowerIntersection = new NormalEnemyPowerIntersection();
     }
     public void controllingAllIntersections(Game game){
         checkTheAddingAndRemovingTheEnemiesFromTheFramesToEpsilonFrame(game);

@@ -9,6 +9,7 @@ import Models.Enemy.MiniBoss.BlackOrb.BlackOrb;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrbChuck;
 import Models.Epsilon.Epsilon;
 import Models.Game;
+import MyProject.MyProjectData;
 import View.Game.GameFrame;
 import View.Menu.GameOverPanel;
 
@@ -57,14 +58,15 @@ public class CheckTheStateOfTheGame {
         }
         if(Constant.isBossTriggered() && game.getBossFightManger().getSmileyFace().getHp() <= 0){
             SmileyFace smileyFace = game.getBossFightManger().getSmileyFace();
-            smileyFace.setBackground("کله ی مرده");
+            smileyFace.setBackground(MyProjectData.getProjectData().getHeadSkeleton());
             Epsilon epsilon = game.getEpsilon();
             smileyFace.setHeight(smileyFace.getHeight() - 1);
-            smileyFace.setHeight(smileyFace.getWidth() - 1);
+            smileyFace.setWidth(smileyFace.getWidth() - 1);
+            smileyFace.repaint();
             epsilon.setHeight(epsilon.getHeight() + 3);
             epsilon.setWidth(epsilon.getWidth() + 3);
+            epsilon.repaint();
             if(smileyFace.getHeight() == 0){
-
                 GameOverPanel gameOverPanel = new GameOverPanel(epsilon.getEpsilonController().numberOfShot, Epsilon.successfulShots, EnemyController.enemiesKilled, Constant.getPlayerXP(), System.currentTimeMillis() - GameLoop.startOfGame);
                 gameOverPanel.setVisible(true);
                 gameEnd(game);
@@ -81,6 +83,8 @@ public class CheckTheStateOfTheGame {
             game.getConstant().updateToSkillAndXp();
             Constant.setSavedXp(Constant.getPlayerXP() + Constant.getSavedXp());
             game.getConstant().writeInFile(Constant.getSavedXp(), Constant.levelOfAttack, Constant.levelOfDefend, Constant.levelOfChangeShape);
+            Constant.setBossTriggered(false);
+
         }
     }
     private void setTheStartState(Game game){
@@ -106,7 +110,6 @@ public class CheckTheStateOfTheGame {
             }
             game.getEnemyController().setEnemyArrayList(new ArrayList<>());
             game.getEnemyController().setBlackOrbs(new ArrayList<>());
-
         }
     }
 

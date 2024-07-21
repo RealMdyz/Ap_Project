@@ -14,7 +14,7 @@ public class ArchmireAoeController {
     public void control(Game game){
         updateAoE(game.getEnemyController().getEnemyArrayList());
         checkTheAoeDamage(game);
-        if(Math.random() < 0.01)
+        if(Math.random() < 0.08)
              fadingTheAoeAre(game.getEnemyController().getEnemyArrayList());
     }
     public void updateAoE(ArrayList<Enemy> enemyArrayList) {

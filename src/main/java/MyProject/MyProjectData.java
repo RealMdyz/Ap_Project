@@ -40,6 +40,9 @@ public class MyProjectData {
     protected BufferedImage smileyLeftHand ;
     protected BufferedImage smileyRightHand ;
     protected BufferedImage smileyPunch;
+
+    protected BufferedImage headSkeleton ;
+
     protected Font font10;
     protected Font font12;
     protected Font font15;
@@ -75,6 +78,14 @@ public class MyProjectData {
     private void importImages(){
         gameMenuImage = new ImageIcon("Game/GameMenuImage.jpg");
         gameIcon = new ImageIcon("Game/GameIcon.ico");
+
+        try {
+            String pathBackground = "Enemy/head dead.png";
+            File fileBackground = new File(pathBackground);
+            headSkeleton = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         try {
             String pathBackground = "Enemy/Punch.gif";
             File fileBackground = new File(pathBackground);
@@ -553,5 +564,13 @@ public class MyProjectData {
 
     public void setSmileyPunch(BufferedImage smileyPunch) {
         this.smileyPunch = smileyPunch;
+    }
+
+    public BufferedImage getHeadSkeleton() {
+        return headSkeleton;
+    }
+
+    public void setHeadSkeleton(BufferedImage headSkeleton) {
+        this.headSkeleton = headSkeleton;
     }
 }

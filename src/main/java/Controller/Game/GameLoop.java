@@ -82,7 +82,8 @@ public class GameLoop{
                     game.getStorePanel().setVisible(false);
                     game.getCheckTheStateOfTheGame().allThing(game);
                     game.getEpsilon().getEpsilonController().setTheEpsilonFrameSize(game);
-                    game.getEpsilon().getEpsilonController().fireShot(game);
+                    if(!Constant.isBossTriggered())
+                        game.getEpsilon().getEpsilonController().fireShot(game);
                     game.getIntersectionController().getCheckIntersectionShotsToEnemy().checkIntersectionShotsToEnemy(game);
                 }
                 else{
