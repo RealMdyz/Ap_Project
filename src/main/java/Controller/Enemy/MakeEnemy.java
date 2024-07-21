@@ -1,5 +1,6 @@
 package Controller.Enemy;
 
+import Controller.Game.FrameIntersection;
 import Models.Constant;
 import Models.Enemy.Enemy;
 import Models.Enemy.MiniBoss.Barricados.Barricados;
@@ -16,11 +17,8 @@ public class MakeEnemy {
     }
 
     public Enemy makeRandomEnemy(int random, int currentWaveIndex){
-        boolean test = false;
-        if(test){
-            return makeOmenoct();
-        }
-        else if(currentWaveIndex <= 2){
+
+        if(currentWaveIndex <= 2){
             random %= 4;
             random = Math.abs(random);
             if(random == 0) {
@@ -97,19 +95,39 @@ public class MakeEnemy {
 
         return new Wyrm(15, 15, gameFrame);
     }
-    private Barricados makebarricados(){
+    private Barricados makebarricados() {
         Random random = new Random();
-        int locX = Math.abs(random.nextInt() % 100);
-        int locY = Math.abs(random.nextInt() % 600);
+        int locX, locY;
+        GameFrame gameFrame;
 
-        boolean isSolb = random.nextBoolean();
+        // Find a valid spawn position
+        do {
+            if(Math.random() < 0.1){
+                makeRandomEnemy(random.nextInt(), game.getEnemyController().getCurrentWaveIndex());
+            }
+            locX = Math.abs(random.nextInt() % 1000); // Adjust the range as necessary
+            locY = Math.abs(random.nextInt() % 600); // Adjust the range as necessary
+            gameFrame = new GameFrame(Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS, true, random.nextBoolean());
+        } while (!isValidSpawnPosition(gameFrame, locX, locY));
 
-        GameFrame gameFrame = new GameFrame(Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS, true, isSolb);
+        gameFrame.setBounds(locX, locY, Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS);
         game.getGameFrames().add(gameFrame);
         gameFrame.setVisible(true);
         game.getEpsilonFrame().requestFocus();
-        gameFrame.setBounds(locX, locY, Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS);
 
         return new Barricados(gameFrame);
     }
+
+    private boolean isValidSpawnPosition(GameFrame newFrame, int x, int y) {
+        newFrame.setBounds(x, y, Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS);
+
+        for (GameFrame existingFrame : game.getGameFrames()) {
+            if (FrameIntersection.twoFrameIntersection(newFrame, existingFrame)) {
+                return false; // Intersection found
+            }
+        }
+        return true; // No intersection
+    }
+
 }
+

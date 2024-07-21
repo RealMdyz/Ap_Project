@@ -58,7 +58,7 @@ public class IntersectionHandler {
     public boolean handleIntersectionVertexToObjectInGameForEnemiesVertexAndEpsilon(ArrayList<Vertex> vertices, Epsilon epsilon) {
         boolean c = false;
         for (Vertex vertex : vertices) {
-            if (intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(vertex, epsilon) && System.currentTimeMillis() - vertex.getLastAttackFromMe() > 100) {
+            if (intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(vertex, epsilon) && System.currentTimeMillis() - vertex.getLastAttackFromMe() > 500) {
                 epsilon.reduceHp(vertex.getPower(), AttackType.MELEE, EntityType.ENEMY);
                 vertex.setLastAttackFromMe(System.currentTimeMillis());
                 ImpactManager.checkAndDoingTheImpact(epsilon, vertex.getX(), vertex.getY());

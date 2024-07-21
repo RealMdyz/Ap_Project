@@ -18,8 +18,9 @@ public class Constant {
 
     private final Object lockForStore = new Object();
     public static final int NUMBER_OF_WAVE = 5;
+    public static final int OMENOCT_BONUS_SPEED = 7;
     public static final int NORMAL_BOSS_FIGHT_CHUNK_SIZE = 80;
-    public static final int SPAWN_SMILEY_PUNCH_HP = 320;
+    public static final int SPAWN_SMILEY_PUNCH_HP = 200;
     public static final int RADIUS_FOR_APPEARING_NECROPICK = 200;
     public static final int FIRST_HEIGHT = 700;
     public static final int FIRST_WIDTH = 700;

@@ -5,6 +5,8 @@ import Models.Enemy.Enemy;
 import Models.Enemy.MiniBoss.Barricados.Barricados;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrb;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrbChuck;
+import Models.Enemy.Normal.Aoe;
+import Models.Enemy.Normal.Archmire;
 import Models.Enemy.Normal.Necropick;
 import Models.Game;
 
@@ -29,7 +31,7 @@ public class EnemyController {
     }
     public void controllingTheEnemies(){
         spawnProcess();
-        if(currentWaveIndex > 3){
+        if(currentWaveIndex == 4){
             blackOrbSpawnProcess();
             for(BlackOrb blackOrb : blackOrbs){
                 for(BlackOrbChuck blackOrbChuck : blackOrb.getBlackOrbChucks())
@@ -37,7 +39,6 @@ public class EnemyController {
             }
 
         }
-
         for(Enemy enemy : enemyArrayList){
             enemy.specialPowers(game.getEpsilon());
             enemy.move();
@@ -68,7 +69,6 @@ public class EnemyController {
         enemyArrayList.add(enemy);
     }
     public void removingEnemies() {
-
         Iterator<Enemy> iterator = enemyArrayList.iterator();
         while (iterator.hasNext()) {
             Enemy enemy = iterator.next();
@@ -106,10 +106,6 @@ public class EnemyController {
                 }
             }
         }
-
-
-
-
     }
     public void spawnProcess(){
         if(currentWaveIndex >= waveController.getEnemiesToKillEachWave().length){
@@ -130,9 +126,17 @@ public class EnemyController {
             Random random = new Random();
             addEnemy(makeEnemy.makeRandomEnemy(random.nextInt(), currentWaveIndex));
         }
-
-
         waveController.setCurrentDelay(waveController.getCurrentDelay() + (long) (2L * currentWaveIndex + 5));
+    }
+    public void fadingTheAoeAre() {
+        for (Enemy enemy : enemyArrayList) {
+            if (enemy instanceof Archmire) {
+                Archmire archmire = (Archmire) enemy;
+                for (Aoe aoe : archmire.getAoeList()) {
+                    aoe.fade();
+                }
+            }
+        }
     }
 
     public ArrayList<Enemy> getEnemyArrayList() {

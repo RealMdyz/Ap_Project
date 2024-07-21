@@ -18,7 +18,8 @@ public class Necropick extends Enemy {
     long time = System.currentTimeMillis();
     private ArrayList<Shot> shots = new ArrayList<>();
     private boolean setVisibilityAtThisTimeOfAppearing = false;
-
+    private boolean lastSettingThePos = false;
+    private  Aoe markArea;
     int[] x = {-50, -50, 50, 50};
     int[] y = {50, -50, 50, -50};
     Epsilon epsilon;
@@ -26,12 +27,10 @@ public class Necropick extends Enemy {
     boolean canShot = true;
     public Necropick(int x, int y, GameFrame frame) {
         super(x, y, 10, 4, 2, 0, 5, false, frame);
-
         this.setHeight(Constant.getHeightOfNecropick());
         this.setWidth(Constant.getWidthOfNecropick());
-        this.setxCenter(this.getX() + (int)this.getWidth() / 2);
-        this.setyCenter(this.getY() + (int)this.getHeight() / 2);
         this.setVisible(false);
+        markArea = new Aoe(0, 0, 2000, 0, 10, 10, frame);
         setSize(Constant.getWidthOfNecropick(), Constant.getHeightOfNecropick());
         background = MyProjectData.getProjectData().getNecropick();
     }
@@ -40,6 +39,7 @@ public class Necropick extends Enemy {
         Graphics2D g2D = (Graphics2D) g;
         g2D.drawImage(background, 0, 0, Constant.getWidthOfOmenoct(), Constant.getHeightOfOmenoct(), null);
     }
+
 
     @Override
     public void move() {
@@ -56,18 +56,31 @@ public class Necropick extends Enemy {
         moveShots();
     }
     private void checkTimeForAppearAndDisappear(int xEpsilon, int yEpsilon){
-        if(System.currentTimeMillis() - time < 8000){
+        if(!currentFrame.equals(epsilon.getCurrentFrame()))
+            this.changeFrameAndPaint(epsilon.getCurrentFrame());
+        long current = System.currentTimeMillis();
+        if(current - time < 7500){
             this.setVisible(false);
             this.setHovering(true);
             setVisibilityAtThisTimeOfAppearing = false;
+            lastSettingThePos = false;
+        }
+        else if(current - time < 8000){
+            if(!lastSettingThePos){
+                Point newLocation = getRandomPointInCircle(Constant.RADIUS_FOR_APPEARING_NECROPICK, xEpsilon, yEpsilon); // شعاع دلخواه را جایگزین کنید
+                this.setX(newLocation.x);
+                this.setY(newLocation.y);
+                markArea = new Aoe(this.getX(), this.getY(), 2000, 0, 15, 15, currentFrame);
+                System.out.println(markArea.getX() + " " + markArea.getY());
+                markArea.getCurrentFrame().addToGamePanel(markArea);
+                lastSettingThePos = true;
+            }
         }
         else if(System.currentTimeMillis() - time < 12000){
             this.setVisible(true);
             if(!setVisibilityAtThisTimeOfAppearing){
                 setVisibilityAtThisTimeOfAppearing = true;
-                Point newLocation = getRandomPointInCircle(Constant.RADIUS_FOR_APPEARING_NECROPICK, xEpsilon, yEpsilon); // شعاع دلخواه را جایگزین کنید
-                this.setX(newLocation.x);
-                this.setY(newLocation.y);
+                markArea.getCurrentFrame().removeFromGamePanel(markArea);
                 this.setHovering(false);
                 fireShots();
             }
@@ -81,6 +94,8 @@ public class Necropick extends Enemy {
     public void removeTheImpactOnTheFrame() {
         for(Shot shot : shots)
             currentFrame.removeFromGamePanel(shot);
+        if(isHovering())
+             markArea.getCurrentFrame().removeFromGamePanel(markArea);
     }
 
     public long getTime() {

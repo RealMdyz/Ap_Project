@@ -1,8 +1,10 @@
 package Controller.Game;
 
 
+import Models.Constant;
 import Models.Enemy.Enemy;
 import Models.Epsilon.Collectible;
+import Models.Game;
 import View.Game.GameFrame;
 
 import java.util.ArrayList;
@@ -49,6 +51,17 @@ public class CollectibleController {
             }
         }
         collectibles.removeAll(collectibleArrayList);
+    }
+    public void checkTheIntersectionBetweenACollectibleAndEpsilon(Game game){
+        ArrayList<Collectible> collectibleArrayList = new ArrayList<>();
+        for(Collectible collectible : game.getCollectibleController().collectibles){
+            if(Intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(game.getEpsilon(), collectible)){
+                game.getCollectibleController().intersectionHappen(collectible);
+                collectibleArrayList.add(collectible);
+                Constant.setPlayerXP(Constant.getPlayerXP() + collectible.getIncreaseXp());
+            }
+        }
+        game.getCollectibleController().getCollectibles().removeAll(collectibleArrayList);
     }
     public ArrayList<Collectible> getCollectibles() {
         return collectibles;

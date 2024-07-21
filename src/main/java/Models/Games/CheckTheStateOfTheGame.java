@@ -39,6 +39,7 @@ public class CheckTheStateOfTheGame {
 
         }
         if(game.getEnemyController().getCurrentWaveIndex() == 5){
+            game.getEnemyController().setCurrentWaveIndex(7);
             setTheStartState(game);
             try {
                 Thread.sleep(100);
@@ -47,7 +48,6 @@ public class CheckTheStateOfTheGame {
             }
             game.getBossFightManger().trigger(game);
             Constant.setBossTriggered(true);
-            game.getEnemyController().setCurrentWaveIndex(7);
             game.getEpsilon().getCurrentFrame().requestFocus();
         }
     }
@@ -58,9 +58,9 @@ public class CheckTheStateOfTheGame {
                 gameFrame.setVisible(false);
             game.getMusicPlayer().stop();
             game.getEpsilonFrame().setVisible(false);
+            game.getConstant().updateToSkillAndXp();
             Constant.setSavedXp(Constant.getPlayerXP() + Constant.getSavedXp());
-            // GameData gameData = (GameData.loadGame());
-            // System.out.println(gameData.epsilon.getX() + " " + gameData.epsilon.getY());
+            game.getConstant().writeInFile(Constant.getSavedXp(), Constant.levelOfAttack, Constant.levelOfDefend, Constant.levelOfChangeShape);
         }
     }
     private void setTheStartState(Game game){
@@ -86,7 +86,7 @@ public class CheckTheStateOfTheGame {
             }
             game.getEnemyController().setEnemyArrayList(new ArrayList<>());
             game.getEnemyController().setBlackOrbs(new ArrayList<>());
-            game.getEnemyController().setLastBlackOrbDone(false);
+
         }
     }
 

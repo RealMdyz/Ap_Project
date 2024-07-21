@@ -13,9 +13,6 @@ import java.util.ArrayList;
 public class FrameIntersection {
 
     public FrameIntersection(){}
-    public  void changeLocalFrame(GameFrame frame, ObjectsInGame entity) {
-
-    }
     public static boolean twoFrameIntersection(GameFrame frame1, GameFrame frame2) {
         Rectangle bounds1 = new Rectangle(frame1.getX(), frame1.getY(), frame1.getWidth(), frame1.getHeight());
         Rectangle bounds2 = new Rectangle(frame2.getX(), frame2.getY(), frame2.getWidth(), frame2.getHeight());

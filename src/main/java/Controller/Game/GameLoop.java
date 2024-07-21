@@ -75,10 +75,9 @@ public class GameLoop{
                 if(!Constant.isOpenStore() && !Constant.isOpenCheckPointPanel()){
                     if(game.getBossFightManger().isFirstSpawnOfBossFight() || !Constant.isBossTriggered()){
                         game.getEpsilon().move();
-                        game.getEpsilon().specialPower(game);
                         game.getSkillTreeLogic().runSkills();
                     }
-                    if(Constant.isBossTriggered()){
+                    if(Constant.isBossTriggered() && game.getBossFightManger().isFirstSpawnOfBossFight()){
                         game.getEpsilon().getEpsilonController().handelEpsilonShotInBossFight(game);
                     }
                 }
@@ -121,6 +120,8 @@ public class GameLoop{
                 if(!Constant.isOpenStore() && !Constant.isOpenCheckPointPanel()) {
                     game.getUpdateToPanel().updateTopPanel(startOfGame, game.getEnemyController().getCurrentWaveIndex(), Constant.NUMBER_OF_WAVE,game.getEpsilon().getHp());
                     game.getCollectibleController().checkTheExpirationTime();
+                    game.getCollectibleController().checkTheIntersectionBetweenACollectibleAndEpsilon(game);
+                    game.getEnemyController().fadingTheAoeAre();
                 }
 
                 try {
@@ -155,6 +156,7 @@ public class GameLoop{
                 if(!Constant.isOpenStore() && !Constant.isOpenCheckPointPanel()) {
                     game.getIntersectionController().controllingAllIntersections(game);
                     game.getEpsilon().getEpsilonController().setTheEpsilonFrameSize(game);
+                    game.getEpsilon().getEpsilonController().fireShot(game);
                 }
                 try {
                     Thread.sleep(10);

@@ -69,6 +69,7 @@ public class Game {
         bossFightManger = new BossFightManger(bossFightAttackParadigm);
         makeEpsilonFrame(epsilonFrame);
         epsilonFrame.addToGamePanel(epsilon);
+        getGameFrames().add(epsilonFrame);
 
     }
     public void makeEpsilonFrame(GameFrame gameFrame){

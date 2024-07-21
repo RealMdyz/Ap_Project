@@ -60,8 +60,21 @@ public class Omenoct extends Enemy {
         if(currentFrame.equals(epsilon.getCurrentFrame())){
             setTargetPosition();
             if(isInSide()){
-                addX(0);
-                addX(0);
+                // To do :
+                if(side <= 1){
+                    int deltaX = epsilon.getX() - this.getX();
+                    if(Math.abs(deltaX) < 10)
+                        return;
+                    deltaX /= Math.abs(deltaX);
+                    addX(deltaX * Constant.OMENOCT_BONUS_SPEED);
+                }
+                else {
+                    int deltaY = epsilon.getY() - this.getY();
+                    if(Math.abs(deltaY) < 10)
+                        return;
+                    deltaY /= Math.abs(deltaY);
+                    addY(deltaY * Constant.OMENOCT_BONUS_SPEED);
+                }
             }
             else{
                 int deltaX = targetX - this.getX();
@@ -74,11 +87,11 @@ public class Omenoct extends Enemy {
                     this.addX((int) (directionX * Constant.SPEED_OF_NORMAL_ENEMY));
                     this.addY((int) (directionY * Constant.SPEED_OF_NORMAL_ENEMY));
                 }
-                ///System.out.println(this.getX() + " " + this.getY() + " " +targetX + "  " + targetY + " " + deltaX + " " + deltaY + " " + side);
             }
         }
         else{
-
+            if(!currentFrame.equals(epsilon.getCurrentFrame()))
+                this.changeFrameAndPaint(epsilon.getCurrentFrame());
         }
         repaint();
     }
@@ -90,7 +103,6 @@ public class Omenoct extends Enemy {
         int yEpsilon = epsilon.getY();
         shotAShot(xEpsilon, yEpsilon);
         moveShots();
-
     }
     private void shotAShot(int xEpsilon, int yEpsilon){
         if(System.currentTimeMillis() - lastShotTime > Constant.getEveryShotOmenoct()){

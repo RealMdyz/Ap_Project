@@ -95,6 +95,7 @@ public class LoginPageShare extends JFrame implements ActionListener {
         repaint();
     }
     private void Start() {
+        constant = new Constant();
         Game game = new Game(constant);
         GameLoop gameLoop = new GameLoop(game, constant);
         game.getEpsilonFrame().setVisible(true);

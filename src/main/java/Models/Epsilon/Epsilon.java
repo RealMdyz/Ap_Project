@@ -20,7 +20,7 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     public Epsilon(int x, int y, GameFrame jFrame) {
         super(x, y, 100, jFrame);
         epsilonLogic = new EpsilonLogic();
-        epsilonController = new EpsilonController();
+        epsilonController = new EpsilonController(epsilonLogic);
         this.setHeight(70);
         this.setWidth(70);
         setSize(this.getWidth(), this.getHeight());
@@ -32,11 +32,6 @@ public class Epsilon extends ObjectsInGame implements Moveable {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
         g2D.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
-    }
-    public void specialPower(Game game){
-        if(!Constant.isBossTriggered()){
-            epsilonLogic.fireShot(game);
-        }
     }
 
     @Override

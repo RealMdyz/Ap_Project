@@ -18,26 +18,11 @@ public class EpsilonLogic {
     public EpsilonLogic(){
 
     }
-    protected void fireShot(Game game){
-        if (game.getInputListener().getxMousePress() != -1 || game.getInputListener().getyMousePress() != -1) {
-            Shot shot = new Shot(game.getEpsilon().getX(), game.getEpsilon().getY(), game.getEpsilon().getPowerOfShot(), game.getEpsilon().getCurrentFrame(), true);
-            if(isInPhonoiSlaughter)
-                shot.setPower(50);
-            isInPhonoiSlaughter = false;
-            game.getEpsilon().getCurrentFrame().add(shot);
-            game.getEpsilon().shots.add(shot);
-            shot.setV(game.getInputListener().getxMousePress(), game.getInputListener().getyMousePress());
-            game.getInputListener().setxMousePress(-1);
-            game.getInputListener().setyMousePress(-1);
-        }
-    }
     protected void move(Epsilon epsilon){
 
         int xLimit = epsilon.getCurrentFrame().getWidth();
         int yLimit = epsilon.getCurrentFrame().getHeight();
 
-        // System.out.println(xLimit + " " + yLimit);
-        //System.out.println(this.getX() + " " + this.getY() + " " + this.getxVelocity() + " " + this.getyVelocity());
         double t = ((double)System.currentTimeMillis() - (double)epsilon.getImpactTime()) / 1000;
         t = Math.max(0, (1 - t));
         double x = (epsilon.getxVelocityImpact()) * (t);

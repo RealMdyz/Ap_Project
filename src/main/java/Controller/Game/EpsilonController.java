@@ -3,6 +3,7 @@ package Controller.Game;
 import Controller.BossFight.BossFightManger;
 import Models.AttackType;
 import Models.EntityType;
+import Models.Epsilon.EpsilonLogic;
 import Models.Epsilon.Shot;
 import Models.Game;
 import View.Game.GameFrame;
@@ -13,13 +14,27 @@ import java.util.List;
 
 public class EpsilonController {
     boolean firstTime = true;
-
-    public EpsilonController() {
+    EpsilonLogic epsilonLogic;
+    public EpsilonController(EpsilonLogic epsilonLogic) {
+        this.epsilonLogic = epsilonLogic;
     }
 
     public void setTheEpsilonFrameSize(Game game) {
-        if (firstTime || Math.random() < 0.03) {
+        if (firstTime || Math.random() < 0.04) {
             reduceEpsilonFrameSize(game);
+        }
+    }
+    protected void fireShot(Game game){
+        if (game.getInputListener().getxMousePress() != -1 || game.getInputListener().getyMousePress() != -1) {
+            Shot shot = new Shot(game.getEpsilon().getX(), game.getEpsilon().getY(), game.getEpsilon().getPowerOfShot(), game.getEpsilon().getCurrentFrame(), true);
+            if(epsilonLogic.isInPhonoiSlaughter())
+                shot.setPower(50);
+            epsilonLogic.setInPhonoiSlaughter(false);
+            game.getEpsilon().getCurrentFrame().add(shot);
+            game.getEpsilon().getShots().add(shot);
+            shot.setV(game.getInputListener().getxMousePress(), game.getInputListener().getyMousePress());
+            game.getInputListener().setxMousePress(-1);
+            game.getInputListener().setyMousePress(-1);
         }
     }
     public void reduceEpsilonFrameSize(Game game) {
@@ -44,18 +59,10 @@ public class EpsilonController {
         int frameWidth = epsilonFrame.getWidth();
         int frameHeight = epsilonFrame.getHeight();
 
-        return shotX <= 0 || shotX >= frameWidth - shot.getWidth() ||
-                shotY <= 0 || shotY >= frameHeight - shot.getHeight();
+        return shotX <= 0 || shotX >= frameWidth ||
+                shotY <= 0 || shotY >= frameHeight ;
     }
 
-    public boolean isCollidingWithRigidFrame(Shot shot, Game game) {
-        for (GameFrame frame : game.getGameFrames()) {
-            if (frame.isSolb() && frame.getBounds().intersects(shot.getBounds())) {
-                return true;
-            }
-        }
-        return false;
-    }
     public void handelEpsilonShotInBossFight(Game game){
         ArrayList<Shot> shotArrayList = new ArrayList<>();
         if (game.getInputListener().getxMousePress() != -1 || game.getInputListener().getyMousePress() != -1) {

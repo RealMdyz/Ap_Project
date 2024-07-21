@@ -76,7 +76,7 @@ public class Archmire extends Enemy {
     }
     public void checkAoEDamage(ObjectsInGame objectsInGame) {
         for (Aoe aoe : aoeList) {
-            aoe.checkAndReduceTheHP(objectsInGame);
+            aoe.checkAndReduceTheHP(objectsInGame, EntityType.ENEMY);
         }
     }
 
@@ -88,6 +88,8 @@ public class Archmire extends Enemy {
 
     @Override
     public void move() {
+        if(!currentFrame.equals(epsilon.getCurrentFrame()))
+            this.changeFrameAndPaint(epsilon.getCurrentFrame());
         int deltaX = xEpsilon + xEpsilonFrame - this.getX() - this.getCurrentFrame().getX();
         int deltaY = yEpsilon + yEpsilonFrame - this.getY() - this.getCurrentFrame().getY();
         double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -154,5 +156,13 @@ public class Archmire extends Enemy {
 
     public void setLastDrownAttack(long lastDrownAttack) {
         this.lastDrownAttack = lastDrownAttack;
+    }
+
+    public List<Aoe> getAoeList() {
+        return aoeList;
+    }
+
+    public void setAoeList(List<Aoe> aoeList) {
+        this.aoeList = aoeList;
     }
 }
