@@ -171,5 +171,19 @@ public class BlackOrb {
         return false;
     }
 
+    public int getxCenter() {
+        return xCenter;
+    }
 
+    public void setxCenter(int xCenter) {
+        this.xCenter = xCenter;
+    }
+
+    public int getyCenter() {
+        return yCenter;
+    }
+
+    public void setyCenter(int yCenter) {
+        this.yCenter = yCenter;
+    }
 }

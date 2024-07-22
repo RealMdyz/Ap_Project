@@ -21,39 +21,33 @@ public class IntersectionHandler {
     }
 
     public void handleShotIntersections(Game game, Necropick enemy) {
-        ArrayList<Shot> shotArrayList = new ArrayList<>();
         for(Shot shot : enemy.getShots()){
             if(intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(game.getEpsilon(), shot)){
-                game.getEpsilon().reduceHp(enemy.getPower(), AttackType.RANGED, EntityType.ENEMY);
-                shotArrayList.add(shot);
+                game.getEpsilon().reduceHp(shot.getPower(), AttackType.RANGED, EntityType.ENEMY);
+                shot.setPower(0);
                 enemy.getCurrentFrame().removeFromGamePanel(shot);
             }
         }
-        enemy.getShots().removeAll(shotArrayList);
     }
 
     public void handleShotIntersections(Game game, Wyrm enemy) {
-        ArrayList<Shot> shotArrayList = new ArrayList<>();
         for(Shot shot : enemy.getShots()){
             if(intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(game.getEpsilon(), shot)){
-                game.getEpsilon().reduceHp(enemy.getPower(), AttackType.RANGED, EntityType.ENEMY);
-                shotArrayList.add(shot);
+                game.getEpsilon().reduceHp(shot.getPower(), AttackType.RANGED, EntityType.ENEMY);
+                shot.setPower(0);
                 enemy.getCurrentFrame().removeFromGamePanel(shot);
             }
         }
-        enemy.getShots().removeAll(shotArrayList);
     }
 
     public void handleShotIntersections(Game game, Omenoct enemy) {
-        ArrayList<Shot> shotArrayList = new ArrayList<>();
         for(Shot shot : enemy.getShots()){
             if(intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(game.getEpsilon(), shot)){
-                game.getEpsilon().reduceHp(enemy.getPower(), AttackType.RANGED, EntityType.ENEMY);
-                shotArrayList.add(shot);
+                game.getEpsilon().reduceHp(shot.getPower(), AttackType.RANGED, EntityType.ENEMY);
+                shot.setPower(0);
                 enemy.getCurrentFrame().removeFromGamePanel(shot);
             }
         }
-        enemy.getShots().removeAll(shotArrayList);
     }
     public boolean handleIntersectionVertexToObjectInGameForEnemiesVertexAndEpsilon(ArrayList<Vertex> vertices, Epsilon epsilon) {
         boolean c = false;

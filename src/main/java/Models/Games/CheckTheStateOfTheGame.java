@@ -21,11 +21,11 @@ public class CheckTheStateOfTheGame {
 
     }
     public void allThing(Game game){
-        //saveGameData(game);
+        saveGameData(game);
         checkTheState(game);
     }
     private void saveGameData(Game game){
-        GameData.saveGame(game);
+        game.getCreateFromConfig().createLevelConfig(game);
     }
     private void checkTheState(Game game){
         if(game.getEpsilon().getHp() <= 0 && haveACheckPoint == 0){
@@ -84,6 +84,9 @@ public class CheckTheStateOfTheGame {
             Constant.setSavedXp(Constant.getPlayerXP() + Constant.getSavedXp());
             game.getConstant().writeInFile(Constant.getSavedXp(), Constant.levelOfAttack, Constant.levelOfDefend, Constant.levelOfChangeShape);
             Constant.setBossTriggered(false);
+            Constant.setqPressed(false);
+            Constant.setPlayerXP(0);
+            
 
         }
     }

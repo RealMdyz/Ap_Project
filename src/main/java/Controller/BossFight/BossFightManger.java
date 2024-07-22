@@ -16,41 +16,21 @@ public class BossFightManger {
     SmileyRightHand smileyRightHand;
     SmileyLeftHand smileyLeftHand;
     SmileyPunch smileyPunch;
-    private  boolean firstSpawnOfBossFight = false;
-    private boolean intersectWithEpsilonFrameAtTheStart = false;
     public static boolean openAttackToSmileyFace = false;
     public static boolean openAttackToSmileyHands = false;
     BossFightAttackParadigm bossFightAttackParadigm;
+    FirstSpawnBossFight firstSpawnBossFight;
     public BossFightManger(BossFightAttackParadigm bossFightAttackParadigm){
         this.bossFightAttackParadigm = bossFightAttackParadigm;
+        firstSpawnBossFight = new FirstSpawnBossFight();
     }
     public void control(Game game){
         if(smileyFace.getHp() <= 0)
             return;
-        if(!firstSpawnOfBossFight){
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            if(!intersectWithEpsilonFrameAtTheStart)
-                 smileyFace.getCurrentFrame().setLocation(smileyFace.getCurrentFrame().getX() + 1, smileyFace.getCurrentFrame().getY() + 1);
-            else{
-                smileyRightHand.getCurrentFrame().setVisible(true);
-                smileyLeftHand.getCurrentFrame().setVisible(true);
-                firstSpawnOfBossFight = true;
-                game.getGameFrames().add(smileyFace.getCurrentFrame());
-                game.getGameFrames().add(smileyLeftHand.getCurrentFrame());
-                game.getGameFrames().add(smileyRightHand.getCurrentFrame());
-                game.getEpsilon().getCurrentFrame().requestFocus();
-            }
-            if(FrameIntersection.twoFrameIntersection(smileyFace.getCurrentFrame(), game.getEpsilon().getCurrentFrame())){
-                intersectWithEpsilonFrameAtTheStart = true;
-                smileyFace.getCurrentFrame().setLocation(smileyFace.getCurrentFrame().getX() - 1, smileyFace.getCurrentFrame().getY() - 1);
-            }
+        if(!firstSpawnBossFight.isFirstSpawnOfBossFight()){
+            firstSpawnBossFight.firstSpawn(smileyFace, smileyRightHand, smileyLeftHand,game);
         }
         else{
-
             if(smileyRightHand.getHp() > 0 && smileyLeftHand.getHp() > 0){
                 bossFightAttackParadigm.squeezeAttackManager(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
                 bossFightAttackParadigm.projectileAttackManger(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
@@ -65,10 +45,23 @@ public class BossFightManger {
                 bossFightAttackParadigm.rapidFireAttackManger(game.getEpsilon(), smileyFace);
             }
 
+
         }
 
-
+        checkTheBossFightState();
         checkTheStateOfTheSmileyChuck(game);
+    }
+    private void checkTheBossFightState(){
+        if(smileyRightHand.getHp() < 0 && smileyRightHand != null){
+            smileyRightHand.getCurrentFrame().setVisible(false);
+            smileyFace.changeFrameAndPaint(smileyFace.getCurrentFrame());
+            smileyRightHand = null;
+        }
+        if(smileyLeftHand.getHp() < 0 && smileyLeftHand != null){
+            smileyRightHand.getCurrentFrame().setVisible(false);
+            smileyFace.changeFrameAndPaint(smileyFace.getCurrentFrame());
+            smileyLeftHand = null;
+        }
     }
     public void trigger(Game game){
         GameFrame smileyFaceFrame = new GameFrame(200, 200, false, false);
@@ -98,7 +91,6 @@ public class BossFightManger {
 
     }
     public void checkTheStateOfTheSmileyChuck(Game game){
-       // System.out.println(smileyFace.getHp() + " " + smileyLeftHand.getHp() + " " + smileyRightHand.getHp());
         if(smileyFace.getHp() <  Constant.SPAWN_SMILEY_PUNCH_HP && smileyPunch == null){
             triggerPunch(game);
         }
@@ -127,13 +119,6 @@ public class BossFightManger {
         this.smileyLeftHand = smileyLeftHand;
     }
 
-    public boolean isFirstSpawnOfBossFight() {
-        return firstSpawnOfBossFight;
-    }
-
-    public void setFirstSpawnOfBossFight(boolean firstSpawnOfBossFight) {
-        this.firstSpawnOfBossFight = firstSpawnOfBossFight;
-    }
 
     public static boolean isOpenAttackToSmileyFace() {
         return openAttackToSmileyFace;
@@ -149,5 +134,13 @@ public class BossFightManger {
 
     public static void setOpenAttackToSmileyHands(boolean openAttackToSmileyHands) {
         BossFightManger.openAttackToSmileyHands = openAttackToSmileyHands;
+    }
+
+    public FirstSpawnBossFight getFirstSpawnBossFight() {
+        return firstSpawnBossFight;
+    }
+
+    public void setFirstSpawnBossFight(FirstSpawnBossFight firstSpawnBossFight) {
+        this.firstSpawnBossFight = firstSpawnBossFight;
     }
 }

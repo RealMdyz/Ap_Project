@@ -81,9 +81,9 @@ public class EnemyController {
             if(enemy instanceof Barricados){
                 Barricados barricados = (Barricados) enemy;
                 if(barricados.isExpired()){
-                    enemy.getCurrentFrame().removeFromGamePanel(enemy);
-                    enemy.getCurrentFrame().setVisible(false);
-                    game.getGameFrames().remove(enemy.getCurrentFrame());
+                    barricados.getCurrentFrame().removeFromGamePanel(enemy);
+                    barricados.getCurrentFrame().setVisible(false);
+                    game.getGameFrames().remove(barricados.getCurrentFrame());
                     iterator.remove();
                     currentWaveEnemyDied += 1;
                     enemiesKilled += 1;

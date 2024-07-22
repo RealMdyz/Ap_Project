@@ -1,5 +1,6 @@
 package Models;
 
+import Config.CreateFromConfig;
 import Controller.BossFight.BossFightManger;
 import Controller.Enemy.EnemyController;
 import Controller.Game.*;
@@ -47,6 +48,7 @@ public class Game {
     private BossFightManger bossFightManger;
     private BossFightAttackParadigm bossFightAttackParadigm;
     private ArchmireAoeController archmireAoeController;
+    private CreateFromConfig createFromConfig;
     public Game(Constant constant){
         this.constant = constant;
         Constant.setIsRunning(true);
@@ -69,6 +71,7 @@ public class Game {
         bossFightAttackParadigm = new BossFightAttackParadigm();
         bossFightManger = new BossFightManger(bossFightAttackParadigm);
         archmireAoeController = new ArchmireAoeController();
+        createFromConfig = new CreateFromConfig();
         makeEpsilonFrame(epsilonFrame);
         epsilonFrame.addToGamePanel(epsilon);
         getGameFrames().add(epsilonFrame);
@@ -304,5 +307,13 @@ public class Game {
 
     public void setArchmireAoeController(ArchmireAoeController archmireAoeController) {
         this.archmireAoeController = archmireAoeController;
+    }
+
+    public CreateFromConfig getCreateFromConfig() {
+        return createFromConfig;
+    }
+
+    public void setCreateFromConfig(CreateFromConfig createFromConfig) {
+        this.createFromConfig = createFromConfig;
     }
 }

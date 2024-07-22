@@ -15,7 +15,6 @@ public class Aoe extends ObjectsInGame {
     private long startOFMe;
     private long lastAttackFromMe = 0;
     private Color currentColor; // Store the current color
-
     public Aoe(int x, int y, int duration, int power, int width, int height, GameFrame gameFrame) {
         super(x, y, 0, gameFrame);
         this.x = x;

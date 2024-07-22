@@ -102,11 +102,17 @@ public class EpsilonController {
                 Epsilon.successfulShots += 1;
 
             }
+            if(game.getBossFightManger().getSmileyLeftHand() == null){
+
+            }
             else if(BossFightManger.isOpenAttackToSmileyHands() && Intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(shot, game.getBossFightManger().getSmileyLeftHand())){
                 game.getBossFightManger().getSmileyLeftHand().reduceHp(shot.getPower(), AttackType.RANGED, EntityType.EPSILON);
                 shotArrayList.add(shot);
                 shot.getCurrentFrame().removeFromGamePanel(shot);
                 Epsilon.successfulShots += 1;
+
+            }
+            if(game.getBossFightManger().getSmileyRightHand() == null){
 
             }
             else if(BossFightManger.isOpenAttackToSmileyHands() && Intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(shot, game.getBossFightManger().getSmileyRightHand())){

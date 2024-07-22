@@ -1,6 +1,6 @@
 package Controller.Game;
 
-import Controller.Enemy.CheckIntersectionShotsToEnemy;
+import Controller.Enemy.HandelEpsilonShots;
 import Controller.Enemy.NormalEnemyPowerIntersection;
 import Models.AttackType;
 import Models.Enemy.Enemy;
@@ -21,13 +21,14 @@ public class IntersectionController {
 
     Intersection intersection;
     IntersectionHandler intersectionHandler;
-    CheckIntersectionShotsToEnemy checkIntersectionShotsToEnemy;
+    HandelEpsilonShots handelEpsilonShots;
     NormalEnemyPowerIntersection normalEnemyPowerIntersection;
     public IntersectionController(){
         intersection = new Intersection();
         intersectionHandler = new IntersectionHandler(intersection);
-        checkIntersectionShotsToEnemy = new CheckIntersectionShotsToEnemy();
+        handelEpsilonShots = new HandelEpsilonShots();
         normalEnemyPowerIntersection = new NormalEnemyPowerIntersection();
+
     }
     public void controllingAllIntersections(Game game){
         checkTheAddingAndRemovingTheEnemiesFromTheFramesToEpsilonFrame(game);
@@ -36,98 +37,8 @@ public class IntersectionController {
         checkTheIntersectionBetweenBarricadosFrameAndWyrmFrame(game);
         checkTheLinePowerOfBlackOrbChunks(game);
         checkTheCheckPointIntersection(game);
-        checkTheEpsilonShotIntersectionToHisFrame(game);
-        checkTheIntersectionForBlackOrb(game);
     }
-    public void checkTheEpsilonShotIntersectionToHisFrame(Game game){
-        ArrayList<Shot> shotsToRemove = new ArrayList<>();
-        List<Shot> shotsCopy;
 
-        synchronized (game.getEpsilon().getShots()) {
-            shotsCopy = new ArrayList<>(game.getEpsilon().getShots());
-            for (Shot shot : shotsCopy) {
-                shot.move();
-                shot.repaint();
-                shot.getCurrentFrame().repaint();
-                if (game.getEpsilon().getEpsilonController().isCollidingWithFrameEdge(shot, game.getEpsilonFrame())) {
-                    game.getEpsilon().getEpsilonController().enlargeEpsilonFrame(game, shot);
-                    shot.getCurrentFrame().removeFromGamePanel(shot);
-                    shotsToRemove.add(shot);
-                }
-            }
-
-            // Remove identified shots from the original list
-            game.getEpsilon().getShots().removeAll(shotsToRemove);
-        }
-
-        checkTheIntersectionToTheWallForReduceTheOmenoctHp(game, shotsToRemove);
-    }
-    public void checkTheIntersectionToTheWallForReduceTheOmenoctHp(Game game, ArrayList<Shot> shots){
-        for(Shot shot : shots){
-            if(shot.getX() <= 0){
-                for(Enemy enemy : game.getEnemyController().getEnemyArrayList()){
-                    if(enemy instanceof  Omenoct){
-                        Omenoct omenoct = (Omenoct) enemy;
-                        if(omenoct.getSide() == 2){
-                            omenoct.reduceHp(shot.getPower(), AttackType.RANGED, EntityType.EPSILON);
-                        }
-                    }
-                }
-            }
-            else if(shot.getY() <= 0){
-                for(Enemy enemy : game.getEnemyController().getEnemyArrayList()){
-                    if(enemy instanceof  Omenoct){
-                        Omenoct omenoct = (Omenoct) enemy;
-                        if(omenoct.getSide() == 0){
-                            omenoct.reduceHp(shot.getPower(), AttackType.RANGED, EntityType.EPSILON);
-                        }
-                    }
-                }
-            }
-            else if(shot.getY() >= shot.getCurrentFrame().getHeight() - shot.getHeight()){
-                for(Enemy enemy : game.getEnemyController().getEnemyArrayList()){
-                    if(enemy instanceof  Omenoct){
-                        Omenoct omenoct = (Omenoct) enemy;
-                        if(omenoct.getSide() == 1){
-                            omenoct.reduceHp(shot.getPower(), AttackType.RANGED, EntityType.EPSILON);
-                        }
-                    }
-                }
-            }
-            else{
-                for(Enemy enemy : game.getEnemyController().getEnemyArrayList()){
-                    if(enemy instanceof  Omenoct){
-                        Omenoct omenoct = (Omenoct) enemy;
-                        if(omenoct.getSide() == 3){
-                            omenoct.reduceHp(shot.getPower(), AttackType.RANGED, EntityType.EPSILON);
-                        }
-                    }
-                }
-            }
-
-        }
-    }
-    public void checkTheIntersectionForBlackOrb(Game game){
-
-        if(!game.getEnemyController().isLastBlackOrbDone())
-            return;
-
-        Shot shot1 = new Shot(0, 0, 0, game.getEpsilon().getCurrentFrame(), false);
-        for(Shot shot : game.getEpsilon().getShots()){
-            for(BlackOrb blackOrb : game.getEnemyController().getBlackOrbs()){
-                for(BlackOrbChuck blackOrbChuck : blackOrb.getBlackOrbChucks()){
-                    if(intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(blackOrbChuck, shot)){
-                        blackOrbChuck.reduceHp(shot.getPower(), AttackType.RANGED, EntityType.EPSILON);
-                        shot1 = shot;
-                        break;
-                    }
-                }
-            }
-        }
-        game.getEpsilon().getCurrentFrame().removeFromGamePanel(shot1);
-        game.getEpsilon().getShots().remove(shot1);
-
-    }
     public void checkTheCheckPointIntersection(Game game){
         if(game.getEnemyController().getCurrentWaveIndex() == 1 && game.getCheckPointController().wave2CheckPoint != null && intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(game.getEpsilon(), game.getCheckPointController().wave2CheckPoint)){
             game.getCheckPointController().checkPointStart(game);
@@ -253,11 +164,11 @@ public class IntersectionController {
 
     }
 
-    public CheckIntersectionShotsToEnemy getCheckIntersectionShotsToEnemy() {
-        return checkIntersectionShotsToEnemy;
+    public HandelEpsilonShots getHandelEpsilonShots() {
+        return handelEpsilonShots;
     }
 
-    public void setCheckIntersectionShotsToEnemy(CheckIntersectionShotsToEnemy checkIntersectionShotsToEnemy) {
-        this.checkIntersectionShotsToEnemy = checkIntersectionShotsToEnemy;
+    public void setHandelEpsilonShots(HandelEpsilonShots handelEpsilonShots) {
+        this.handelEpsilonShots = handelEpsilonShots;
     }
 }

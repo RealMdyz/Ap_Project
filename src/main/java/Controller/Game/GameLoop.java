@@ -15,7 +15,7 @@ public class GameLoop{
     public GameLoop(Game game, Constant constant){
         this.constant = constant;
         this.game = game;
-
+        startOfGame = System.currentTimeMillis();
 
         EpsilonThread epsilonThread = new EpsilonThread();
         CalculatorThread calculatorThread = new CalculatorThread();
@@ -57,11 +57,11 @@ public class GameLoop{
         public void run() {
             while (Constant.isIsRunning()){
                 if(!Constant.isOpenStore() && !Constant.isOpenCheckPointPanel()){
-                    if(game.getBossFightManger().isFirstSpawnOfBossFight() || !Constant.isBossTriggered()){
+                    if(game.getBossFightManger().getFirstSpawnBossFight().isFirstSpawnOfBossFight() || !Constant.isBossTriggered()){
                         game.getEpsilon().move();
                         game.getSkillTreeLogic().runSkills();
                     }
-                    if(Constant.isBossTriggered() && game.getBossFightManger().isFirstSpawnOfBossFight()){
+                    if(Constant.isBossTriggered() && game.getBossFightManger().getFirstSpawnBossFight().isFirstSpawnOfBossFight()){
                         game.getEpsilon().getEpsilonController().handelEpsilonShotInBossFight(game);
                     }
                 }
@@ -82,13 +82,18 @@ public class GameLoop{
                     game.getStorePanel().setVisible(false);
                     game.getCheckTheStateOfTheGame().allThing(game);
                     game.getEpsilon().getEpsilonController().setTheEpsilonFrameSize(game);
-                    if(!Constant.isBossTriggered())
+                    if(!Constant.isBossTriggered()){
                         game.getEpsilon().getEpsilonController().fireShot(game);
-                    game.getIntersectionController().getCheckIntersectionShotsToEnemy().checkIntersectionShotsToEnemy(game);
+                        game.getIntersectionController().getHandelEpsilonShots().checkIntersectionShotsToEnemy(game);
+                        game.getIntersectionController().getHandelEpsilonShots().checkTheEpsilonShotIntersectionToHisFrame(game);
+                        game.getIntersectionController().getHandelEpsilonShots().checkTheIntersectionForBlackOrb(game);
+                    }
+
                 }
                 else{
                     if(System.currentTimeMillis() - Constant.getStartOFHypnosSlumber() > 10000)
                       game.getStorePanel().setVisible(true);
+                    game.getStorePanel().setXpLabel();
                 }
                 try {
                     Thread.sleep(10);
