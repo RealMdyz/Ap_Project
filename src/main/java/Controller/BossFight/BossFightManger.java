@@ -31,9 +31,9 @@ public class BossFightManger {
             firstSpawnBossFight.firstSpawn(smileyFace, smileyRightHand, smileyLeftHand,game);
         }
         else{
-            if(smileyRightHand.getHp() > 0 && smileyLeftHand.getHp() > 0){
+            bossFightAttackParadigm.projectileAttackManger(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
+            if(smileyRightHand != null && smileyLeftHand != null){
                 bossFightAttackParadigm.squeezeAttackManager(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
-                bossFightAttackParadigm.projectileAttackManger(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
             }
             if(smileyFace.getHp() < Constant.SPAWN_SMILEY_PUNCH_HP && smileyPunch != null){
                 bossFightAttackParadigm.vomitAttackManger(game.getEpsilon(), smileyFace, smileyLeftHand, smileyRightHand);
@@ -57,8 +57,9 @@ public class BossFightManger {
             smileyFace.changeFrameAndPaint(smileyFace.getCurrentFrame());
             smileyRightHand = null;
         }
+
         if(smileyLeftHand.getHp() < 0 && smileyLeftHand != null){
-            smileyRightHand.getCurrentFrame().setVisible(false);
+            smileyLeftHand.getCurrentFrame().setVisible(false);
             smileyFace.changeFrameAndPaint(smileyFace.getCurrentFrame());
             smileyLeftHand = null;
         }

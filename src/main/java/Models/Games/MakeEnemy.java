@@ -17,8 +17,6 @@ public class MakeEnemy {
     }
 
     public Enemy makeRandomEnemy(int random, int currentWaveIndex){
-        if (true)
-            return makeOmenoct();
         if(currentWaveIndex <= 2){
             random %= 4;
             random = Math.abs(random);

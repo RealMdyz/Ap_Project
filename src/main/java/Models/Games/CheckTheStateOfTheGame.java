@@ -69,6 +69,7 @@ public class CheckTheStateOfTheGame {
             if(smileyFace.getHeight() == 0){
                 GameOverPanel gameOverPanel = new GameOverPanel(epsilon.getEpsilonController().numberOfShot, Epsilon.successfulShots, EnemyController.enemiesKilled, Constant.getPlayerXP(), System.currentTimeMillis() - GameLoop.startOfGame);
                 gameOverPanel.setVisible(true);
+                Constant.setPlayerXP(Constant.getPlayerXP() + 300);
                 gameEnd(game);
             }
         }

@@ -19,19 +19,18 @@ public class HandelEpsilonShots {
 
     }
     public void checkIntersectionShotsToEnemy(Game game) {
-        ArrayList<Shot> shotArrayList = new ArrayList<>();
         for(Shot shot : game.getEpsilon().getShots()){
             for (Enemy enemy : game.getEnemyController().getEnemyArrayList()) {
-                if (Intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(enemy, shot)) {
+                if (shot.getPower() != 0 && Intersection.checkTheIntersectionBetweenAShotAndAObjectInGame(enemy, shot)) {
                     enemy.reduceHp(shot.getPower(), AttackType.RANGED, EntityType.EPSILON);
                     shot.getCurrentFrame().removeFromGamePanel(shot);
-                    shotArrayList.add(shot);
                     shot.setPower(0);
+                    Epsilon.successfulShots += 1;
                     break;
                 }
             }
         }
-        Epsilon.successfulShots += shotArrayList.size();
+
     }
     public void checkTheEpsilonShotIntersectionToHisFrame(Game game){
         ArrayList<Shot> shotsToRemove = new ArrayList<>();
