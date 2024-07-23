@@ -41,26 +41,28 @@ public class BossFightAttackParadigm {
 
     ArrayList<Shot> shotsForProjectile = new ArrayList<>();
 
+    SlapLogic slapLogic;
+    RapidFireLogic rapidFireLogic;
+    PowerPunchLogic powerPunchLogic;
+    VomitLogic vomitLogic;
+    ProjectileLogic projectileLogic;
     public BossFightAttackParadigm(){
-
+        slapLogic = new SlapLogic();
+        rapidFireLogic = new RapidFireLogic();
+        powerPunchLogic = new PowerPunchLogic();
+        vomitLogic = new VomitLogic();
+        projectileLogic = new ProjectileLogic();
     }
     public void slapAttackManger(Epsilon epsilon, SmileyRightHand smileyRightHand){
         long currentTime = System.currentTimeMillis();
         if(smileyRightHand.getHp() > 0 && Math.random() < 0.00005 && lastSlap == 0){
-            GameFrame gameFrame = smileyRightHand.getCurrentFrame();
-            smileyRightHand.changeFrameAndPaint(epsilon.getCurrentFrame());
-            smileyRightHand.setCurrentFrame(gameFrame);
-            smileyRightHand.setX(epsilon.getX() + epsilon.getWidth() - Math.abs(new Random().nextInt(20)));
-            smileyRightHand.setY(epsilon.getY() + epsilon.getHeight() - Math.abs(new Random().nextInt(20)));
-            epsilon.doImpact(smileyRightHand.getX(), smileyRightHand.getY(), 150);
-            epsilon.reduceHp(smileyRightHand.getPower(), AttackType.MELEE, EntityType.ENEMY);
+            slapLogic.startTheSlap(smileyRightHand, epsilon);
             lastSlap = currentTime;
             BossFightManger.setOpenAttackToSmileyFace(true);
 
         }
         if(currentTime - lastSlap > SLAP_INTERVAL && lastSlap != 0){
-            smileyRightHand.changeFrameAndPaint(smileyRightHand.getCurrentFrame());
-            smileyRightHand.setRandomPosAfterGettingAttack();
+            slapLogic.endTheSlap(smileyRightHand);
             BossFightManger.setOpenAttackToSmileyFace(false);
             lastSlap = 0;
         }
@@ -70,10 +72,7 @@ public class BossFightAttackParadigm {
         if(currentTime - lastRapidFire < RAPID_FIRE_INTERVAL && !faceInUseForProjectile){
             BossFightManger.setOpenAttackToSmileyFace(true);
             if(Math.random() < 0.005){
-                Shot shot = new Shot(smileyFace.getCenterX(), smileyFace.getCenterY(), smileyFace.getPower(), smileyFace.getCurrentFrame(), false);
-                shot.getCurrentFrame().addToGamePanel(shot);
-                shot.setRandomV();
-                smileyFace.getRapidFireShots().add(shot);
+                rapidFireLogic.fire(smileyFace);
             }
         }
         else if(currentTime - lastRapidFire < 2 * RAPID_FIRE_INTERVAL){
@@ -85,25 +84,7 @@ public class BossFightAttackParadigm {
             lastRapidFire = currentTime;
             BossFightManger.setOpenAttackToSmileyFace(true);
         }
-        ArrayList<Shot> shotArrayList = new ArrayList<>();
-        for(Shot shot : smileyFace.getRapidFireShots()){
-            shot.move();
-            if(Intersection.isInThisFrame(shot, epsilon.getCurrentFrame()) && !shot.getCurrentFrame().equals(epsilon.getCurrentFrame())){
-                shot.changeFrameAndPaint(epsilon.getCurrentFrame());
-
-            }
-            else if (shot.getXRelativeToTheScreen() < -200 || shot.getXRelativeToTheScreen() > 2500 || shot.getYRelativeToTheScreen() < -200 || shot.getYRelativeToTheScreen()> 2500){
-                shotArrayList.add(shot);
-                shot.getCurrentFrame().removeFromGamePanel(shot);
-            }
-            else if(Intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(shot, epsilon)){
-                epsilon.reduceHp(shot.getPower(), AttackType.RANGED, EntityType.ENEMY);
-                shotArrayList.add(shot);
-                shot.getCurrentFrame().removeFromGamePanel(shot);
-            }
-        }
-        smileyFace.getRapidFireShots().removeAll(shotArrayList);
-
+        rapidFireLogic.manageTheShots(smileyFace, epsilon);
     }
     public void quakeAttackManager(Epsilon epsilon, SmileyPunch smileyPunch){
         long currentTime = System.currentTimeMillis();
@@ -141,26 +122,7 @@ public class BossFightAttackParadigm {
         else {
             smileyLeftHand.getCurrentFrame().setSolb(true);
             smileyRightHand.getCurrentFrame().setSolb(true);
-
-            // Determine which wall to strike
-            int wallToHit = new Random().nextInt(4); // 0: top, 1: right, 2: bottom, 3: left
-            switch (wallToHit) {
-                case 0: // Top
-                    smileyPunch.getCurrentFrame().setLocation(smileyPunch.getCurrentFrame().getX(), epsilon.getCurrentFrame().getY() - smileyPunch.getCurrentFrame().getHeight());
-                    break;
-                case 1: // Right
-                    smileyPunch.getCurrentFrame().setLocation(epsilon.getCurrentFrame().getX() + epsilon.getCurrentFrame().getWidth(), smileyPunch.getCurrentFrame().getY());
-                    break;
-                case 2: // Bottom
-                    smileyPunch.getCurrentFrame().setLocation(smileyPunch.getCurrentFrame().getX(), epsilon.getCurrentFrame().getY() + epsilon.getCurrentFrame().getHeight());
-                    break;
-                case 3: // Left
-                    smileyPunch.getCurrentFrame().setLocation(epsilon.getCurrentFrame().getX() - smileyPunch.getCurrentFrame().getWidth(), smileyPunch.getCurrentFrame().getY());
-                    break;
-            }
-
-            // Execute the punch
-            epsilon.reduceFrameSize(wallToHit);
+            powerPunchLogic.doAPunch(smileyPunch, epsilon);
 
             // Make Smiley vulnerable during this attack
             BossFightManger.setOpenAttackToSmileyFace(true);
@@ -174,13 +136,9 @@ public class BossFightAttackParadigm {
         long currentTime = System.currentTimeMillis();
         if(currentTime - lastVomit < VOMIT_INTERVAL && !smileyFace.isInEpsilonFrameForProjectile){
             BossFightManger.setOpenAttackToSmileyHands(true);
-
             // Do Vomit Attack
             if(Math.random() < 0.05){
-                Aoe aoe = new Aoe(epsilon.getX() + new Random().nextInt(120), epsilon.getY() + + new Random().nextInt(120), 2000, 2, 40, 40, epsilon.getCurrentFrame());
-                vomitAoeArea.add(aoe);
-                aoe.getCurrentFrame().addToGamePanel(aoe);
-                aoe.repaint();
+                vomitLogic.doAVomit(vomitAoeArea, epsilon);
             }
         }
         else if(currentTime - lastVomit < 3 * VOMIT_INTERVAL){
@@ -191,18 +149,7 @@ public class BossFightAttackParadigm {
             BossFightManger.setOpenAttackToSmileyHands(true);
             lastVomit = currentTime;
         }
-        ArrayList<Aoe> expiredAoe = new ArrayList<>();
-        for(Aoe aoe : vomitAoeArea){
-            if(Intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(aoe, epsilon) && currentTime - aoe.getLastAttackFromMe() > 1000){
-                epsilon.reduceHp(aoe.getPower(), AttackType.AOE, EntityType.ENEMY);
-                aoe.setLastAttackFromMe(currentTime);
-            }
-            if(aoe.isExpired()){
-                aoe.getCurrentFrame().removeFromGamePanel(aoe);
-                expiredAoe.add(aoe);
-            }
-        }
-        vomitAoeArea.removeAll(expiredAoe);
+        vomitLogic.controlTheAreas(vomitAoeArea, epsilon);
     }
     public void squeezeAttackManager(Epsilon epsilon, SmileyFace smileyFace, SmileyLeftHand smileyLeftHand, SmileyRightHand smileyRightHand){
         long currentTime = System.currentTimeMillis();
@@ -227,7 +174,6 @@ public class BossFightAttackParadigm {
                 smileyRightHand.getCurrentFrame().setLocation(epsilon.getCurrentFrame().getX()+ epsilon.getCurrentFrame().getWidth(),smileyRightHand.getCurrentFrame().getY());
                 smileyLeftHand.getCurrentFrame().setLocation(epsilon.getCurrentFrame().getX() - smileyLeftHand.getCurrentFrame().getWidth(), smileyLeftHand.getCurrentFrame().getY());
                 BossFightManger.setOpenAttackToSmileyFace(true);
-                System.out.println("Squeeze Attack Executed!");
             }
         }
     }
@@ -237,36 +183,16 @@ public class BossFightAttackParadigm {
         if (currentTime - lastProjectile < PROJECTILE_INTERVAL && !faceInUseForRapidFire) {
             smileyFace.move(epsilon);
             BossFightManger.setOpenAttackToSmileyHands(true);
-
             // Do the projectileAttack
-            if(Math.random() < 0.005){
-                if(smileyRightHand != null){
-                    Shot shot1 = new Shot(-100, smileyLeftHand.getYRelativeToTheScreen() - epsilon.getCurrentFrame().getY(), 5, epsilon.getCurrentFrame(), false);
-                    shot1.setxVelocity(+5);
-                    shot1.setyVelocity(0);
-                    shot1.getCurrentFrame().addToGamePanel(shot1);
-                    shotsForProjectile.add(shot1);
-                }
-                if(smileyLeftHand != null){
-                    Shot shot2 = new Shot(1500, smileyRightHand.getYRelativeToTheScreen() - epsilon.getCurrentFrame().getY(), 5, epsilon.getCurrentFrame(), false);
-                    shot2.setxVelocity(-5);
-                    shot2.setyVelocity(0);
-                    shot2.getCurrentFrame().addToGamePanel(shot2);
-                    shotsForProjectile.add(shot2);
-                }
-
-                System.out.println("ShotFireProjectile!");
+            if(Math.random() < 0.01){
+                projectileLogic.fire(smileyRightHand, smileyLeftHand, shotsForProjectile, epsilon);
             }
         }
         else if(currentTime - lastProjectile < 3 * PROJECTILE_INTERVAL){
             // Do Nothing
             if(smileyFace.isInEpsilonFrameForProjectile){
                 faceInUseForProjectile = false;
-                smileyFace.setX(80);
-                smileyFace.setY(80);
-                smileyFace.isInEpsilonFrameForProjectile = false;
-                smileyFace.getCurrentFrame().addToGamePanel(smileyFace);
-                epsilon.getCurrentFrame().removeFromGamePanel(smileyFace);
+                projectileLogic.setSmileyFace(smileyFace, epsilon);
             }
             BossFightManger.setOpenAttackToSmileyHands(false);
 
@@ -274,26 +200,10 @@ public class BossFightAttackParadigm {
         else{
             faceInUseForProjectile = true;
             lastProjectile = currentTime;
-            smileyFace.getCurrentFrame().removeFromGamePanel(smileyFace);
-            epsilon.getCurrentFrame().addToGamePanel(smileyFace);
-            smileyFace.isInEpsilonFrameForProjectile = true;
+            projectileLogic.setTheStartStateOfProjectile(smileyFace, epsilon);
             BossFightManger.setOpenAttackToSmileyHands(true);
         }
-        ArrayList<Shot> shotArrayList = new ArrayList<>();
-        for(Shot shot : shotsForProjectile){
-            shot.move();
-            shot.repaint();
-            if(shot.getX() > 1800 || shot.getX() < -200){
-                shot.getCurrentFrame().removeFromGamePanel(shot);
-                shotArrayList.add(shot);
-            }
-            else if(Intersection.checkTheIntersectionBetweenAObjectInGameAndAObjectInGame(shot, epsilon)){
-                epsilon.reduceHp(5, AttackType.RANGED, EntityType.ENEMY);
-                shot.getCurrentFrame().removeFromGamePanel(shot);
-                shotArrayList.add(shot);
-            }
-        }
-        shotsForProjectile.removeAll(shotArrayList);
+        projectileLogic.controlTheShots(epsilon, shotsForProjectile);
 
     }
 

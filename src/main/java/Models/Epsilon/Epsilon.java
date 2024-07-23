@@ -107,21 +107,42 @@ public class Epsilon extends ObjectsInGame implements Moveable {
         // wallToHit: 0 = top, 1 = right, 2 = bottom, 3 = left
         int height = this.getCurrentFrame().getHeight();
         int width = this.getCurrentFrame().getWidth();
+
         switch (wallToHit) {
             case 0: // Top
-                height *= (0.9);
+                height *= 0.9;
                 break;
             case 1: // Right
-                width *= (0.9);
+                width *= 0.9;
+                // به جای جابجایی، فقط سایز را کم می‌کنیم
                 break;
             case 2: // Bottom
-                height *= (0.9);
+                height *= 0.9;
                 break;
             case 3: // Left
-                width *= (0.9);
+                width *= 0.9;
+                // به جای جابجایی، فقط سایز را کم می‌کنیم
                 break;
         }
+
+        // محاسبه موقعیت جدید برای ایجاد اثر ضربه از سمت مخالف
+        int newX = getCurrentFrame().getX();
+        if (wallToHit == 2) { // Right
+            newX -= (width * 0.05); // به سمت چپ جابجا می‌شود
+        } else if (wallToHit == 0) { // Left
+            newX += (width * 0.05); // به سمت راست جابجا می‌شود
+        }
+
+        int newY = getCurrentFrame().getY();
+        if (wallToHit == 1) { // Right
+            newY -= (height * 0.05); // به سمت چپ جابجا می‌شود
+        } else if (wallToHit == 3) { // Left
+            newX += (height * 0.05); // به سمت راست جابجا می‌شود
+        }
+
         getCurrentFrame().setSize(width, height);
+        getCurrentFrame().setLocation(newX, newY);
     }
+
 
 }

@@ -44,7 +44,7 @@ public class EpsilonController {
         int frameWidth = epsilonFrame.getWidth();
         int frameHeight = epsilonFrame.getHeight();
         int reductionAmount = 4;
-        if (frameWidth > 400  && frameHeight > 400) {
+        if (frameWidth > 400  &&  frameHeight > 400) {
             epsilonFrame.setBounds(epsilonFrame.getX() + reductionAmount / 2, epsilonFrame.getY() + reductionAmount / 2, frameWidth - reductionAmount, frameHeight - reductionAmount);
             epsilonFrame.getGamePanel().setSize(epsilonFrame.getWidth(), epsilonFrame.getHeight());
             epsilonFrame.revalidate();

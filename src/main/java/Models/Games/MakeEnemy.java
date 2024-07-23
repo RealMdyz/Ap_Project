@@ -106,7 +106,7 @@ public class MakeEnemy {
             }
             locX = Math.abs(random.nextInt() % 1000); // Adjust the range as necessary
             locY = Math.abs(random.nextInt() % 600); // Adjust the range as necessary
-            gameFrame = new GameFrame(Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS, true, random.nextBoolean());
+            gameFrame = new GameFrame(Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS, true, true);
         } while (!isValidSpawnPosition(gameFrame, locX, locY));
 
         gameFrame.setBounds(locX, locY, Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS);
