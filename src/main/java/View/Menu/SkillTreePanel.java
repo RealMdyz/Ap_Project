@@ -30,6 +30,8 @@ public class SkillTreePanel extends JPanel implements ActionListener {
     protected BufferedImage writOfEmpusa = MyProjectData.getProjectData().getWritOfEmpusa();
     protected BufferedImage writOfMelampus = MyProjectData.getProjectData().getWritOfMelampus();
 
+    protected BufferedImage writOfAthena = MyProjectData.getProjectData().getWritOfAthena();
+
     private Map<String, Boolean> skillStatus = new HashMap<>();  // To store the status of each skill
     private Map<String, String> levelSkill = new HashMap<>();
 
@@ -72,6 +74,8 @@ public class SkillTreePanel extends JPanel implements ActionListener {
         addSkillButton(skillButtonsPanel, "Writ of Aceso", writOfAceso, 500);
         addSkillButton(skillButtonsPanel, "Writ of Melampus", writOfMelampus, 750);
         addSkillButton(skillButtonsPanel, "Writ of Chiron", writOfChiron, 900);
+        addSkillButton(skillButtonsPanel, "Writ of Athena", writOfAthena, 1200);
+
 
         // Shape Shift Skill Buttons
         addSkillButton(skillButtonsPanel, "Writ of Proteus", writOfProteus, 1000);
@@ -191,6 +195,16 @@ public class SkillTreePanel extends JPanel implements ActionListener {
                         showError("You need to unlock Writ of Melampus first.");
                     }
                     break;
+                case "Writ of Athena":
+                    if (isSkillUnlocked("Writ of Chiron")) {
+                        if(unlockSkill("Writ of Athena", 1200)){
+                            levelOfDefend = 4;
+                        }
+                    } else {
+                        showError("You need to unlock Writ of Chiron first.");
+                    }
+                    break;
+
                 case "Writ of Proteus":
                     if(unlockSkill("Writ of Proteus", 1000)){
                         levelOfChangeShape = 1;
@@ -265,7 +279,8 @@ public class SkillTreePanel extends JPanel implements ActionListener {
 
         levelSkill.put("Writ of Aceso", "Writ of Melampus");
         levelSkill.put("Writ of Melampus", "Writ of Chiron");
-        levelSkill.put("Writ of Chiron", "Writ of Chiron");
+        levelSkill.put("Writ of Chiron", "Writ of Athena");
+        levelSkill.put("Writ of Athena", "Writ of Athena");
 
         levelSkill.put("Writ of Proteus", "Writ of Empusa");
         levelSkill.put("Writ of Empusa", "Writ of Dolus");
@@ -277,9 +292,11 @@ public class SkillTreePanel extends JPanel implements ActionListener {
         skillStatus.put("Writ of Aceso", true);
         skillStatus.put("Writ of Melampus", false);
         skillStatus.put("Writ of Chiron", false);
+        skillStatus.put("Writ of Athena", false);
         skillStatus.put("Writ of Proteus", true);
         skillStatus.put("Writ of Empusa", false);
         skillStatus.put("Writ of Dolus", false);
+
         Scanner scanner;
         try {
             scanner = new Scanner(file);

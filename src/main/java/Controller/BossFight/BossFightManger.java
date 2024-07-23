@@ -52,13 +52,19 @@ public class BossFightManger {
         checkTheStateOfTheSmileyChuck(game);
     }
     private void checkTheBossFightState(){
-        if(smileyRightHand.getHp() < 0 && smileyRightHand != null){
+        if(smileyRightHand == null){
+
+        }
+        else if(smileyRightHand.getHp() < 0){
             smileyRightHand.getCurrentFrame().setVisible(false);
             smileyFace.changeFrameAndPaint(smileyFace.getCurrentFrame());
             smileyRightHand = null;
         }
 
-        if(smileyLeftHand.getHp() < 0 && smileyLeftHand != null){
+        if(smileyLeftHand == null){
+
+        }
+        else if(smileyLeftHand.getHp() < 0){
             smileyLeftHand.getCurrentFrame().setVisible(false);
             smileyFace.changeFrameAndPaint(smileyFace.getCurrentFrame());
             smileyLeftHand = null;

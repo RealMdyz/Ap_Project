@@ -114,14 +114,18 @@ public class BossFightAttackParadigm {
             BossFightManger.setOpenAttackToSmileyHands(true);
         }
         else if(currentTime - lastPowerPunch < 3 * POWER_PUNCH_INTERVAL){
-            smileyLeftHand.getCurrentFrame().setSolb(false);
-            smileyRightHand.getCurrentFrame().setSolb(false);
+            if(smileyLeftHand != null)
+                smileyLeftHand.getCurrentFrame().setSolb(false);
+            if(smileyRightHand != null)
+                smileyRightHand.getCurrentFrame().setSolb(false);
             BossFightManger.setOpenAttackToSmileyFace(false);
             BossFightManger.setOpenAttackToSmileyHands(false);
         }
         else {
-            smileyLeftHand.getCurrentFrame().setSolb(true);
-            smileyRightHand.getCurrentFrame().setSolb(true);
+            if(smileyLeftHand != null)
+                smileyLeftHand.getCurrentFrame().setSolb(true);
+            if(smileyRightHand != null)
+                smileyRightHand.getCurrentFrame().setSolb(true);
             powerPunchLogic.doAPunch(smileyPunch, epsilon);
 
             // Make Smiley vulnerable during this attack
@@ -154,8 +158,10 @@ public class BossFightAttackParadigm {
     public void squeezeAttackManager(Epsilon epsilon, SmileyFace smileyFace, SmileyLeftHand smileyLeftHand, SmileyRightHand smileyRightHand){
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastSqueeze > SQUEEZE_INTERVAL && currentTime - lastSqueeze < 3 * SQUEEZE_INTERVAL) {
-            smileyLeftHand.getCurrentFrame().setSolb(false);
-            smileyRightHand.getCurrentFrame().setSolb(false);
+            if(smileyLeftHand != null)
+                smileyLeftHand.getCurrentFrame().setSolb(false);
+            if(smileyRightHand != null)
+                smileyRightHand.getCurrentFrame().setSolb(false);
             BossFightManger.setOpenAttackToSmileyFace(false);
             return; // Not enough time has passed since the last squeeze attack
         }
@@ -169,8 +175,10 @@ public class BossFightAttackParadigm {
                 // Execute squeeze attack
                 lastSqueeze = currentTime;
                 // Add logic to handle squeeze attack (e.g., inflict damage to Epsilon)
-                smileyLeftHand.getCurrentFrame().setSolb(true);
-                smileyRightHand.getCurrentFrame().setSolb(true);
+                if(smileyLeftHand != null)
+                    smileyLeftHand.getCurrentFrame().setSolb(true);
+                if(smileyRightHand != null)
+                    smileyRightHand.getCurrentFrame().setSolb(true);
                 smileyRightHand.getCurrentFrame().setLocation(epsilon.getCurrentFrame().getX()+ epsilon.getCurrentFrame().getWidth(),smileyRightHand.getCurrentFrame().getY());
                 smileyLeftHand.getCurrentFrame().setLocation(epsilon.getCurrentFrame().getX() - smileyLeftHand.getCurrentFrame().getWidth(), smileyLeftHand.getCurrentFrame().getY());
                 BossFightManger.setOpenAttackToSmileyFace(true);

@@ -4,6 +4,7 @@ import Models.Constant;
 import Models.Game;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class UpdateToPPanel {
 
@@ -25,7 +26,7 @@ public class UpdateToPPanel {
     ImageIcon imageIconMelampus = new ImageIcon("Game/Writ of Melampus.png");
 
     ImageIcon imageIconChiron = new ImageIcon("Game/Writ of Chiron.png");
-
+    ImageIcon imageIconWritOfAthena = new ImageIcon("Game/Writ Of Athena.png");
 
 
     public void updateTopPanel(long startOfGame, int currentWaveIndex, int endWaveIndex, int hp){
@@ -62,11 +63,14 @@ public class UpdateToPPanel {
         if(Constant.levelOfDefend == 1){
             game.getTopPanel().updateAbilityDefendIcon(imageIconAceso);
         }
-        else if(Constant.levelOfAttack == 2){
+        else if(Constant.levelOfDefend == 2){
             game.getTopPanel().updateAbilityDefendIcon(imageIconMelampus);
         }
-        else if(Constant.levelOfAttack >= 3){
+        else if(Constant.levelOfDefend == 3){
             game.getTopPanel().updateAbilityDefendIcon(imageIconChiron);
+        }
+        else if(Constant.levelOfDefend >= 4){
+            game.getTopPanel().updateAbilityDefendIcon(imageIconWritOfAthena);
         }
 
 

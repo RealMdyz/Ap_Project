@@ -2,6 +2,7 @@ package Controller.Game;
 
 import Controller.BossFight.BossFightManger;
 import Models.AttackType;
+import Models.Constant;
 import Models.EntityType;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.EpsilonLogic;
@@ -21,7 +22,7 @@ public class EpsilonController {
         this.epsilonLogic = epsilonLogic;
     }
     public void setTheEpsilonFrameSize(Game game) {
-        if (firstTime || Math.random() < 0.04) {
+        if (firstTime || Math.random() < 0.07 * (Constant.levelOfDefend >= 4 ? (0.8) : 1)) {
             reduceEpsilonFrameSize(game);
         }
     }
@@ -47,8 +48,6 @@ public class EpsilonController {
         if (frameWidth > 400  &&  frameHeight > 400) {
             epsilonFrame.setBounds(epsilonFrame.getX() + reductionAmount / 2, epsilonFrame.getY() + reductionAmount / 2, frameWidth - reductionAmount, frameHeight - reductionAmount);
             epsilonFrame.getGamePanel().setSize(epsilonFrame.getWidth(), epsilonFrame.getHeight());
-            epsilonFrame.revalidate();
-            epsilonFrame.repaint();
         }
         else{
             firstTime = false;

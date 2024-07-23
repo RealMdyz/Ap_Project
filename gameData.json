@@ -1,8 +1,12 @@
 {
   "blackOrbConfigs" : [ ],
-  "enemyConfigs" : [ ],
+  "enemyConfigs" : [ {
+    "x" : 161,
+    "y" : -156,
+    "type" : "Necropick"
+  } ],
   "epsilonConfig" : {
-    "x" : 136,
-    "y" : 59
+    "x" : 194,
+    "y" : 236
   }
 }

@@ -42,6 +42,7 @@ public class MyProjectData {
     protected BufferedImage smileyPunch;
 
     protected BufferedImage headSkeleton ;
+    protected BufferedImage writOfAthena;
 
     protected Font font10;
     protected Font font12;
@@ -79,6 +80,13 @@ public class MyProjectData {
         gameMenuImage = new ImageIcon("Game/GameMenuImage.jpg");
         gameIcon = new ImageIcon("Game/GameIcon.ico");
 
+        try {
+            String pathBackground = "Game/Writ Of Athena.png";
+            File fileBackground = new File(pathBackground);
+            writOfAthena = ImageIO.read(fileBackground);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         try {
             String pathBackground = "Enemy/head dead.png";
             File fileBackground = new File(pathBackground);
@@ -572,5 +580,13 @@ public class MyProjectData {
 
     public void setHeadSkeleton(BufferedImage headSkeleton) {
         this.headSkeleton = headSkeleton;
+    }
+
+    public BufferedImage getWritOfAthena() {
+        return writOfAthena;
+    }
+
+    public void setWritOfAthena(BufferedImage writOfAthena) {
+        this.writOfAthena = writOfAthena;
     }
 }

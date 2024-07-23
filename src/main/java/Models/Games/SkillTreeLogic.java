@@ -82,7 +82,10 @@ public class SkillTreeLogic {
             // I Write This in epsilon (reduce Hp function)
         }
         if(Constant.levelOfDefend >= 3){
-            // I Write This is enemy (reduce Hp function)
+            // I Write This in enemy (reduce Hp function)
+        }
+        if(Constant.levelOfDefend >= 4){
+            // I Write This in Epsilon Controller
         }
     }
     public void changeShapeProcess(){
