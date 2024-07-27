@@ -1,8 +1,20 @@
 {
   "blackOrbConfigs" : [ ],
-  "enemyConfigs" : [ ],
+  "enemyConfigs" : [ {
+    "x" : 172,
+    "y" : 363,
+    "type" : "Wyrm"
+  }, {
+    "x" : 97,
+    "y" : 1,
+    "type" : "Omenoct"
+  }, {
+    "x" : 90,
+    "y" : 240,
+    "type" : "Archmire"
+  } ],
   "epsilonConfig" : {
-    "x" : 326,
-    "y" : 104
+    "x" : 89,
+    "y" : 239
   }
 }

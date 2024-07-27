@@ -10,8 +10,11 @@ import Models.Enemy.MiniBoss.BlackOrb.BlackOrbChuck;
 import Models.Epsilon.Epsilon;
 import Models.Game;
 import MyProject.MyProjectData;
+import Server.History;
+import Server.LeaderBoard;
 import View.Game.GameFrame;
 import View.Menu.GameOverPanel;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 
@@ -76,6 +79,11 @@ public class CheckTheStateOfTheGame {
     }
     private void gameEnd(Game game){
         synchronized (this){
+            History history = new History();
+            history.setName(Constant.clientName);
+            history.setMostAliveTime(System.currentTimeMillis() - GameLoop.startOfGame);
+            history.setMostGainedXp(Constant.getPlayerXP());
+
             Constant.setIsRunning(false);
             for(GameFrame gameFrame : game.getGameFrames())
                 gameFrame.setVisible(false);
@@ -87,7 +95,12 @@ public class CheckTheStateOfTheGame {
             Constant.setBossTriggered(false);
             Constant.setqPressed(false);
             Constant.setPlayerXP(0);
-            
+
+
+            LeaderBoard leaderBoard = new LeaderBoard();
+            leaderBoard = leaderBoard.load("offlineResult.json");
+            leaderBoard.getHistories().add(history);
+            leaderBoard.save("offlineResult.json");
 
         }
     }

@@ -82,6 +82,8 @@ public class Constant {
 
     private static boolean qPressed = false;
     private static boolean bossTriggered = false;
+    public static boolean isOnline = false;
+    public static String clientName;
 
 
     public Constant(){

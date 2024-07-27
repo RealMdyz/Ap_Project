@@ -16,6 +16,8 @@ public class Epsilon extends ObjectsInGame implements Moveable {
     EpsilonLogic epsilonLogic;
     EpsilonController epsilonController;
     public static int successfulShots = 0;
+    String name;
+    String mySquadName = "nothing";
 
     public Epsilon(int x, int y, GameFrame jFrame) {
         super(x, y, 100, jFrame);
