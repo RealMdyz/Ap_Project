@@ -2,6 +2,7 @@ package Models.Enemy.Normal;
 
 import Models.AttackType;
 import Models.Constant;
+import Models.Enemy.Aoe;
 import Models.Enemy.Enemy;
 import Models.EntityType;
 import Models.Epsilon.Epsilon;

@@ -1,7 +1,6 @@
 package Controller.Game;
 
-import Models.Enemy.Enemy;
-import Models.Enemy.Normal.Aoe;
+import Models.Enemy.Aoe;
 import Models.Epsilon.Shot;
 import Models.ObjectsInGame;
 import View.Game.GameFrame;

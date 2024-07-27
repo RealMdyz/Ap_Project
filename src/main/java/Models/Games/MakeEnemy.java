@@ -3,7 +3,7 @@ package Models.Games;
 import Controller.Game.FrameIntersection;
 import Models.Constant;
 import Models.Enemy.Enemy;
-import Models.Enemy.MiniBoss.Barricados.Barricados;
+import Models.Enemy.Normal.Barricados;
 import Models.Enemy.Normal.*;
 import Models.Game;
 import View.Game.GameFrame;

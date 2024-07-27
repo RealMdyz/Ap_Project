@@ -1,7 +1,7 @@
 package Controller.Game;
 
 import Models.Enemy.Enemy;
-import Models.Enemy.Normal.Aoe;
+import Models.Enemy.Aoe;
 import Models.Enemy.Normal.Archmire;
 import Models.Game;
 

@@ -1,20 +1,11 @@
 package Models.BossFight;
 
 import Controller.BossFight.BossFightManger;
-import Controller.Game.Intersection;
-import Models.AttackType;
-import Models.Enemy.Normal.Aoe;
-import Models.EntityType;
-import Models.Epsilon.Collectible;
+import Models.Enemy.Aoe;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
-import View.Game.GameFrame;
 
-import java.security.BasicPermission;
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class BossFightAttackParadigm {
 

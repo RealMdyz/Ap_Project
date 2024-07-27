@@ -2,7 +2,7 @@ package Models.BossFight;
 
 import Controller.Game.Intersection;
 import Models.AttackType;
-import Models.Enemy.Normal.Aoe;
+import Models.Enemy.Aoe;
 import Models.EntityType;
 import Models.Epsilon.Epsilon;
 

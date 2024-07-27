@@ -4,17 +4,15 @@ import Controller.Enemy.HandelEpsilonShots;
 import Controller.Enemy.NormalEnemyPowerIntersection;
 import Models.AttackType;
 import Models.Enemy.Enemy;
-import Models.Enemy.MiniBoss.Barricados.Barricados;
+import Models.Enemy.Normal.Barricados;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrb;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrbChuck;
 import Models.Enemy.Normal.*;
 import Models.EntityType;
-import Models.Epsilon.Shot;
 import Models.Game;
 import Models.Games.CheckTheStateOfTheGame;
 import View.Game.GameFrame;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class IntersectionController {

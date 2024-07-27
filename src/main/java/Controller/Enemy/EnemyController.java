@@ -2,7 +2,7 @@ package Controller.Enemy;
 
 import Models.Constant;
 import Models.Enemy.Enemy;
-import Models.Enemy.MiniBoss.Barricados.Barricados;
+import Models.Enemy.Normal.Barricados;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrb;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrbChuck;
 import Models.Game;

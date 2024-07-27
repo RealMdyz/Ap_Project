@@ -2,11 +2,11 @@ package Models.Enemy.Normal;
 
 import Models.AttackType;
 import Models.Constant;
+import Models.Enemy.Aoe;
 import Models.Enemy.Enemy;
 import Models.EntityType;
 import Models.Epsilon.Epsilon;
 import Models.Epsilon.Shot;
-import Models.Game;
 import MyProject.MyProjectData;
 import View.Game.GameFrame;
 
@@ -19,7 +19,7 @@ public class Necropick extends Enemy {
     private ArrayList<Shot> shots = new ArrayList<>();
     private boolean setVisibilityAtThisTimeOfAppearing = false;
     private boolean lastSettingThePos = false;
-    private  Aoe markArea;
+    private Aoe markArea;
     int[] x = {-50, -50, 50, 50};
     int[] y = {50, -50, 50, -50};
     Epsilon epsilon;

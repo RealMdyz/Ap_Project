@@ -1,4 +1,4 @@
-package Models.Enemy.Normal;
+package Models.Enemy;
 
 import Controller.Game.Intersection;
 import Models.AttackType;
