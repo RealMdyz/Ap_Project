@@ -1,12 +1,14 @@
 package Controller.Enemy;
 
+import Controller.Game.FrameIntersection;
 import Models.Constant;
 import Models.Enemy.Enemy;
-import Models.Enemy.Normal.Barricados;
+import Models.Enemy.Barricados.Barricados;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrb;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrbChuck;
 import Models.Game;
 import Models.Games.MakeEnemy;
+import View.Game.GameFrame;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,6 +32,9 @@ public class EnemyController {
     }
     public void controllingTheEnemies(){
         spawnProcess();
+        if(currentWaveIndex >= 3 && Math.random() < 0.001){
+            spawnABarricados();
+        }
         if(currentWaveIndex == 4){
             blackOrbSpawnProcess();
             for(BlackOrb blackOrb : blackOrbs){
@@ -42,6 +47,41 @@ public class EnemyController {
             enemy.move();
         }
         removingEnemies();
+    }
+    public void spawnABarricados(){
+        Random random = new Random();
+        int locX, locY;
+        GameFrame gameFrame;
+
+        // Find a valid spawn position
+        do {
+            if(Math.random() < 0.5){
+                return;
+            }
+            locX = Math.abs(random.nextInt() % 1000); // Adjust the range as necessary
+            locY = Math.abs(random.nextInt() % 600); // Adjust the range as necessary
+            gameFrame = new GameFrame(Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS, true, true);
+        } while (!isValidSpawnPosition(gameFrame, locX, locY));
+
+        gameFrame.setBounds(locX, locY, Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS);
+        game.getGameFrames().add(gameFrame);
+        gameFrame.setVisible(true);
+        game.getEpsilonFrame().requestFocus();
+
+        addEnemy(new Barricados(0, 0, gameFrame));
+
+    }
+
+
+    private boolean isValidSpawnPosition(GameFrame newFrame, int x, int y) {
+        newFrame.setBounds(x, y, Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS);
+
+        for (GameFrame existingFrame : game.getGameFrames()) {
+            if (FrameIntersection.twoFrameIntersection(newFrame, existingFrame)) {
+                return false; // Intersection found
+            }
+        }
+        return true; // No intersection
     }
     public void blackOrbSpawnProcess(){
         if(lastBlackOrbDone && Math.random() < 0.005 && blackOrbs.size() == 0){
@@ -132,7 +172,7 @@ public class EnemyController {
         } else if(waveController.getCurrentDelay() >  Constant.SPAWN_PROCESS_RATE / waveController.getSpawnRateMultiplier()){
             waveController.setCurrentDelay(0);
             Random random = new Random();
-            addEnemy(makeEnemy.makeRandomEnemy(random.nextInt(), currentWaveIndex));
+            addEnemy(makeEnemy.makeRandomEnemy(currentWaveIndex));
         }
         waveController.setCurrentDelay(waveController.getCurrentDelay() + (long) (2L * currentWaveIndex + 5));
     }

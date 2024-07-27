@@ -1,4 +1,4 @@
-package Models.Enemy.Normal;
+package Models.Enemy.Barricados;
 
 import Models.Constant;
 import Models.Enemy.Enemy;
@@ -11,7 +11,7 @@ public class Barricados extends Enemy {
 
     private long spawnTime;
     private static int EXPIRATION_TIME = 120000;
-    public Barricados(GameFrame frame) {
+    public Barricados(int x, int y, GameFrame frame) {
         super(0, 0, 99999, 0, 0, 4, 0, false, frame);
         this.setHeight(Constant.SIDE_LENGTH_OF_BARRICADOS);
         this.setWidth(Constant.SIDE_LENGTH_OF_BARRICADOS);

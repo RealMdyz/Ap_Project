@@ -23,7 +23,7 @@ public class Omenoct extends Enemy {
     private int tolerance = 3;
     private Epsilon epsilon;
     private ArrayList<Vertex> vertices;
-    public Omenoct(int x, int y, int side, GameFrame frame) {
+    public Omenoct(int x, int y, GameFrame frame) {
         super(x, y, 20, 8, 4, 8, 4, false, frame);
         this.side = side;
         this.setHeight(Constant.getHeightOfOmenoct());

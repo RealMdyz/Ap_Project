@@ -4,7 +4,7 @@ import Controller.Enemy.HandelEpsilonShots;
 import Controller.Enemy.NormalEnemyPowerIntersection;
 import Models.AttackType;
 import Models.Enemy.Enemy;
-import Models.Enemy.Normal.Barricados;
+import Models.Enemy.Barricados.Barricados;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrb;
 import Models.Enemy.MiniBoss.BlackOrb.BlackOrbChuck;
 import Models.Enemy.Normal.*;

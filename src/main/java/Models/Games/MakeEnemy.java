@@ -3,130 +3,98 @@ package Models.Games;
 import Controller.Game.FrameIntersection;
 import Models.Constant;
 import Models.Enemy.Enemy;
-import Models.Enemy.Normal.Barricados;
 import Models.Enemy.Normal.*;
 import Models.Game;
 import View.Game.GameFrame;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MakeEnemy {
     private Game game;
-    public MakeEnemy(Game game){
+    private List<Class<? extends Enemy>> enemyClasses;
+
+    public MakeEnemy(Game game) {
         this.game = game;
+        this.enemyClasses = new ArrayList<>();
+        loadEnemyClasses();
     }
 
-    public Enemy makeRandomEnemy(int random, int currentWaveIndex){
-        if(currentWaveIndex <= 2){
-            random %= 4;
-            random = Math.abs(random);
-            if(random == 0) {
-                return makeNecropick();
-            }
-            else if(random == 1){
-                return makeOmenoct();
-            }
-            else if(random == 2 ){
-                return makeArchmire();
-            }
-            else{
-                return makeWyrm();
-            }
-
-        }
-        else{
-            random %= 5;
-            random = Math.abs(random);
-
-            if(random == 0) {
-                return makeNecropick();
-            }
-            else if(random == 1){
-                return makeOmenoct();
-            }
-            else if(random == 2 ){
-                return makeArchmire();
-            }
-            else if(random == 3){
-                return makeWyrm();
-            }
-            else {
-                return makebarricados();
-            }
-        }
-
+    private void loadEnemyClasses() {
+        // بارگذاری کلاس‌های دشمن
+        enemyClasses.add(Necropick.class);
+        enemyClasses.add(Omenoct.class);
+        enemyClasses.add(Archmire.class);
+        enemyClasses.add(Wyrm.class);
     }
-    public Necropick makeNecropick(){
-        Random random =new Random();
-        int locX = random.nextInt() % 350 + 15;
-        int locY = random.nextInt() % 350 + 15;
-        return new Necropick(locX, locY, game.getEpsilonFrame());
-    }
-    public Omenoct makeOmenoct(){
-        Random random =new Random();
-        int locX = Math.abs(random.nextInt() % 350 + 50);
-        int locY = Math.abs(random.nextInt() % 450 + 50);
-        int randomSide  = Math.abs(random.nextInt() % 4);
-        return new Omenoct(locX , locY, randomSide, game.getEpsilonFrame());
-    }
-    public Archmire makeArchmire(){
+
+    public Enemy makeRandomEnemy(int currentWaveIndex) {
         Random random = new Random();
-        int locX = random.nextInt() % 450 + 45;
-        int locY = random.nextInt() % 450 + 45;
+        int index = random.nextInt(enemyClasses.size());
+        Class<? extends Enemy> enemyClass = enemyClasses.get(index);
 
-        if(random.nextInt() % 2 == 0){
-            return new Archmire(locX, locY, false, game.getEpsilonFrame());
-        }
-        else {
-            return new Archmire(locX, locY, true, game.getEpsilonFrame());
-        }
+        GameFrame gameFrame = game.getEpsilonFrame();
+        int locX = random.nextInt(350) + 15;
+        int locY = random.nextInt(350) + 15;
 
-    }
-    private Wyrm makeWyrm(){
-        Random random = new Random();
-        int locX = random.nextInt() % 1000 + 45;
-        int locY = random.nextInt() % 800 + 45;
-        GameFrame gameFrame = new GameFrame(0, 0, true, false);
-        game.getGameFrames().add(gameFrame);
-        gameFrame.setVisible(true);
-        game.getEpsilonFrame().requestFocus();
-        gameFrame.setBounds(locX, locY, Constant.WIDTH_OF_WYRM, Constant.HEIGHT_OF_WYRM);
-
-        return new Wyrm(15, 15, gameFrame);
-    }
-    private Barricados makebarricados() {
-        Random random = new Random();
-        int locX, locY;
-        GameFrame gameFrame;
-
-        // Find a valid spawn position
-        do {
-            if(Math.random() < 0.1){
-                makeRandomEnemy(random.nextInt(), game.getEnemyController().getCurrentWaveIndex());
+        if (enemyClass == Archmire.class) {
+            boolean isMini = random.nextBoolean(); // برای Archmire یک boolean تصادفی
+            Constructor<? extends Enemy> constructor = null;
+            try {
+                constructor = enemyClass.getConstructor(int.class, int.class, boolean.class, GameFrame.class);
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(e);
             }
-            locX = Math.abs(random.nextInt() % 1000); // Adjust the range as necessary
-            locY = Math.abs(random.nextInt() % 600); // Adjust the range as necessary
-            gameFrame = new GameFrame(Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS, true, true);
-        } while (!isValidSpawnPosition(gameFrame, locX, locY));
-
-        gameFrame.setBounds(locX, locY, Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS);
-        game.getGameFrames().add(gameFrame);
-        gameFrame.setVisible(true);
-        game.getEpsilonFrame().requestFocus();
-
-        return new Barricados(gameFrame);
-    }
-
-    private boolean isValidSpawnPosition(GameFrame newFrame, int x, int y) {
-        newFrame.setBounds(x, y, Constant.SIDE_LENGTH_OF_BARRICADOS, Constant.SIDE_LENGTH_OF_BARRICADOS);
-
-        for (GameFrame existingFrame : game.getGameFrames()) {
-            if (FrameIntersection.twoFrameIntersection(newFrame, existingFrame)) {
-                return false; // Intersection found
+            try {
+                return constructor.newInstance(locX, locY, isMini, gameFrame);
+            } catch (InstantiationException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (enemyClass == Wyrm.class) {
+            // Wyrm نیاز به GameFrame جدید دارد
+            GameFrame wyrmFrame = new GameFrame(0, 0, true, false);
+            game.getGameFrames().add(wyrmFrame);
+            wyrmFrame.setVisible(true);
+            wyrmFrame.setBounds(locX, locY, Constant.WIDTH_OF_WYRM, Constant.HEIGHT_OF_WYRM);
+            Constructor<? extends Enemy> constructor = null;
+            try {
+                constructor = enemyClass.getConstructor(int.class, int.class, GameFrame.class);
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                return constructor.newInstance(locX, locY, wyrmFrame);
+            } catch (InstantiationException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            // برای Necropick و Omenoct
+            Constructor<? extends Enemy> constructor = null;
+            try {
+                constructor = enemyClass.getConstructor(int.class, int.class, GameFrame.class);
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                return constructor.newInstance(locX, locY, gameFrame);
+            } catch (InstantiationException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException(e);
             }
         }
-        return true; // No intersection
     }
-
 }
-
