@@ -10,14 +10,14 @@ import java.util.ArrayList;
 
 public class ProjectileLogic {
     protected void fire(SmileyRightHand smileyRightHand, SmileyLeftHand smileyLeftHand, ArrayList<Shot> shotsForProjectile, Epsilon epsilon){
-        if(smileyRightHand != null){
+        if(smileyLeftHand != null){
             Shot shot1 = new Shot(-100, smileyLeftHand.getYRelativeToTheScreen() - epsilon.getCurrentFrame().getY(), 5, epsilon.getCurrentFrame(), false);
             shot1.setxVelocity(+5);
             shot1.setyVelocity(0);
             shot1.getCurrentFrame().addToGamePanel(shot1);
             shotsForProjectile.add(shot1);
         }
-        if(smileyLeftHand != null){
+        if(smileyRightHand != null){
             Shot shot2 = new Shot(1500, smileyRightHand.getYRelativeToTheScreen() - epsilon.getCurrentFrame().getY(), 5, epsilon.getCurrentFrame(), false);
             shot2.setxVelocity(-5);
             shot2.setyVelocity(0);

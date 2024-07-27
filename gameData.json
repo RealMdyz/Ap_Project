@@ -2,7 +2,7 @@
   "blackOrbConfigs" : [ ],
   "enemyConfigs" : [ ],
   "epsilonConfig" : {
-    "x" : 92,
-    "y" : 230
+    "x" : 326,
+    "y" : 104
   }
 }

@@ -62,6 +62,7 @@ public class MakeEnemy {
             GameFrame wyrmFrame = new GameFrame(0, 0, true, false);
             game.getGameFrames().add(wyrmFrame);
             wyrmFrame.setVisible(true);
+
             wyrmFrame.setBounds(locX, locY, Constant.WIDTH_OF_WYRM, Constant.HEIGHT_OF_WYRM);
             Constructor<? extends Enemy> constructor = null;
             try {

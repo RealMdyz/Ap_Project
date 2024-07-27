@@ -23,7 +23,7 @@ public class Wyrm extends Enemy {
     private boolean movingTowardsEpsilon = true;
     Epsilon epsilon;
     public Wyrm(int x, int y, GameFrame frame) {
-        super(x, y, 12, 2, 8, 0, 8, false, frame);
+        super(15, 15, 12, 2, 8, 0, 8, false, frame);
         this.setVisible(true);
         this.setHeight(Constant.WIDTH_OF_WYRM);
         this.setWidth(Constant.HEIGHT_OF_WYRM);
