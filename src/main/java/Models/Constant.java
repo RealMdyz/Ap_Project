@@ -84,6 +84,7 @@ public class Constant {
     private static boolean bossTriggered = false;
     public static boolean isOnline = false;
     public static String clientName;
+    public static String squadName;
 
 
     public Constant(){

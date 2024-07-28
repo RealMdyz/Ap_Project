@@ -1,10 +1,25 @@
 package Server;
 
+import Models.Epsilon.Epsilon;
+import View.Menu.GameHistoryPage;
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.databind.DatabindException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 public class RequestHandler {
+    private ArrayList<Squad> squads = new ArrayList<>();
+    private static final String SQUADS_FILE = "squads.json";
+    private ObjectMapper objectMapper = new ObjectMapper();
 
-    public void handel(String response , PrintWriter out){
+
+    public void handel(String response,  PrintWriter out){
         if(response.startsWith("UpdBoard")){
             String[] parts = response.split(" ");
             LeaderBoard leaderBoard = new LeaderBoard();
@@ -33,18 +48,121 @@ public class RequestHandler {
             leaderBoard.save("allResult.json");
         }
         else if (response.startsWith("NeedGameHistory")) {
-            sendGameHistory(out);
+            showGameHistory();
+        }
+        else if (response.startsWith("RequestSquadInfo")) {
+            sendSquadInfo(out);
+        } else if (response.startsWith("JoinSquad")) {
+            handleJoinSquad(response, out);
+        } else if (response.startsWith("CreateSquad")) {
+            handleCreateSquad(response, out);
+        } else if (response.startsWith("LeaveSquad")) {
+            handleLeaveSquad(response, out);
+        }
+
+    }
+
+    private void loadSquads() {
+        try {
+            File file = new File(SQUADS_FILE);
+            if (file.exists()) {
+                squads = objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, Squad.class));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-    private void sendGameHistory(PrintWriter out) {
-        LeaderBoard leaderBoard = new LeaderBoard();
-        leaderBoard = leaderBoard.load("allResult.json"); // بارگذاری داده‌ها
 
-        for (History history : leaderBoard.getHistories()) {
-            String data = history.getName() + " - Alive Time: " + history.getMostAliveTime() +
-                    ", XP: " + history.getMostGainedXp();
-            out.println(data); // ارسال داده‌ها به کلاینت
+    private void saveSquads() {
+        try {
+            objectMapper.writeValue(new File(SQUADS_FILE), squads);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        out.println("END"); // علامت پایان داده‌ها
+    }
+
+    private void showGameHistory() {
+        LeaderBoard leaderBoard = new LeaderBoard();
+        leaderBoard = leaderBoard.load("allResult.json");
+
+        StringBuilder historyData = new StringBuilder();
+        for (History history : leaderBoard.getHistories()) {
+            historyData.append("Name: ").append(history.getName()).append("\n");
+            historyData.append("Most Alive Time: ").append(history.getMostAliveTime()).append("\n");
+            historyData.append("Most Gained XP: ").append(history.getMostGainedXp()).append("\n\n");
+        }
+
+        SwingUtilities.invokeLater(() -> new GameHistoryPage(historyData.toString()));
+    }
+
+    private void sendSquadInfo(PrintWriter out) {
+        for (Squad squad : squads) {
+            out.println("SquadInfo " + squad.getSquadName() + " " + squad.getMembersName().size());
+        }
+        out.println("END");
+    }
+
+    private void handleJoinSquad(String response, PrintWriter out) {
+        String[] parts = response.split(" ");
+        String playerName = parts[1];
+        String squadName = parts[2];
+
+        for (Squad squad : squads) {
+            if (squad.getSquadName().equals(squadName)) {
+                if (squad.getMembersName().contains(playerName)) {
+                    out.println("JoinSquadResponse Failed AlreadyInSquad");
+                    return;
+                }
+                squad.getMembersName().add(playerName);
+                saveSquads();
+                out.println("JoinSquadResponse Success");
+                return;
+            }
+        }
+        out.println("JoinSquadResponse Failed SquadNotFound");
+    }
+
+    private void handleCreateSquad(String response, PrintWriter out) {
+        String[] parts = response.split(" ");
+        String playerName = parts[1];
+        String squadName = parts[2];
+
+        for (Squad squad : squads) {
+            if (squad.getSquadName().equals(squadName)) {
+                out.println("CreateSquadResponse Failed SquadAlreadyExists");
+                return;
+            }
+            if (squad.getOwnersName().equals(playerName)) {
+                out.println("CreateSquadResponse Failed AlreadyOwnsSquad");
+                return;
+            }
+        }
+
+        Squad squad = new Squad();
+        squad.setSquadName(squadName);
+        squad.setOwnersName(playerName);
+        squad.getMembersName().add(playerName);
+        squads.add(squad);
+        saveSquads();
+        out.println("CreateSquadResponse Success");
+    }
+
+    private void handleLeaveSquad(String response, PrintWriter out) {
+        String[] parts = response.split(" ");
+        String playerName = parts[1];
+
+        for (Squad squad : squads) {
+            if (squad.getMembersName().contains(playerName)) {
+                if (squad.getOwnersName().equals(playerName)) {
+                    out.println("LeaveSquadResponse Failed OwnerCannotLeave");
+                    return;
+                }
+                squad.getMembersName().remove(playerName);
+                saveSquads();
+                out.println("LeaveSquadResponse Success");
+                return;
+            }
+        }
+        out.println("LeaveSquadResponse Failed NotInSquad");
     }
 }

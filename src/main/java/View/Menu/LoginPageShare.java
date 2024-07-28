@@ -21,7 +21,7 @@ public class LoginPageShare extends JFrame implements ActionListener {
     JButton tutorialButton;
     JButton skillTreeButton;
     JButton viewLeaderboardButton;
-
+    JButton squadButton;
     JButton exitButton;
     JButton connectServerButton; // Button for connecting to server
     JButton offlinePlayButton; // Button for offline play
@@ -30,7 +30,7 @@ public class LoginPageShare extends JFrame implements ActionListener {
 
     protected Constant constant;
     public  Socket socket;
-
+    private PrintWriter out;
 
     public LoginPageShare(Constant constant) {
         this.constant = constant;
@@ -64,6 +64,7 @@ public class LoginPageShare extends JFrame implements ActionListener {
         connectServerButton = createButton("Connect to Server", 100, 300, font20);
         offlinePlayButton = createButton("Play Offline", 100, 400, font20);
         viewLeaderboardButton = createButton("View Leaderboard", 100, 500, MyProjectData.getProjectData().getFont20()); // دکمه جدید
+        squadButton = createButton("Squads", 100, 600, MyProjectData.getProjectData().getFont20());
 
         // Add action listeners
         startButton.addActionListener(this);
@@ -74,6 +75,8 @@ public class LoginPageShare extends JFrame implements ActionListener {
         connectServerButton.addActionListener(this);
         offlinePlayButton.addActionListener(this);
         viewLeaderboardButton.addActionListener(this);
+        squadButton.addActionListener(this);
+
 
         // Add components to the background panel
         backgroundPanel.add(backgroundImageLabel, Integer.valueOf(0));
@@ -85,9 +88,13 @@ public class LoginPageShare extends JFrame implements ActionListener {
         backgroundPanel.add(connectServerButton, Integer.valueOf(1));
         backgroundPanel.add(offlinePlayButton, Integer.valueOf(1));
         backgroundPanel.add(viewLeaderboardButton, Integer.valueOf(1));
+        backgroundPanel.add(squadButton, Integer.valueOf(1));
+
 
         this.add(backgroundPanel);
 
+        Constant.getSavedXp();
+        Constant.squadName = "nothing";
         Constant.clientName  = JOptionPane.showInputDialog(this, "Enter client name:", "Register", JOptionPane.PLAIN_MESSAGE);
         repaint();
     }
@@ -131,6 +138,7 @@ public class LoginPageShare extends JFrame implements ActionListener {
             try {
                 socket = new Socket(serverAddress, 12345);
                 JOptionPane.showMessageDialog(this, "Connected to the server!");
+                out = new PrintWriter(socket.getOutputStream(), true); // Initialize the PrintWriter
                 updateAllResult(socket);
                 Constant.isOnline = true;
             } catch (IOException e) {
@@ -143,12 +151,6 @@ public class LoginPageShare extends JFrame implements ActionListener {
         LeaderBoard leaderBoard = new LeaderBoard();
         leaderBoard = leaderBoard.load("offlineResult.json");
         PrintWriter out = null;
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         try {
             out = new PrintWriter(socket.getOutputStream(), true);
         } catch (IOException e) {
@@ -167,24 +169,8 @@ public class LoginPageShare extends JFrame implements ActionListener {
     }
     private void viewGameHistory() {
         if (Constant.isOnline && socket != null) {
-            try {
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-                out.println("NeedGameHistory");
-
-                StringBuilder historyData = new StringBuilder();
-                String line;
-                while ((line = in.readLine()) != null) {
-                    if (line.equals("END")) break; // پایان داده‌ها
-                    historyData.append(line).append("\n");
-                }
-
-                new GameHistoryPage(historyData.toString());
-            } catch (IOException e) {
-                e.printStackTrace(); // چاپ خطا برای بررسی بیشتر
-                JOptionPane.showMessageDialog(this, "Error retrieving game history.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            out.println("NeedGameHistory");
+            out.println("END");
         } else {
             JOptionPane.showMessageDialog(this, "You are not connected to the server.", "Connection Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -215,6 +201,16 @@ public class LoginPageShare extends JFrame implements ActionListener {
         }
         else if (e.getSource() == viewLeaderboardButton) {
             viewGameHistory();
+        }
+        else if (e.getSource() == squadButton) {
+            openSquadMenu();
+        }
+    }
+    private void openSquadMenu() {
+        if (Constant.isOnline && socket != null) {
+            new SquadMenu(out);
+        } else {
+            JOptionPane.showMessageDialog(this, "You are not connected to the server.", "Connection Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

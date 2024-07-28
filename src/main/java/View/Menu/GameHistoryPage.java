@@ -10,12 +10,18 @@ public class GameHistoryPage extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
         JTextArea textArea = new JTextArea();
         textArea.setEditable(false);
         textArea.setText(historyData);
 
         JScrollPane scrollPane = new JScrollPane(textArea);
-        add(scrollPane, BorderLayout.CENTER);
+        scrollPane.setPreferredSize(new Dimension(380, 250));
+
+        panel.add(scrollPane);
+        add(panel, BorderLayout.CENTER);
 
         setVisible(true);
     }
