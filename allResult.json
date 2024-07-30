@@ -15,5 +15,9 @@
     "name" : "alios",
     "mostAliveTime" : 22833,
     "mostGainedXp" : 0
+  }, {
+    "name" : "leila",
+    "mostAliveTime" : 58350,
+    "mostGainedXp" : 55
   } ]
 }
